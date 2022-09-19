@@ -6,7 +6,7 @@ import static islandworkshop.Popularity.*;
 import static islandworkshop.DemandShift.*;
 import static islandworkshop.PeakCycle.*;
 import static islandworkshop.Item.*;
-
+import java.util.List;
 import java.util.Arrays;
 import java.util.Map;
 public class Solver
@@ -66,7 +66,11 @@ public class Solver
             new ItemInfo(GardenScythe,Sundries,Metalworks,90,6,Map.of(Claw,3)),
             new ItemInfo(Bed,Furnishings,Textiles,120,8,Map.of(Fur,4)),
             new ItemInfo(ScaleFingers,Attire,CreatureCreations,120,8,Map.of(Carapace,4)),
-            new ItemInfo(Crook,Arms,Woodworks,120,8,Map.of(Fang,4))};;
+            new ItemInfo(Crook,Arms,Woodworks,120,8,Map.of(Fang,4))};
+    
+    public static int groove = 0;
+            
+            
     
     public static void main(String[] args)
     {
@@ -313,21 +317,23 @@ public class Solver
          * System.out.println(item); }
          */
         
-        int groove = 0;
-        CycleSchedule day2 = new CycleSchedule(1, groove);
-        day2.setForAllWorkshops(Arrays.asList(Butter,TomatoRelish,Jam,TomatoRelish,Jam));
+        addDay(Arrays.asList(Butter,TomatoRelish,Jam,TomatoRelish,Jam), 1);
+        addDay(Arrays.asList(CulinaryKnife,GardenScythe,SilverEarCuffs,GardenScythe),2);
+        addDay(Arrays.asList(SheepfluffRug, Hora, SheepfluffRug, Hora),4);
+        addDay(Arrays.asList(Crook, SpruceRoundShield, Crook),5);
+        addDay(Arrays.asList(BoiledEgg, ScaleFingers, BoiledEgg, ScaleFingers),6);
         
-        System.out.println("day 2 total: "+day2.getValue()+" material cost: "+day2.getMaterialCost());
+    }
+    
+    public static void addDay(List<Item> crafts, int day)
+    {
+        CycleSchedule schedule = new CycleSchedule(day, groove);
+        schedule.setForAllWorkshops(crafts);
         
-        day2.numCrafted.forEach((k,v)->{items[k.ordinal()].addCrafted(v, 1);});
-        groove += day2.endingGroove;
+        System.out.println("day "+(day+1)+" total: "+schedule.getValue()+" material cost: "+schedule.getMaterialCost());
         
-        
-        CycleSchedule day6 = new CycleSchedule(5, 30);
-        day6.setForAllWorkshops(Arrays.asList(Crook, SpruceRoundShield, Crook));
-        day6.setWorkshop(0, Arrays.asList(Brush,Crook,Brush,Crook));
-        System.out.println("day 6 total: "+day6.getValue()+" material cost: "+day6.getMaterialCost());
-        
+        schedule.numCrafted.forEach((k,v)->{items[k.ordinal()].addCrafted(v, day);});
+        groove = schedule.endingGroove;
     }
     
     public static Supply getSupplyBucket(int supply)

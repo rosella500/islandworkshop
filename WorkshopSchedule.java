@@ -57,7 +57,7 @@ public class WorkshopSchedule
         if(isEfficient)
             adjustedValue *= 2;
         
-        System.out.println(craft.item+" is worth "+adjustedValue + " at hour "+completionHours.get(currentIndex) +" with "+currentGroove+" groove at "+ItemInfo.getSupplyBucket(craft.getSupplyOnDay(day) + craftedSoFar)+ " supply ("+supply+") and "+craft.popularity+" popularity");
+        //System.out.println(craft.item+" is worth "+adjustedValue + " at hour "+completionHours.get(currentIndex) +" with "+currentGroove+" groove at "+ItemInfo.getSupplyBucket(craft.getSupplyOnDay(day) + craftedSoFar)+ " supply ("+supply+") and "+craft.popularity+" popularity");
         
         return adjustedValue;
     }
