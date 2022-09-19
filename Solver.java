@@ -14,6 +14,7 @@ public class Solver
     
     
     final static double WORKSHOP_BONUS = 1.2;
+    final static int GROOVE_MAX = 35;
     
     final static ItemInfo[] items = {
             new ItemInfo(Potion,Concoctions,Invalid,28,4,null),
@@ -121,11 +122,10 @@ public class Solver
         items[49].setInitialData(VeryHigh,Cycle3Strong,Sufficient,None);
         
         
-        System.out.println("\nDay1: ");
-        for(ItemInfo item : items)
-        {
-            System.out.println(item);
-        }
+        /*
+         * System.out.println("\nDay1: "); for(ItemInfo item : items) {
+         * System.out.println(item); }
+         */
         
         /*
          * items[3].addCrafted(7, 0); items[7].addCrafted(2, 0); items[9].addCrafted(7,
@@ -195,7 +195,10 @@ public class Solver
         items[48].addObservedDay(Insufficient,None);
         items[49].addObservedDay(Insufficient,None);
         
-
+        /*
+         * System.out.println("\nDay2: "); for(ItemInfo item : items) {
+         * System.out.println(item); }
+         */
         
         items[0].addObservedDay(Insufficient,Increasing);
         items[1].addObservedDay(Sufficient,Decreasing);
@@ -248,7 +251,10 @@ public class Solver
         items[48].addObservedDay(Sufficient,Plummeting);
         items[49].addObservedDay(Sufficient,Plummeting);
         
-
+        /*
+         * System.out.println("\nDay3: "); for(ItemInfo item : items) {
+         * System.out.println(item); }
+         */
         
         items[0].addObservedDay(Insufficient,Increasing);
         items[1].addObservedDay(Sufficient,Increasing);
@@ -302,22 +308,25 @@ public class Solver
         items[49].addObservedDay(Sufficient,Increasing);
         
         
-        System.out.println("\nDay4: ");
-        for(ItemInfo item : items)
-        {
-            System.out.println(item);
-        }
+        /*
+         * System.out.println("\nDay4: "); for(ItemInfo item : items) {
+         * System.out.println(item); }
+         */
         
         int groove = 0;
         CycleSchedule day2 = new CycleSchedule(1, groove);
-        day2.setForAllWorkshops(Arrays.asList(items[Butter.ordinal()], items[TomatoRelish.ordinal()], items[Jam.ordinal()],
-                items[TomatoRelish.ordinal()], items[Jam.ordinal()]));
+        day2.setForAllWorkshops(Arrays.asList(Butter,TomatoRelish,Jam,TomatoRelish,Jam));
         
         System.out.println("day 2 total: "+day2.getValue()+" material cost: "+day2.getMaterialCost());
         
         day2.numCrafted.forEach((k,v)->{items[k.ordinal()].addCrafted(v, 1);});
         groove += day2.endingGroove;
-
+        
+        
+        CycleSchedule day6 = new CycleSchedule(5, 30);
+        day6.setForAllWorkshops(Arrays.asList(Crook, SpruceRoundShield, Crook));
+        day6.setWorkshop(0, Arrays.asList(Brush,Crook,Brush,Crook));
+        System.out.println("day 6 total: "+day6.getValue()+" material cost: "+day6.getMaterialCost());
         
     }
     

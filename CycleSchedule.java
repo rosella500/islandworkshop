@@ -17,14 +17,14 @@ public class CycleSchedule
         startingGroove = groove;
     }
     
-    public void setForAllWorkshops(List<ItemInfo> crafts)
+    public void setForAllWorkshops(List<Item> crafts)
     {
         workshops[0] = new WorkshopSchedule(crafts);
         workshops[1] = new WorkshopSchedule(crafts);
         workshops[2] = new WorkshopSchedule(crafts);
     }
     
-    public void setWorkshop(int index, ArrayList<ItemInfo> crafts)
+    public void setWorkshop(int index, List<Item> crafts)
     {
         if(workshops[index] == null)
             workshops[index] = new WorkshopSchedule(crafts);
@@ -54,7 +54,7 @@ public class CycleSchedule
                    boolean efficient = workshops[i].currentCraftIsEfficient();
                    craftsToAdd.put(completedCraft.item, craftsToAdd.getOrDefault(completedCraft.item, 0) + (efficient? 2 : 1));
                    
-                   System.out.println("Found completed "+completedCraft.item+" at hour "+hour+". Efficient? "+efficient);
+                   //System.out.println("Found completed "+completedCraft.item+" at hour "+hour+". Efficient? "+efficient);
                    
                    totalCowries += workshops[i].getValueForCurrent(day, numCrafted.getOrDefault(completedCraft.item, 0), currentGroove, efficient);
                    

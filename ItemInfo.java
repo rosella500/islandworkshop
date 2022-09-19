@@ -9,7 +9,7 @@ import static islandworkshop.PeakCycle.*;
 
 public class ItemInfo
 {
-    final static int[][] SUPPLY_PATH = {{0, 0,0}, //Unknown
+    private static final int[][] SUPPLY_PATH = {{0, 0}, //Unknown
             {-4, -4, 10, 0, 0, 0, 0}, //Cycle2Weak 
             {-8, -7, 15, 0, 0, 0, 0}, //Cycle2Strong
             {0, -4, -4, 10, 0, 0, 0}, //Cycle3Weak
@@ -26,6 +26,10 @@ public class ItemInfo
             {0, 0, 0,-4,-4}, //5
             {0, -1, 8, 0} //6/7
             };
+    
+    private static final PeakCycle[][] PEAKS_TO_CHECK = {{Cycle3Weak, Cycle3Strong, Cycle67, Cycle45}, //Day2
+            {Cycle4Weak, Cycle4Strong, Cycle6Weak, Cycle5, Cycle67}, //Day3
+            {Cycle5Weak, Cycle5Strong, Cycle6Strong, Cycle7Weak, Cycle7Strong}}; //Day4
     
     //Constant info
     Item item;
@@ -66,10 +70,6 @@ public class ItemInfo
                 (other.category2!=Invalid && (other.category2 == category1 || other.category2 == category2)));
     }
     
-    private static final PeakCycle[][] PEAKS_TO_CHECK = {{Cycle3Weak, Cycle3Strong, Cycle67, Cycle45}, //Day2
-            {Cycle4Weak, Cycle4Strong, Cycle6Weak, Cycle5, Cycle67}, //Day3
-            {Cycle5Weak, Cycle5Strong, Cycle6Strong, Cycle7Weak, Cycle7Strong}}; //Day4
-    
     //Set start-of-week data
     public void setInitialData(Popularity pop, PeakCycle prevPeak, Supply startingSupply, DemandShift startingDemand)
     {
@@ -80,12 +80,6 @@ public class ItemInfo
         observedSupplies = new ArrayList<ObservedSupply>();
         observedSupplies.add(new ObservedSupply(startingSupply, startingDemand));   
         setPeakBasedOnObserved();
-    }
-    
-    
-    public String toString()
-    {
-        return item+", "+peak;
     }
     
     public void addObservedDay(Supply supply, DemandShift demand)
@@ -236,5 +230,10 @@ public class ItemInfo
         if(diff < 6)
             return Decreasing;
         return Plummeting;
+    }
+    
+    public String toString()
+    {
+        return item+", "+peak;
     }
 }

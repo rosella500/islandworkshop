@@ -9,15 +9,17 @@ public class WorkshopSchedule
     public int currentIndex = 0; //Used for cycle scheduler to figure out crafts stuff
     
     
-    public WorkshopSchedule(List<ItemInfo> crafts)
+    public WorkshopSchedule(List<Item> crafts)
     {
         completionHours = new ArrayList<Integer>();
+        this.crafts = new ArrayList<ItemInfo>();
         setCrafts(crafts);
     }
     
-    public void setCrafts(List<ItemInfo> newCrafts)
+    public void setCrafts(List<Item> newCrafts)
     {
-        crafts = newCrafts;
+        crafts.clear();
+        newCrafts.forEach(item -> {crafts.add(Solver.items[item.ordinal()]);});
         int currentHour = 0;
         completionHours.clear();
         for(ItemInfo craft : crafts)
@@ -45,6 +47,9 @@ public class WorkshopSchedule
     public int getValueForCurrent(int day, int craftedSoFar, int currentGroove, boolean isEfficient)
     {
         ItemInfo craft = crafts.get(currentIndex);
+        if(currentGroove > Solver.GROOVE_MAX)
+            currentGroove = Solver.GROOVE_MAX;
+        
         int baseValue = (int) (craft.baseValue * Solver.WORKSHOP_BONUS * (1.0+currentGroove/100.0));
         int supply = craft.getSupplyOnDay(day) + craftedSoFar;
         int adjustedValue = (int) (baseValue * craft.popularity.multiplier * ItemInfo.getSupplyBucket(supply).multiplier);
@@ -52,10 +57,11 @@ public class WorkshopSchedule
         if(isEfficient)
             adjustedValue *= 2;
         
-        //System.out.println(craft.name+" is worth "+adjustedValue +" with "+currentGroove+" groove at "+ItemInfo.getSupplyBucket(craft.getSupplyOnDay(day) + craftedSoFar)+ " supply ("+supply+") and "+craft.popularity+" popularity");
+        System.out.println(craft.item+" is worth "+adjustedValue + " at hour "+completionHours.get(currentIndex) +" with "+currentGroove+" groove at "+ItemInfo.getSupplyBucket(craft.getSupplyOnDay(day) + craftedSoFar)+ " supply ("+supply+") and "+craft.popularity+" popularity");
         
         return adjustedValue;
     }
+    
     public boolean currentCraftIsEfficient()
     {
         if(currentIndex > 0 && currentIndex < crafts.size())
