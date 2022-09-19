@@ -39,6 +39,9 @@ public class WorkshopSchedule
     
     public boolean currentCraftCompleted(int hour)
     {
+        if(currentIndex >= crafts.size())
+            return false;
+        
         if(completionHours.get(currentIndex) == hour)
             return true;
         return false;
@@ -46,10 +49,7 @@ public class WorkshopSchedule
     
     public int getValueForCurrent(int day, int craftedSoFar, int currentGroove, boolean isEfficient)
     {
-        ItemInfo craft = crafts.get(currentIndex);
-        if(currentGroove > Solver.GROOVE_MAX)
-            currentGroove = Solver.GROOVE_MAX;
-        
+        ItemInfo craft = crafts.get(currentIndex);        
         int baseValue = (int) (craft.baseValue * Solver.WORKSHOP_BONUS * (1.0+currentGroove/100.0));
         int supply = craft.getSupplyOnDay(day) + craftedSoFar;
         int adjustedValue = (int) (baseValue * craft.popularity.multiplier * ItemInfo.getSupplyBucket(supply).multiplier);
@@ -57,7 +57,7 @@ public class WorkshopSchedule
         if(isEfficient)
             adjustedValue *= 2;
         if(Solver.verboseLogging)
-            System.out.println(craft.item+" is worth "+adjustedValue + " at hour "+completionHours.get(currentIndex) +" with "+currentGroove+" groove at "+ItemInfo.getSupplyBucket(craft.getSupplyOnDay(day) + craftedSoFar)+ " supply ("+supply+") and "+craft.popularity+" popularity");
+            System.out.println(craft.item+" is worth "+adjustedValue +" with "+currentGroove+" groove at "+ItemInfo.getSupplyBucket(craft.getSupplyOnDay(day) + craftedSoFar)+ " supply ("+supply+") and "+craft.popularity+" popularity");
         
         return adjustedValue;
     }

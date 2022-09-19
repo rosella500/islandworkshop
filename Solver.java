@@ -1,4 +1,5 @@
 package islandworkshop;
+
 import static islandworkshop.ItemCategory.*;
 import static islandworkshop.RareMaterial.*;
 import static islandworkshop.Supply.*;
@@ -147,227 +148,241 @@ public class Solver
          * System.out.println(items[9]); System.out.println(items[25]);
          * System.out.println(items[38]);
          */
-        
-        
-        
-        items[0].addObservedDay(Sufficient,None);
-        items[1].addObservedDay(Insufficient,None);
-        items[2].addObservedDay(Insufficient,None);
-        items[3].addObservedDay(Insufficient,None);
-        items[4].addObservedDay(Insufficient,None);
-        items[5].addObservedDay(Insufficient,Increasing);
-        items[6].addObservedDay(Insufficient,None);
-        items[7].addObservedDay(Nonexistent,Skyrocketing);
-        items[8].addObservedDay(Insufficient,None);
-        items[9].addObservedDay(Sufficient,None);
-        items[10].addObservedDay(Sufficient,None);
-        items[11].addObservedDay(Insufficient,Skyrocketing);
-        items[12].addObservedDay(Sufficient,None);
-        items[13].addObservedDay(Insufficient,Increasing);
-        items[14].addObservedDay(Sufficient,None);
-        items[15].addObservedDay(Insufficient,None);
-        items[16].addObservedDay(Insufficient,Increasing);
-        items[17].addObservedDay(Insufficient,Increasing);
-        items[18].addObservedDay(Insufficient,None);
-        items[19].addObservedDay(Sufficient,None);
-        items[20].addObservedDay(Insufficient,None);
-        items[21].addObservedDay(Insufficient,None);
-        items[22].addObservedDay(Insufficient,Increasing);
-        items[23].addObservedDay(Insufficient,Increasing);
-        items[24].addObservedDay(Insufficient,Increasing);
-        items[25].addObservedDay(Insufficient,Skyrocketing);
-        items[26].addObservedDay(Insufficient,None);
-        items[27].addObservedDay(Insufficient,None);
-        items[28].addObservedDay(Sufficient,None);
-        items[29].addObservedDay(Sufficient,None);
-        items[30].addObservedDay(Insufficient,None);
-        items[31].addObservedDay(Insufficient,Increasing);
-        items[32].addObservedDay(Insufficient,None);
-        items[33].addObservedDay(Insufficient,None);
-        items[34].addObservedDay(Nonexistent,Skyrocketing);
-        items[35].addObservedDay(Nonexistent,Skyrocketing);
-        items[36].addObservedDay(Sufficient,None);
-        items[37].addObservedDay(Sufficient,None);
-        items[38].addObservedDay(Nonexistent,Skyrocketing);
-        items[39].addObservedDay(Sufficient,None);
-        items[40].addObservedDay(Sufficient,None);
-        items[41].addObservedDay(Insufficient,Skyrocketing);
-        items[42].addObservedDay(Sufficient,None);
-        items[43].addObservedDay(Sufficient,None);
-        items[44].addObservedDay(Sufficient,None);
-        items[45].addObservedDay(Insufficient,None);
-        items[46].addObservedDay(Insufficient,Skyrocketing);
-        items[47].addObservedDay(Sufficient,None);
-        items[48].addObservedDay(Insufficient,None);
-        items[49].addObservedDay(Insufficient,None);
-        
+
+        items[0].addObservedDay(Sufficient, None);
+        items[1].addObservedDay(Insufficient, None);
+        items[2].addObservedDay(Insufficient, None);
+        items[3].addObservedDay(Insufficient, None);
+        items[4].addObservedDay(Insufficient, None);
+        items[5].addObservedDay(Insufficient, Increasing);
+        items[6].addObservedDay(Insufficient, None);
+        items[7].addObservedDay(Nonexistent, Skyrocketing);
+        items[8].addObservedDay(Insufficient, None);
+        items[9].addObservedDay(Sufficient, None);
+        items[10].addObservedDay(Sufficient, None);
+        items[11].addObservedDay(Insufficient, Skyrocketing);
+        items[12].addObservedDay(Sufficient, None);
+        items[13].addObservedDay(Insufficient, Increasing);
+        items[14].addObservedDay(Sufficient, None);
+        items[15].addObservedDay(Insufficient, None);
+        items[16].addObservedDay(Insufficient, Increasing);
+        items[17].addObservedDay(Insufficient, Increasing);
+        items[18].addObservedDay(Insufficient, None);
+        items[19].addObservedDay(Sufficient, None);
+        items[20].addObservedDay(Insufficient, None);
+        items[21].addObservedDay(Insufficient, None);
+        items[22].addObservedDay(Insufficient, Increasing);
+        items[23].addObservedDay(Insufficient, Increasing);
+        items[24].addObservedDay(Insufficient, Increasing);
+        items[25].addObservedDay(Insufficient, Skyrocketing);
+        items[26].addObservedDay(Insufficient, None);
+        items[27].addObservedDay(Insufficient, None);
+        items[28].addObservedDay(Sufficient, None);
+        items[29].addObservedDay(Sufficient, None);
+        items[30].addObservedDay(Insufficient, None);
+        items[31].addObservedDay(Insufficient, Increasing);
+        items[32].addObservedDay(Insufficient, None);
+        items[33].addObservedDay(Insufficient, None);
+        items[34].addObservedDay(Nonexistent, Skyrocketing);
+        items[35].addObservedDay(Nonexistent, Skyrocketing);
+        items[36].addObservedDay(Sufficient, None);
+        items[37].addObservedDay(Sufficient, None);
+        items[38].addObservedDay(Nonexistent, Skyrocketing);
+        items[39].addObservedDay(Sufficient, None);
+        items[40].addObservedDay(Sufficient, None);
+        items[41].addObservedDay(Insufficient, Skyrocketing);
+        items[42].addObservedDay(Sufficient, None);
+        items[43].addObservedDay(Sufficient, None);
+        items[44].addObservedDay(Sufficient, None);
+        items[45].addObservedDay(Insufficient, None);
+        items[46].addObservedDay(Insufficient, Skyrocketing);
+        items[47].addObservedDay(Sufficient, None);
+        items[48].addObservedDay(Insufficient, None);
+        items[49].addObservedDay(Insufficient, None);
+
         /*
          * System.out.println("\nDay2: "); for(ItemInfo item : items) {
          * System.out.println(item); }
          */
-        
-        items[0].addObservedDay(Insufficient,Increasing);
-        items[1].addObservedDay(Sufficient,Decreasing);
-        items[2].addObservedDay(Sufficient,Plummeting);
-        items[3].addObservedDay(Sufficient,Decreasing);
-        items[4].addObservedDay(Sufficient,Plummeting);
-        items[5].addObservedDay(Sufficient,Plummeting);
-        items[6].addObservedDay(Sufficient,Plummeting);
-        items[7].addObservedDay(Sufficient,Plummeting);
-        items[8].addObservedDay(Sufficient,Plummeting);
-        items[9].addObservedDay(Sufficient,None);
-        items[10].addObservedDay(Insufficient,Increasing);
-        items[11].addObservedDay(Nonexistent,Skyrocketing);
-        items[12].addObservedDay(Insufficient,Skyrocketing);
-        items[13].addObservedDay(Insufficient,Increasing);
-        items[14].addObservedDay(Sufficient,None);
-        items[15].addObservedDay(Sufficient,Plummeting);
-        items[16].addObservedDay(Sufficient,Plummeting);
-        items[17].addObservedDay(Sufficient,Plummeting);
-        items[18].addObservedDay(Sufficient,Plummeting);
-        items[19].addObservedDay(Insufficient,Increasing);
-        items[20].addObservedDay(Sufficient,Plummeting);
-        items[21].addObservedDay(Sufficient,Plummeting);
-        items[22].addObservedDay(Insufficient,Increasing);
-        items[23].addObservedDay(Insufficient,Increasing);
-        items[24].addObservedDay(Insufficient,Increasing);
-        items[25].addObservedDay(Nonexistent,Skyrocketing);
-        items[26].addObservedDay(Sufficient,Plummeting);
-        items[27].addObservedDay(Sufficient,Decreasing);
-        items[28].addObservedDay(Sufficient,None);
-        items[29].addObservedDay(Insufficient,Increasing);
-        items[30].addObservedDay(Sufficient,Plummeting);
-        items[31].addObservedDay(Sufficient,Plummeting);
-        items[32].addObservedDay(Sufficient,Plummeting);
-        items[33].addObservedDay(Sufficient,Plummeting);
-        items[34].addObservedDay(Surplus,Plummeting);
-        items[35].addObservedDay(Surplus,Plummeting);
-        items[36].addObservedDay(Insufficient,Skyrocketing);
-        items[37].addObservedDay(Sufficient,None);
-        items[38].addObservedDay(Sufficient,Plummeting);
-        items[39].addObservedDay(Sufficient,None);
-        items[40].addObservedDay(Insufficient,Skyrocketing);
-        items[41].addObservedDay(Nonexistent,Skyrocketing);
-        items[42].addObservedDay(Sufficient,None);
-        items[43].addObservedDay(Sufficient,None);
-        items[44].addObservedDay(Sufficient,None);
-        items[45].addObservedDay(Sufficient,Decreasing);
-        items[46].addObservedDay(Nonexistent,Skyrocketing);
-        items[47].addObservedDay(Insufficient,Skyrocketing);
-        items[48].addObservedDay(Sufficient,Plummeting);
-        items[49].addObservedDay(Sufficient,Plummeting);
-        
+
+        items[0].addObservedDay(Insufficient, Increasing);
+        items[1].addObservedDay(Sufficient, Decreasing);
+        items[2].addObservedDay(Sufficient, Plummeting);
+        items[3].addObservedDay(Sufficient, Decreasing);
+        items[4].addObservedDay(Sufficient, Plummeting);
+        items[5].addObservedDay(Sufficient, Plummeting);
+        items[6].addObservedDay(Sufficient, Plummeting);
+        items[7].addObservedDay(Sufficient, Plummeting);
+        items[8].addObservedDay(Sufficient, Plummeting);
+        items[9].addObservedDay(Sufficient, None);
+        items[10].addObservedDay(Insufficient, Increasing);
+        items[11].addObservedDay(Nonexistent, Skyrocketing);
+        items[12].addObservedDay(Insufficient, Skyrocketing);
+        items[13].addObservedDay(Insufficient, Increasing);
+        items[14].addObservedDay(Sufficient, None);
+        items[15].addObservedDay(Sufficient, Plummeting);
+        items[16].addObservedDay(Sufficient, Plummeting);
+        items[17].addObservedDay(Sufficient, Plummeting);
+        items[18].addObservedDay(Sufficient, Plummeting);
+        items[19].addObservedDay(Insufficient, Increasing);
+        items[20].addObservedDay(Sufficient, Plummeting);
+        items[21].addObservedDay(Sufficient, Plummeting);
+        items[22].addObservedDay(Insufficient, Increasing);
+        items[23].addObservedDay(Insufficient, Increasing);
+        items[24].addObservedDay(Insufficient, Increasing);
+        items[25].addObservedDay(Nonexistent, Skyrocketing);
+        items[26].addObservedDay(Sufficient, Plummeting);
+        items[27].addObservedDay(Sufficient, Decreasing);
+        items[28].addObservedDay(Sufficient, None);
+        items[29].addObservedDay(Insufficient, Increasing);
+        items[30].addObservedDay(Sufficient, Plummeting);
+        items[31].addObservedDay(Sufficient, Plummeting);
+        items[32].addObservedDay(Sufficient, Plummeting);
+        items[33].addObservedDay(Sufficient, Plummeting);
+        items[34].addObservedDay(Surplus, Plummeting);
+        items[35].addObservedDay(Surplus, Plummeting);
+        items[36].addObservedDay(Insufficient, Skyrocketing);
+        items[37].addObservedDay(Sufficient, None);
+        items[38].addObservedDay(Sufficient, Plummeting);
+        items[39].addObservedDay(Sufficient, None);
+        items[40].addObservedDay(Insufficient, Skyrocketing);
+        items[41].addObservedDay(Nonexistent, Skyrocketing);
+        items[42].addObservedDay(Sufficient, None);
+        items[43].addObservedDay(Sufficient, None);
+        items[44].addObservedDay(Sufficient, None);
+        items[45].addObservedDay(Sufficient, Decreasing);
+        items[46].addObservedDay(Nonexistent, Skyrocketing);
+        items[47].addObservedDay(Insufficient, Skyrocketing);
+        items[48].addObservedDay(Sufficient, Plummeting);
+        items[49].addObservedDay(Sufficient, Plummeting);
+
         /*
          * System.out.println("\nDay3: "); for(ItemInfo item : items) {
          * System.out.println(item); }
          */
-        
-        items[0].addObservedDay(Insufficient,Increasing);
-        items[1].addObservedDay(Sufficient,Increasing);
-        items[2].addObservedDay(Sufficient,Increasing);
-        items[3].addObservedDay(Sufficient,Increasing);
-        items[4].addObservedDay(Sufficient,None);
-        items[5].addObservedDay(Sufficient,None);
-        items[6].addObservedDay(Sufficient,None);
-        items[7].addObservedDay(Sufficient,None);
-        items[8].addObservedDay(Sufficient,Increasing);
-        items[9].addObservedDay(Insufficient,Increasing);
-        items[10].addObservedDay(Insufficient,Increasing);
-        items[11].addObservedDay(Sufficient,Plummeting);
-        items[12].addObservedDay(Nonexistent,Skyrocketing);
-        items[13].addObservedDay(Sufficient,Plummeting);
-        items[14].addObservedDay(Insufficient,Skyrocketing);
-        items[15].addObservedDay(Sufficient,Skyrocketing);
-        items[16].addObservedDay(Sufficient,None);
-        items[17].addObservedDay(Sufficient,None);
-        items[18].addObservedDay(Sufficient,Skyrocketing);
-        items[19].addObservedDay(Insufficient,Increasing);
-        items[20].addObservedDay(Sufficient,None);
-        items[21].addObservedDay(Sufficient,Skyrocketing);
-        items[22].addObservedDay(Sufficient,Plummeting);
-        items[23].addObservedDay(Surplus,Plummeting);
-        items[24].addObservedDay(Sufficient,Plummeting);
-        items[25].addObservedDay(Sufficient,Plummeting);
-        items[26].addObservedDay(Sufficient,Skyrocketing);
-        items[27].addObservedDay(Sufficient,Increasing);
-        items[28].addObservedDay(Insufficient,Skyrocketing);
-        items[29].addObservedDay(Insufficient,Increasing);
-        items[30].addObservedDay(Sufficient,Increasing);
-        items[31].addObservedDay(Sufficient,None);
-        items[32].addObservedDay(Sufficient,None);
-        items[33].addObservedDay(Sufficient,Increasing);
-        items[34].addObservedDay(Surplus,None);
-        items[35].addObservedDay(Surplus,None);
-        items[36].addObservedDay(Nonexistent,Skyrocketing);
-        items[37].addObservedDay(Insufficient,Increasing);
-        items[38].addObservedDay(Sufficient,None);
-        items[39].addObservedDay(Insufficient,Increasing);
-        items[40].addObservedDay(Nonexistent,Skyrocketing);
-        items[41].addObservedDay(Sufficient,Plummeting);
-        items[42].addObservedDay(Insufficient,Skyrocketing);
-        items[43].addObservedDay(Insufficient,Skyrocketing);
-        items[44].addObservedDay(Insufficient,Increasing);
-        items[45].addObservedDay(Sufficient,Increasing);
-        items[46].addObservedDay(Surplus,Plummeting);
-        items[47].addObservedDay(Nonexistent,Skyrocketing);
-        items[48].addObservedDay(Sufficient,None);
-        items[49].addObservedDay(Sufficient,Increasing);
-        
-        
+
+        items[0].addObservedDay(Insufficient, Increasing);
+        items[1].addObservedDay(Sufficient, Increasing);
+        items[2].addObservedDay(Sufficient, Increasing);
+        items[3].addObservedDay(Sufficient, Increasing);
+        items[4].addObservedDay(Sufficient, None);
+        items[5].addObservedDay(Sufficient, None);
+        items[6].addObservedDay(Sufficient, None);
+        items[7].addObservedDay(Sufficient, None);
+        items[8].addObservedDay(Sufficient, Increasing);
+        items[9].addObservedDay(Insufficient, Increasing);
+        items[10].addObservedDay(Insufficient, Increasing);
+        items[11].addObservedDay(Sufficient, Plummeting);
+        items[12].addObservedDay(Nonexistent, Skyrocketing);
+        items[13].addObservedDay(Sufficient, Plummeting);
+        items[14].addObservedDay(Insufficient, Skyrocketing);
+        items[15].addObservedDay(Sufficient, Skyrocketing);
+        items[16].addObservedDay(Sufficient, None);
+        items[17].addObservedDay(Sufficient, None);
+        items[18].addObservedDay(Sufficient, Skyrocketing);
+        items[19].addObservedDay(Insufficient, Increasing);
+        items[20].addObservedDay(Sufficient, None);
+        items[21].addObservedDay(Sufficient, Skyrocketing);
+        items[22].addObservedDay(Sufficient, Plummeting);
+        items[23].addObservedDay(Surplus, Plummeting);
+        items[24].addObservedDay(Sufficient, Plummeting);
+        items[25].addObservedDay(Sufficient, Plummeting);
+        items[26].addObservedDay(Sufficient, Skyrocketing);
+        items[27].addObservedDay(Sufficient, Increasing);
+        items[28].addObservedDay(Insufficient, Skyrocketing);
+        items[29].addObservedDay(Insufficient, Increasing);
+        items[30].addObservedDay(Sufficient, Increasing);
+        items[31].addObservedDay(Sufficient, None);
+        items[32].addObservedDay(Sufficient, None);
+        items[33].addObservedDay(Sufficient, Increasing);
+        items[34].addObservedDay(Surplus, None);
+        items[35].addObservedDay(Surplus, None);
+        items[36].addObservedDay(Nonexistent, Skyrocketing);
+        items[37].addObservedDay(Insufficient, Increasing);
+        items[38].addObservedDay(Sufficient, None);
+        items[39].addObservedDay(Insufficient, Increasing);
+        items[40].addObservedDay(Nonexistent, Skyrocketing);
+        items[41].addObservedDay(Sufficient, Plummeting);
+        items[42].addObservedDay(Insufficient, Skyrocketing);
+        items[43].addObservedDay(Insufficient, Skyrocketing);
+        items[44].addObservedDay(Insufficient, Increasing);
+        items[45].addObservedDay(Sufficient, Increasing);
+        items[46].addObservedDay(Surplus, Plummeting);
+        items[47].addObservedDay(Nonexistent, Skyrocketing);
+        items[48].addObservedDay(Sufficient, None);
+        items[49].addObservedDay(Sufficient, Increasing);
+
         /*
          * System.out.println("\nDay4: "); for(ItemInfo item : items) {
          * System.out.println(item); }
          */
-        
-        addDay(Arrays.asList(Butter,TomatoRelish,Jam,TomatoRelish,Jam), 1);
-        addDay(Arrays.asList(CulinaryKnife,GardenScythe,SilverEarCuffs,GardenScythe),2);
-        addDay(Arrays.asList(SheepfluffRug, Hora, SheepfluffRug, Hora),4);
-        addDay(Arrays.asList(Brush, Crook, Earrings, ScaleFingers),5);
 
-        //addDay(Arrays.asList(Crook,SpruceRoundShield,Crook),5);
-        addDay(Arrays.asList(BoiledEgg, ScaleFingers, BoiledEgg, ScaleFingers),6);
-        System.out.println("Week total: "+totalGross+" ("+totalNet+")");
         
+          addDay(Arrays.asList(Butter,TomatoRelish,Jam,TomatoRelish,Jam), 1);
+          addDay(Arrays.asList(CulinaryKnife,GardenScythe,SilverEarCuffs,GardenScythe), 2); 
+          //addDay(Arrays.asList(BoiledEgg, ParsnipSalad, OnionSoup, ParsnipSalad, OnionSoup),3);
+          addDay(Arrays.asList(SheepfluffRug, Hora, SheepfluffRug, Hora),4);
+          addDay(Arrays.asList(Crook,SpruceRoundShield,Crook),5);
+          addDay(Arrays.asList(BoiledEgg, ScaleFingers, BoiledEgg, ScaleFingers),6);
+         
+
+        System.out.println("Week total: " + totalGross + " (" + totalNet + ")");
+
     }
-    
+
     public static void addDay(List<Item> crafts, int day)
     {
+        addDay(crafts, crafts, crafts, day);
+    }
+
+    public static void addDay(List<Item> crafts0, List<Item> crafts1, List<Item> crafts2, int day)
+    {
         CycleSchedule schedule = new CycleSchedule(day, groove);
-        schedule.setForAllWorkshops(crafts);
+        schedule.setWorkshop(0, crafts0);
+        schedule.setWorkshop(1, crafts1);
+        schedule.setWorkshop(2, crafts2);
         int gross = schedule.getValue();
         totalGross += gross;
-        
+
         int net = gross - schedule.getMaterialCost();
         totalNet += net;
-        System.out.println("day "+(day+1)+" total: "+gross+" ("+net+")");
-        
-        schedule.numCrafted.forEach((k,v)->{items[k.ordinal()].addCrafted(v, day);});
+        int startingGroove = groove;
         groove = schedule.endingGroove;
+        
+        schedule.startingGroove = 0;
+        boolean oldVerbose = verboseLogging;
+        verboseLogging = false;
+        System.out.println("day " + (day + 1) + " total, "+startingGroove+" starting groove: " + gross +"(" + net + "). With 0 groove: "+schedule.getValue());
+        verboseLogging = oldVerbose;
+        schedule.numCrafted.forEach((k, v) ->
+        {
+            items[k.ordinal()].addCrafted(v, day);
+        });
     }
-    
+
     public static Supply getSupplyBucket(int supply)
     {
-        if(supply < -8)
+        if (supply < -8)
             return Supply.Nonexistent;
-        if(supply < 0)
+        if (supply < 0)
             return Supply.Insufficient;
-        if(supply < 8)
+        if (supply < 8)
             return Supply.Sufficient;
-        if(supply < 16)
+        if (supply < 16)
             return Supply.Surplus;
         return Supply.Overflowing;
     }
-    
+
     public static DemandShift getDemandShift(int prevSupply, int newSupply)
     {
         int diff = newSupply - prevSupply;
-        if(diff < -5)
+        if (diff < -5)
             return DemandShift.Skyrocketing;
-        if(diff < -1)
+        if (diff < -1)
             return DemandShift.Increasing;
-        if(diff < 2)
+        if (diff < 2)
             return DemandShift.None;
-        if(diff < 6)
+        if (diff < 6)
             return DemandShift.Decreasing;
         return DemandShift.Plummeting;
     }

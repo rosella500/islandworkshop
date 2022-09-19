@@ -45,6 +45,7 @@ public class CycleSchedule
        {
            HashMap<Item, Integer> craftsToAdd = new HashMap<Item,Integer>();
            int grooveToAdd = 0;
+           int cowriesThisHour = 0;
            for(int i=0; i<workshops.length;i++)
            {
                if(workshops[i].currentCraftCompleted(hour))
@@ -55,15 +56,20 @@ public class CycleSchedule
                    
                    //System.out.println("Found completed "+completedCraft.item+" at hour "+hour+". Efficient? "+efficient);
                    
-                   totalCowries += workshops[i].getValueForCurrent(day, numCrafted.getOrDefault(completedCraft.item, 0), currentGroove, efficient);
+                   cowriesThisHour += workshops[i].getValueForCurrent(day, numCrafted.getOrDefault(completedCraft.item, 0), currentGroove, efficient);
                    
                    workshops[i].currentIndex++;
                    if(workshops[i].currentCraftIsEfficient())
                        grooveToAdd++;
                }
            }
+           if(Solver.verboseLogging && cowriesThisHour>0)
+               System.out.println("hour "+hour+": "+cowriesThisHour);
            
+           totalCowries += cowriesThisHour;
            currentGroove += grooveToAdd;
+           if(currentGroove > Solver.GROOVE_MAX)
+               currentGroove = Solver.GROOVE_MAX;
            craftsToAdd.forEach((k, v) ->  {numCrafted.put(k, numCrafted.getOrDefault(k, 0) + v); });
            
        }

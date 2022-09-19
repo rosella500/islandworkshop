@@ -152,7 +152,8 @@ public class ItemInfo
             for(int day=1; day < daysToCheck; day++)
             {
                 ObservedSupply observedToday = observedSupplies.get(day);
-                //System.out.println("Observed: "+observedToday);
+                if(Solver.verboseLogging)
+                  System.out.println("Observed: "+observedToday);
                 int crafted = getCraftedBeforeDay(day);
                 boolean found = false;
                 
@@ -163,10 +164,13 @@ public class ItemInfo
                     int expectedSupply = getSupplyOnDayByPeak(potentialPeak, day);
                     ObservedSupply expectedObservation = new ObservedSupply(getSupplyBucket(crafted + expectedSupply), 
                             getDemandShift(expectedPrevious, expectedSupply));
-                    //System.out.println("Checking against peak "+potentialPeak+", expecting: "+expectedObservation);
+                    if(Solver.verboseLogging)
+                      System.out.println("Checking against peak "+potentialPeak+", expecting: "+expectedObservation);
                     
                     if(observedToday.equals(expectedObservation))
                     {
+                        if(Solver.verboseLogging)
+                            System.out.println("match found!");
                         peak = potentialPeak;
                         found = true;
                         if(peak.isTerminal)
