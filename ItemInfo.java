@@ -9,7 +9,8 @@ import static islandworkshop.PeakCycle.*;
 
 public class ItemInfo
 {
-    private static final int[][] SUPPLY_PATH = {{0, 0}, //Unknown
+    //Contains exact supply values for concrete paths and worst-case supply values for tentative ones
+    private static final int[][] SUPPLY_PATH = {{0, 0, 0, 0, 0, 0, 0}, //Unknown
             {-4, -4, 10, 0, 0, 0, 0}, //Cycle2Weak 
             {-8, -7, 15, 0, 0, 0, 0}, //Cycle2Strong
             {0, -4, -4, 10, 0, 0, 0}, //Cycle3Weak
@@ -22,9 +23,9 @@ public class ItemInfo
             {0, -1, 8, -7, -8, -7, 15}, //6Strong
             {0, -1, 8, -3, -4, -4, -4}, //7Weak
             {0, -1, 8, 0, -7, -8, -7}, //7Strong
-            {0, 0, 0}, //4/5
-            {0, 0, 0,-4,-4}, //5
-            {0, -1, 8, 0} //6/7
+            {0, 0, 0, 0, -4, 4, 0}, //4/5
+            {0, 0, 0, -4, -4, 10, 0}, //5
+            {0, -1, 8, 0, -7, -4, 0} //6/7
             };
     
     private static final PeakCycle[][] PEAKS_TO_CHECK = {{Cycle3Weak, Cycle3Strong, Cycle67, Cycle45}, //Day2
@@ -152,7 +153,7 @@ public class ItemInfo
             for(int day=1; day < daysToCheck; day++)
             {
                 ObservedSupply observedToday = observedSupplies.get(day);
-                if(Solver.verboseLogging)
+                if(Solver.verboseCalculatorLogging)
                   System.out.println("Observed: "+observedToday);
                 int crafted = getCraftedBeforeDay(day);
                 boolean found = false;
@@ -164,12 +165,12 @@ public class ItemInfo
                     int expectedSupply = getSupplyOnDayByPeak(potentialPeak, day);
                     ObservedSupply expectedObservation = new ObservedSupply(getSupplyBucket(crafted + expectedSupply), 
                             getDemandShift(expectedPrevious, expectedSupply));
-                    if(Solver.verboseLogging)
+                    if(Solver.verboseCalculatorLogging)
                       System.out.println("Checking against peak "+potentialPeak+", expecting: "+expectedObservation);
                     
                     if(observedToday.equals(expectedObservation))
                     {
-                        if(Solver.verboseLogging)
+                        if(Solver.verboseCalculatorLogging)
                             System.out.println("match found!");
                         peak = potentialPeak;
                         found = true;
@@ -182,6 +183,12 @@ public class ItemInfo
                     System.out.println(item + " does not match any known patterns for day "+(day+1));
             }
         }
+    }
+    
+    public int getValueWithSupply(Supply supply)
+    {
+        int base = (int)(baseValue * Solver.WORKSHOP_BONUS);
+        return (int) (base * supply.multiplier * popularity.multiplier);
     }
     
     public int getSupplyAfterCraft(int day, int newCrafts)
@@ -200,6 +207,40 @@ public class ItemInfo
         
         return supply;
     }
+    
+    public Supply getSupplyBucketOnDay(int day)
+    {
+        return getSupplyBucket(getSupplyOnDay(day));
+    }
+    public Supply getSupplyBucketAfterCraft(int day, int newCrafts)
+    {
+        return getSupplyBucket(getSupplyAfterCraft(day, newCrafts));
+    }
+    
+    public boolean equals(ItemInfo other)
+    {
+        return item == other.item;
+    }
+    
+    public boolean peaksOnOrBeforeDay(int day)
+    {
+        if(peak == Cycle2Weak || peak == Cycle2Strong || peak == Unknown)
+            return day > 0;
+        if (peak == Cycle3Weak || peak == Cycle3Strong)
+            return day > 1;
+        if(peak == Cycle4Weak || peak == Cycle4Strong || peak == Cycle45)
+            return day > 2;
+        if(peak == Cycle5Weak || peak == Cycle5Strong || peak == Cycle5)
+            return day > 3;
+        if(peak == Cycle6Weak || peak == Cycle6Strong || peak == Cycle67)
+            return day > 4;
+        if(peak == Cycle7Weak || peak == Cycle7Strong)
+            return day > 5;
+            
+        //If we don't have a confirmed peak day, then it definitely hasn't passed
+        return false;
+    }
+    
     public static Supply getSupplyBucket(int supply)
     {
         if(supply < -8)

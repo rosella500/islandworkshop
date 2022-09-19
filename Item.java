@@ -50,7 +50,7 @@ public enum Item
     SheepfluffRug("Sheepfluff Rug"),
     GardenScythe("Garden Scythe"),
     Bed("Bed"),
-    ScaleFingers("ScaleFingers"),
+    ScaleFingers("Scale Fingers"),
     Crook("Crook");
     
     private String displayName;

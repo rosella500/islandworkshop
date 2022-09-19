@@ -63,7 +63,7 @@ public class CycleSchedule
                        grooveToAdd++;
                }
            }
-           if(Solver.verboseLogging && cowriesThisHour>0)
+           if(Solver.verboseCalculatorLogging && cowriesThisHour>0)
                System.out.println("hour "+hour+": "+cowriesThisHour);
            
            totalCowries += cowriesThisHour;
@@ -88,6 +88,20 @@ public class CycleSchedule
             cost+=shop.getMaterialCost();
         }
         return cost;
+    }
+    
+    public boolean equals(Object other)
+    {
+        if(other instanceof CycleSchedule)
+        {
+            return workshops.equals(((CycleSchedule)other).workshops);
+        }
+        return false;
+    }
+    
+    public int hashCode()
+    {
+        return workshops.hashCode();
     }
     
 }

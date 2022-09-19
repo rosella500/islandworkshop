@@ -56,7 +56,7 @@ public class WorkshopSchedule
         
         if(isEfficient)
             adjustedValue *= 2;
-        if(Solver.verboseLogging)
+        if(Solver.verboseCalculatorLogging)
             System.out.println(craft.item+" is worth "+adjustedValue +" with "+currentGroove+" groove at "+ItemInfo.getSupplyBucket(craft.getSupplyOnDay(day) + craftedSoFar)+ " supply ("+supply+") and "+craft.popularity+" popularity");
         
         return adjustedValue;
@@ -79,5 +79,22 @@ public class WorkshopSchedule
             cost+=craft.materialValue;
         }
         return cost;
+    }
+    
+    public boolean equals(Object other)
+    {
+        if(other instanceof WorkshopSchedule)
+        {
+            WorkshopSchedule otherWorkshop = (WorkshopSchedule)other;
+            
+            return crafts.equals(otherWorkshop.crafts);
+            
+        }
+        return false;
+    }
+    
+    public int hashCode()
+    {
+        return crafts.hashCode();
     }
 }

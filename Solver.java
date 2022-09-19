@@ -9,11 +9,17 @@ import static islandworkshop.PeakCycle.*;
 import static islandworkshop.Item.*;
 import java.util.List;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.stream.Collectors;
 public class Solver
 {
-    
-    
     final static double WORKSHOP_BONUS = 1.2;
     final static int GROOVE_MAX = 35;
     
@@ -72,10 +78,371 @@ public class Solver
     public static int groove = 0;
     public static int totalGross = 0;
     public static int totalNet = 0;
-    public static boolean verboseLogging = false;
-            
+    public static boolean verboseCalculatorLogging = false;
+    public static boolean verboseSolverLogging = false;
+    
+    //I don't actually use this but I know the moment I get rid of it, I'll need it and have to do this work over again
+    public static final Item[][] itemsByCategory = {{}, 
+            {Sauerkraut, SaltCod, CornFlakes, PickledRadish}, 
+            {Barbut, Tunic, SpruceRoundShield, CavaliersHat, ScaleFingers},
+            {GrilledClam, BakedPumpkin, BoiledEgg, ParsnipSalad, OnionSoup},
+            {SweetPopoto, Caramels, Pie, PumpkinPudding},
+            {CulinaryKnife, Brush, SharkOil, Rope, Item.Horn, PorcelainVase, GardenScythe},
+            {WoodenChair, BrickCounter, BronzeSheep, SheepfluffRug,Bed},
+            {Macuahuitl, Hora, GarnetRapier, IronAxe, Crook},
+            {Potion, Firesand, GrowthFormula, EssentialDraught, VegetableJuice},
+            {Butter, SquidInk, Jam, TomatoRelish},
+            {Necklace, CoralRing, Earrings, SilverEarCuffs, Ribbon, QuartzRing},
+            {Barbut, BronzeSheep, SilverEarCuffs, IronAxe, GardenScythe},
+            {WoodenChair, Necklace, Macuahuitl, Brush, SpruceRoundShield, Crook},
+            {Tunic, Ribbon, Rope, CavaliersHat, Bed},
+            {CulinaryKnife, BoiledEgg, Hora, Earrings, Butter, Item.Horn, SheepfluffRug, ScaleFingers},
+            {GrilledClam, CoralRing, SharkOil, SaltCod, SquidInk, EssentialDraught, Pie},
+            {Firesand, BrickCounter, GarnetRapier, QuartzRing, PorcelainVase}};
+    
+    
+    
+    
     
     public static void main(String[] args)
+    {
+        //TODO: Figure out a better way to enter data that isn't super slow
+        boolean rested = false;
+        
+        setWeek4Initial();
+        rested = setOrRestEarlyWeek(rested, 1) || rested; //Must be in this order or we'll short-circuit out of actually adding the day
+
+        setWeek4Day2();
+        rested = setOrRestEarlyWeek(rested, 2) || rested; //Must be in this order or we'll short-circuit out of actually adding the day
+
+        setWeek4Day3();
+        rested = setOrRestEarlyWeek(rested, 3) || rested; //Must be in this order or we'll short-circuit out of actually adding the day
+
+        setWeek4Day4();
+        
+        Entry<List<Item>,Integer> cycle7Sched = getBestScheduleForCycle(6,null);
+        Set<Item> reservedItems = new HashSet<Item>(cycle7Sched.getKey());
+        Entry<List<Item>,Integer> cycle6Sched = getBestScheduleForCycle(5,reservedItems);
+        reservedItems.addAll(cycle6Sched.getKey());
+        Entry<List<Item>,Integer> cycle5Sched = getBestScheduleForCycle(4,reservedItems);
+        
+        if(!rested)
+        {
+            if(cycle5Sched.getValue() <= cycle6Sched.getValue() && cycle5Sched.getValue() <= cycle7Sched.getValue())
+            {
+                //Double check to make sure that 5 wouldn't be better if it weren't for 6
+                cycle5Sched = getBestScheduleForCycle(4,new HashSet<Item>(cycle7Sched.getKey()));
+                if(cycle5Sched.getValue() <= cycle6Sched.getValue())
+                {
+                    System.out.println("Rest day 5");
+                    addDay(cycle6Sched.getKey(), 5);
+                    addDay(cycle7Sched.getKey(), 6);
+                }
+                else
+                {
+                    //Cycle 5 lives again!!!
+                    addDay(cycle5Sched.getKey(), 4);
+                    System.out.println("Rest day 6");
+                    addDay(cycle7Sched.getKey(), 6);
+                }
+            }
+            else if(cycle6Sched.getValue() <= cycle5Sched.getValue() && cycle6Sched.getValue() <= cycle7Sched.getValue())
+            {
+                //Redo cycle 5 to reserve only cycle 7 items
+                cycle5Sched = getBestScheduleForCycle(4,new HashSet<Item>(cycle7Sched.getKey()));
+                addDay(cycle5Sched.getKey(), 4);
+                System.out.println("Rest day 6");
+                addDay(cycle7Sched.getKey(), 6);
+            }
+            else
+            {
+                //Redo cycles 5 and 6 to give them free-ish reign
+                cycle6Sched = getBestScheduleForCycle(5, new HashSet<Item>());
+                cycle5Sched = getBestScheduleForCycle(4,new HashSet<Item>(cycle6Sched.getKey()));
+                addDay(cycle5Sched.getKey(), 4);
+                addDay(cycle6Sched.getKey(), 5);
+                System.out.println("Rest day 7");
+            }
+        }
+        else
+        {
+            addDay(cycle5Sched.getKey(), 4);
+            addDay(cycle6Sched.getKey(), 5);
+            addDay(cycle7Sched.getKey(), 6);
+        }
+
+        
+          //addDay(Arrays.asList(Butter,TomatoRelish,Jam,TomatoRelish,Jam), 1);
+          //addDay(Arrays.asList(CulinaryKnife,GardenScythe,SilverEarCuffs,GardenScythe), 2); 
+          //addDay(Arrays.asList(BoiledEgg, ParsnipSalad, OnionSoup, ParsnipSalad, OnionSoup),3);
+          //addDay(Arrays.asList(SheepfluffRug, Hora, SheepfluffRug, Hora),4);
+         //addDay(Arrays.asList(Crook,SpruceRoundShield,Crook),5);
+          //addDay(Arrays.asList(BoiledEgg, ScaleFingers, BoiledEgg, ScaleFingers),6);
+         
+
+        System.out.println("Week total: " + totalGross + " (" + totalNet + ")");
+
+    }
+    
+    private static boolean setOrRestEarlyWeek(boolean rested, int day)
+    {
+        Entry<List<Item>,Integer> sched = getBestScheduleForCycle(day,null);
+        if(!rested && (sched == null || isWorseThanAllFollowing(sched.getValue(), day)))
+        {
+            System.out.println("Rest day "+(day + 1));
+            return true;
+        }
+        else
+            addDay(sched.getKey(), day);
+        
+        return false;
+    }
+    
+    private static boolean isWorseThanAllFollowing(int value, int day)
+    {
+        int worstInFuture = 99999;
+        if(verboseSolverLogging)
+        System.out.println("Comparing d"+(day+1)+" ("+value+") to worst-case future days");
+        for(int d=day+1; d < 7; d++)
+        {
+            Entry<List<Item>,Integer> solution =  getBestScheduleForCycle(d, null);
+            if(verboseSolverLogging)
+            System.out.println("Day "+(d+1)+", crafts: "+Arrays.toString(solution.getKey().toArray())+" value: "+solution.getValue());
+            worstInFuture = Math.min(worstInFuture,solution.getValue());
+        }
+        if(verboseSolverLogging)
+        System.out.println("Worst future day: "+worstInFuture);
+        return value <= worstInFuture + 100;
+            
+    }
+
+    public static void addDay(List<Item> crafts, int day)
+    {
+       
+       System.out.println("Day "+(day+1)+", crafts: "+Arrays.toString(crafts.toArray()));
+       
+        addDay(crafts, crafts, crafts, day);
+    }
+
+    public static void addDay(List<Item> crafts0, List<Item> crafts1, List<Item> crafts2, int day)
+    {
+        CycleSchedule schedule = new CycleSchedule(day, groove);
+        schedule.setWorkshop(0, crafts0);
+        schedule.setWorkshop(1, crafts1);
+        schedule.setWorkshop(2, crafts2);
+        int gross = schedule.getValue();
+        totalGross += gross;
+
+        int net = gross - schedule.getMaterialCost();
+        totalNet += net;
+        int startingGroove = groove;
+        groove = schedule.endingGroove;
+        
+        schedule.startingGroove = 0;
+        boolean oldVerbose = verboseCalculatorLogging;
+        verboseCalculatorLogging = false;
+        System.out.println("day " + (day + 1) + " total, "+startingGroove+" starting groove: " + gross +"(" + net + "). With 0 groove: "+schedule.getValue());
+        verboseCalculatorLogging = oldVerbose;
+        schedule.numCrafted.forEach((k, v) ->
+        {
+            items[k.ordinal()].addCrafted(v, day);
+        });
+    }
+    
+    private static Map.Entry<List<Item>, Integer> getBestScheduleForCycle(int day, Set<Item> reservedForLater)
+    {
+        HashMap<ItemInfo, Integer> itemsByValue = new HashMap<>();
+        for(ItemInfo item : items)
+        {
+            itemsByValue.put(item, item.getValueWithSupply(item.getSupplyBucketOnDay(day)));
+        }
+        
+        HashMap<List<Item>, Integer> safeSchedules = new HashMap<>();
+        
+        LinkedHashMap<ItemInfo, Integer> sortedItems;
+        
+        if(reservedForLater == null)
+        {
+            sortedItems = itemsByValue.entrySet().stream().filter(entry -> entry.getKey().peaksOnOrBeforeDay(day))
+                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (x, y) -> y, LinkedHashMap::new));
+        }
+        else
+        {
+            sortedItems = itemsByValue.entrySet().stream().filter(entry -> !reservedForLater.contains(entry.getKey().item))
+                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (x, y) -> y, LinkedHashMap::new));
+        }
+        
+        Iterator<Entry<ItemInfo, Integer>> topItemIt = sortedItems.entrySet().iterator();
+        
+        CycleSchedule sch = new CycleSchedule(day, 0);
+        
+        while(topItemIt.hasNext())
+        {
+            Map.Entry<ItemInfo, Integer> topItem = topItemIt.next();
+            if(verboseSolverLogging)
+            System.out.println("Top item peaking today: "+topItem.getKey().item+": value: "+topItem.getValue());
+            
+            
+            if(topItem.getKey().time == 8)
+            {
+                //Try 4-8-4-8 schedules
+                //Get best 4 to pair it with
+                ItemInfo fourHour = null;
+                ItemInfo sixHour = null;
+                ItemInfo eightHour = null;
+                Iterator<Entry<ItemInfo, Integer>> eightMatchIt = sortedItems.entrySet().iterator();
+                while(eightMatchIt.hasNext())
+                {
+                    ItemInfo possibleMatch = eightMatchIt.next().getKey();
+                    //Try all 4 hours in case they change supply
+                    if(possibleMatch.time == 4 && possibleMatch.getsEfficiencyBonus(topItem.getKey()))
+                    {
+                        fourHour = possibleMatch;
+                        List<Item> items = Arrays.asList(fourHour.item, topItem.getKey().item, fourHour.item, topItem.getKey().item);
+                        sch.setForAllWorkshops(items);
+                        safeSchedules.put(items, sch.getValue());
+                        if(verboseSolverLogging)
+                        System.out.println("Compatible 4-hour craft found: "+fourHour.item+" adding safe 4-8-4-8 schedule with a value of "+safeSchedules.get(items));
+                    }
+                        
+                    //Only need to check top 8 hour because we make it once
+                    if(eightHour == null && (possibleMatch.time == 8 && possibleMatch.getsEfficiencyBonus(topItem.getKey())))
+                    {
+                        eightHour = possibleMatch;
+                        List<Item> items = Arrays.asList(topItem.getKey().item, eightHour.item, topItem.getKey().item);
+                        sch.setForAllWorkshops(items);
+                        safeSchedules.put(items, sch.getValue());
+                        if(verboseSolverLogging)
+                        System.out.println("Compatible 8-hour craft found: "+eightHour.item+" adding safe 8-8-8 schedule with a value of "+safeSchedules.get(items));
+                    }
+                        
+                    //Try all 6 hours because we make them twice and also they have different pairs
+                    if((possibleMatch.time == 6 && possibleMatch.getsEfficiencyBonus(topItem.getKey())))
+                    {
+                        sixHour = possibleMatch;
+                        
+                        //Try all 4-6-8-6 schedules
+                        if(verboseSolverLogging)
+                        System.out.println("Compatible 6-hour found: "+sixHour.item);
+                        Iterator<Entry<ItemInfo, Integer>> sixMatchIt = sortedItems.entrySet().iterator();
+                        ItemInfo fourSixMatch = null;
+                        
+                        //Only need to check top 4 hour because we only make it once
+                        while(fourSixMatch == null  && sixMatchIt.hasNext())
+                        {
+                            ItemInfo possible46Match = sixMatchIt.next().getKey();
+                            if(possible46Match.time == 4 && possible46Match.getsEfficiencyBonus(sixHour))
+                                fourSixMatch = possible46Match;
+                        }
+                        if(fourSixMatch != null)
+                        {
+                            List<Item> items = Arrays.asList(fourSixMatch.item, sixHour.item, topItem.getKey().item, sixHour.item);
+                            sch.setForAllWorkshops(items);
+                            safeSchedules.put(items, sch.getValue());
+                            if(verboseSolverLogging)
+                            System.out.println("Compatible 4-6 combo found: "+fourSixMatch.item+" adding safe 4-6-8-6 schedule with a value of "+safeSchedules.get(items));
+                        }
+                    }
+                        
+                }
+            }
+            else if(topItem.getKey().time == 6)
+            {
+                //Try 4-6-8-6 schedules
+                ItemInfo bestFourHour = null;
+                ItemInfo fourHour = null;
+                ItemInfo sixHour = null;
+                ItemInfo eightHour = null;
+                Iterator<Entry<ItemInfo, Integer>> sixMatchIt = sortedItems.entrySet().iterator();
+                while(sixMatchIt.hasNext())
+                {
+                    ItemInfo possibleMatch = sixMatchIt.next().getKey();
+                    //Need to try all 4-hours because we make them multiple times and they pair up
+                    if(possibleMatch.time == 4 && possibleMatch.getsEfficiencyBonus(topItem.getKey()))
+                    {
+                        fourHour = possibleMatch;
+                        if(bestFourHour == null)
+                            bestFourHour = fourHour;
+                        
+                        //Might as well add 4-6-4-6-4, I guess
+                        List<Item> items = Arrays.asList(fourHour.item, topItem.getKey().item, fourHour.item, topItem.getKey().item, fourHour.item);
+                        sch.setForAllWorkshops(items);
+                        safeSchedules.put(items, sch.getValue());
+                        if(verboseSolverLogging)
+                        System.out.println("Compatible 4 combo found: "+fourHour.item+" adding safe 4-6-4-6-4 schedule with a value of "+safeSchedules.get(items));
+                        
+                        //Try all 4-4-6-4-6
+                        Iterator<Entry<ItemInfo, Integer>> fourMatchIt = sortedItems.entrySet().iterator();
+                        ItemInfo fourFourMatch = null;
+                        
+                        //Get the best 4 to pair with the other 4
+                        while(fourFourMatch == null  && fourMatchIt.hasNext())
+                        {
+                            ItemInfo possible44Match = fourMatchIt.next().getKey();
+                            if(possible44Match.time == 4 && possible44Match.getsEfficiencyBonus(fourHour))
+                                fourFourMatch = possible44Match;
+                        }
+                        if(fourFourMatch != null)
+                        {
+                            List<Item> items44 = Arrays.asList(fourFourMatch.item, fourHour.item, topItem.getKey().item, fourHour.item, topItem.getKey().item);
+                            sch.setForAllWorkshops(items44);
+                            safeSchedules.put(items44, sch.getValue());
+                            if(verboseSolverLogging)
+                            System.out.println("Compatible 4-4 combo found: "+fourFourMatch.item+" adding safe 4-4-6-4-6 schedule with a value of "+safeSchedules.get(items44));
+                        }
+                    }
+                    if(eightHour == null && possibleMatch.time == 8 && possibleMatch.getsEfficiencyBonus(topItem.getKey()))
+                    {
+                        eightHour = possibleMatch;
+                    }
+                        
+                    //Need to try all 6 hours in case they go up in supply
+                    if(possibleMatch.time == 6 && possibleMatch.getsEfficiencyBonus(topItem.getKey()))
+                    {
+                        sixHour = possibleMatch; 
+                        List<Item> items = Arrays.asList(sixHour.item, topItem.getKey().item, sixHour.item, topItem.getKey().item);
+                        sch.setForAllWorkshops(items);
+                        safeSchedules.put(items, sch.getValue());
+                        if(verboseSolverLogging)
+                        System.out.println("Compatible 6-hour craft found: "+sixHour.item+" adding safe 6-6-6-6 schedule with a value of "+safeSchedules.get(items));
+                    }                    
+                }
+                
+                //Only need first one because we only make them once
+                //Try 4-6-8-6
+                if(bestFourHour != null && eightHour != null)
+                {
+                    List<Item> items = Arrays.asList(bestFourHour.item, topItem.getKey().item, eightHour.item, topItem.getKey().item);
+                    sch.setForAllWorkshops(items);
+                    safeSchedules.put(items, sch.getValue());
+                    if(verboseSolverLogging)
+                    System.out.println("Compatible 8-hour craft found: "+eightHour.item+" adding safe 4-6-8-6 schedule with a value of "+safeSchedules.get(items));
+                }
+            }
+            else
+            {
+                //I refuse to optimize for a 4-craft. 
+            }
+        }
+        
+        
+        
+        
+        if(safeSchedules.size() == 0)
+            return null;
+        
+        LinkedHashMap<List<Item>, Integer> sortedSchedules = 
+                safeSchedules.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (x, y) -> y, LinkedHashMap::new));
+        
+        return sortedSchedules.entrySet().iterator().next();
+    }
+    
+    
+    private static void setWeek4Initial()
     {
         items[0].setInitialData(High,Cycle7Weak,Sufficient,None);
         items[1].setInitialData(VeryHigh,Cycle6Strong,Sufficient,None);
@@ -127,28 +494,10 @@ public class Solver
         items[47].setInitialData(Low,Cycle2Weak,Sufficient,None);
         items[48].setInitialData(VeryHigh,Cycle2Weak,Sufficient,None);
         items[49].setInitialData(VeryHigh,Cycle3Strong,Sufficient,None);
-        
-        
-        /*
-         * System.out.println("\nDay1: "); for(ItemInfo item : items) {
-         * System.out.println(item); }
-         */
-        
-        /*
-         * items[3].addCrafted(7, 0); items[7].addCrafted(2, 0); items[9].addCrafted(7,
-         * 0); items[25].addCrafted(8, 0); items[38].addCrafted(2, 0);
-         * 
-         * items[3].addObservedDay(Sufficient, None);
-         * items[7].addObservedDay(Nonexistent, Skyrocketing);
-         * items[9].addObservedDay(Sufficient, None);
-         * items[25].addObservedDay(Sufficient, Skyrocketing);
-         * items[38].addObservedDay(Nonexistent, Skyrocketing);
-         * 
-         * System.out.println(items[3]); System.out.println(items[7]);
-         * System.out.println(items[9]); System.out.println(items[25]);
-         * System.out.println(items[38]);
-         */
-
+    }
+    
+    private static void setWeek4Day2()
+    {
         items[0].addObservedDay(Sufficient, None);
         items[1].addObservedDay(Insufficient, None);
         items[2].addObservedDay(Insufficient, None);
@@ -199,12 +548,10 @@ public class Solver
         items[47].addObservedDay(Sufficient, None);
         items[48].addObservedDay(Insufficient, None);
         items[49].addObservedDay(Insufficient, None);
-
-        /*
-         * System.out.println("\nDay2: "); for(ItemInfo item : items) {
-         * System.out.println(item); }
-         */
-
+    }
+    
+    private static void setWeek4Day3()
+    {
         items[0].addObservedDay(Insufficient, Increasing);
         items[1].addObservedDay(Sufficient, Decreasing);
         items[2].addObservedDay(Sufficient, Plummeting);
@@ -255,12 +602,10 @@ public class Solver
         items[47].addObservedDay(Insufficient, Skyrocketing);
         items[48].addObservedDay(Sufficient, Plummeting);
         items[49].addObservedDay(Sufficient, Plummeting);
-
-        /*
-         * System.out.println("\nDay3: "); for(ItemInfo item : items) {
-         * System.out.println(item); }
-         */
-
+    }
+    
+    private static void setWeek4Day4()
+    {
         items[0].addObservedDay(Insufficient, Increasing);
         items[1].addObservedDay(Sufficient, Increasing);
         items[2].addObservedDay(Sufficient, Increasing);
@@ -311,54 +656,8 @@ public class Solver
         items[47].addObservedDay(Nonexistent, Skyrocketing);
         items[48].addObservedDay(Sufficient, None);
         items[49].addObservedDay(Sufficient, Increasing);
-
-        /*
-         * System.out.println("\nDay4: "); for(ItemInfo item : items) {
-         * System.out.println(item); }
-         */
-
-        
-          addDay(Arrays.asList(Butter,TomatoRelish,Jam,TomatoRelish,Jam), 1);
-          addDay(Arrays.asList(CulinaryKnife,GardenScythe,SilverEarCuffs,GardenScythe), 2); 
-          //addDay(Arrays.asList(BoiledEgg, ParsnipSalad, OnionSoup, ParsnipSalad, OnionSoup),3);
-          addDay(Arrays.asList(SheepfluffRug, Hora, SheepfluffRug, Hora),4);
-          addDay(Arrays.asList(Crook,SpruceRoundShield,Crook),5);
-          addDay(Arrays.asList(BoiledEgg, ScaleFingers, BoiledEgg, ScaleFingers),6);
-         
-
-        System.out.println("Week total: " + totalGross + " (" + totalNet + ")");
-
     }
-
-    public static void addDay(List<Item> crafts, int day)
-    {
-        addDay(crafts, crafts, crafts, day);
-    }
-
-    public static void addDay(List<Item> crafts0, List<Item> crafts1, List<Item> crafts2, int day)
-    {
-        CycleSchedule schedule = new CycleSchedule(day, groove);
-        schedule.setWorkshop(0, crafts0);
-        schedule.setWorkshop(1, crafts1);
-        schedule.setWorkshop(2, crafts2);
-        int gross = schedule.getValue();
-        totalGross += gross;
-
-        int net = gross - schedule.getMaterialCost();
-        totalNet += net;
-        int startingGroove = groove;
-        groove = schedule.endingGroove;
-        
-        schedule.startingGroove = 0;
-        boolean oldVerbose = verboseLogging;
-        verboseLogging = false;
-        System.out.println("day " + (day + 1) + " total, "+startingGroove+" starting groove: " + gross +"(" + net + "). With 0 groove: "+schedule.getValue());
-        verboseLogging = oldVerbose;
-        schedule.numCrafted.forEach((k, v) ->
-        {
-            items[k.ordinal()].addCrafted(v, day);
-        });
-    }
+    
 
     public static Supply getSupplyBucket(int supply)
     {
