@@ -69,7 +69,9 @@ public class Solver
             new ItemInfo(Crook,Arms,Woodworks,120,8,Map.of(Fang,4))};
     
     public static int groove = 0;
-            
+    public static int totalGross = 0;
+    public static int totalNet = 0;
+    public static boolean verboseLogging = false;
             
     
     public static void main(String[] args)
@@ -320,8 +322,11 @@ public class Solver
         addDay(Arrays.asList(Butter,TomatoRelish,Jam,TomatoRelish,Jam), 1);
         addDay(Arrays.asList(CulinaryKnife,GardenScythe,SilverEarCuffs,GardenScythe),2);
         addDay(Arrays.asList(SheepfluffRug, Hora, SheepfluffRug, Hora),4);
-        addDay(Arrays.asList(Crook, SpruceRoundShield, Crook),5);
+        addDay(Arrays.asList(Brush, Crook, Earrings, ScaleFingers),5);
+
+        //addDay(Arrays.asList(Crook,SpruceRoundShield,Crook),5);
         addDay(Arrays.asList(BoiledEgg, ScaleFingers, BoiledEgg, ScaleFingers),6);
+        System.out.println("Week total: "+totalGross+" ("+totalNet+")");
         
     }
     
@@ -329,8 +334,12 @@ public class Solver
     {
         CycleSchedule schedule = new CycleSchedule(day, groove);
         schedule.setForAllWorkshops(crafts);
+        int gross = schedule.getValue();
+        totalGross += gross;
         
-        System.out.println("day "+(day+1)+" total: "+schedule.getValue()+" material cost: "+schedule.getMaterialCost());
+        int net = gross - schedule.getMaterialCost();
+        totalNet += net;
+        System.out.println("day "+(day+1)+" total: "+gross+" ("+net+")");
         
         schedule.numCrafted.forEach((k,v)->{items[k.ordinal()].addCrafted(v, day);});
         groove = schedule.endingGroove;
