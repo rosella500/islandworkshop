@@ -5,156 +5,144 @@ import static islandworkshop.Supply.*;
 import static islandworkshop.Popularity.*;
 import static islandworkshop.DemandShift.*;
 import static islandworkshop.PeakCycle.*;
+import static islandworkshop.Item.*;
+
+import java.util.Arrays;
 import java.util.Map;
 public class Solver
 {
-    final static int[][] SUPPLY_PATH = {{0, 0,0}, //Unknown
-            {-4, -4, 10, 0, 0, 0, 0}, //Cycle2Weak 
-            {-8, -7, 15, 0, 0, 0, 0}, //Cycle2Strong
-            {0, -4, -4, 10, 0, 0, 0}, //Cycle3Weak
-            {0, -8, -7, 15, 0, 0, 0}, //Cycle3Strong
-            {0, 0, -4, -4, 10, 0, 0}, //Cycle4Weak
-            {0, 0, -8, -7, 15, 0, 0}, //Cycle4Strong
-            {0, 0, 0, -4, -4, 10, 0}, //5Weak
-            {0, 0, 0, -8, -7, 15, 0}, //5Strong
-            {0, -1, 5, -4, -4, -4, 10}, //6Weak
-            {0, -1, 8, -7, -8, -7, 15}, //6Strong
-            {0, -1, 8, -3, -4, -4, -4}, //7Weak
-            {0, -1, 8, 0, -7, -8, -7}, //7Strong
-            {0, 0, 0}, //4/5
-            {0, 0, 0,-4,-4}, //5
-            {0, -1, 8, 0} //6/7
-            };
     
-    final static ItemInfo[] ITEMS = {
-            new ItemInfo("Potion",Concoctions,Invalid,28,4,null),
-            new ItemInfo("Firesand",Concoctions,UnburiedTreasures,28,4,null),
-            new ItemInfo("Wooden Chair",Furnishings,Woodworks,42,6,null),
-            new ItemInfo("Grilled Clam",Foodstuffs,MarineMerchandise,28,4,null),
-            new ItemInfo("Necklace",Accessories,Woodworks,28,4,null),
-            new ItemInfo("Coral Ring",Accessories,MarineMerchandise,42,6,null),
-            new ItemInfo("Barbut",Attire,Metalworks,42,6,null),
-            new ItemInfo("Macuahuitl",Arms,Woodworks,42,6,null),
-            new ItemInfo("Sauerkraut",PreservedFood,Invalid,40,4,Map.of(Cabbage,1)),
-            new ItemInfo("Baked Pumpkin",Foodstuffs,Invalid,40,4,Map.of(Pumpkin,1)),
-            new ItemInfo("Tunic",Attire,Textiles,72,6,Map.of(Fleece,2)),
-            new ItemInfo("Culinary Knife",Sundries,CreatureCreations,44,4,Map.of(Claw,1)),
-            new ItemInfo("Brush",Sundries,Woodworks,44,4,Map.of(Fur, 1)),
-            new ItemInfo("Boiled Egg",Foodstuffs,CreatureCreations,44,4,Map.of(Egg, 1)),
-            new ItemInfo("Hora",Arms,CreatureCreations,72,6,Map.of(Carapace, 2)),
-            new ItemInfo("Earrings",Accessories,CreatureCreations,44,4,Map.of(Fang, 1)),
-            new ItemInfo("Butter",Ingredients,CreatureCreations,44,4,Map.of(Milk, 1)),
-            new ItemInfo("Brick Counter",Furnishings,UnburiedTreasures,48,6,null),
-            new ItemInfo("Bronze Sheep",Furnishings,Metalworks,64,8,null),
-            new ItemInfo("Growth Formula",Concoctions,Invalid,136,8,Map.of(Alyssum, 2)),
-            new ItemInfo("Garnet Rapier",Arms,UnburiedTreasures,136,8,Map.of(Garnet,2)),
-            new ItemInfo("Spruce Round Shield",Attire,Woodworks,136,8,Map.of(Spruce,2)),
-            new ItemInfo("Shark Oil",Sundries,MarineMerchandise,136,8,Map.of(Shark,2)),
-            new ItemInfo("Silver Ear Cuffs",Accessories,Metalworks,136,8,Map.of(Silver,2)),
-            new ItemInfo("Sweet Popoto",Confections,Invalid,72,6,Map.of(Popoto, 2, Milk,1)),
-            new ItemInfo("Parsnip Salad",Foodstuffs,Invalid,48,4,Map.of(Parsnip,2)),
-            new ItemInfo("Caramels",Confections,Invalid,81,6,Map.of(Milk,2)),
-            new ItemInfo("Ribbon",Accessories,Textiles,54,6,null),
-            new ItemInfo("Rope",Sundries,Textiles,36,4,null),
-            new ItemInfo("Cavalier's Hat",Attire,Textiles,81,6,Map.of(Feather,2)),
-            new ItemInfo("Horn",Sundries,CreatureCreations,81,6,Map.of(Horn,2)),
-            new ItemInfo("Salt Cod",PreservedFood,MarineMerchandise,54,6,null),
-            new ItemInfo("Squid Ink",Ingredients,MarineMerchandise,36,4,null),
-            new ItemInfo("Essential Draught",Concoctions,MarineMerchandise,54,6,null),
-            new ItemInfo("Jam",Ingredients,Invalid,78,6,Map.of(Isleberry,3)),
-            new ItemInfo("Tomato Relish",Ingredients,Invalid,52,4,Map.of(Tomato,2)),
-            new ItemInfo("Onion Soup",Foodstuffs,Invalid,78,6,Map.of(Onion,3)),
-            new ItemInfo("Pie",Confections,MarineMerchandise,78,6,Map.of(Wheat,3)),
-            new ItemInfo("Corn Flakes",PreservedFood,Invalid,52,4,Map.of(Corn,2)),
-            new ItemInfo("Pickled Radish",PreservedFood,Invalid,104,8,Map.of(Radish,4)),
-            new ItemInfo("Iron Axe",Arms,Metalworks,72,8,null),
-            new ItemInfo("Quartz Ring",Accessories,UnburiedTreasures,72,8,null),
-            new ItemInfo("Porcelain Vase",Sundries,UnburiedTreasures,72,8,null),
-            new ItemInfo("Vegetable Juice",Concoctions,Invalid,78,6,Map.of(Cabbage,3)),
-            new ItemInfo("Pumpkin Pudding",Confections,Invalid,78,6,Map.of(Pumpkin, 3, Egg, 1, Milk,1)),
-            new ItemInfo("Sheepfluff Rug",Furnishings,CreatureCreations,90,6,Map.of(Fleece,3)),
-            new ItemInfo("Garden Scythe",Sundries,Metalworks,90,6,Map.of(Claw,3)),
-            new ItemInfo("Bed",Furnishings,Textiles,120,8,Map.of(Fur,4)),
-            new ItemInfo("Scale Fingers",Attire,CreatureCreations,120,8,Map.of(Carapace,4)),
-            new ItemInfo("Crook",Arms,Woodworks,120,8,Map.of(Fang,4))};
+    
+    final static double WORKSHOP_BONUS = 1.2;
+    
+    final static ItemInfo[] items = {
+            new ItemInfo(Potion,Concoctions,Invalid,28,4,null),
+            new ItemInfo(Firesand,Concoctions,UnburiedTreasures,28,4,null),
+            new ItemInfo(WoodenChair,Furnishings,Woodworks,42,6,null),
+            new ItemInfo(GrilledClam,Foodstuffs,MarineMerchandise,28,4,null),
+            new ItemInfo(Necklace,Accessories,Woodworks,28,4,null),
+            new ItemInfo(CoralRing,Accessories,MarineMerchandise,42,6,null),
+            new ItemInfo(Barbut,Attire,Metalworks,42,6,null),
+            new ItemInfo(Macuahuitl,Arms,Woodworks,42,6,null),
+            new ItemInfo(Sauerkraut,PreservedFood,Invalid,40,4,Map.of(Cabbage,1)),
+            new ItemInfo(BakedPumpkin,Foodstuffs,Invalid,40,4,Map.of(Pumpkin,1)),
+            new ItemInfo(Tunic,Attire,Textiles,72,6,Map.of(Fleece,2)),
+            new ItemInfo(CulinaryKnife,Sundries,CreatureCreations,44,4,Map.of(Claw,1)),
+            new ItemInfo(Brush,Sundries,Woodworks,44,4,Map.of(Fur, 1)),
+            new ItemInfo(BoiledEgg,Foodstuffs,CreatureCreations,44,4,Map.of(Egg, 1)),
+            new ItemInfo(Hora,Arms,CreatureCreations,72,6,Map.of(Carapace, 2)),
+            new ItemInfo(Earrings,Accessories,CreatureCreations,44,4,Map.of(Fang, 1)),
+            new ItemInfo(Butter,Ingredients,CreatureCreations,44,4,Map.of(Milk, 1)),
+            new ItemInfo(BrickCounter,Furnishings,UnburiedTreasures,48,6,null),
+            new ItemInfo(BronzeSheep,Furnishings,Metalworks,64,8,null),
+            new ItemInfo(GrowthFormula,Concoctions,Invalid,136,8,Map.of(Alyssum, 2)),
+            new ItemInfo(GarnetRapier,Arms,UnburiedTreasures,136,8,Map.of(Garnet,2)),
+            new ItemInfo(SpruceRoundShield,Attire,Woodworks,136,8,Map.of(Spruce,2)),
+            new ItemInfo(SharkOil,Sundries,MarineMerchandise,136,8,Map.of(Shark,2)),
+            new ItemInfo(SilverEarCuffs,Accessories,Metalworks,136,8,Map.of(Silver,2)),
+            new ItemInfo(SweetPopoto,Confections,Invalid,72,6,Map.of(Popoto, 2, Milk,1)),
+            new ItemInfo(ParsnipSalad,Foodstuffs,Invalid,48,4,Map.of(Parsnip,2)),
+            new ItemInfo(Caramels,Confections,Invalid,81,6,Map.of(Milk,2)),
+            new ItemInfo(Ribbon,Accessories,Textiles,54,6,null),
+            new ItemInfo(Rope,Sundries,Textiles,36,4,null),
+            new ItemInfo(CavaliersHat,Attire,Textiles,81,6,Map.of(Feather,2)),
+            new ItemInfo(Item.Horn,Sundries,CreatureCreations,81,6,Map.of(RareMaterial.Horn,2)),
+            new ItemInfo(SaltCod,PreservedFood,MarineMerchandise,54,6,null),
+            new ItemInfo(SquidInk,Ingredients,MarineMerchandise,36,4,null),
+            new ItemInfo(EssentialDraught,Concoctions,MarineMerchandise,54,6,null),
+            new ItemInfo(Jam,Ingredients,Invalid,78,6,Map.of(Isleberry,3)),
+            new ItemInfo(TomatoRelish,Ingredients,Invalid,52,4,Map.of(Tomato,2)),
+            new ItemInfo(OnionSoup,Foodstuffs,Invalid,78,6,Map.of(Onion,3)),
+            new ItemInfo(Pie,Confections,MarineMerchandise,78,6,Map.of(Wheat,3)),
+            new ItemInfo(CornFlakes,PreservedFood,Invalid,52,4,Map.of(Corn,2)),
+            new ItemInfo(PickledRadish,PreservedFood,Invalid,104,8,Map.of(Radish,4)),
+            new ItemInfo(IronAxe,Arms,Metalworks,72,8,null),
+            new ItemInfo(QuartzRing,Accessories,UnburiedTreasures,72,8,null),
+            new ItemInfo(PorcelainVase,Sundries,UnburiedTreasures,72,8,null),
+            new ItemInfo(VegetableJuice,Concoctions,Invalid,78,6,Map.of(Cabbage,3)),
+            new ItemInfo(PumpkinPudding,Confections,Invalid,78,6,Map.of(Pumpkin, 3, Egg, 1, Milk,1)),
+            new ItemInfo(SheepfluffRug,Furnishings,CreatureCreations,90,6,Map.of(Fleece,3)),
+            new ItemInfo(GardenScythe,Sundries,Metalworks,90,6,Map.of(Claw,3)),
+            new ItemInfo(Bed,Furnishings,Textiles,120,8,Map.of(Fur,4)),
+            new ItemInfo(ScaleFingers,Attire,CreatureCreations,120,8,Map.of(Carapace,4)),
+            new ItemInfo(Crook,Arms,Woodworks,120,8,Map.of(Fang,4))};;
     
     public static void main(String[] args)
     {
-        ItemInstance[] items = new ItemInstance[]{new ItemInstance(0,High,Cycle7Weak,Sufficient,None),
-            new ItemInstance(1,VeryHigh,Cycle6Strong,Sufficient,None),
-                    new ItemInstance(2,VeryHigh,Cycle5Strong,Sufficient,None),
-                    new ItemInstance(3,Average,Cycle4Strong,Sufficient,None),
-                    new ItemInstance(4,Low,Cycle7Strong,Sufficient,None),
-                    new ItemInstance(5,Average,Cycle7Weak,Insufficient,Decreasing),
-                    new ItemInstance(6,VeryHigh,Cycle4Strong,Sufficient,None),
-                    new ItemInstance(7,VeryHigh,Cycle4Weak,Insufficient,Skyrocketing),
-                    new ItemInstance(8,Average,Cycle3Strong,Sufficient,None),
-                    new ItemInstance(9,Low,Cycle6Weak,Sufficient,None),
-                    new ItemInstance(10,Average,Cycle6Strong,Sufficient,None),
-                    new ItemInstance(11,Average,Cycle2Weak,Sufficient,None),
-                    new ItemInstance(12,Low,Cycle6Strong,Sufficient,None),
-                    new ItemInstance(13,High,Cycle5Weak,Sufficient,None),
-                    new ItemInstance(14,High,Cycle5Weak,Sufficient,None),
-                    new ItemInstance(15,High,Cycle3Weak,Sufficient,None),
-                    new ItemInstance(16,High,Cycle7Weak,Insufficient,Decreasing),
-                    new ItemInstance(17,High,Cycle7Weak,Insufficient,Decreasing),
-                    new ItemInstance(18,VeryHigh,Cycle5Strong,Sufficient,None),
-                    new ItemInstance(19,Average,Cycle3Strong,Sufficient,None),
-                    new ItemInstance(20,Low,Cycle7Weak,Sufficient,None),
-                    new ItemInstance(21,Low,Cycle6Weak,Sufficient,None),
-                    new ItemInstance(22,Average,Cycle4Weak,Sufficient,None),
-                    new ItemInstance(23,High,Cycle5Weak,Sufficient,None),
-                    new ItemInstance(24,VeryHigh,Cycle6Strong,Sufficient,None),
-                    new ItemInstance(25,VeryHigh,Cycle3Weak,Sufficient,None),
-                    new ItemInstance(26,Average,Cycle3Weak,Sufficient,None),
-                    new ItemInstance(27,High,Cycle5Strong,Sufficient,None),
-                    new ItemInstance(28,Average,Cycle7Strong,Sufficient,None),
-                    new ItemInstance(29,Average,Cycle7Strong,Sufficient,None),
-                    new ItemInstance(30,Low,Cycle3Weak,Sufficient,None),
-                    new ItemInstance(31,High,Cycle7Strong,Insufficient,Plummeting),
-                    new ItemInstance(32,VeryHigh,Cycle2Strong,Sufficient,None),
-                    new ItemInstance(33,VeryHigh,Cycle2Strong,Sufficient,None),
-                    new ItemInstance(34,High,Cycle2Strong,Insufficient,Skyrocketing),
-                    new ItemInstance(35,Average,Cycle5Strong,Insufficient,Skyrocketing),
-                    new ItemInstance(36,Average,Cycle3Strong,Sufficient,None),
-                    new ItemInstance(37,Average,Cycle4Weak,Sufficient,None),
-                    new ItemInstance(38,High,Cycle6Weak,Insufficient,Skyrocketing),
-                    new ItemInstance(39,High,Cycle5Weak,Sufficient,None),
-                    new ItemInstance(40,VeryHigh,Cycle7Strong,Sufficient,None),
-                    new ItemInstance(41,Average,Cycle6Weak,Sufficient,None),
-                    new ItemInstance(42,Low,Cycle4Weak,Sufficient,None),
-                    new ItemInstance(43,Average,Cycle2Weak,Sufficient,None),
-                    new ItemInstance(44,High,Cycle4Strong,Sufficient,None),
-                    new ItemInstance(45,High,Cycle2Strong,Sufficient,None),
-                    new ItemInstance(46,High,Cycle4Strong,Sufficient,None),
-                    new ItemInstance(47,Low,Cycle2Weak,Sufficient,None),
-                    new ItemInstance(48,VeryHigh,Cycle2Weak,Sufficient,None),
-                    new ItemInstance(49,VeryHigh,Cycle3Strong,Sufficient,None)};
+        items[0].setInitialData(High,Cycle7Weak,Sufficient,None);
+        items[1].setInitialData(VeryHigh,Cycle6Strong,Sufficient,None);
+        items[2].setInitialData(VeryHigh,Cycle5Strong,Sufficient,None);
+        items[3].setInitialData(Average,Cycle4Strong,Sufficient,None);
+        items[4].setInitialData(Low,Cycle7Strong,Sufficient,None);
+        items[5].setInitialData(Average,Cycle7Weak,Insufficient,Decreasing);
+        items[6].setInitialData(VeryHigh,Cycle4Strong,Sufficient,None);
+        items[7].setInitialData(VeryHigh,Cycle4Weak,Insufficient,Skyrocketing);
+        items[8].setInitialData(Average,Cycle3Strong,Sufficient,None);
+        items[9].setInitialData(Low,Cycle6Weak,Sufficient,None);
+        items[10].setInitialData(Average,Cycle6Strong,Sufficient,None);
+        items[11].setInitialData(Average,Cycle2Weak,Sufficient,None);
+        items[12].setInitialData(Low,Cycle6Strong,Sufficient,None);
+        items[13].setInitialData(High,Cycle5Weak,Sufficient,None);
+        items[14].setInitialData(High,Cycle5Weak,Sufficient,None);
+        items[15].setInitialData(High,Cycle3Weak,Sufficient,None);
+        items[16].setInitialData(High,Cycle7Weak,Insufficient,Decreasing);
+        items[17].setInitialData(High,Cycle7Weak,Insufficient,Decreasing);
+        items[18].setInitialData(VeryHigh,Cycle5Strong,Sufficient,None);
+        items[19].setInitialData(Average,Cycle3Strong,Sufficient,None);
+        items[20].setInitialData(Low,Cycle7Weak,Sufficient,None);
+        items[21].setInitialData(Low,Cycle6Weak,Sufficient,None);
+        items[22].setInitialData(Average,Cycle4Weak,Sufficient,None);
+        items[23].setInitialData(High,Cycle5Weak,Sufficient,None);
+        items[24].setInitialData(VeryHigh,Cycle6Strong,Sufficient,None);
+        items[25].setInitialData(VeryHigh,Cycle3Weak,Sufficient,None);
+        items[26].setInitialData(Average,Cycle3Weak,Sufficient,None);
+        items[27].setInitialData(High,Cycle5Strong,Sufficient,None);
+        items[28].setInitialData(Average,Cycle7Strong,Sufficient,None);
+        items[29].setInitialData(Average,Cycle7Strong,Sufficient,None);
+        items[30].setInitialData(Low,Cycle3Weak,Sufficient,None);
+        items[31].setInitialData(High,Cycle7Strong,Insufficient,Plummeting);
+        items[32].setInitialData(VeryHigh,Cycle2Strong,Sufficient,None);
+        items[33].setInitialData(VeryHigh,Cycle2Strong,Sufficient,None);
+        items[34].setInitialData(High,Cycle2Strong,Insufficient,Skyrocketing);
+        items[35].setInitialData(Average,Cycle5Strong,Insufficient,Skyrocketing);
+        items[36].setInitialData(Average,Cycle3Strong,Sufficient,None);
+        items[37].setInitialData(Average,Cycle4Weak,Sufficient,None);
+        items[38].setInitialData(High,Cycle6Weak,Insufficient,Skyrocketing);
+        items[39].setInitialData(High,Cycle5Weak,Sufficient,None);
+        items[40].setInitialData(VeryHigh,Cycle7Strong,Sufficient,None);
+        items[41].setInitialData(Average,Cycle6Weak,Sufficient,None);
+        items[42].setInitialData(Low,Cycle4Weak,Sufficient,None);
+        items[43].setInitialData(Average,Cycle2Weak,Sufficient,None);
+        items[44].setInitialData(High,Cycle4Strong,Sufficient,None);
+        items[45].setInitialData(High,Cycle2Strong,Sufficient,None);
+        items[46].setInitialData(High,Cycle4Strong,Sufficient,None);
+        items[47].setInitialData(Low,Cycle2Weak,Sufficient,None);
+        items[48].setInitialData(VeryHigh,Cycle2Weak,Sufficient,None);
+        items[49].setInitialData(VeryHigh,Cycle3Strong,Sufficient,None);
         
         
         System.out.println("\nDay1: ");
-        for(ItemInstance item : items)
+        for(ItemInfo item : items)
         {
             System.out.println(item);
         }
         
-        /*items[3].addCrafted(2, 0);
-        items[7].addCrafted(2, 0);
-        items[9].addCrafted(7, 0);
-        items[25].addCrafted(8, 0);
-        items[38].addCrafted(2, 0);
+        /*
+         * items[3].addCrafted(7, 0); items[7].addCrafted(2, 0); items[9].addCrafted(7,
+         * 0); items[25].addCrafted(8, 0); items[38].addCrafted(2, 0);
+         * 
+         * items[3].addObservedDay(Sufficient, None);
+         * items[7].addObservedDay(Nonexistent, Skyrocketing);
+         * items[9].addObservedDay(Sufficient, None);
+         * items[25].addObservedDay(Sufficient, Skyrocketing);
+         * items[38].addObservedDay(Nonexistent, Skyrocketing);
+         * 
+         * System.out.println(items[3]); System.out.println(items[7]);
+         * System.out.println(items[9]); System.out.println(items[25]);
+         * System.out.println(items[38]);
+         */
         
-        items[3].addObservedDay(Sufficient, None);
-        items[7].addObservedDay(Nonexistent, Skyrocketing);
-        items[9].addObservedDay(Sufficient, None);
-        items[25].addObservedDay(Sufficient, Skyrocketing);
-        items[38].addObservedDay(Nonexistent, Skyrocketing);
         
-        System.out.println(items[3]);
-        System.out.println(items[7]);
-        System.out.println(items[9]);
-        System.out.println(items[25]);
-        System.out.println(items[38]);*/
         
         items[0].addObservedDay(Sufficient,None);
         items[1].addObservedDay(Insufficient,None);
@@ -207,15 +195,7 @@ public class Solver
         items[48].addObservedDay(Insufficient,None);
         items[49].addObservedDay(Insufficient,None);
         
-        System.out.println("\nDay2: ");
-        for(ItemInstance item : items)
-        {
-            System.out.println(item);
-        }
 
-        items[16].addCrafted(3, 1);
-        items[34].addCrafted(12, 1);
-        items[35].addCrafted(12, 1);
         
         items[0].addObservedDay(Insufficient,Increasing);
         items[1].addObservedDay(Sufficient,Decreasing);
@@ -269,11 +249,6 @@ public class Solver
         items[49].addObservedDay(Sufficient,Plummeting);
         
 
-        System.out.println("\nDay3: ");
-        for(ItemInstance item : items)
-        {
-            System.out.println(item);
-        }
         
         items[0].addObservedDay(Insufficient,Increasing);
         items[1].addObservedDay(Sufficient,Increasing);
@@ -328,32 +303,25 @@ public class Solver
         
         
         System.out.println("\nDay4: ");
-        for(ItemInstance item : items)
+        for(ItemInfo item : items)
         {
             System.out.println(item);
         }
+        
+        int groove = 0;
+        CycleSchedule day2 = new CycleSchedule(1, groove);
+        day2.setForAllWorkshops(Arrays.asList(items[Butter.ordinal()], items[TomatoRelish.ordinal()], items[Jam.ordinal()],
+                items[TomatoRelish.ordinal()], items[Jam.ordinal()]));
+        
+        System.out.println("day 2 total: "+day2.getValue()+" material cost: "+day2.getMaterialCost());
+        
+        day2.numCrafted.forEach((k,v)->{items[k.ordinal()].addCrafted(v, 1);});
+        groove += day2.endingGroove;
 
         
     }
     
-    
-    public static int getSupplyAfterCraft(ItemInstance craft, int day, int newCrafts)
-    {
-        return getSupplyOnDay(craft, day) + newCrafts;
-    }
-    
-    public static int getSupplyOnDay(ItemInstance craft, int day)
-    {
-        int supply = SUPPLY_PATH[craft.peak.ordinal()][0];
-        for(int c=1;c < day; c++)
-        {
-            supply += craft.craftedPerDay[c-1];
-            supply += SUPPLY_PATH[craft.peak.ordinal()][c];
-        }
-        
-        return supply;
-    }
-    public static Supply GetSupplyBucket(int supply)
+    public static Supply getSupplyBucket(int supply)
     {
         if(supply < -8)
             return Supply.Nonexistent;
@@ -366,16 +334,7 @@ public class Solver
         return Supply.Overflowing;
     }
     
-    public static int getSupplyOnDayByPeak(PeakCycle peak, int day)
-    {
-        int supply = SUPPLY_PATH[peak.ordinal()][0];
-        for(int c = 1; c<=day; c++)
-            supply += SUPPLY_PATH[peak.ordinal()][c];
-        
-        return supply;
-    }
-    
-    public static DemandShift GetDemandShift(int prevSupply, int newSupply)
+    public static DemandShift getDemandShift(int prevSupply, int newSupply)
     {
         int diff = newSupply - prevSupply;
         if(diff < -5)
