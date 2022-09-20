@@ -37,6 +37,11 @@ public class WorkshopSchedule
         return null;
     }
     
+    public int getNumCrafts()
+    {
+        return crafts.size();
+    }
+    
     public boolean currentCraftCompleted(int hour)
     {
         if(currentIndex >= crafts.size())

@@ -72,6 +72,14 @@ public class ItemInfo
     }
     
     //Set start-of-week data
+    public void setInitialData(Popularity pop, PeakCycle prevPeak)
+    {
+        setInitialData(pop, prevPeak, Sufficient, None);
+    }
+    public void setInitialData(Popularity pop, PeakCycle prevPeak, DemandShift startingDemand)
+    {
+        setInitialData(pop, prevPeak, Insufficient, startingDemand);
+    }
     public void setInitialData(Popularity pop, PeakCycle prevPeak, Supply startingSupply, DemandShift startingDemand)
     {
         popularity = pop;
@@ -224,9 +232,9 @@ public class ItemInfo
     
     public boolean peaksOnOrBeforeDay(int day)
     {
-        if(peak == Cycle2Weak || peak == Cycle2Strong || peak == Unknown)
+        if(peak == Cycle2Weak || peak == Cycle2Strong)
             return day > 0;
-        if (peak == Cycle3Weak || peak == Cycle3Strong)
+        if (peak == Cycle3Weak || peak == Cycle3Strong || peak == Unknown)
             return day > 1;
         if(peak == Cycle4Weak || peak == Cycle4Strong || peak == Cycle45)
             return day > 2;

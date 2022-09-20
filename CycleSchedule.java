@@ -80,6 +80,23 @@ public class CycleSchedule
        
     }
     
+    public int getValueWithGrooveEstimate()
+    {
+        int craftsAbove4 = 0;
+        for(int i=0; i<workshops.length;i++)
+        {
+            craftsAbove4+=workshops[i].getNumCrafts()-4;
+        }
+        int daysToGroove = 5-day;
+        if(!Solver.rested)
+            daysToGroove--;
+        
+        if(daysToGroove < 0)
+            daysToGroove = 0;
+                
+        return craftsAbove4 * daysToGroove * Solver.groovePerDay + getValue();
+    }
+    
     public int getMaterialCost()
     {
         int cost = 0;
