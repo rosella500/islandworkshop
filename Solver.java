@@ -84,6 +84,7 @@ public class Solver
     public static int alternativesToDisplay = 0;
     public static int groovePerDay = 30;
     public static boolean rested = false;
+    public static boolean allowD2Borrowing = false;
     
     //I don't actually use this but I know the moment I get rid of it, I'll need it and have to do this work over again
     public static final Item[][] itemsByCategory = {{}, 
