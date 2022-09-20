@@ -232,7 +232,7 @@ public class ItemInfo
     
     public boolean peaksOnOrBeforeDay(int day)
     {
-        if(peak == Cycle2Weak || peak == Cycle2Strong)
+        if(peak == Cycle2Weak || peak == Cycle2Strong|| (peak == Unknown && time == 4)) //D2 can borrow from the future if it's a 4hr craft
             return day > 0;
         if (peak == Cycle3Weak || peak == Cycle3Strong || peak == Unknown)
             return day > 1;

@@ -109,28 +109,31 @@ public class Solver
     {
         //TODO: Figure out a better way to enter data that isn't super slow
         
+        
+        
+          setWeek3Initial();
+          items[CulinaryKnife.ordinal()].addObservedDay(Insufficient, Increasing);
+          
+          
+          alternativesToDisplay = 5; List<Item> d2 = getBestScheduleForCycle(1,
+          null).getKey(); alternativesToDisplay =0;
+          items[Butter.ordinal()].addObservedDay(Insufficient, None);
+          
+          addDay(d2, 1);
+         
+        
+        
+        
         /*
-         * setWeek3Initial();
-         * items[CulinaryKnife.ordinal()].addObservedDay(Insufficient, Increasing);
+         * alternativesToDisplay = 0; setWeek4Initial(); setOrRestEarlyWeek(1);
          * 
+         * setWeek4Day2(); setOrRestEarlyWeek(2) ;
          * 
-         * alternativesToDisplay = 5; verboseSolverLogging = true;
-         * getBestScheduleForCycle(1, null);
+         * setWeek4Day3(); setOrRestEarlyWeek(3) ;
+         * 
+         * setWeek4Day4(); setLateDays();
          */
-        
-        
-        alternativesToDisplay = 0;
-          setWeek4Initial();
-          setOrRestEarlyWeek(1); 
-          
-          setWeek4Day2(); 
-          setOrRestEarlyWeek(2) ;
-          
-          setWeek4Day3(); 
-          setOrRestEarlyWeek(3) ;
-          
-          setWeek4Day4();
-          setLateDays();
+         
          
 
         System.out.println("Week total: " + totalGross + " (" + totalNet + ")");
@@ -359,6 +362,8 @@ public class Solver
         
         
         //This is a hard-coded mess, I'm sorry.
+        
+        //TODO: Clean this up bad
         while(topItemIt.hasNext())
         {
             Map.Entry<ItemInfo, Integer> topItem = topItemIt.next();
@@ -431,11 +436,8 @@ public class Solver
             }
             else if(topItem.getKey().time == 6)
             {
-                //Try 4-6-8-6 schedules
-                ItemInfo bestFourHour = null;
                 ItemInfo fourHour = null;
                 ItemInfo sixHour = null;
-                ItemInfo eightHour = null;
                 Iterator<Entry<ItemInfo, Integer>> sixMatchIt = sortedItems.entrySet().iterator();
                 while(sixMatchIt.hasNext())
                 {
@@ -444,8 +446,6 @@ public class Solver
                     if(possibleMatch.time == 4 && possibleMatch.getsEfficiencyBonus(topItem.getKey()))
                     {
                         fourHour = possibleMatch;
-                        if(bestFourHour == null)
-                            bestFourHour = fourHour;
                         
                         //Might as well add 4-6-4-6-4, I guess
                         List<Item> items = Arrays.asList(fourHour.item, topItem.getKey().item, fourHour.item, topItem.getKey().item, fourHour.item);
@@ -454,7 +454,7 @@ public class Solver
                         if(verboseSolverLogging)
                         System.out.println("Compatible 4 combo found: "+fourHour.item+" adding safe 4-6-4-6-4 schedule with a value of "+safeSchedules.get(items));
                         
-                        //Try all 4-4-6-4-6
+                        //Try all A-B-C-B-C
                         Iterator<Entry<ItemInfo, Integer>> fourMatchIt = sortedItems.entrySet().iterator();
                         ItemInfo fourFourMatch = null;
                         
@@ -472,13 +472,22 @@ public class Solver
                             safeSchedules.put(items44, sch.getValueWithGrooveEstimate());
                             if(verboseSolverLogging)
                             System.out.println("Compatible 4-4 combo found: "+fourFourMatch.item+" adding safe 4-4-6-4-6 schedule with a value of "+safeSchedules.get(items44));
+                            
+                            //
+                            List<Item> items4444 = Arrays.asList(fourFourMatch.item, fourHour.item, fourFourMatch.item, fourHour.item, topItem.getKey().item);
+                            sch.setForAllWorkshops(items4444);
+                            safeSchedules.put(items4444, sch.getValueWithGrooveEstimate());
+                            if(verboseSolverLogging)
+                            System.out.println("Compatible 4-4 combo found: "+fourFourMatch.item+" adding safe 4-4-4-4-6 schedule with a value of "+safeSchedules.get(items4444));
+                            
+                            
                         }
-                    }
-                    if(eightHour == null && possibleMatch.time == 8 && possibleMatch.getsEfficiencyBonus(topItem.getKey()))
-                    {
-                        eightHour = possibleMatch;
+                        
+                        //Figure out A-B-C-A-C too?
+                        
                     }
                         
+                    
                     //Need to try all 6 hours in case they go up in supply
                     if(possibleMatch.time == 6 && possibleMatch.getsEfficiencyBonus(topItem.getKey()))
                     {
@@ -488,18 +497,10 @@ public class Solver
                         safeSchedules.put(items, sch.getValueWithGrooveEstimate());
                         if(verboseSolverLogging)
                         System.out.println("Compatible 6-hour craft found: "+sixHour.item+" adding safe 6-6-6-6 schedule with a value of "+safeSchedules.get(items));
-                    }                    
-                }
-                
-                //Only need first one because we only make them once
-                //Try 4-6-8-6
-                if(bestFourHour != null && eightHour != null)
-                {
-                    List<Item> items = Arrays.asList(bestFourHour.item, topItem.getKey().item, eightHour.item, topItem.getKey().item);
-                    sch.setForAllWorkshops(items);
-                    safeSchedules.put(items, sch.getValueWithGrooveEstimate());
-                    if(verboseSolverLogging)
-                    System.out.println("Compatible 8-hour craft found: "+eightHour.item+" adding safe 4-6-8-6 schedule with a value of "+safeSchedules.get(items));
+                        
+                        //4-6-6-6?
+                    }  
+                  
                 }
             }
             else
