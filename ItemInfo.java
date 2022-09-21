@@ -42,14 +42,14 @@ public class ItemInfo
     int materialValue;
     
     //Weekly info
-    int id;
     Popularity popularity;
     PeakCycle previousPeak;
-    PeakCycle peak;
+    PeakCycle peak = Unknown;
     int[] craftedPerDay;
     ArrayList<ObservedSupply> observedSupplies;
+    int rankUnlocked;
     
-    public ItemInfo(Item i, ItemCategory cat1, ItemCategory cat2, int value, int hours, Map<RareMaterial,Integer> mats)
+    public ItemInfo(Item i, ItemCategory cat1, ItemCategory cat2, int value, int hours, int rank, Map<RareMaterial,Integer> mats)
     {
         item = i;
         baseValue = value;
@@ -58,6 +58,7 @@ public class ItemInfo
         time = hours;
         materialsRequired = mats;
         materialValue = 0;
+        rankUnlocked = rank;
         
         if(mats != null)
             materialsRequired.forEach((k, v) -> {materialValue+=k.cowrieValue * v;});
@@ -84,7 +85,7 @@ public class ItemInfo
     {
         popularity = pop;
         previousPeak = prevPeak;
-        peak = Unknown;
+
         craftedPerDay = new int[7];
         observedSupplies = new ArrayList<ObservedSupply>();
         observedSupplies.add(new ObservedSupply(startingSupply, startingDemand));   
@@ -112,7 +113,9 @@ public class ItemInfo
     }
     
     private void setPeakBasedOnObserved()
-    {        
+    {      
+        if(peak.isTerminal)
+            return;
         if(observedSupplies.get(0).supply == Insufficient)
         {
             DemandShift observedDemand = observedSupplies.get(0).demandShift;

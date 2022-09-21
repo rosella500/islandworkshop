@@ -25,66 +25,68 @@ public class Solver
     final static int GROOVE_MAX = 35;
     
     final static ItemInfo[] items = {
-            new ItemInfo(Potion,Concoctions,Invalid,28,4,null),
-            new ItemInfo(Firesand,Concoctions,UnburiedTreasures,28,4,null),
-            new ItemInfo(WoodenChair,Furnishings,Woodworks,42,6,null),
-            new ItemInfo(GrilledClam,Foodstuffs,MarineMerchandise,28,4,null),
-            new ItemInfo(Necklace,Accessories,Woodworks,28,4,null),
-            new ItemInfo(CoralRing,Accessories,MarineMerchandise,42,6,null),
-            new ItemInfo(Barbut,Attire,Metalworks,42,6,null),
-            new ItemInfo(Macuahuitl,Arms,Woodworks,42,6,null),
-            new ItemInfo(Sauerkraut,PreservedFood,Invalid,40,4,Map.of(Cabbage,1)),
-            new ItemInfo(BakedPumpkin,Foodstuffs,Invalid,40,4,Map.of(Pumpkin,1)),
-            new ItemInfo(Tunic,Attire,Textiles,72,6,Map.of(Fleece,2)),
-            new ItemInfo(CulinaryKnife,Sundries,CreatureCreations,44,4,Map.of(Claw,1)),
-            new ItemInfo(Brush,Sundries,Woodworks,44,4,Map.of(Fur, 1)),
-            new ItemInfo(BoiledEgg,Foodstuffs,CreatureCreations,44,4,Map.of(Egg, 1)),
-            new ItemInfo(Hora,Arms,CreatureCreations,72,6,Map.of(Carapace, 2)),
-            new ItemInfo(Earrings,Accessories,CreatureCreations,44,4,Map.of(Fang, 1)),
-            new ItemInfo(Butter,Ingredients,CreatureCreations,44,4,Map.of(Milk, 1)),
-            new ItemInfo(BrickCounter,Furnishings,UnburiedTreasures,48,6,null),
-            new ItemInfo(BronzeSheep,Furnishings,Metalworks,64,8,null),
-            new ItemInfo(GrowthFormula,Concoctions,Invalid,136,8,Map.of(Alyssum, 2)),
-            new ItemInfo(GarnetRapier,Arms,UnburiedTreasures,136,8,Map.of(Garnet,2)),
-            new ItemInfo(SpruceRoundShield,Attire,Woodworks,136,8,Map.of(Spruce,2)),
-            new ItemInfo(SharkOil,Sundries,MarineMerchandise,136,8,Map.of(Shark,2)),
-            new ItemInfo(SilverEarCuffs,Accessories,Metalworks,136,8,Map.of(Silver,2)),
-            new ItemInfo(SweetPopoto,Confections,Invalid,72,6,Map.of(Popoto, 2, Milk,1)),
-            new ItemInfo(ParsnipSalad,Foodstuffs,Invalid,48,4,Map.of(Parsnip,2)),
-            new ItemInfo(Caramels,Confections,Invalid,81,6,Map.of(Milk,2)),
-            new ItemInfo(Ribbon,Accessories,Textiles,54,6,null),
-            new ItemInfo(Rope,Sundries,Textiles,36,4,null),
-            new ItemInfo(CavaliersHat,Attire,Textiles,81,6,Map.of(Feather,2)),
-            new ItemInfo(Item.Horn,Sundries,CreatureCreations,81,6,Map.of(RareMaterial.Horn,2)),
-            new ItemInfo(SaltCod,PreservedFood,MarineMerchandise,54,6,null),
-            new ItemInfo(SquidInk,Ingredients,MarineMerchandise,36,4,null),
-            new ItemInfo(EssentialDraught,Concoctions,MarineMerchandise,54,6,null),
-            new ItemInfo(Jam,Ingredients,Invalid,78,6,Map.of(Isleberry,3)),
-            new ItemInfo(TomatoRelish,Ingredients,Invalid,52,4,Map.of(Tomato,2)),
-            new ItemInfo(OnionSoup,Foodstuffs,Invalid,78,6,Map.of(Onion,3)),
-            new ItemInfo(Pie,Confections,MarineMerchandise,78,6,Map.of(Wheat,3)),
-            new ItemInfo(CornFlakes,PreservedFood,Invalid,52,4,Map.of(Corn,2)),
-            new ItemInfo(PickledRadish,PreservedFood,Invalid,104,8,Map.of(Radish,4)),
-            new ItemInfo(IronAxe,Arms,Metalworks,72,8,null),
-            new ItemInfo(QuartzRing,Accessories,UnburiedTreasures,72,8,null),
-            new ItemInfo(PorcelainVase,Sundries,UnburiedTreasures,72,8,null),
-            new ItemInfo(VegetableJuice,Concoctions,Invalid,78,6,Map.of(Cabbage,3)),
-            new ItemInfo(PumpkinPudding,Confections,Invalid,78,6,Map.of(Pumpkin, 3, Egg, 1, Milk,1)),
-            new ItemInfo(SheepfluffRug,Furnishings,CreatureCreations,90,6,Map.of(Fleece,3)),
-            new ItemInfo(GardenScythe,Sundries,Metalworks,90,6,Map.of(Claw,3)),
-            new ItemInfo(Bed,Furnishings,Textiles,120,8,Map.of(Fur,4)),
-            new ItemInfo(ScaleFingers,Attire,CreatureCreations,120,8,Map.of(Carapace,4)),
-            new ItemInfo(Crook,Arms,Woodworks,120,8,Map.of(Fang,4))};
+            new ItemInfo(Potion,Concoctions,Invalid,28,4,1,null),
+            new ItemInfo(Firesand,Concoctions,UnburiedTreasures,28,4,1,null),
+            new ItemInfo(WoodenChair,Furnishings,Woodworks,42,6,1,null),
+            new ItemInfo(GrilledClam,Foodstuffs,MarineMerchandise,28,4,1,null),
+            new ItemInfo(Necklace,Accessories,Woodworks,28,4,1,null),
+            new ItemInfo(CoralRing,Accessories,MarineMerchandise,42,6,1,null),
+            new ItemInfo(Barbut,Attire,Metalworks,42,6,1,null),
+            new ItemInfo(Macuahuitl,Arms,Woodworks,42,6,1,null),
+            new ItemInfo(Sauerkraut,PreservedFood,Invalid,40,4,1,Map.of(Cabbage,1)),
+            new ItemInfo(BakedPumpkin,Foodstuffs,Invalid,40,4,1,Map.of(Pumpkin,1)),
+            new ItemInfo(Tunic,Attire,Textiles,72,6,1,Map.of(Fleece,2)),
+            new ItemInfo(CulinaryKnife,Sundries,CreatureCreations,44,4,1,Map.of(Claw,1)),
+            new ItemInfo(Brush,Sundries,Woodworks,44,4,1,Map.of(Fur, 1)),
+            new ItemInfo(BoiledEgg,Foodstuffs,CreatureCreations,44,4,1,Map.of(Egg, 1)),
+            new ItemInfo(Hora,Arms,CreatureCreations,72,6,1,Map.of(Carapace, 2)),
+            new ItemInfo(Earrings,Accessories,CreatureCreations,44,4,1,Map.of(Fang, 1)),
+            new ItemInfo(Butter,Ingredients,CreatureCreations,44,4,1,Map.of(Milk, 1)),
+            new ItemInfo(BrickCounter,Furnishings,UnburiedTreasures,48,6,5,null),
+            new ItemInfo(BronzeSheep,Furnishings,Metalworks,64,8,5,null),
+            new ItemInfo(GrowthFormula,Concoctions,Invalid,136,8,5,Map.of(Alyssum, 2)),
+            new ItemInfo(GarnetRapier,Arms,UnburiedTreasures,136,8,5,Map.of(Garnet,2)),
+            new ItemInfo(SpruceRoundShield,Attire,Woodworks,136,8,5,Map.of(Spruce,2)),
+            new ItemInfo(SharkOil,Sundries,MarineMerchandise,136,8,5,Map.of(Shark,2)),
+            new ItemInfo(SilverEarCuffs,Accessories,Metalworks,136,8,5,Map.of(Silver,2)),
+            new ItemInfo(SweetPopoto,Confections,Invalid,72,6,5,Map.of(Popoto, 2, Milk,1)),
+            new ItemInfo(ParsnipSalad,Foodstuffs,Invalid,48,4,5,Map.of(Parsnip,2)),
+            new ItemInfo(Caramels,Confections,Invalid,81,6,6,Map.of(Milk,2)),
+            new ItemInfo(Ribbon,Accessories,Textiles,54,6,6,null),
+            new ItemInfo(Rope,Sundries,Textiles,36,4,6,null),
+            new ItemInfo(CavaliersHat,Attire,Textiles,81,6,6,Map.of(Feather,2)),
+            new ItemInfo(Item.Horn,Sundries,CreatureCreations,81,6,6,Map.of(RareMaterial.Horn,2)),
+            new ItemInfo(SaltCod,PreservedFood,MarineMerchandise,54,6,7,null),
+            new ItemInfo(SquidInk,Ingredients,MarineMerchandise,36,4,7,null),
+            new ItemInfo(EssentialDraught,Concoctions,MarineMerchandise,54,6,7,null),
+            new ItemInfo(Jam,Ingredients,Invalid,78,6,7,Map.of(Isleberry,3)),
+            new ItemInfo(TomatoRelish,Ingredients,Invalid,52,4,7,Map.of(Tomato,2)),
+            new ItemInfo(OnionSoup,Foodstuffs,Invalid,78,6,7,Map.of(Onion,3)),
+            new ItemInfo(Pie,Confections,MarineMerchandise,78,6,7,Map.of(Wheat,3)),
+            new ItemInfo(CornFlakes,PreservedFood,Invalid,52,4,7,Map.of(Corn,2)),
+            new ItemInfo(PickledRadish,PreservedFood,Invalid,104,8,7,Map.of(Radish,4)),
+            new ItemInfo(IronAxe,Arms,Metalworks,72,8,8,null),
+            new ItemInfo(QuartzRing,Accessories,UnburiedTreasures,72,8,8,null),
+            new ItemInfo(PorcelainVase,Sundries,UnburiedTreasures,72,8,8,null),
+            new ItemInfo(VegetableJuice,Concoctions,Invalid,78,6,8,Map.of(Cabbage,3)),
+            new ItemInfo(PumpkinPudding,Confections,Invalid,78,6,8,Map.of(Pumpkin, 3, Egg, 1, Milk,1)),
+            new ItemInfo(SheepfluffRug,Furnishings,CreatureCreations,90,6,8,Map.of(Fleece,3)),
+            new ItemInfo(GardenScythe,Sundries,Metalworks,90,6,9,Map.of(Claw,3)),
+            new ItemInfo(Bed,Furnishings,Textiles,120,8,9,Map.of(Fur,4)),
+            new ItemInfo(ScaleFingers,Attire,CreatureCreations,120,8,9,Map.of(Carapace,4)),
+            new ItemInfo(Crook,Arms,Woodworks,120,8,9,Map.of(Fang,4))};
     
-    public static int groove = 0;
-    public static int totalGross = 0;
-    public static int totalNet = 0;
+    private static int groove = 0;
+    private static int totalGross = 0;
+    private static int totalNet = 0;
     public static boolean verboseCalculatorLogging = false;
     public static boolean verboseSolverLogging = false;
-    public static int alternativesToDisplay = 0;
+    private static int alternativesToDisplay = 0;
     public static int groovePerDay = 30;
     public static boolean rested = false;
     public static boolean allowD2Borrowing = false;
+    private static boolean bruteForce = true;
+    private static int islandRank = 10;
     
     //I don't actually use this but I know the moment I get rid of it, I'll need it and have to do this work over again
     public static final Item[][] itemsByCategory = {{}, 
@@ -112,28 +114,63 @@ public class Solver
         
         
         
-          setWeek3Initial();
-          items[CulinaryKnife.ordinal()].addObservedDay(Insufficient, Increasing);
+          //setWeek5Initial();
+          BruteForceChains.init();/*
+                                   * items[Earrings.ordinal()].peak = Cycle3Strong;
+                                   * items[Necklace.ordinal()].peak = Cycle3Strong;
+                                   */
+          
+          alternativesToDisplay = 0; 
+          
+          allowD2Borrowing = false; 
+          //List<Item> d2Risky = getBestScheduleForCycle(1, null).getKey();
+
+          //getBestScheduleForCycle(1, new HashSet<>(Arrays.asList(Earrings,GardenScythe,SharkOil))).getKey();
+          //addDay(Arrays.asList(Butter, TomatoRelish, Butter, Earrings, SilverEarCuffs),1);
+          //addDay(Arrays.asList(Earrings, SilverEarCuffs, Earrings, SilverEarCuffs),Arrays.asList(Earrings, SilverEarCuffs, Earrings, SilverEarCuffs),Arrays.asList(Butter, TomatoRelish,Butter, Earrings, SilverEarCuffs ),1);
+          
+          /*
+           * items[SilverEarCuffs.ordinal()].peak = Cycle2Strong;
+           * //items[Earrings.ordinal()].peak = Cycle3Strong;
+           * items[PickledRadish.ordinal()].peak = Cycle2Weak;
+           * //items[CornFlakes.ordinal()].peak = Cycle3Strong;
+           * items[BoiledEgg.ordinal()].peak = Cycle2Strong;
+           * items[BakedPumpkin.ordinal()].peak = Cycle2Strong;
+           * 
+           * 
+           * items[BrickCounter.ordinal()].peak = Cycle2Strong;
+           * items[SaltCod.ordinal()].peak = Cycle2Strong; items[Barbut.ordinal()].peak =
+           * Cycle2Strong;
+           */
+           
+          
+            
+             
           
           
-          alternativesToDisplay = 5; List<Item> d2 = getBestScheduleForCycle(1,
-          null).getKey(); alternativesToDisplay =0;
-          items[Butter.ordinal()].addObservedDay(Insufficient, None);
-          
-          addDay(d2, 1);
+          /*
+           * items[Butter.ordinal()].addObservedDay(Insufficient, None);
+           * 
+           * addDay(Arrays.asList(SquidInk, Butter, SheepfluffRug, Butter, SheepfluffRug),
+           * 1);
+           */
          
         
         
-        
-        /*
-         * alternativesToDisplay = 0; setWeek4Initial(); setOrRestEarlyWeek(1);
-         * 
-         * setWeek4Day2(); setOrRestEarlyWeek(2) ;
-         * 
-         * setWeek4Day3(); setOrRestEarlyWeek(3) ;
-         * 
-         * setWeek4Day4(); setLateDays();
-         */
+          
+            long time = System.currentTimeMillis(); alternativesToDisplay = 0;
+            setWeek4Initial(); setOrRestEarlyWeek(1);
+            
+            
+            setWeek4Day2(); setOrRestEarlyWeek(2) ;
+            
+            setWeek4Day3(); setOrRestEarlyWeek(3) ;
+            
+            setWeek4Day4(); setLateDays();
+            
+            System.out.println("Took "+(System.currentTimeMillis()-time)
+            +" ms to complete");
+           
          
          
 
@@ -147,7 +184,7 @@ public class Solver
         Entry<List<Item>,Integer> cycle6Sched = getBestScheduleForCycle(5,null);
         Entry<List<Item>,Integer> cycle7Sched = getBestScheduleForCycle(6,null);
         
-        //I'm just hardcoding this, This could probably be improved
+        //I'm just hardcoding this, This could almost certainly be improved
         
         List<Entry<List<Item>,Integer>> endOfWeekSchedules = new ArrayList<>();
         endOfWeekSchedules.add(cycle5Sched);
@@ -332,7 +369,70 @@ public class Solver
         });
     }
     
+    private static Map.Entry<List<Item>, Integer> getBestBruteForceSchedule(int day, Set<Item> reservedForLater)
+    {
+        
+        HashMap<List<Item>, Integer> safeSchedules = new HashMap<>();
+        List<List<Item>> filteredItemLists;
+        
+        
+        if(reservedForLater == null)
+        {
+            filteredItemLists = BruteForceChains.allEfficientChains.stream()
+                    .filter(list -> list.stream().allMatch(item -> items[item.ordinal()].rankUnlocked <= islandRank))
+                    .filter(list -> list.stream().allMatch(item -> items[item.ordinal()].peaksOnOrBeforeDay(day)))
+                    .collect(Collectors.toList()); 
+            
+            
+        }
+        else
+        {
+            filteredItemLists = BruteForceChains.allEfficientChains.stream()
+                    .filter(list -> list.stream().allMatch(item -> items[item.ordinal()].rankUnlocked <= islandRank))
+                    .filter(list -> list.stream().allMatch(item -> !reservedForLater.contains(item)) )
+                    .collect(Collectors.toList());
+        }
+        
+        CycleSchedule sch = new CycleSchedule(day, 0);
+        
+        for(List<Item> list : filteredItemLists)
+        {
+            sch.setForAllWorkshops(list);
+            safeSchedules.put(list, sch.getValueWithGrooveEstimate());
+        }
+        
+
+        
+        LinkedHashMap<List<Item>, Integer> sortedSchedules = 
+                safeSchedules.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (x, y) -> y, LinkedHashMap::new)); 
+        
+        Iterator<Entry<List<Item>, Integer>> finalIterator = sortedSchedules.entrySet().iterator();
+        Entry<List<Item>,Integer> bestSchedule = finalIterator.next();
+        if(alternativesToDisplay > 0)
+        {
+            System.out.println("Best rec: "+Arrays.toString(bestSchedule.getKey().toArray())+": "+bestSchedule.getValue());
+            for(int c=0; c<alternativesToDisplay && finalIterator.hasNext(); c++)
+            {
+                Entry<List<Item>,Integer> alt = finalIterator.next();
+                System.out.println("Alternative rec: "+Arrays.toString(alt.getKey().toArray())+": "+alt.getValue());
+            }
+        }
+        
+        return bestSchedule;
+        
+    }
+    
     private static Map.Entry<List<Item>, Integer> getBestScheduleForCycle(int day, Set<Item> reservedForLater)
+    {
+        if(bruteForce)
+            return getBestBruteForceSchedule(day, reservedForLater);
+        else
+            return getBestScheduleFittingPatterns(day, reservedForLater);
+    }
+    
+    private static Map.Entry<List<Item>, Integer> getBestScheduleFittingPatterns(int day, Set<Item> reservedForLater)
     {
         HashMap<ItemInfo, Integer> itemsByValue = new HashMap<>();
         for(ItemInfo item : items)
@@ -362,7 +462,7 @@ public class Solver
         CycleSchedule sch = new CycleSchedule(day, 0);
         
         
-        //This is a hard-coded mess, I'm sorry.
+        //This is a hard-coded mess, I'm sorry. I promise I'll make it better later, though I do not promise it'll be good
         
         //TODO: Clean this up bad
         while(topItemIt.hasNext())
@@ -648,30 +748,40 @@ public class Solver
     
     private static void setWeek5Initial()
     {
+
+        items[CoralRing.ordinal()].peak = Cycle2Strong;
+        items[SilverEarCuffs.ordinal()].peak = Cycle2Strong;
+        items[BrickCounter.ordinal()].peak = Cycle2Strong;
+        items[BakedPumpkin.ordinal()].peak = Cycle2Strong;
+        items[PickledRadish.ordinal()].peak = Cycle2Weak;
+        items[BoiledEgg.ordinal()].peak = Cycle2Weak;
+        items[SaltCod.ordinal()].peak = Cycle2Weak;
+        items[Barbut.ordinal()].peak = Cycle2Weak;
+        
         items[Potion.ordinal()].setInitialData(Average,Cycle4Weak);
         items[Firesand.ordinal()].setInitialData(High,Cycle6Weak);
         items[WoodenChair.ordinal()].setInitialData(High,Cycle7Weak);
         items[GrilledClam.ordinal()].setInitialData(Average,Cycle6Weak);
         items[Necklace.ordinal()].setInitialData(High,Cycle7Strong);
-        items[CoralRing.ordinal()].setInitialData(Average,Cycle2Weak);
-        items[Barbut.ordinal()].setInitialData(VeryHigh,Cycle7Strong);
+        items[CoralRing.ordinal()].setInitialData(Average,Cycle2Weak, Skyrocketing);
+        items[Barbut.ordinal()].setInitialData(VeryHigh,Cycle7Strong, Plummeting);
         items[Macuahuitl.ordinal()].setInitialData(Low,Cycle2Strong);
         items[Sauerkraut.ordinal()].setInitialData(Low,Cycle7Weak);
-        items[BakedPumpkin.ordinal()].setInitialData(VeryHigh,Cycle5Weak);
+        items[BakedPumpkin.ordinal()].setInitialData(VeryHigh,Cycle5Weak,Skyrocketing);
         items[Tunic.ordinal()].setInitialData(Average,Cycle4Weak);
         items[CulinaryKnife.ordinal()].setInitialData(High,Cycle3Strong);
         items[Brush.ordinal()].setInitialData(VeryHigh,Cycle4Strong);
-        items[BoiledEgg.ordinal()].setInitialData(Low,Cycle3Weak);
+        items[BoiledEgg.ordinal()].setInitialData(Low,Cycle3Weak,Skyrocketing);
         items[Hora.ordinal()].setInitialData(Average,Cycle5Strong);
         items[Earrings.ordinal()].setInitialData(High,Cycle6Strong);
         items[Butter.ordinal()].setInitialData(VeryHigh,Cycle2Weak);
-        items[BrickCounter.ordinal()].setInitialData(Low,Cycle2Weak);
+        items[BrickCounter.ordinal()].setInitialData(Low,Cycle2Weak,Skyrocketing);
         items[BronzeSheep.ordinal()].setInitialData(High,Cycle6Strong);
         items[GrowthFormula.ordinal()].setInitialData(Average,Cycle4Weak);
         items[GarnetRapier.ordinal()].setInitialData(High,Cycle7Strong);
         items[SpruceRoundShield.ordinal()].setInitialData(Average,Cycle6Strong);
         items[SharkOil.ordinal()].setInitialData(VeryHigh,Cycle3Weak);
-        items[SilverEarCuffs.ordinal()].setInitialData(VeryHigh,Cycle3Weak);
+        items[SilverEarCuffs.ordinal()].setInitialData(VeryHigh,Cycle3Weak,Skyrocketing);
         items[SweetPopoto.ordinal()].setInitialData(Average,Cycle3Weak);
         items[ParsnipSalad.ordinal()].setInitialData(High,Cycle3Strong);
         items[Caramels.ordinal()].setInitialData(High,Cycle6Strong);
@@ -679,7 +789,7 @@ public class Solver
         items[Rope.ordinal()].setInitialData(Average,Cycle5Strong);
         items[CavaliersHat.ordinal()].setInitialData(VeryHigh,Cycle4Weak);
         items[Item.Horn.ordinal()].setInitialData(Average,Cycle7Weak);
-        items[SaltCod.ordinal()].setInitialData(VeryHigh,Cycle2Weak);
+        items[SaltCod.ordinal()].setInitialData(VeryHigh,Cycle2Weak,Skyrocketing);
         items[SquidInk.ordinal()].setInitialData(VeryHigh,Cycle7Strong);
         items[EssentialDraught.ordinal()].setInitialData(VeryHigh,Cycle7Weak);
         items[Jam.ordinal()].setInitialData(VeryHigh,Cycle2Strong);
@@ -687,7 +797,7 @@ public class Solver
         items[OnionSoup.ordinal()].setInitialData(Low,Cycle4Strong);
         items[Pie.ordinal()].setInitialData(Average,Cycle5Weak);
         items[CornFlakes.ordinal()].setInitialData(Average,Cycle2Strong);
-        items[PickledRadish.ordinal()].setInitialData(VeryHigh,Cycle5Weak);
+        items[PickledRadish.ordinal()].setInitialData(VeryHigh,Cycle5Weak,Skyrocketing);
         items[IronAxe.ordinal()].setInitialData(High,Cycle4Strong);
         items[QuartzRing.ordinal()].setInitialData(Low,Cycle3Strong);
         items[PorcelainVase.ordinal()].setInitialData(Average,Cycle5Strong);
@@ -698,6 +808,7 @@ public class Solver
         items[Bed.ordinal()].setInitialData(VeryHigh,Cycle4Strong);
         items[ScaleFingers.ordinal()].setInitialData(Average,Cycle7Strong);
         items[Crook.ordinal()].setInitialData(High,Cycle7Weak);
+        
     }
     
     private static void setWeek4Day2()
