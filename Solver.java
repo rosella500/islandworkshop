@@ -83,42 +83,25 @@ public class Solver
     public static boolean verboseCalculatorLogging = false;
     public static boolean verboseSolverLogging = false;
     private static int alternativesToDisplay = 0;
-    public static int groovePerDay = 30;
+    public static int groovePerDay = 45;
     public static boolean rested = false;
     public static boolean allow4HrBorrowing = true;
     private static boolean bruteForce = true;
     private static int islandRank = 10;
-    
-    //I don't actually use this but I know the moment I get rid of it, I'll need it and have to do this work over again
-    public static final Item[][] itemsByCategory = {{}, 
-            {Sauerkraut, SaltCod, CornFlakes, PickledRadish}, 
-            {Barbut, Tunic, SpruceRoundShield, CavaliersHat, ScaleFingers},
-            {GrilledClam, BakedPumpkin, BoiledEgg, ParsnipSalad, OnionSoup},
-            {SweetPopoto, Caramels, Pie, PumpkinPudding},
-            {CulinaryKnife, Brush, SharkOil, Rope, Item.Horn, PorcelainVase, GardenScythe},
-            {WoodenChair, BrickCounter, BronzeSheep, SheepfluffRug,Bed},
-            {Macuahuitl, Hora, GarnetRapier, IronAxe, Crook},
-            {Potion, Firesand, GrowthFormula, EssentialDraught, VegetableJuice},
-            {Butter, SquidInk, Jam, TomatoRelish},
-            {Necklace, CoralRing, Earrings, SilverEarCuffs, Ribbon, QuartzRing},
-            {Barbut, BronzeSheep, SilverEarCuffs, IronAxe, GardenScythe},
-            {WoodenChair, Necklace, Macuahuitl, Brush, SpruceRoundShield, Crook},
-            {Tunic, Ribbon, Rope, CavaliersHat, Bed},
-            {CulinaryKnife, BoiledEgg, Hora, Earrings, Butter, Item.Horn, SheepfluffRug, ScaleFingers},
-            {GrilledClam, CoralRing, SharkOil, SaltCod, SquidInk, EssentialDraught, Pie},
-            {Firesand, BrickCounter, GarnetRapier, QuartzRing, PorcelainVase}};
 
-    
-    
     public static void main(String[] args)
     { 
+        //TODO: Figure out why Week 2 recs are so bad (fix late day recs?)
+        //TODO: Figure out better rest day formula (if it assumes weak peaks, maybe get #1 rec and check strong or weak peaks for all applicable items?)
+        //TODO: Change not-brute force to include  E4 - D4 - C4 - B4 - A8 and B4 - A8 - C4 - A8
+        //TODO: Change not-brute force to be good
+        //TODO: Save peak info in CSV on D4
+        //TODO: ...Port everything to .Net and make a plugin???
+        //TODO: Automatically delete two weeks ago? 
+        //TODO: Figure out how to handle D2 because no one's going to craft things D1 to find out
           long time = System.currentTimeMillis();
           CSVImporter.initSupplyData(5);
-          CSVImporter.initBruteForceChains();/*
-                               * items[Earrings.ordinal()].peak = Cycle3Strong;
-                               * items[Necklace.ordinal()].peak = Cycle3Strong;
-                               */
-          
+          CSVImporter.initBruteForceChains();          
           setInitialFromCSV();
           
           
@@ -130,13 +113,18 @@ public class Solver
           if(addOrRest(1))
           {            
               if(addOrRest(2))
-              {                  
-                  if(addOrRest(3))
+              {      
+                  boolean keepGoing = setObservedFromCSV(3);
+                  rested = true;
+                  //addDay(Arrays.asList(TomatoRelish, SquidInk, Jam, SquidInk, Jam),4);
+                  
+                  if(keepGoing)
                   {
                       setLateDays();
                   }            
               }
           }
+          
         
           System.out.println("Week total: " + totalGross + " (" + totalNet + ")\n"+"Took "+(System.currentTimeMillis() - time)+"ms.");
 
@@ -144,7 +132,7 @@ public class Solver
     
     private static boolean addOrRest(int day)
     {
-        Entry<List<Item>, Integer> rec = getBestScheduleForCycle(day, null);
+        Entry<List<Item>, Integer> rec = getBestSchedule(day, null);
         
         boolean hasNextDay = setObservedFromCSV(day);
         if(!rested && (rec == null || isWorseThanAllFollowing(rec.getValue(), 2)))
@@ -162,9 +150,9 @@ public class Solver
     
     private static void setLateDays()
     {
-        Entry<List<Item>,Integer> cycle5Sched = getBestScheduleForCycle(4,null);
-        Entry<List<Item>,Integer> cycle6Sched = getBestScheduleForCycle(5,null);
-        Entry<List<Item>,Integer> cycle7Sched = getBestScheduleForCycle(6,null);
+        Entry<List<Item>,Integer> cycle5Sched = getBestSchedule(4,null);
+        Entry<List<Item>,Integer> cycle6Sched = getBestSchedule(5,null);
+        Entry<List<Item>,Integer> cycle7Sched = getBestSchedule(6,null);
         
         //I'm just hardcoding this, This could almost certainly be improved
         
@@ -202,13 +190,13 @@ public class Solver
             if(worstDay == 5)
             {
                 //Day 6 is worst, so recalculate it according to day 7
-                Entry<List<Item>,Integer> recalcedCycle7Sched = getBestScheduleForCycle(6,null);
+                Entry<List<Item>,Integer> recalcedCycle7Sched = getBestSchedule(6,null);
 
                 //System.out.println("Recalcing day 7");
                 if(rested)
                 {
                     //System.out.println("Recalcing day 6 using only day 7's requirements as verboten and adding");
-                    addDay(getBestScheduleForCycle(5, new HashSet<Item>(recalcedCycle7Sched.getKey())).getKey(), 5);
+                    addDay(getBestSchedule(5, new HashSet<Item>(recalcedCycle7Sched.getKey())).getKey(), 5);
                 }
                // System.out.println("Adding day 7");
                 addDay(recalcedCycle7Sched.getKey(), 6);
@@ -216,11 +204,11 @@ public class Solver
             else
             {
                 //System.out.println("Day 6 is second best, just recalcing and adding");
-                addDay(getBestScheduleForCycle(5,null).getKey(), 5);
+                addDay(getBestSchedule(5,null).getKey(), 5);
                 if(rested)
                 {
                    // System.out.println("Day 6 is second best, just recalcing and adding 7 too");
-                    addDay(getBestScheduleForCycle(6,null).getKey(), 6);
+                    addDay(getBestSchedule(6,null).getKey(), 6);
                 }
             }                
         }
@@ -232,7 +220,7 @@ public class Solver
             {
                 //System.out.println("Day 6 is second best or we're using all the days anyway. Recalcing 6 based on 7.");
                 //Recalculate it in case it's better just reserving day 7
-                Entry<List<Item>,Integer> recalcedCycle6Sched = getBestScheduleForCycle(5, reserved7Items);
+                Entry<List<Item>,Integer> recalcedCycle6Sched = getBestSchedule(5, reserved7Items);
                 //System.out.println("Recalced 6: "+Arrays.toString(recalcedCycle6Sched.getKey().toArray())+" value: "+recalcedCycle6Sched.getValue());
                 HashSet<Item> reserved67Items = new HashSet<Item>();
                 reserved67Items.addAll(reserved7Items);
@@ -240,7 +228,7 @@ public class Solver
             
                 if(rested)
                 {
-                    Entry<List<Item>,Integer> recalcedCycle5Sched = getBestScheduleForCycle(4,reserved67Items);
+                    Entry<List<Item>,Integer> recalcedCycle5Sched = getBestSchedule(4,reserved67Items);
                     //System.out.println("Recalced 5: "+Arrays.toString(recalcedCycle5Sched.getKey().toArray())+" value: "+recalcedCycle5Sched.getValue());
                     //System.out.println("Recalcing 5 based on 6. Is it better?");
                     
@@ -258,7 +246,7 @@ public class Solver
                         addDay(cycle5Sched.getKey(), 4);
                     }
                    //System.out.println("Recalcing 6 AGAIN just in case 5 changed it, still only forbidding things used day 7");
-                   addDay(getBestScheduleForCycle(5, reserved7Items).getKey(), 5);
+                   addDay(getBestSchedule(5, reserved7Items).getKey(), 5);
                 }
                 else
                     addDay(recalcedCycle6Sched.getKey(), 5);                
@@ -266,10 +254,10 @@ public class Solver
             if(worstDay == 5) //Day 5 is second best and we aren't using day 6
             {
                 ///System.out.println("Day 6 isn't being used so just recalc 5 based on day 7");
-                addDay(getBestScheduleForCycle(4,reserved7Items).getKey(), 4);
+                addDay(getBestSchedule(4,reserved7Items).getKey(), 4);
             }
             //System.out.println("Adding recalced day 7");
-            addDay(getBestScheduleForCycle(6, null).getKey(), 6);
+            addDay(getBestSchedule(6, null).getKey(), 6);
             
         }
         else //Best day is Day 6
@@ -281,11 +269,11 @@ public class Solver
                 addDay(cycle5Sched.getKey(), 4);
             }
             //System.out.println("Recalcing day 6 and adding");
-            addDay(getBestScheduleForCycle(5, null).getKey(), 5);
+            addDay(getBestSchedule(5, null).getKey(), 5);
             if(rested || worstDay != 6)
             {
                 //System.out.println("Recalcing day 7 and adding");
-                addDay(getBestScheduleForCycle(6, null).getKey(), 6);
+                addDay(getBestSchedule(6, null).getKey(), 6);
             }
         }
     }
@@ -297,7 +285,7 @@ public class Solver
         System.out.println("Comparing d"+(day+1)+" ("+value+") to worst-case future days");
         for(int d=day+1; d < 7; d++)
         {
-            Entry<List<Item>,Integer> solution =  getBestScheduleForCycle(d, null);
+            Entry<List<Item>,Integer> solution =  getBestSchedule(d, null);
             if(verboseSolverLogging)
             System.out.println("Day "+(d+1)+", crafts: "+Arrays.toString(solution.getKey().toArray())+" value: "+solution.getValue());
             worstInFuture = Math.min(worstInFuture,solution.getValue());
@@ -332,7 +320,7 @@ public class Solver
         schedule.startingGroove = 0;
         boolean oldVerbose = verboseCalculatorLogging;
         verboseCalculatorLogging = false;
-        System.out.println("day " + (day + 1) + " total, "+startingGroove+" starting groove: " + gross +"(" + net + "). With 0 groove: "+schedule.getValue());
+        System.out.println("day " + (day + 1) + " total, 0 groove: "+schedule.getValue()+". Starting groove "+startingGroove+": " + gross +", net " + net + ".");
         verboseCalculatorLogging = oldVerbose;
         schedule.numCrafted.forEach((k, v) ->
         {
@@ -399,12 +387,12 @@ public class Solver
         
     }
     
-    private static Map.Entry<List<Item>, Integer> getBestScheduleForCycle(int day, Set<Item> reservedForLater)
+    private static Map.Entry<List<Item>, Integer> getBestSchedule(int day, Set<Item> reservedForLater)
     {
-        return getBestScheduleForCycle(day, reservedForLater, true);
+        return getBestSchedule(day, reservedForLater, true);
     }
     
-    private static Map.Entry<List<Item>, Integer> getBestScheduleForCycle(int day, Set<Item> reservedForLater, boolean allowAllOthers)
+    private static Map.Entry<List<Item>, Integer> getBestSchedule(int day, Set<Item> reservedForLater, boolean allowAllOthers)
     {
         if(bruteForce)
             return getBestBruteForceSchedule(day, reservedForLater, allowAllOthers);

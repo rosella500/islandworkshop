@@ -101,7 +101,7 @@ public class CycleSchedule
     {
         int craftsAbove4 = 0;
         craftsAbove4+=workshops[0].getNumCrafts()-4;
-        int daysToGroove = 5-day;
+        int daysToGroove = 4-day;
         if(!Solver.rested)
             daysToGroove--;
         
