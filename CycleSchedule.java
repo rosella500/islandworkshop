@@ -91,7 +91,8 @@ public class CycleSchedule
             boolean efficient = workshops[index].currentCraftIsEfficient();
             value += workshops[index].getValueForCurrent(day, numCrafted.getOrDefault(completedCraft.item, 0), i*3, efficient);
             workshops[index].currentIndex++;
-            numCrafted.put(completedCraft.item, numCrafted.getOrDefault(completedCraft.item, 0) + 3);
+            int amountCrafted = efficient? 6 : 3;
+            numCrafted.put(completedCraft.item, numCrafted.getOrDefault(completedCraft.item, 0) + amountCrafted);
         }
         return value;
     }

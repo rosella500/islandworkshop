@@ -130,13 +130,7 @@ public class Solver
           
           boolean hasDay2 = setObservedFromCSV(1);
           
-          if(!rested && (d2 == null || isWorseThanAllFollowing(d2.getValue(), 1)))
-          {
-              System.out.println("Rest day 2");
-              rested = true;
-          }
-          else
-              addDay(d2.getKey(), 1);
+          addOrRest(d2, 1);
           
           if(hasDay2)
           {
@@ -144,13 +138,7 @@ public class Solver
               
               boolean hasDay3 = setObservedFromCSV(2);
               
-              if(!rested && (d3 == null || isWorseThanAllFollowing(d3.getValue(), 2)))
-              {
-                  System.out.println("Rest day 3");
-                  rested = true;
-              }
-              else
-                  addDay(d3.getKey(), 2);
+              addOrRest(d3, 2);
               
               if(hasDay3)
               {
@@ -158,13 +146,7 @@ public class Solver
                   
                   boolean hasDay4 = setObservedFromCSV(3);
                   
-                  if(!rested && (d4 == null || isWorseThanAllFollowing(d4.getValue(), 3)))
-                  {
-                      System.out.println("Rest day 4");
-                      rested = true;
-                  }
-                  else
-                      addDay(d4.getKey(), 3);
+                  addOrRest(d4, 3);
                   
                   if(hasDay4)
                   {
@@ -175,6 +157,19 @@ public class Solver
         
           System.out.println("Week total: " + totalGross + " (" + totalNet + ")\n"+"Took "+(System.currentTimeMillis() - time)+"ms.");
 
+    }
+    
+    private static void addOrRest(Entry<List<Item>, Integer> rec, int day)
+    {
+        if(!rested && (rec == null || isWorseThanAllFollowing(rec.getValue(), 2)))
+        {
+            CycleSchedule restedDay = new CycleSchedule(day, 0);
+            restedDay.setForAllWorkshops(rec.getKey());
+            System.out.println("Think we're guaranteed to make more than "+restedDay.getValue()+" with "+rec.getKey()+". Rest day "+(day+1));
+            rested = true;
+        }
+        else
+            addDay(rec.getKey(), day);
     }
     
     private static void setLateDays()
@@ -268,8 +263,10 @@ public class Solver
                         //System.out.println("It is! Using recalced 5");
                         addDay(recalcedCycle5Sched.getKey(), 4);
                     }
+                    
                     else
                     {
+                        
                         addDay(cycle5Sched.getKey(), 4);
                     }
                    //System.out.println("Recalcing 6 AGAIN just in case 5 changed it, still only forbidding things used day 7");
@@ -319,7 +316,7 @@ public class Solver
         }
         if(verboseSolverLogging)
         System.out.println("Worst future day: "+worstInFuture);
-        return value <= worstInFuture + 100;
+        return value <= worstInFuture + 10;
     }
 
     public static void addDay(List<Item> crafts, int day)
@@ -650,10 +647,8 @@ public class Solver
     {
         if(day >= CSVImporter.observedSupplies.get(0).size())
         {
-            System.out.println("Cannot find data for day "+ (day+1));
             return false;
         }
-        System.out.println("Found observed data for day "+(day+1));
         for(int i=0; i<items.length; i++)
         {
             ObservedSupply ob = CSVImporter.observedSupplies.get(i).get(day);
