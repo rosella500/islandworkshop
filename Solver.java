@@ -129,23 +129,42 @@ public class Solver
         
           
           boolean hasDay2 = setObservedFromCSV(1);
-          addDay(d2.getKey(), 1);
+          
+          if(!rested && (d2 == null || isWorseThanAllFollowing(d2.getValue(), 1)))
+          {
+              System.out.println("Rest day 2");
+              rested = true;
+          }
+          else
+              addDay(d2.getKey(), 1);
           
           if(hasDay2)
           {
               Entry<List<Item>, Integer> d3 = getBestScheduleForCycle(2, null);
               
               boolean hasDay3 = setObservedFromCSV(2);
-        
-              addDay(d3.getKey(), 2);
+              
+              if(!rested && (d3 == null || isWorseThanAllFollowing(d3.getValue(), 2)))
+              {
+                  System.out.println("Rest day 3");
+                  rested = true;
+              }
+              else
+                  addDay(d3.getKey(), 2);
               
               if(hasDay3)
               {
-                  Entry<List<Item>, Integer> d4 = getBestScheduleForCycle(2, null);
+                  Entry<List<Item>, Integer> d4 = getBestScheduleForCycle(3, null);
                   
                   boolean hasDay4 = setObservedFromCSV(3);
-        
-                  addDay(d4.getKey(), 2);
+                  
+                  if(!rested && (d4 == null || isWorseThanAllFollowing(d4.getValue(), 3)))
+                  {
+                      System.out.println("Rest day 4");
+                      rested = true;
+                  }
+                  else
+                      addDay(d4.getKey(), 3);
                   
                   if(hasDay4)
                   {
@@ -154,7 +173,7 @@ public class Solver
               }
           }
         
-          System.out.println("Took "+(System.currentTimeMillis() - time)+"ms.\nWeek total: " + totalGross + " (" + totalNet + ")");
+          System.out.println("Week total: " + totalGross + " (" + totalNet + ")\n"+"Took "+(System.currentTimeMillis() - time)+"ms.");
 
     }
     
@@ -286,18 +305,6 @@ public class Solver
         }
     }
     
-    private static void setOrRestEarlyWeek(int day)
-    {
-        Entry<List<Item>,Integer> sched = getBestScheduleForCycle(day,null);
-        if(!rested && (sched == null || isWorseThanAllFollowing(sched.getValue(), day)))
-        {
-            System.out.println("Rest day "+(day + 1));
-            rested = true;
-        }
-        else
-            addDay(sched.getKey(), day);
-    }
-    
     private static boolean isWorseThanAllFollowing(int value, int day)
     {
         int worstInFuture = 99999;
@@ -313,7 +320,6 @@ public class Solver
         if(verboseSolverLogging)
         System.out.println("Worst future day: "+worstInFuture);
         return value <= worstInFuture + 100;
-            
     }
 
     public static void addDay(List<Item> crafts, int day)
