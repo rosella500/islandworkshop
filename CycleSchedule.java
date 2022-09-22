@@ -80,13 +80,26 @@ public class CycleSchedule
        
     }
     
+    public int getSingleWorkshopValue(int index)
+    {
+        int value = 0;
+        numCrafted = new HashMap<Item, Integer>(); 
+        workshops[index].currentIndex = 0;
+        for(int i=0; i<workshops[index].getNumCrafts(); i++)
+        {
+            ItemInfo completedCraft = workshops[index].getCurrentCraft();
+            boolean efficient = workshops[index].currentCraftIsEfficient();
+            value += workshops[index].getValueForCurrent(day, numCrafted.getOrDefault(completedCraft.item, 0), i*3, efficient);
+            workshops[index].currentIndex++;
+            numCrafted.put(completedCraft.item, numCrafted.getOrDefault(completedCraft.item, 0) + 3);
+        }
+        return value;
+    }
+    
     public int getValueWithGrooveEstimate()
     {
         int craftsAbove4 = 0;
-        for(int i=0; i<workshops.length;i++)
-        {
-            craftsAbove4+=workshops[i].getNumCrafts()-4;
-        }
+        craftsAbove4+=workshops[0].getNumCrafts()-4;
         int daysToGroove = 5-day;
         if(!Solver.rested)
             daysToGroove--;
@@ -94,7 +107,7 @@ public class CycleSchedule
         if(daysToGroove < 0)
             daysToGroove = 0;
                 
-        return craftsAbove4 * daysToGroove * Solver.groovePerDay + getValue();
+        return craftsAbove4 * daysToGroove * Solver.groovePerDay + getSingleWorkshopValue(0);
     }
     
     public int getMaterialCost()

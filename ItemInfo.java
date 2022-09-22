@@ -83,18 +83,27 @@ public class ItemInfo
     }
     public void setInitialData(Popularity pop, PeakCycle prevPeak, Supply startingSupply, DemandShift startingDemand)
     {
+        setInitialData(pop,prevPeak,new ObservedSupply(startingSupply, startingDemand));   
+    }
+    
+    public void setInitialData(Popularity pop, PeakCycle prev, ObservedSupply ob)
+    {
         popularity = pop;
-        previousPeak = prevPeak;
+        previousPeak = prev;
 
         craftedPerDay = new int[7];
         observedSupplies = new ArrayList<ObservedSupply>();
-        observedSupplies.add(new ObservedSupply(startingSupply, startingDemand));   
-        setPeakBasedOnObserved();
+        addObservedDay(ob);
     }
     
     public void addObservedDay(Supply supply, DemandShift demand)
     {
-        observedSupplies.add(new ObservedSupply(supply, demand));
+        addObservedDay(new ObservedSupply(supply, demand));
+    }
+    
+    public void addObservedDay(ObservedSupply ob)
+    {
+        observedSupplies.add(ob);
         setPeakBasedOnObserved();
     }
     
@@ -114,7 +123,7 @@ public class ItemInfo
     
     private void setPeakBasedOnObserved()
     {      
-        if(peak.isTerminal)
+        if(peak.isTerminal && peak != Cycle2Weak)
             return;
         if(observedSupplies.get(0).supply == Insufficient)
         {
@@ -165,7 +174,7 @@ public class ItemInfo
             {
                 ObservedSupply observedToday = observedSupplies.get(day);
                 if(Solver.verboseCalculatorLogging)
-                  System.out.println("Observed: "+observedToday);
+                  System.out.println(item+" observed: "+observedToday);
                 int crafted = getCraftedBeforeDay(day);
                 boolean found = false;
                 
@@ -235,7 +244,7 @@ public class ItemInfo
     
     public boolean peaksOnOrBeforeDay(int day)
     {
-        if(day == 1 && Solver.allowD2Borrowing && time == 4) //D2 can borrow from the future if it's a 4hr craft
+        if(Solver.allow4HrBorrowing && time == 4) //D2 can borrow from the future if it's a 4hr craft
             return true;
         if(peak == Cycle2Weak || peak == Cycle2Strong) 
             return day > 0;
