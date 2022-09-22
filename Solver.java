@@ -125,30 +125,13 @@ public class Solver
           allow4HrBorrowing = true; 
         
           alternativesToDisplay = 0; 
-          Entry<List<Item>, Integer> d2 = getBestScheduleForCycle(1, null);
-        
           
-          boolean hasDay2 = setObservedFromCSV(1);
           
-          addOrRest(d2, 1);
-          
-          if(hasDay2)
-          {
-              Entry<List<Item>, Integer> d3 = getBestScheduleForCycle(2, null);
-              
-              boolean hasDay3 = setObservedFromCSV(2);
-              
-              addOrRest(d3, 2);
-              
-              if(hasDay3)
-              {
-                  Entry<List<Item>, Integer> d4 = getBestScheduleForCycle(3, null);
-                  
-                  boolean hasDay4 = setObservedFromCSV(3);
-                  
-                  addOrRest(d4, 3);
-                  
-                  if(hasDay4)
+          if(addOrRest(1))
+          {            
+              if(addOrRest(2))
+              {                  
+                  if(addOrRest(3))
                   {
                       setLateDays();
                   }            
@@ -159,8 +142,11 @@ public class Solver
 
     }
     
-    private static void addOrRest(Entry<List<Item>, Integer> rec, int day)
+    private static boolean addOrRest(int day)
     {
+        Entry<List<Item>, Integer> rec = getBestScheduleForCycle(day, null);
+        
+        boolean hasNextDay = setObservedFromCSV(day);
         if(!rested && (rec == null || isWorseThanAllFollowing(rec.getValue(), 2)))
         {
             CycleSchedule restedDay = new CycleSchedule(day, 0);
@@ -170,6 +156,8 @@ public class Solver
         }
         else
             addDay(rec.getKey(), day);
+        
+        return hasNextDay;
     }
     
     private static void setLateDays()
