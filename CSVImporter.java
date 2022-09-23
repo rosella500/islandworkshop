@@ -44,6 +44,13 @@ public class CSVImporter
         }
     }
     
+    public static void writeCurrentPeaks(int week)
+    {
+        String path = "Week"+(week)+"Supply.csv";
+        
+        //TODO: this
+    }
+    
     public static void initSupplyData(int week)
     {
         lastWeekPeaks = new PeakCycle[Solver.items.length];
@@ -70,6 +77,17 @@ public class CSVImporter
             {
                 System.out.println("Error importing csv "+path+": "+e.getMessage());
             }
+        }
+        else
+        {
+            for(int c=0; c<lastWeekPeaks.length; c++)
+            {                   
+                lastWeekPeaks[c] = PeakCycle.Cycle2Weak;
+            }
+            lastWeekPeaks[Item.Barbut.ordinal()] = PeakCycle.Cycle7Strong;
+            lastWeekPeaks[Item.Tunic.ordinal()] = PeakCycle.Cycle7Strong;
+            lastWeekPeaks[Item.Brush.ordinal()] = PeakCycle.Cycle3Strong;
+            
         }
         
         path = "Week"+week+"Supply.csv";
