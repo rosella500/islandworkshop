@@ -2,6 +2,9 @@ package islandworkshop;
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class CSVImporter
@@ -46,9 +49,44 @@ public class CSVImporter
     
     public static void writeCurrentPeaks(int week)
     {
-        String path = "Week"+(week)+"Supply.csv";
+        String fileName = "Week"+(week)+"Supply.csv";
         
         //TODO: this
+        
+        Path path = Paths.get(fileName);
+        
+        /*
+         * byte[] strToBytes = str.getBytes();
+         * 
+         * Files.write(path, strToBytes);
+         */
+
+        try
+        {
+            List<String> original = Files.readAllLines(path);
+            List<String> updated = new ArrayList<>();
+            
+            for(int c=0; c<currentPeaks.length; c++)
+            {
+                String orig = original.get(c);
+                String[] split = orig.split(",");
+                if(split.length<11)
+                {
+                    updated.add(orig + "," + Solver.items[c].peak);
+                }
+                else
+                {
+                    updated.add(orig);
+                    System.out.println("Trying to write new peaks but we already have them? "+orig);
+                }
+            }
+            Files.write(path, updated);
+        }
+        catch(Exception e)
+        {
+            System.out.println("Error writing new peaks to csv "+path+": "+e.getMessage());
+        }
+        
     }
     
     public static void initSupplyData(int week)

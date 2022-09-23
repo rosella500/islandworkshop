@@ -89,13 +89,10 @@ public class Solver
 
     public static void main(String[] args)
     { 
-        //TODO: Change solution set to match on number of crafts and only keep highest for that set 
-        //e.g., if butter ink jam butter jam is better than ink butter jam butter jam, we don't need to keep both
         //TODO: Change not-brute force to include  E4 - D4 - C4 - B4 - A8 and B4 - A8 - C4 - A8
         //TODO: Change not-brute force to be good
-        //TODO: Save peak info in CSV on D4
         //TODO: Figure out how to handle D2 because no one's going to craft things D1 to find out
-        int week = 5;
+        int week = 1;
           long time = System.currentTimeMillis();
           CSVImporter.initSupplyData(week);
           CSVImporter.initBruteForceChains();          
@@ -103,21 +100,20 @@ public class Solver
           
           allow4HrBorrowing = true;           
           
-          Entry<List<Item>, Integer> d2 = getBestSchedule(1, null);
-          
+          Entry<WorkshopSchedule, Integer> d2 = getBestSchedule(1, null);
           boolean hasNextDay = setObservedFromCSV(1);
           
           addOrRest(d2, 1);
           if(hasNextDay)
           {
-              Entry<List<Item>, Integer> d3 = getBestSchedule(2, null);
+              Entry<WorkshopSchedule, Integer> d3 = getBestSchedule(2, null);
               
               hasNextDay = setObservedFromCSV(2);
               
               addOrRest(d3, 2);
               if(hasNextDay)
               {
-                  Entry<List<Item>, Integer> d4 = getBestSchedule(3, null);
+                  Entry<WorkshopSchedule, Integer> d4 = getBestSchedule(3, null);
                   
                   hasNextDay = setObservedFromCSV(3);
                   
@@ -127,10 +123,10 @@ public class Solver
                       if(CSVImporter.currentPeaks[0] == null)
                           CSVImporter.writeCurrentPeaks(week);
                       
-                      /*
-                       * addBestSchedule(4); addBestSchedule(5); getBestSchedule(6, null);
-                       */
+                        //addDay(Arrays.asList(Butter, SquidInk, Butter, SquidInk, SharkOil),4); addBestSchedule(5); addBestSchedule(6);
+                       
                       setLateDays();
+                       
                   }
               }
           }
@@ -141,48 +137,48 @@ public class Solver
            */
           
           
-            //for(ItemInfo item : items) { System.out.println(item.item+":" +item.peak); }
+           // for(ItemInfo item : items) { System.out.println(item.item+":" +item.peak); }
            
         
           System.out.println("Week total: " + totalGross + " (" + totalNet + ")\n"+"Took "+(System.currentTimeMillis() - time)+"ms.");
 
     }
     
-    private static void addOrRest(Entry<List<Item>,Integer> rec, int day)
+    private static void addOrRest(Entry<WorkshopSchedule,Integer> rec, int day)
     {
         if(!rested && (rec == null || isWorseThanAllFollowing(rec, day)))
         {
-            printRestDayInfo(rec.getKey(), day);
+            printRestDayInfo(rec.getKey().getItems(), day);
             rested = true;
         }
         else
         {
 
-            addDay(rec.getKey(), day);
+            addDay(rec.getKey().getItems(), day);
         }
     }
     
     private static void addBestSchedule(int day)
     {
-        addDay(getBestSchedule(day, null).getKey(), day);
+        addDay(getBestSchedule(day, null).getKey().getItems(), day);
     }
     
     private static void printRestDayInfo(List<Item> rec, int day)
     {
-        CycleSchedule restedDay = new CycleSchedule(day, 0);
+        CycleSchedule restedDay = new CycleSchedule(day, groove);
         restedDay.setForAllWorkshops(rec);
         System.out.println("Think we're guaranteed to make more than "+restedDay.getValue()+" with "+rec+". Rest day "+(day+1));
     }
     
     private static void setLateDays()
     {
-        Entry<List<Item>,Integer> cycle5Sched = getBestSchedule(4,null);
-        Entry<List<Item>,Integer> cycle6Sched = getBestSchedule(5,null);
-        Entry<List<Item>,Integer> cycle7Sched = getBestSchedule(6,null);
+        Entry<WorkshopSchedule,Integer> cycle5Sched = getBestSchedule(4,null);
+        Entry<WorkshopSchedule,Integer> cycle6Sched = getBestSchedule(5,null);
+        Entry<WorkshopSchedule,Integer> cycle7Sched = getBestSchedule(6,null);
         
         //I'm just hardcoding this, This could almost certainly be improved
         
-        List<Entry<List<Item>,Integer>> endOfWeekSchedules = new ArrayList<>();
+        List<Entry<WorkshopSchedule,Integer>> endOfWeekSchedules = new ArrayList<>();
         endOfWeekSchedules.add(cycle5Sched);
         endOfWeekSchedules.add(cycle6Sched);
         endOfWeekSchedules.add(cycle7Sched);
@@ -211,61 +207,61 @@ public class Solver
         if(bestDay == 4) //Day 5 is best
         {
             //System.out.println("Day 5 is best. Adding as-is");
-            addDay(cycle5Sched.getKey(), 4);
+            addDay(cycle5Sched.getKey().getItems(), 4);
             
             if(worstDay == 5)
             {
                 //Day 6 is worst, so recalculate it according to day 7
-                Entry<List<Item>,Integer> recalcedCycle7Sched = getBestSchedule(6,null);
+                Entry<WorkshopSchedule,Integer> recalcedCycle7Sched = getBestSchedule(6,null);
 
-                Entry<List<Item>,Integer> recalced6Sched = getBestSchedule(5, new HashSet<Item>(recalcedCycle7Sched.getKey()));
+                Entry<WorkshopSchedule,Integer> recalced6Sched = getBestSchedule(5, new HashSet<Item>(recalcedCycle7Sched.getKey().getItems()));
                 //System.out.println("Recalcing day 7");
                 if(rested)
                 {
                     //System.out.println("Recalcing day 6 using only day 7's requirements as verboten and adding");
-                    addDay(recalced6Sched.getKey(), 5);
+                    addDay(recalced6Sched.getKey().getItems(), 5);
                 }
                 else
                 {
-                    printRestDayInfo(recalced6Sched.getKey(), 5);
+                    printRestDayInfo(recalced6Sched.getKey().getItems(), 5);
                 }
                // System.out.println("Adding day 7");
-                addDay(recalcedCycle7Sched.getKey(), 6);
+                addDay(recalcedCycle7Sched.getKey().getItems(), 6);
             }
             else
             {
                 //System.out.println("Day 6 is second best, just recalcing and adding");
-                addDay(getBestSchedule(5,null).getKey(), 5);
+                addDay(getBestSchedule(5,null).getKey().getItems(), 5);
                 
-                Entry<List<Item>,Integer> recalced7Sched = getBestSchedule(6,null);
+                Entry<WorkshopSchedule,Integer> recalced7Sched = getBestSchedule(6,null);
                 if(rested)
                 {
                    // System.out.println("Day 6 is second best, just recalcing and adding 7 too");
-                    addDay(recalced7Sched.getKey(), 6);
+                    addDay(recalced7Sched.getKey().getItems(), 6);
                 }
                 else
                 {
-                    printRestDayInfo(recalced7Sched.getKey(), 6);
+                    printRestDayInfo(recalced7Sched.getKey().getItems(), 6);
                 }
             }                
         }
         else if(bestDay == 6) //Day 7 is best
         {
             //System.out.println("Day 7 is best");
-            HashSet<Item> reserved7Items = new HashSet<>(cycle7Sched.getKey());
+            HashSet<Item> reserved7Items = new HashSet<>(cycle7Sched.getKey().getItems());
             if(worstDay == 4 || rested) //Day 6 is second best or we're using all the days anyway
             {
                 //System.out.println("Day 6 is second best or we're using all the days anyway. Recalcing 6 based on 7.");
                 //Recalculate it in case it's better just reserving day 7
-                Entry<List<Item>,Integer> recalcedCycle6Sched = getBestSchedule(5, reserved7Items);
+                Entry<WorkshopSchedule,Integer> recalcedCycle6Sched = getBestSchedule(5, reserved7Items);
                 //System.out.println("Recalced 6: "+Arrays.toString(recalcedCycle6Sched.getKey().toArray())+" value: "+recalcedCycle6Sched.getValue());
                 HashSet<Item> reserved67Items = new HashSet<Item>();
                 reserved67Items.addAll(reserved7Items);
-                reserved67Items.addAll(recalcedCycle6Sched.getKey());
+                reserved67Items.addAll(recalcedCycle6Sched.getKey().getItems());
             
                 if(rested)
                 {
-                    Entry<List<Item>,Integer> recalcedCycle5Sched = getBestSchedule(4,reserved67Items);
+                    Entry<WorkshopSchedule,Integer> recalcedCycle5Sched = getBestSchedule(4,reserved67Items);
                     //System.out.println("Recalced 5: "+Arrays.toString(recalcedCycle5Sched.getKey().toArray())+" value: "+recalcedCycle5Sched.getValue());
                     //System.out.println("Recalcing 5 based on 6. Is it better?");
                     
@@ -274,30 +270,30 @@ public class Solver
                     if(recalcedCycle5Sched.getValue() + recalcedCycle6Sched.getValue() > cycle5Sched.getValue() + cycle6Sched.getValue())
                     {
                         //System.out.println("It is! Using recalced 5");
-                        addDay(recalcedCycle5Sched.getKey(), 4);
+                        addDay(recalcedCycle5Sched.getKey().getItems(), 4);
                     }
                     
                     else
                     {                        
-                        addDay(cycle5Sched.getKey(), 4);
+                        addDay(cycle5Sched.getKey().getItems(), 4);
                     }
                    //System.out.println("Recalcing 6 AGAIN just in case 5 changed it, still only forbidding things used day 7");
-                   addDay(getBestSchedule(5, reserved7Items).getKey(), 5);
+                   addDay(getBestSchedule(5, reserved7Items).getKey().getItems(), 5);
                 }
                 else
                 {
-                    printRestDayInfo(cycle5Sched.getKey(), 4);
-                    addDay(recalcedCycle6Sched.getKey(), 5);  
+                    printRestDayInfo(cycle5Sched.getKey().getItems(), 4);
+                    addDay(recalcedCycle6Sched.getKey().getItems(), 5);  
                 }              
             }
             if(worstDay == 5) //Day 5 is second best and we aren't using day 6
             {
-                printRestDayInfo(cycle6Sched.getKey(), 5);
+                printRestDayInfo(cycle6Sched.getKey().getItems(), 5);
                 ///System.out.println("Day 6 isn't being used so just recalc 5 based on day 7");
-                addDay(getBestSchedule(4,reserved7Items).getKey(), 4);
+                addDay(getBestSchedule(4,reserved7Items).getKey().getItems(), 4);
             }
             //System.out.println("Adding recalced day 7");
-            addDay(getBestSchedule(6, null).getKey(), 6);
+            addDay(getBestSchedule(6, null).getKey().getItems(), 6);
             
         }
         else //Best day is Day 6
@@ -306,25 +302,25 @@ public class Solver
             if(rested || worstDay != 4)
             {
                 //System.out.println("Adding day 5 as-is");
-                addDay(cycle5Sched.getKey(), 4);
+                addDay(cycle5Sched.getKey().getItems(), 4);
             }
             else
-                printRestDayInfo(cycle5Sched.getKey(), 4);
+                printRestDayInfo(cycle5Sched.getKey().getItems(), 4);
             //System.out.println("Recalcing day 6 and adding");
-            addDay(getBestSchedule(5, null).getKey(), 5);
+            addDay(getBestSchedule(5, null).getKey().getItems(), 5);
             
-            Entry<List<Item>,Integer> recalcedCycle7Sched = getBestSchedule(6, null);
+            Entry<WorkshopSchedule,Integer> recalcedCycle7Sched = getBestSchedule(6, null);
             if(rested || worstDay != 6)
             {
                 //System.out.println("Recalcing day 7 and adding");
-                addDay(recalcedCycle7Sched.getKey(), 6);
+                addDay(recalcedCycle7Sched.getKey().getItems(), 6);
             }
             else
-                printRestDayInfo(recalcedCycle7Sched.getKey(), 6);
+                printRestDayInfo(recalcedCycle7Sched.getKey().getItems(), 6);
         }
     }
     
-    private static boolean isWorseThanAllFollowing(Entry<List<Item>,Integer> rec, int day)
+    private static boolean isWorseThanAllFollowing(Entry<WorkshopSchedule,Integer> rec, int day)
     {
         int worstInFuture = 99999;
         if(verboseSolverLogging)
@@ -332,47 +328,58 @@ public class Solver
         HashSet<Item> reservedSet = new HashSet<>();
         for(int d=day+1; d < 7; d++)
         {
-            Entry<List<Item>,Integer> solution;
+            Entry<WorkshopSchedule,Integer> solution;
             if(day ==3 && d==4) //We have a lot of info about this specific pair so we might as well use it
                solution = getD5EV();
             else
                 solution = getBestSchedule(d, reservedSet, false);
             if(verboseSolverLogging)
-            System.out.println("Day "+(d+1)+", crafts: "+Arrays.toString(solution.getKey().toArray())+" value: "+solution.getValue());
+            System.out.println("Day "+(d+1)+", crafts: "+Arrays.toString(solution.getKey().getItems().toArray())+" value: "+solution.getValue());
             worstInFuture = Math.min(worstInFuture,solution.getValue());
-            reservedSet.addAll(solution.getKey());
+            reservedSet.addAll(solution.getKey().getItems());
         }
         if(verboseSolverLogging)
         System.out.println("Worst future day: "+worstInFuture);
-        return rec.getValue() <= worstInFuture + 10;
+        
+        return rec.getValue() <= worstInFuture;
     }
     
     //Specifically for comparing D4 to D5
-    public static Entry<List<Item>,Integer> getD5EV()
+    public static Entry<WorkshopSchedule,Integer> getD5EV()
     {
-        Entry<List<Item>,Integer> solution =  getBestSchedule(4, null);
+        Entry<WorkshopSchedule,Integer> solution =  getBestSchedule(4, null);
+        if(verboseSolverLogging)
+        System.out.println("Testing against D5 solution "+solution.getKey().getItems());
         List<ItemInfo> c5Peaks = new ArrayList<>();
-        for(Item item : solution.getKey())
+        for(Item item : solution.getKey().getItems())
             if(items[item.ordinal()].peak==Cycle5 && !c5Peaks.contains(items[item.ordinal()]))
                 c5Peaks.add(items[item.ordinal()]);
         int sum = solution.getValue();
         int permutations = (int) Math.pow(2, c5Peaks.size());
-        CycleSchedule sch = new CycleSchedule(4,0);
-        sch.setForAllWorkshops(solution.getKey());
+        if(verboseSolverLogging)
+        System.out.println("C5 peaks: "+c5Peaks.size()+", permutations: "+permutations);
+        
         for(int p=1; p<permutations; p++)
         {
              for (int i=0; i<c5Peaks.size(); i++)
              {
                  boolean strong = ((p) & (1 << i)) != 0; //I can't believe I'm using a bitwise and
-                 
+                 if(verboseSolverLogging)
+                     System.out.println("Checking permutation "+p+" for item "+c5Peaks.get(i).item+" "+(strong?"strong":"weak"));
                  if(strong)
                      c5Peaks.get(i).peak = Cycle5Strong;
                  else
                      c5Peaks.get(i).peak = Cycle5Weak;
              }
-             int toAdd= sch.getValueWithGrooveEstimate();
+             
+             int toAdd = solution.getKey().getValueWithGrooveEstimate(4, groove);
+             if(verboseSolverLogging)
+                 System.out.println("Permutation "+p+" has value "+toAdd);
              sum+=toAdd;
         }
+        
+        if(verboseSolverLogging)
+            System.out.println("Sum: "+sum+" average: "+sum/permutations);
         sum /= permutations;
         solution.setValue(sum);
         
@@ -418,10 +425,10 @@ public class Solver
         });
     }
     
-    private static Map.Entry<List<Item>, Integer> getBestBruteForceSchedule(int day, Set<Item> cannotUse, boolean allowAllOthers)
+    private static Map.Entry<WorkshopSchedule, Integer> getBestBruteForceSchedule(int day, Set<Item> cannotUse, boolean allowAllOthers)
     {
         
-        HashMap<List<Item>, Integer> safeSchedules = new HashMap<>();
+        HashMap<WorkshopSchedule, Integer> safeSchedules = new HashMap<>();
         List<List<Item>> filteredItemLists;
         
         
@@ -446,30 +453,26 @@ public class Solver
             
           }
         
-        CycleSchedule sch = new CycleSchedule(day, groove);
         
         for(List<Item> list : filteredItemLists)
-        {
-            sch.setForAllWorkshops(list);
-            safeSchedules.put(list, sch.getValueWithGrooveEstimate());
+        {            
+            addToScheduleMap(list, day, safeSchedules);
         }
         
-
-        
-        LinkedHashMap<List<Item>, Integer> sortedSchedules = 
+        LinkedHashMap<WorkshopSchedule, Integer> sortedSchedules = 
                 safeSchedules.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (x, y) -> y, LinkedHashMap::new)); 
         
-        Iterator<Entry<List<Item>, Integer>> finalIterator = sortedSchedules.entrySet().iterator();
-        Entry<List<Item>,Integer> bestSchedule = finalIterator.next();
+        Iterator<Entry<WorkshopSchedule, Integer>> finalIterator = sortedSchedules.entrySet().iterator();
+        Entry<WorkshopSchedule,Integer> bestSchedule = finalIterator.next();
         if(alternatives > 0)
         {
-            System.out.println("Best rec: "+Arrays.toString(bestSchedule.getKey().toArray())+": "+bestSchedule.getValue());
+            System.out.println("Best rec: "+Arrays.toString(bestSchedule.getKey().getItems().toArray())+": "+bestSchedule.getValue());
             for(int c=0; c<alternatives && finalIterator.hasNext(); c++)
             {
-                Entry<List<Item>,Integer> alt = finalIterator.next();
-                System.out.println("Alternative rec: "+Arrays.toString(alt.getKey().toArray())+": "+alt.getValue());
+                Entry<WorkshopSchedule,Integer> alt = finalIterator.next();
+                System.out.println("Alternative rec: "+Arrays.toString(alt.getKey().getItems().toArray())+": "+alt.getValue());
             }
         }
         
@@ -477,12 +480,12 @@ public class Solver
         
     }
     
-    private static Map.Entry<List<Item>, Integer> getBestSchedule(int day, Set<Item> reservedForLater)
+    private static Map.Entry<WorkshopSchedule, Integer> getBestSchedule(int day, Set<Item> reservedForLater)
     {
         return getBestSchedule(day, reservedForLater, true);
     }
     
-    private static Map.Entry<List<Item>, Integer> getBestSchedule(int day, Set<Item> reservedForLater, boolean allowAllOthers)
+    private static Map.Entry<WorkshopSchedule, Integer> getBestSchedule(int day, Set<Item> reservedForLater, boolean allowAllOthers)
     {
         if(bruteForce)
             return getBestBruteForceSchedule(day, reservedForLater, allowAllOthers);
@@ -490,7 +493,7 @@ public class Solver
             return getBestScheduleFittingPatterns(day, reservedForLater, allowAllOthers);
     }
     
-    private static Map.Entry<List<Item>, Integer> getBestScheduleFittingPatterns(int day, Set<Item> reservedForLater, boolean allowAllOthers)
+    private static Map.Entry<WorkshopSchedule, Integer> getBestScheduleFittingPatterns(int day, Set<Item> reservedForLater, boolean allowAllOthers)
     {
         HashMap<ItemInfo, Integer> itemsByValue = new HashMap<>();
         for(ItemInfo item : items)
@@ -498,7 +501,7 @@ public class Solver
             itemsByValue.put(item, item.getValueWithSupply(item.getSupplyBucketOnDay(day)));
         }
         
-        HashMap<List<Item>, Integer> safeSchedules = new HashMap<>();
+        HashMap<WorkshopSchedule, Integer> safeSchedules = new HashMap<>();
         
         LinkedHashMap<ItemInfo, Integer> sortedItems;
         
@@ -523,10 +526,7 @@ public class Solver
         }
         
         Iterator<Entry<ItemInfo, Integer>> topItemIt = sortedItems.entrySet().iterator();
-        
-        CycleSchedule sch = new CycleSchedule(day, groove);
-        
-        
+               
         //This is a hard-coded mess, I'm sorry. I promise I'll make it better later, though I do not promise it'll be good
         
         //TODO: Clean this up bad
@@ -553,10 +553,9 @@ public class Solver
                     {
                         fourHour = possibleMatch;
                         List<Item> items = Arrays.asList(fourHour.item, topItem.getKey().item, fourHour.item, topItem.getKey().item);
-                        sch.setForAllWorkshops(items);
-                        safeSchedules.put(items, sch.getValueWithGrooveEstimate());
+                        int value = addToScheduleMap(items, day, safeSchedules);
                         if(verboseSolverLogging)
-                        System.out.println("Compatible 4-hour craft found: "+fourHour.item+" adding safe 4-8-4-8 schedule with a value of "+safeSchedules.get(items));
+                        System.out.println("Compatible 4-hour craft found: "+fourHour.item+" adding safe 4-8-4-8 schedule with a value of "+value);
                     }
                         
                     //Only need to check top 8 hour because we make it once
@@ -564,10 +563,9 @@ public class Solver
                     {
                         eightHour = possibleMatch;
                         List<Item> items = Arrays.asList(topItem.getKey().item, eightHour.item, topItem.getKey().item);
-                        sch.setForAllWorkshops(items);
-                        safeSchedules.put(items, sch.getValueWithGrooveEstimate());
+                        int value = addToScheduleMap(items, day, safeSchedules);
                         if(verboseSolverLogging)
-                        System.out.println("Compatible 8-hour craft found: "+eightHour.item+" adding safe 8-8-8 schedule with a value of "+safeSchedules.get(items));
+                        System.out.println("Compatible 8-hour craft found: "+eightHour.item+" adding safe 8-8-8 schedule with a value of "+value);
                     }
                         
                     //Try all 6 hours because we make them twice and also they have different pairs
@@ -591,10 +589,9 @@ public class Solver
                         if(fourSixMatch != null)
                         {
                             List<Item> items = Arrays.asList(fourSixMatch.item, sixHour.item, topItem.getKey().item, sixHour.item);
-                            sch.setForAllWorkshops(items);
-                            safeSchedules.put(items, sch.getValueWithGrooveEstimate());
+                            int value = addToScheduleMap(items, day, safeSchedules);
                             if(verboseSolverLogging)
-                            System.out.println("Compatible 4-6 combo found: "+fourSixMatch.item+" adding safe 4-6-8-6 schedule with a value of "+safeSchedules.get(items));
+                            System.out.println("Compatible 4-6 combo found: "+fourSixMatch.item+" adding safe 4-6-8-6 schedule with a value of "+value);
                         }
                     }
                         
@@ -615,10 +612,9 @@ public class Solver
                         
                         //Might as well add 4-6-4-6-4, I guess
                         List<Item> items = Arrays.asList(fourHour.item, topItem.getKey().item, fourHour.item, topItem.getKey().item, fourHour.item);
-                        sch.setForAllWorkshops(items);
-                        safeSchedules.put(items, sch.getValueWithGrooveEstimate());
+                        int value = addToScheduleMap(items, day, safeSchedules);
                         if(verboseSolverLogging)
-                        System.out.println("Compatible 4 combo found: "+fourHour.item+" adding safe 4-6-4-6-4 schedule with a value of "+safeSchedules.get(items));
+                        System.out.println("Compatible 4 combo found: "+fourHour.item+" adding safe 4-6-4-6-4 schedule with a value of "+value);
                         
                         //Try all A-B-C-B-C
                         Iterator<Entry<ItemInfo, Integer>> fourMatchIt = sortedItems.entrySet().iterator();
@@ -634,17 +630,15 @@ public class Solver
                         if(fourFourMatch != null)
                         {
                             List<Item> items44 = Arrays.asList(fourFourMatch.item, fourHour.item, topItem.getKey().item, fourHour.item, topItem.getKey().item);
-                            sch.setForAllWorkshops(items44);
-                            safeSchedules.put(items44, sch.getValueWithGrooveEstimate());
+                            int value44 = addToScheduleMap(items44, day, safeSchedules);
                             if(verboseSolverLogging)
-                            System.out.println("Compatible 4-4 combo found: "+fourFourMatch.item+" adding safe 4-4-6-4-6 schedule with a value of "+safeSchedules.get(items44));
+                            System.out.println("Compatible 4-4 combo found: "+fourFourMatch.item+" adding safe 4-4-6-4-6 schedule with a value of "+value44);
                             
                             //
                             List<Item> items4444 = Arrays.asList(fourFourMatch.item, fourHour.item, fourFourMatch.item, fourHour.item, topItem.getKey().item);
-                            sch.setForAllWorkshops(items4444);
-                            safeSchedules.put(items4444, sch.getValueWithGrooveEstimate());
+                            int value4444 = addToScheduleMap(items4444, day, safeSchedules);
                             if(verboseSolverLogging)
-                            System.out.println("Compatible 4-4 combo found: "+fourFourMatch.item+" adding safe 4-4-4-4-6 schedule with a value of "+safeSchedules.get(items4444));
+                            System.out.println("Compatible 4-4 combo found: "+fourFourMatch.item+" adding safe 4-4-4-4-6 schedule with a value of "+value4444);
                             
                             
                         }
@@ -659,10 +653,9 @@ public class Solver
                     {
                         sixHour = possibleMatch; 
                         List<Item> items = Arrays.asList(sixHour.item, topItem.getKey().item, sixHour.item, topItem.getKey().item);
-                        sch.setForAllWorkshops(items);
-                        safeSchedules.put(items, sch.getValueWithGrooveEstimate());
+                        int value = addToScheduleMap(items, day, safeSchedules);
                         if(verboseSolverLogging)
-                        System.out.println("Compatible 6-hour craft found: "+sixHour.item+" adding safe 6-6-6-6 schedule with a value of "+safeSchedules.get(items));
+                        System.out.println("Compatible 6-hour craft found: "+sixHour.item+" adding safe 6-6-6-6 schedule with a value of "+value);
                         
                         //4-6-6-6?
                     }  
@@ -681,24 +674,50 @@ public class Solver
         if(safeSchedules.size() == 0)
             return null;
         
-        LinkedHashMap<List<Item>, Integer> sortedSchedules = 
+        LinkedHashMap<WorkshopSchedule, Integer> sortedSchedules = 
                 safeSchedules.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (x, y) -> y, LinkedHashMap::new)); 
         
-        Iterator<Entry<List<Item>, Integer>> finalIterator = sortedSchedules.entrySet().iterator();
-        Entry<List<Item>,Integer> bestSchedule = finalIterator.next();
+        Iterator<Entry<WorkshopSchedule, Integer>> finalIterator = sortedSchedules.entrySet().iterator();
+        Entry<WorkshopSchedule,Integer> bestSchedule = finalIterator.next();
         if(alternatives > 0)
         {
-            System.out.println("Best rec: "+Arrays.toString(bestSchedule.getKey().toArray())+": "+bestSchedule.getValue());
+            System.out.println("Best rec: "+Arrays.toString(bestSchedule.getKey().getItems().toArray())+": "+bestSchedule.getValue());
             for(int c=0; c<alternatives && finalIterator.hasNext(); c++)
             {
-                Entry<List<Item>,Integer> alt = finalIterator.next();
-                System.out.println("Alternative rec: "+Arrays.toString(alt.getKey().toArray())+": "+alt.getValue());
+                Entry<WorkshopSchedule,Integer> alt = finalIterator.next();
+                System.out.println("Alternative rec: "+Arrays.toString(alt.getKey().getItems().toArray())+": "+alt.getValue());
             }
         }
         
         return bestSchedule;
+    }
+    
+    private static int addToScheduleMap(List<Item> list, int day, HashMap<WorkshopSchedule, Integer> safeSchedules)
+    {
+        WorkshopSchedule workshop = new WorkshopSchedule(list);
+        int value = workshop.getValueWithGrooveEstimate(day, groove);
+        //Only add if we don't already have one with this schedule or ours is better
+        int oldValue = safeSchedules.getOrDefault(workshop, -1);
+        
+        if(oldValue < value)  
+        {
+            if(verboseSolverLogging && list.contains(Jam))
+                System.out.println("Replacing schedule with mats "+workshop.rareMaterialsRequired+" with "+list+" because "+value+" is higher than "+oldValue);
+            safeSchedules.remove(workshop); //It doesn't seem to update the key when updating the value, so we delete the key first
+            safeSchedules.put(workshop, value);
+        }
+        else
+        {
+            if(verboseSolverLogging && list.contains(Jam))
+                System.out.println("Not replacing schedule with mats "+workshop.rareMaterialsRequired+" with "+list+" because "+value+" is lower than "+oldValue);
+
+            value = 0;
+        }
+        
+        return value;
+        
     }
     
     private static void setInitialFromCSV()

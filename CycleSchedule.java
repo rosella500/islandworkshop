@@ -80,38 +80,6 @@ public class CycleSchedule
        
     }
     
-    public int getSingleWorkshopValue(int index)
-    {
-        int value = 0;
-        numCrafted = new HashMap<Item, Integer>(); 
-        workshops[index].currentIndex = 0;
-        for(int i=0; i<workshops[index].getNumCrafts(); i++)
-        {
-            ItemInfo completedCraft = workshops[index].getCurrentCraft();
-            boolean efficient = workshops[index].currentCraftIsEfficient();
-            value += workshops[index].getValueForCurrent(day, numCrafted.getOrDefault(completedCraft.item, 0), startingGroove + i*3, efficient);
-            workshops[index].currentIndex++;
-            int amountCrafted = efficient? 6 : 3;
-            numCrafted.put(completedCraft.item, numCrafted.getOrDefault(completedCraft.item, 0) + amountCrafted);
-        }
-        return value;
-    }
-    
-    public int getValueWithGrooveEstimate()
-    {
-        int craftsAbove4 = 0;
-        craftsAbove4+=workshops[0].getNumCrafts()-4;
-        int daysToGroove = 4-day;
-        if(!Solver.rested)
-            daysToGroove--;
-        
-        if(daysToGroove < 0)
-            daysToGroove = 0;
-                
-        //Account for half material cost to like, split the difference? Idk
-        return craftsAbove4 * daysToGroove * Solver.groovePerDay + getSingleWorkshopValue(0) - (int)(workshops[0].getMaterialCost() * Solver.materialWeight);
-    }
-    
     public int getMaterialCost()
     {
         int cost = 0;
