@@ -97,8 +97,6 @@ public class Solver
         //TODO: Change not-brute force to include  E4 - D4 - C4 - B4 - A8 and B4 - A8 - C4 - A8
         //TODO: Change not-brute force to be good
         //TODO: Save peak info in CSV on D4
-        //TODO: ...Port everything to .Net and make a plugin???
-        //TODO: Automatically delete two weeks ago? 
         //TODO: Figure out how to handle D2 because no one's going to craft things D1 to find out
         int week = 2;
           long time = System.currentTimeMillis();
