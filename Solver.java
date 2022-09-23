@@ -2,9 +2,6 @@ package islandworkshop;
 
 import static islandworkshop.ItemCategory.*;
 import static islandworkshop.RareMaterial.*;
-import static islandworkshop.Supply.*;
-import static islandworkshop.Popularity.*;
-import static islandworkshop.DemandShift.*;
 import static islandworkshop.PeakCycle.*;
 import static islandworkshop.Item.*;
 import java.util.List;
@@ -82,7 +79,7 @@ public class Solver
     private static int totalNet = 0;
     public static boolean verboseCalculatorLogging = false;
     public static boolean verboseSolverLogging = false;
-    private static int alternativesToDisplay = 0;
+    private static int alternatives = 0;
     public static int groovePerDay = 45;
     public static boolean rested = false;
     public static boolean allow4HrBorrowing = true;
@@ -98,7 +95,7 @@ public class Solver
         //TODO: Change not-brute force to be good
         //TODO: Save peak info in CSV on D4
         //TODO: Figure out how to handle D2 because no one's going to craft things D1 to find out
-        int week = 2;
+        int week = 5;
           long time = System.currentTimeMillis();
           CSVImporter.initSupplyData(week);
           CSVImporter.initBruteForceChains();          
@@ -130,6 +127,9 @@ public class Solver
                       if(CSVImporter.currentPeaks[0] == null)
                           CSVImporter.writeCurrentPeaks(week);
                       
+                      /*
+                       * addBestSchedule(4); addBestSchedule(5); getBestSchedule(6, null);
+                       */
                       setLateDays();
                   }
               }
@@ -140,9 +140,9 @@ public class Solver
            * addDay(Arrays.asList(Crook,GarnetRapier,Crook),6);
            */
           
-          /*
-           * for(ItemInfo item : items) { System.out.println(item.item+":" +item.peak); }
-           */
+          
+            //for(ItemInfo item : items) { System.out.println(item.item+":" +item.peak); }
+           
         
           System.out.println("Week total: " + totalGross + " (" + totalNet + ")\n"+"Took "+(System.currentTimeMillis() - time)+"ms.");
 
@@ -162,7 +162,7 @@ public class Solver
         }
     }
     
-    private static void addBestDay(int day)
+    private static void addBestSchedule(int day)
     {
         addDay(getBestSchedule(day, null).getKey(), day);
     }
@@ -463,10 +463,10 @@ public class Solver
         
         Iterator<Entry<List<Item>, Integer>> finalIterator = sortedSchedules.entrySet().iterator();
         Entry<List<Item>,Integer> bestSchedule = finalIterator.next();
-        if(alternativesToDisplay > 0)
+        if(alternatives > 0)
         {
             System.out.println("Best rec: "+Arrays.toString(bestSchedule.getKey().toArray())+": "+bestSchedule.getValue());
-            for(int c=0; c<alternativesToDisplay && finalIterator.hasNext(); c++)
+            for(int c=0; c<alternatives && finalIterator.hasNext(); c++)
             {
                 Entry<List<Item>,Integer> alt = finalIterator.next();
                 System.out.println("Alternative rec: "+Arrays.toString(alt.getKey().toArray())+": "+alt.getValue());
@@ -688,10 +688,10 @@ public class Solver
         
         Iterator<Entry<List<Item>, Integer>> finalIterator = sortedSchedules.entrySet().iterator();
         Entry<List<Item>,Integer> bestSchedule = finalIterator.next();
-        if(alternativesToDisplay > 0)
+        if(alternatives > 0)
         {
             System.out.println("Best rec: "+Arrays.toString(bestSchedule.getKey().toArray())+": "+bestSchedule.getValue());
-            for(int c=0; c<alternativesToDisplay && finalIterator.hasNext(); c++)
+            for(int c=0; c<alternatives && finalIterator.hasNext(); c++)
             {
                 Entry<List<Item>,Integer> alt = finalIterator.next();
                 System.out.println("Alternative rec: "+Arrays.toString(alt.getKey().toArray())+": "+alt.getValue());
