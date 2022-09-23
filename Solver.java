@@ -88,56 +88,85 @@ public class Solver
     public static boolean allow4HrBorrowing = true;
     private static boolean bruteForce = true;
     private static int islandRank = 10;
+    public static double materialWeight = 0.5;
 
     public static void main(String[] args)
     { 
+        //TODO: Change solution set to match on number of crafts and only keep highest for that set 
+        //e.g., if butter ink jam butter jam is better than ink butter jam butter jam, we don't need to keep both
         //TODO: Change not-brute force to include  E4 - D4 - C4 - B4 - A8 and B4 - A8 - C4 - A8
         //TODO: Change not-brute force to be good
         //TODO: Save peak info in CSV on D4
         //TODO: ...Port everything to .Net and make a plugin???
         //TODO: Automatically delete two weeks ago? 
         //TODO: Figure out how to handle D2 because no one's going to craft things D1 to find out
-        int week = 5;
+        int week = 2;
           long time = System.currentTimeMillis();
           CSVImporter.initSupplyData(week);
           CSVImporter.initBruteForceChains();          
           setInitialFromCSV();
           
-          allow4HrBorrowing = true; 
-          alternativesToDisplay = 0; 
+          allow4HrBorrowing = true;           
           
+          Entry<List<Item>, Integer> d2 = getBestSchedule(1, null);
           
-          if(addOrRest(1))
-          {            
-              if(addOrRest(2))
-              {                        
-                  if(addOrRest(3))
+          boolean hasNextDay = setObservedFromCSV(1);
+          
+          addOrRest(d2, 1);
+          if(hasNextDay)
+          {
+              Entry<List<Item>, Integer> d3 = getBestSchedule(2, null);
+              
+              hasNextDay = setObservedFromCSV(2);
+              
+              addOrRest(d3, 2);
+              if(hasNextDay)
+              {
+                  Entry<List<Item>, Integer> d4 = getBestSchedule(3, null);
+                  
+                  hasNextDay = setObservedFromCSV(3);
+                  
+                  addOrRest(d4, 3);
+                  if(hasNextDay)
                   {
                       if(CSVImporter.currentPeaks[0] == null)
                           CSVImporter.writeCurrentPeaks(week);
+                      
                       setLateDays();
-                  }            
+                  }
               }
           }
+          /*
+           * addDay(Arrays.asList( Butter, SquidInk, Jam, SquidInk, Jam),4);
+           * addDay(Arrays.asList(Rope, Bed, Rope, Bed),5);
+           * addDay(Arrays.asList(Crook,GarnetRapier,Crook),6);
+           */
+          
+          /*
+           * for(ItemInfo item : items) { System.out.println(item.item+":" +item.peak); }
+           */
         
           System.out.println("Week total: " + totalGross + " (" + totalNet + ")\n"+"Took "+(System.currentTimeMillis() - time)+"ms.");
 
     }
     
-    private static boolean addOrRest(int day)
+    private static void addOrRest(Entry<List<Item>,Integer> rec, int day)
     {
-        Entry<List<Item>, Integer> rec = getBestSchedule(day, null);
-        
-        boolean hasNextDay = setObservedFromCSV(day);
         if(!rested && (rec == null || isWorseThanAllFollowing(rec, day)))
         {
             printRestDayInfo(rec.getKey(), day);
             rested = true;
         }
         else
+        {
+
             addDay(rec.getKey(), day);
-        
-        return hasNextDay;
+        }
+    }
+    
+    private static void addBestDay(int day)
+    {
+        addDay(getBestSchedule(day, null).getKey(), day);
     }
     
     private static void printRestDayInfo(List<Item> rec, int day)
@@ -371,6 +400,7 @@ public class Solver
         schedule.setWorkshop(0, crafts0);
         schedule.setWorkshop(1, crafts1);
         schedule.setWorkshop(2, crafts2);
+
         int gross = schedule.getValue();
         totalGross += gross;
 
@@ -418,7 +448,7 @@ public class Solver
             
           }
         
-        CycleSchedule sch = new CycleSchedule(day, 0);
+        CycleSchedule sch = new CycleSchedule(day, groove);
         
         for(List<Item> list : filteredItemLists)
         {
@@ -496,7 +526,7 @@ public class Solver
         
         Iterator<Entry<ItemInfo, Integer>> topItemIt = sortedItems.entrySet().iterator();
         
-        CycleSchedule sch = new CycleSchedule(day, 0);
+        CycleSchedule sch = new CycleSchedule(day, groove);
         
         
         //This is a hard-coded mess, I'm sorry. I promise I'll make it better later, though I do not promise it'll be good

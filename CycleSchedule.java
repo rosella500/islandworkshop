@@ -89,7 +89,7 @@ public class CycleSchedule
         {
             ItemInfo completedCraft = workshops[index].getCurrentCraft();
             boolean efficient = workshops[index].currentCraftIsEfficient();
-            value += workshops[index].getValueForCurrent(day, numCrafted.getOrDefault(completedCraft.item, 0), i*3, efficient);
+            value += workshops[index].getValueForCurrent(day, numCrafted.getOrDefault(completedCraft.item, 0), startingGroove + i*3, efficient);
             workshops[index].currentIndex++;
             int amountCrafted = efficient? 6 : 3;
             numCrafted.put(completedCraft.item, numCrafted.getOrDefault(completedCraft.item, 0) + amountCrafted);
@@ -108,7 +108,8 @@ public class CycleSchedule
         if(daysToGroove < 0)
             daysToGroove = 0;
                 
-        return craftsAbove4 * daysToGroove * Solver.groovePerDay + getSingleWorkshopValue(0);
+        //Account for half material cost to like, split the difference? Idk
+        return craftsAbove4 * daysToGroove * Solver.groovePerDay + getSingleWorkshopValue(0) - workshops[0].getMaterialCost() / 2;
     }
     
     public int getMaterialCost()
@@ -120,6 +121,7 @@ public class CycleSchedule
         }
         return cost;
     }
+    
     
     public boolean equals(Object other)
     {
