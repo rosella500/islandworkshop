@@ -109,7 +109,7 @@ public class CycleSchedule
             daysToGroove = 0;
                 
         //Account for half material cost to like, split the difference? Idk
-        return craftsAbove4 * daysToGroove * Solver.groovePerDay + getSingleWorkshopValue(0) - workshops[0].getMaterialCost() / 2;
+        return craftsAbove4 * daysToGroove * Solver.groovePerDay + getSingleWorkshopValue(0) - (int)(workshops[0].getMaterialCost() * Solver.materialWeight);
     }
     
     public int getMaterialCost()
