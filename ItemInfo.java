@@ -207,8 +207,8 @@ public class ItemInfo
     
     public int getValueWithSupply(Supply supply)
     {
-        int base = (int)(baseValue * Solver.WORKSHOP_BONUS);
-        return (int) (base * supply.multiplier * popularity.multiplier);
+        int base = baseValue * Solver.WORKSHOP_BONUS / 100;
+        return base * supply.multiplier * popularity.multiplier / 10000;
     }
     
     public int getSupplyAfterCraft(int day, int newCrafts)

@@ -2,11 +2,11 @@ package islandworkshop;
 
 public enum Popularity
 {
-    VeryHigh(1.4), High(1.2), Average(1), Low(.8);
+    VeryHigh(140), High(120), Average(100), Low(80);
     
-    public final double multiplier;
+    public final int multiplier;
     
-    private Popularity(double mult)
+    private Popularity(int mult)
     {
         this.multiplier = mult;
     }

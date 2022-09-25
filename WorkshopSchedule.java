@@ -74,14 +74,14 @@ public class WorkshopSchedule
     public int getValueForCurrent(int day, int craftedSoFar, int currentGroove, boolean isEfficient)
     {
         ItemInfo craft = crafts.get(currentIndex);        
-        int baseValue = (int) (craft.baseValue * Solver.WORKSHOP_BONUS * (1.0+currentGroove/100.0));
+        int baseValue = craft.baseValue * Solver.WORKSHOP_BONUS * (100+currentGroove) / 10000;
         int supply = craft.getSupplyOnDay(day) + craftedSoFar;
-        int adjustedValue = (int) (baseValue * craft.popularity.multiplier * ItemInfo.getSupplyBucket(supply).multiplier);
+        int adjustedValue = baseValue * craft.popularity.multiplier * ItemInfo.getSupplyBucket(supply).multiplier  / 10000;       
         
         if(isEfficient)
             adjustedValue *= 2;
         if(Solver.verboseCalculatorLogging)
-            System.out.println(craft.item+" is worth "+adjustedValue +" with "+currentGroove+" groove at "+ItemInfo.getSupplyBucket(craft.getSupplyOnDay(day) + craftedSoFar)+ " supply ("+supply+") and "+craft.popularity+" popularity");
+            System.out.println(craft.item+" is worth "+adjustedValue +" with "+currentGroove+" groove at "+ItemInfo.getSupplyBucket(supply)+ " supply ("+supply+") and "+craft.popularity+" popularity");
         
         return adjustedValue;
     }

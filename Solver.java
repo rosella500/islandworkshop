@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 public class Solver
 {
-    final static double WORKSHOP_BONUS = 1.2;
+    final static int WORKSHOP_BONUS = 120;
     final static int GROOVE_MAX = 35;
     
     final static ItemInfo[] items = {

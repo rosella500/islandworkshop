@@ -2,11 +2,11 @@ package islandworkshop;
 
 public enum Supply
 {
-    Overflowing (.6), Surplus(.8), Sufficient(1), Insufficient(1.3), Nonexistent(1.6);
+    Overflowing (60), Surplus(80), Sufficient(100), Insufficient(130), Nonexistent(160);
     
-    public final double multiplier;
+    public final int multiplier;
     
-    private Supply(double mult)
+    private Supply(int mult)
     {
         this.multiplier = mult;
     }
