@@ -109,12 +109,23 @@ public class WorkshopSchedule
     {
         int craftsAbove4 = 0;
         craftsAbove4+=getNumCrafts()-4;
-        int daysToGroove = 4-day;
-        if(!Solver.rested)
+        int daysToGroove = 5 - day;
+        if (!Solver.rested)
             daysToGroove--;
-        
-        if(daysToGroove < 0)
-            daysToGroove = 0;
+
+        int grooveValue = 0;
+
+        if (daysToGroove > 0)
+        {
+            int fullGrooveBonus = (daysToGroove - 1) * Solver.groovePerFullDay;
+            grooveValue = fullGrooveBonus + Solver.groovePerPartDay;
+            
+            grooveValue *= craftsAbove4;
+        }
+        if(Solver.verboseSolverLogging && craftsAbove4 != 0)
+        {
+            System.out.println("days to groove "+daysToGroove+", crafts above 4: "+craftsAbove4+" groove bonus: "+grooveValue);
+        }
         
         int workshopValue = 0;
         HashMap<Item,Integer> numCrafted = new HashMap<Item, Integer>(); 
@@ -130,7 +141,7 @@ public class WorkshopSchedule
         }
                 
         //Allow for the accounting for materials if desired
-        return craftsAbove4 * daysToGroove * Solver.groovePerDay + workshopValue - (int)(getMaterialCost() * Solver.materialWeight);
+        return grooveValue + workshopValue - (int)(getMaterialCost() * Solver.materialWeight);
     }
     
     public boolean equals(Object other)
