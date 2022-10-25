@@ -83,10 +83,12 @@ public class Solver
     public static int groovePerFullDay = 40;
     public static int groovePerPartDay = 20;
     public static boolean rested = false;
-    public static boolean allow4HrBorrowing = true;
     private static int islandRank = 10;
     public static double materialWeight = 0.0;
     public static boolean guaranteeRestD5 = false;
+    public static Set<Item> reservedItems = new HashSet<Item>();
+    private static boolean valuePerHour = true;
+    private static int itemsToReserve = 15;
 
     public static void main(String[] args)
     {
@@ -104,11 +106,40 @@ public class Solver
               item.craftedPerDay = new int[7];
               item.peak = Unknown;
           }
+          reservedItems.clear();
+          
+          
         long time = System.currentTimeMillis();
         CSVImporter.initSupplyData(week);
         CSVImporter.initBruteForceChains();
         setInitialFromCSV();
-        allow4HrBorrowing = true;
+        
+        //get reserved item list
+        Map<Item, Integer> itemValues = new HashMap<Item, Integer>();
+        for(ItemInfo item : items)
+        {
+            if(item.time == 4)
+                continue;
+            int value = item.getValueWithSupply(Supply.Sufficient);
+            if(valuePerHour)
+                value = value * 8 / item.time;
+            itemValues.put(item.item, value);
+        }
+        LinkedHashMap<Item,Integer> bestItems = itemValues
+                .entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (x, y) -> y, LinkedHashMap::new));
+        Iterator<Entry<Item, Integer>> itemIterator = bestItems.entrySet().iterator();
+        
+        for(int i=0;i<itemsToReserve && itemIterator.hasNext(); i++)
+        {
+            Item next = itemIterator.next().getKey();
+            //System.out.println("Reserving "+next);
+            reservedItems.add(next); 
+        }
+        
+        
         Entry<WorkshopSchedule, Integer> d2 = getBestSchedule(1);
         boolean hasNextDay = false;
         if(isWorseThanAllFollowing(d2, 1)) {
@@ -326,7 +357,7 @@ public class Solver
                 //System.out.println("Day 6 isn't being used so just recalc 5 based on day 7");
                 addDay(getBestSchedule(4, reserved7Set,6).getKey().getItems(), 4);
             }
-             System.out.println("Adding recalced day 7");
+             //System.out.println("Adding recalced day 7");
             addDay(getBestSchedule(6).getKey().getItems(), 6);
 
         } else // Best day is Day 6

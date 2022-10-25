@@ -244,7 +244,10 @@ public class ItemInfo
     
     public boolean peaksOnOrBeforeDay(int day)
     {
-        if(Solver.allow4HrBorrowing && time == 4) //D2 can borrow from the future if it's a 4hr craft
+        if(Solver.reservedItems.size()>0 && !Solver.reservedItems.contains(item))
+            return true;
+            
+        if(time == 4) //D2 can borrow from the future if it's a 4hr craft
             return true;
         if(peak == Cycle2Weak || peak == Cycle2Strong) 
             return day > 0;
