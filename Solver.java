@@ -81,36 +81,86 @@ public class Solver
     public static boolean verboseSolverLogging = false;
     private static int alternatives = 0;
     public static int groovePerFullDay = 40;
-    public static int groovePerPartDay = 15;
+    public static int groovePerPartDay = 20;
     public static boolean rested = false;
     public static boolean allow4HrBorrowing = true;
     private static int islandRank = 10;
-    public static double materialWeight = 0.5;
+    public static double materialWeight = 0.0;
+    public static boolean guaranteeRestD5 = false;
 
     public static void main(String[] args)
     {
-        int week = 6;
+        //TODO: Figure out how to borrow from D5 if we're resting it (Week 3 day 4 should be Rope - Scythe - Silver - Scythe, not Pie - Pudding)
+        for(int week = 1; week <= 9; week++)
+        {
+          System.out.println("Week "+week+" schedule:");
+          groove = 0;
+          totalGross = 0;
+          totalNet = 0;
+          rested = false;
+          guaranteeRestD5 = false;
+          for(ItemInfo item : items)
+          {
+              item.craftedPerDay = new int[7];
+              item.peak = Unknown;
+          }
         long time = System.currentTimeMillis();
         CSVImporter.initSupplyData(week);
         CSVImporter.initBruteForceChains();
         setInitialFromCSV();
-
         allow4HrBorrowing = true;
-        Entry<WorkshopSchedule, Integer> d2 = getBestSchedule(1, null);
-        boolean hasNextDay = setObservedFromCSV(1);
-        addOrRest(d2, 1);
-        
+        Entry<WorkshopSchedule, Integer> d2 = getBestSchedule(1);
+        boolean hasNextDay = false;
+        if(isWorseThanAllFollowing(d2, 1)) {
+            restDay(d2, 1);
+            hasNextDay = setObservedFromCSV(1);
+        }
+        else
+        {
+            hasNextDay = setObservedFromCSV(1);
+            addDay(d2.getKey().getItems(), 1); 
+        }
+
         if(hasNextDay) 
         { 
-            Entry<WorkshopSchedule, Integer> d3 = getBestSchedule(2, null);
-            hasNextDay = setObservedFromCSV(2);
-            addOrRest(d3, 2); 
+            Entry<WorkshopSchedule, Integer> d3 = getBestSchedule(2);
+            if(!rested && isWorseThanAllFollowing(d3,2)) {
+                restDay(d3, 2);
+                hasNextDay = setObservedFromCSV(2);
+            }
+            else
+            {
+                hasNextDay = setObservedFromCSV(2);
+                addDay(d3.getKey().getItems(), 2); 
+            }
             if(hasNextDay) 
             { 
-                Entry<WorkshopSchedule, Integer> d4 = getBestSchedule(3, null);
-                hasNextDay = setObservedFromCSV(3);
-                addOrRest(d4, 3); 
+                Entry<WorkshopSchedule, Integer> d4 = getBestSchedule(3);
                 
+                //verboseSolverLogging = true;
+                boolean worst = isWorseThanAllFollowing(d4, 3, true);
+
+                verboseSolverLogging = false;
+                //System.out.println("Rested? "+rested+". Resting D5? " +guaranteeRestD5);
+                if(!rested && guaranteeRestD5)
+                {
+                    System.out.println("Guaranteed resting D5 so recalculating D4");
+                    Entry<WorkshopSchedule, Integer> d4Again = getBestSchedule(3, null, 4); 
+                    hasNextDay = setObservedFromCSV(3);
+                    addDay(d4Again.getKey().getItems(), 3);
+                }
+                else if(!rested && worst)
+                {
+                    restDay(d4, 3);
+                    hasNextDay = setObservedFromCSV(3);
+                }
+                else //We either rested already or we aren't the worst so add it
+                {
+                    hasNextDay = setObservedFromCSV(3);
+                    addDay(d4.getKey().getItems(), 3);
+                }
+                
+                 
                 if(hasNextDay) 
                 { 
                     if(CSVImporter.currentPeaks[0] == null)
@@ -122,58 +172,35 @@ public class Solver
         }
          
 
-        
-        
-//          addDay(Arrays.asList(BoiledEgg, BakedPumpkin, ParsnipSalad, GrilledClam,
-//          SquidInk, TomatoRelish),1); addDay(Arrays.asList(BoiledEgg, BakedPumpkin,
-//          ParsnipSalad, GrilledClam, SquidInk, TomatoRelish),3); rested = true;
-//          //setLateDays(); addDay(Arrays.asList(SquidInk,Butter,Jam,Butter,Jam),4);
-//          addDay(Arrays.asList(Rope,Bed,Rope,Bed),5);
-//          addDay(Arrays.asList(Crook,GarnetRapier,Crook),6);
-         
-        
 
-//        for (ItemInfo item : items)
-//        {
-//            System.out.println(item.peak.toDisplayName());
-//        }
+        //addDay(Arrays.asList(Potion, GrowthFormula, Potion, GrowthFormula), 2);
 
         System.out.println("Week total: " + totalGross + " (" + totalNet + ")\n" + "Took "
                 + (System.currentTimeMillis() - time) + "ms.");
-
-    }
-
-    private static void addOrRest(Entry<WorkshopSchedule, Integer> rec, int day)
-    {
-        if (!rested && (rec == null || isWorseThanAllFollowing(rec, day)))
-        {
-            printRestDayInfo(rec.getKey().getItems(), day);
-            rested = true;
-        } else
-        {
-
-            addDay(rec.getKey().getItems(), day);
+        
         }
-    }
 
-    private static void addBestSchedule(int day)
+    }
+    
+    private static void restDay(Entry<WorkshopSchedule, Integer> rec, int day)
     {
-        addDay(getBestSchedule(day, null).getKey().getItems(), day);
+        printRestDayInfo(rec.getKey().getItems(), day);
+        rested = true;
     }
 
     private static void printRestDayInfo(List<Item> rec, int day)
     {
         CycleSchedule restedDay = new CycleSchedule(day, 0);
         restedDay.setForAllWorkshops(rec);
-        System.out.println("Think we're guaranteed to make more than "
-                + restedDay.getValue() + " with " + rec + ". Rest day " + (day + 1));
+        System.out.println("Rest day " + (day + 1)+". Think we'll make more than "
+                + restedDay.getValue() + " grooveless with " + rec + ". ");
     }
 
     private static void setLateDays()
     {
-        Entry<WorkshopSchedule, Integer> cycle5Sched = getBestSchedule(4, null);
-        Entry<WorkshopSchedule, Integer> cycle6Sched = getBestSchedule(5, null);
-        Entry<WorkshopSchedule, Integer> cycle7Sched = getBestSchedule(6, null);
+        Entry<WorkshopSchedule, Integer> cycle5Sched = getBestSchedule(4);
+        Entry<WorkshopSchedule, Integer> cycle6Sched = getBestSchedule(5);
+        Entry<WorkshopSchedule, Integer> cycle7Sched = getBestSchedule(6);
 
         // I'm just hardcoding this, This could almost certainly be improved
 
@@ -209,19 +236,20 @@ public class Solver
 
             if (worstDay == 5)
             {
-                // Day 6 is worst, so recalculate it according to day 7
-                Entry<WorkshopSchedule, Integer> recalcedCycle7Sched = getBestSchedule(6,
-                        null);
-
-                Entry<WorkshopSchedule, Integer> recalced6Sched = getBestSchedule(5,
-                        new HashSet<Item>(recalcedCycle7Sched.getKey().getItems()));
                 // System.out.println("Recalcing day 7");
+                Entry<WorkshopSchedule, Integer> recalcedCycle7Sched = getBestSchedule(6);
+
+                // Day 6 is worst, so recalculate it according to day 7
+                // System.out.println("Recalcing day 6 using only day 7's requirements
+                // as verboten and adding");
+                Map<Item,Integer> reserved7Set = recalcedCycle7Sched.getKey().getLimitedUses();
+                Entry<WorkshopSchedule, Integer> recalced6Sched = getBestSchedule(5,
+                        reserved7Set, 6);
                 if (rested)
                 {
-                    // System.out.println("Recalcing day 6 using only day 7's requirements
-                    // as verboten and adding");
                     addDay(recalced6Sched.getKey().getItems(), 5);
-                } else
+                } 
+                else
                 {
                     printRestDayInfo(recalced6Sched.getKey().getItems(), 5);
                 }
@@ -230,10 +258,9 @@ public class Solver
             } else
             {
                 // System.out.println("Day 6 is second best, just recalcing and adding");
-                addDay(getBestSchedule(5, null).getKey().getItems(), 5);
+                addDay(getBestSchedule(5).getKey().getItems(), 5);
 
-                Entry<WorkshopSchedule, Integer> recalced7Sched = getBestSchedule(6,
-                        null);
+                Entry<WorkshopSchedule, Integer> recalced7Sched = getBestSchedule(6);
                 if (rested)
                 {
                     // System.out.println("Day 6 is second best, just recalcing and adding
@@ -246,32 +273,36 @@ public class Solver
             }
         } else if (bestDay == 6) // Day 7 is best
         {
-            // System.out.println("Day 7 is best");
-            HashSet<Item> reserved7Items = new HashSet<>(cycle7Sched.getKey().getItems());
+            //System.out.println("Day 7 is best");
+            Map<Item,Integer> reserved7Set = cycle7Sched.getKey().getLimitedUses();
+            Entry<WorkshopSchedule, Integer> recalcedCycle6Sched = getBestSchedule(5, reserved7Set, 6);
+            //System.out.println("Recalced 6:"+Arrays.toString(recalcedCycle6Sched.getKey().getItems().toArray())+" value:"+recalcedCycle6Sched.getValue());
+            
+            if(recalcedCycle6Sched.getValue()>cycle5Sched.getValue())
+                worstDay = 4;
+            else
+                worstDay = 5;
+            
+            //System.out.println("Comparing to original 5: "+cycle5Sched.getValue()+". New worst day: "+worstDay);
+            
             if (worstDay == 4 || rested) // Day 6 is second best or we're using all the
                                          // days anyway
             {
-                 //System.out.println("Day 6 is second best or we're using all the days anyway. Recalcing 6 based on 7.");
-                // Recalculate it in case it's better just reserving day 7
-                Entry<WorkshopSchedule, Integer> recalcedCycle6Sched = getBestSchedule(5,
-                        reserved7Items);
-                 //System.out.println("Recalced 6:"+Arrays.toString(recalcedCycle6Sched.getKey().getItems().toArray())+" value:"+recalcedCycle6Sched.getValue());
-                HashSet<Item> reserved67Items = new HashSet<Item>();
-                reserved67Items.addAll(reserved7Items);
-                reserved67Items.addAll(recalcedCycle6Sched.getKey().getItems());
+                 
+                Map<Item,Integer> reserved67Items = recalcedCycle6Sched.getKey().getLimitedUses(reserved7Set);
 
                 if (rested)
                 {
                     Entry<WorkshopSchedule, Integer> recalcedCycle5Sched = getBestSchedule(
-                            4, reserved67Items);
-                     //System.out.println("Recalced 5:"+Arrays.toString(recalcedCycle5Sched.getKey().getItems().toArray())+" value:"+recalcedCycle5Sched.getValue());
-                     //System.out.println("Recalcing 5 based on 6. Is it better?");
+                            4, reserved67Items, 6);
+                    //System.out.println("Recalced 5:"+Arrays.toString(recalcedCycle5Sched.getKey().getItems().toArray())+" value:"+recalcedCycle5Sched.getValue());
+                    //System.out.println("Recalcing 5 based on 6. Is it better?");
 
                     // Only use the recalculation if it doesn't ruin D5 too badly
                     if (recalcedCycle5Sched.getValue() + recalcedCycle6Sched
                             .getValue() > cycle5Sched.getValue() + cycle6Sched.getValue())
                     {
-                         //System.out.println("It is! Using recalced 5");
+                        //System.out.println("It is! Using recalced 5");
                         addDay(recalcedCycle5Sched.getKey().getItems(), 4);
                     }
 
@@ -282,7 +313,7 @@ public class Solver
                         addDay(cycle5Sched.getKey().getItems(), 4);
                     }
                     //System.out.println("Recalcing 6 AGAIN just in case 5 changed it, still only forbidding things used day 7");
-                    addDay(getBestSchedule(5, reserved7Items).getKey().getItems(), 5);
+                    addDay(getBestSchedule(5, reserved7Set, 6).getKey().getItems(), 5);
                 } else
                 {
                     printRestDayInfo(cycle5Sched.getKey().getItems(), 4);
@@ -291,28 +322,36 @@ public class Solver
             }
             else if (worstDay == 5) // Day 5 is second best and we aren't using day 6
             {
-                printRestDayInfo(cycle6Sched.getKey().getItems(), 5);
-                /// System.out.println("Day 6 isn't being used so just recalc 5 based on
-                /// day 7");
-                addDay(getBestSchedule(4, reserved7Items).getKey().getItems(), 4);
+                printRestDayInfo(recalcedCycle6Sched.getKey().getItems(), 5);
+                //System.out.println("Day 6 isn't being used so just recalc 5 based on day 7");
+                addDay(getBestSchedule(4, reserved7Set,6).getKey().getItems(), 4);
             }
-            // System.out.println("Adding recalced day 7");
-            addDay(getBestSchedule(6, null).getKey().getItems(), 6);
+             System.out.println("Adding recalced day 7");
+            addDay(getBestSchedule(6).getKey().getItems(), 6);
 
         } else // Best day is Day 6
         {
             // System.out.println("Day 6 is best");
+            Map<Item,Integer> reserved6 = cycle6Sched.getKey().getLimitedUses();
+         // System.out.println("Recalcing D5 allowing D6's items");
+            Entry<WorkshopSchedule, Integer> recalcedCycle5Sched = getBestSchedule(4,
+                    reserved6, 5);
+            
+            if(recalcedCycle5Sched.getValue() > cycle7Sched.getValue())
+                worstDay = 6;
+            else
+                worstDay = 4;
+            
+            
             if (rested || worstDay != 4)
             {
-                // System.out.println("Adding day 5 as-is");
-                addDay(cycle5Sched.getKey().getItems(), 4);
+                addDay(recalcedCycle5Sched.getKey().getItems(), 4);
             } else
                 printRestDayInfo(cycle5Sched.getKey().getItems(), 4);
             // System.out.println("Recalcing day 6 and adding");
-            addDay(getBestSchedule(5, null).getKey().getItems(), 5);
+            addDay(getBestSchedule(5).getKey().getItems(), 5);
 
-            Entry<WorkshopSchedule, Integer> recalcedCycle7Sched = getBestSchedule(6,
-                    null);
+            Entry<WorkshopSchedule, Integer> recalcedCycle7Sched = getBestSchedule(6);
             if (rested || worstDay != 6)
             {
                 // System.out.println("Recalcing day 7 and adding");
@@ -321,32 +360,55 @@ public class Solver
                 printRestDayInfo(recalcedCycle7Sched.getKey().getItems(), 6);
         }
     }
-
+    
     private static boolean isWorseThanAllFollowing(Entry<WorkshopSchedule, Integer> rec,
             int day)
     {
+        return isWorseThanAllFollowing(rec, day, false);
+    }
+
+    private static boolean isWorseThanAllFollowing(Entry<WorkshopSchedule, Integer> rec,
+            int day, boolean checkD5)
+    {
         int worstInFuture = 99999;
-        if (verboseSolverLogging)
-            System.out.println("Comparing d" + (day + 1) + " (" + rec.getValue()
-                    + ") to worst-case future days");
-        HashSet<Item> reservedSet = new HashSet<>(rec.getKey().getItems());
+        boolean bestD5IsWorst = true;
+        int bestD5 = 0;
+        if(verboseSolverLogging) System.out.println("Comparing d" + (day + 1) + " (" + rec.getValue()+ ") to worst-case future days");
+        
+        Map<Item,Integer> reservedSet = new HashMap<Item,Integer>();
+        for(Item item : rec.getKey().getItems())
+            reservedSet.put(item, 0);
         for (int d = day + 1; d < 7; d++)
         {
             Entry<WorkshopSchedule, Integer> solution;
             if (day == 3 && d == 4) // We have a lot of info about this specific pair so
                                     // we might as well use it
-                solution = getD5EV();
+            {
+                solution = getD5EV();   
+                bestD5 = solution.getValue();
+            }
             else
-                solution = getBestSchedule(d, reservedSet, false);
+                solution = getBestSchedule(d, reservedSet, d);
             if (verboseSolverLogging)
                 System.out.println("Day " + (d + 1) + ", crafts: "
                         + Arrays.toString(solution.getKey().getItems().toArray())
                         + " value: " + solution.getValue());
             worstInFuture = Math.min(worstInFuture, solution.getValue());
-            reservedSet.addAll(solution.getKey().getItems());
+            
+            for(Item item : solution.getKey().getItems())
+                reservedSet.put(item, 0);
+            
+            if (bestD5 > 0 && d > 4 && solution.getValue() < bestD5) //If we're checking a later day and it's worse than our best D5
+                bestD5IsWorst = false;
         }
-        if (verboseSolverLogging)
-            System.out.println("Worst future day: " + worstInFuture);
+        //System.out.println("Best D5 "+bestD5+". Worst? "+bestD5IsWorst);
+        if (checkD5 && day == 3 && bestD5IsWorst && rec.getValue() >= bestD5)
+        {
+            guaranteeRestD5 = true;
+            //System.out.println("Best D5 "+bestD5+" is the worst value I can find, so recalcing D4 with its crafts too. Resting d5? "+guaranteeRestD5);
+        }
+        
+           // System.out.println("Worst future day: " + worstInFuture);
 
         return rec.getValue() <= worstInFuture;
     }
@@ -354,7 +416,7 @@ public class Solver
     // Specifically for comparing D4 to D5
     public static Entry<WorkshopSchedule, Integer> getD5EV()
     {
-        Entry<WorkshopSchedule, Integer> solution = getBestSchedule(4, null);
+        Entry<WorkshopSchedule, Integer> solution = getBestSchedule(4);
         if (verboseSolverLogging)
             System.out.println(
                     "Testing against D5 solution " + solution.getKey().getItems());
@@ -442,39 +504,25 @@ public class Solver
     }
 
     private static Map.Entry<WorkshopSchedule, Integer> getBestBruteForceSchedule(int day,
-            Set<Item> cannotUse, boolean allowAllOthers)
+            Map<Item,Integer> limitedUse, int allowUpToDay)
     {
 
         HashMap<WorkshopSchedule, Integer> safeSchedules = new HashMap<>();
         List<List<Item>> filteredItemLists;
 
-        if (cannotUse == null)
-        {
-            filteredItemLists = CSVImporter.allEfficientChains.stream()
-                    .filter(list -> list.stream().allMatch(
-                            item -> items[item.ordinal()].rankUnlocked <= islandRank))
-                    .filter(list -> list.stream().allMatch(
-                            item -> items[item.ordinal()].peaksOnOrBeforeDay(day)))
-                    .collect(Collectors.toList());
 
-        } else
-        {
-            Stream<List<Item>> filteredStream = CSVImporter.allEfficientChains.stream()
-                    .filter(list -> list.stream().allMatch(
-                            item -> items[item.ordinal()].rankUnlocked <= islandRank))
-                    .filter(list -> list.stream()
-                            .allMatch(item -> !cannotUse.contains(item)));
-            if (!allowAllOthers)
-                filteredStream = filteredStream.filter(list -> list.stream()
-                        .allMatch(item -> items[item.ordinal()].peaksOnOrBeforeDay(day)));
+        filteredItemLists = CSVImporter.allEfficientChains.stream()
+                .filter(list -> list.stream().allMatch(
+                        item -> items[item.ordinal()].rankUnlocked <= islandRank))
+                .filter(list -> list.stream().allMatch(
+                        item -> items[item.ordinal()].peaksOnOrBeforeDay(allowUpToDay)))
+                .collect(Collectors.toList());
 
-            filteredItemLists = filteredStream.collect(Collectors.toList());
 
-        }
 
         for (List<Item> list : filteredItemLists)
         {
-            addToScheduleMap(list, day, safeSchedules);
+            addToScheduleMap(list, day, limitedUse, safeSchedules);
         }
 
         LinkedHashMap<WorkshopSchedule, Integer> sortedSchedules = safeSchedules
@@ -504,42 +552,44 @@ public class Solver
 
     }
 
-    private static Map.Entry<WorkshopSchedule, Integer> getBestSchedule(int day,
-            Set<Item> reservedForLater)
+    private static Map.Entry<WorkshopSchedule, Integer> getBestSchedule(int day)
     {
-        return getBestSchedule(day, reservedForLater, true);
+        return getBestSchedule(day, null, day);
     }
 
     private static Map.Entry<WorkshopSchedule, Integer> getBestSchedule(int day,
-            Set<Item> reservedForLater, boolean allowAllOthers)
+            Map<Item,Integer> limitedUse, int allowUpToDay)
     {
-            return getBestBruteForceSchedule(day, reservedForLater, allowAllOthers);
+            return getBestBruteForceSchedule(day, limitedUse, allowUpToDay);
     }
     
-    private static int addToScheduleMap(List<Item> list, int day,
+    private static int addToScheduleMap(List<Item> list, int day,Map<Item,Integer> limitedUse,
             HashMap<WorkshopSchedule, Integer> safeSchedules)
     {
         WorkshopSchedule workshop = new WorkshopSchedule(list);
+        if(workshop.usesTooMany(limitedUse))
+            return 0;
+        
         int value = workshop.getValueWithGrooveEstimate(day, groove);
         // Only add if we don't already have one with this schedule or ours is better
         int oldValue = safeSchedules.getOrDefault(workshop, -1);
 
         if (oldValue < value)
         {
-            if (verboseSolverLogging && list.contains(Jam))
-                System.out.println("Replacing schedule with mats "
-                        + workshop.rareMaterialsRequired + " with " + list + " because "
-                        + value + " is higher than " + oldValue);
+//            if (verboseSolverLogging && oldValue > 0)
+//                System.out.println("Replacing schedule with mats "
+//                        + workshop.rareMaterialsRequired + " with " + list + " because "
+//                        + value + " is higher than " + oldValue);
             safeSchedules.remove(workshop); // It doesn't seem to update the key when
                                             // updating the value, so we delete the key
                                             // first
             safeSchedules.put(workshop, value);
         } else
         {
-            if (verboseSolverLogging && list.contains(Jam))
-                System.out.println("Not replacing schedule with mats "
-                        + workshop.rareMaterialsRequired + " with " + list + " because "
-                        + value + " is lower than " + oldValue);
+//            if (verboseSolverLogging)
+//                System.out.println("Not replacing schedule with mats "
+//                        + workshop.rareMaterialsRequired + " with " + list + " because "
+//                        + value + " is lower than " + oldValue);
 
             value = 0;
         }

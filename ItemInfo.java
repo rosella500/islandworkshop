@@ -10,7 +10,7 @@ import static islandworkshop.PeakCycle.*;
 public class ItemInfo
 {
     //Contains exact supply values for concrete paths and worst-case supply values for tentative ones
-    private static final int[][] SUPPLY_PATH = {{0, 0, 0, 0, 0, 0, 0}, //Unknown
+    private static final int[][] SUPPLY_PATH = {{0, 0, -6, 0, 0, 0, 0}, //Unknown
             {-4, -4, 10, 0, 0, 0, 0}, //Cycle2Weak 
             {-8, -7, 15, 0, 0, 0, 0}, //Cycle2Strong
             {0, -4, -4, 10, 0, 0, 0}, //Cycle3Weak
@@ -161,10 +161,10 @@ public class ItemInfo
             else
             {
                 peak = Cycle2Weak;
-                if(previousPeak == Cycle7Strong)
-                    System.out.println("Warning! Can't tell if "+item+" is a weak or a strong 2 peak.");
-                else
-                    System.out.println("Need to craft "+item+" to determine weak or strong 2 peak, assuming weak."); 
+//                if(previousPeak == Cycle7Strong)
+//                    System.out.println("Warning! Can't tell if "+item+" is a weak or a strong 2 peak.");
+//                else
+//                    System.out.println("Need to craft "+item+" to determine weak or strong 2 peak, assuming weak."); 
             }
         }        
         else if(observedSupplies.size() > 1)

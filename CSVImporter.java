@@ -99,7 +99,7 @@ public class CSVImporter
             try (BufferedReader br = new BufferedReader(new FileReader(path))) 
             {
                 String line;
-                for(int c=0; (line = br.readLine()) != null; c++)
+                for(int c=0; (line = br.readLine()) != null && c < lastWeekPeaks.length; c++)
                 {
                     String[] values = line.split(",");
 

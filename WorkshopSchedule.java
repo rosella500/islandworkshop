@@ -124,7 +124,7 @@ public class WorkshopSchedule
         }
         if(Solver.verboseSolverLogging && craftsAbove4 != 0)
         {
-            System.out.println("days to groove "+daysToGroove+", crafts above 4: "+craftsAbove4+" groove bonus: "+grooveValue);
+            //System.out.println("days to groove "+daysToGroove+", crafts above 4: "+craftsAbove4+" groove bonus: "+grooveValue);
         }
         
         int workshopValue = 0;
@@ -142,6 +142,58 @@ public class WorkshopSchedule
                 
         //Allow for the accounting for materials if desired
         return grooveValue + workshopValue - (int)(getMaterialCost() * Solver.materialWeight);
+    }
+    
+    public boolean usesTooMany(Map<Item,Integer> limitedUse)
+    {
+        if(limitedUse == null)
+            return false;
+        boolean tooMany = false;
+       
+        Map<Item, Integer> used = new HashMap<Item,Integer>();
+            
+            
+        for(int i=0; i<items.size(); i++)
+        {
+            if(!used.containsKey(items.get(i)))
+                used.put(items.get(i), 3+(i>0?3:0));
+            else
+                used.put(items.get(i), used.get(items.get(i)) + 3+(i>0?3:0));
+        }
+        for(Item key : used.keySet())
+        {
+            if(limitedUse.containsKey(key) && limitedUse.get(key) < used.get(key))
+            {
+//                if(Solver.verboseSolverLogging)
+//                    System.out.println("Using too many "+key+" in schedule "+items+". Can only use "+limitedUse.get(key)+" but using "+used.get(key));
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public Map<Item, Integer> getLimitedUses()
+    {
+        return getLimitedUses(null);
+    }
+    
+    public Map<Item, Integer> getLimitedUses(Map<Item,Integer> previousLimitedUses)
+    {
+        Map<Item,Integer> limitedUses;
+        if(previousLimitedUses == null)
+            limitedUses = new HashMap<Item,Integer>();
+        else
+            limitedUses = new HashMap<Item,Integer>(previousLimitedUses);
+        
+        for(int i=0; i<items.size(); i++)
+        {
+            if(!limitedUses.containsKey(items.get(i)))
+                limitedUses.put(items.get(i), 12);
+            
+            limitedUses.put(items.get(i), limitedUses.get(items.get(i))-3 - (i>0?3:0));
+        }
+        
+        return limitedUses;
     }
     
     public boolean equals(Object other)
