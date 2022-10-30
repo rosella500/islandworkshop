@@ -1,0 +1,50 @@
+Isleworks Potion,Low,Sufficient,None,Insufficient,None,Sufficient,Decreasing,Sufficient,Increasing,Cycle6Weak
+Isleworks Firesand,High,Sufficient,None,Insufficient,Skyrocketing,Nonexistent,Skyrocketing,Sufficient,Plummeting,Cycle3Strong
+Isleworks Wooden Chair,High,Sufficient,Plummeting,Insufficient,None,Sufficient,Plummeting,Sufficient,None,Cycle7Strong
+Isleworks Grilled Clam,High,Sufficient,None,Insufficient,Skyrocketing,Nonexistent,Skyrocketing,Sufficient,Plummeting,Cycle3Strong
+Isleworks Necklace,Very High,Insufficient,Skyrocketing,Nonexistent,Skyrocketing,Sufficient,Plummeting,Sufficient,None,Cycle2Strong
+Isleworks Coral Ring,High,Sufficient,None,Insufficient,None,Sufficient,Plummeting,Sufficient,Increasing,Cycle7Weak
+Isleworks Barbut,Very High,Sufficient,None,Sufficient,None,Sufficient,None,Insufficient,Skyrocketing,Cycle5Strong
+Isleworks Macuahuitl,Average,Sufficient,None,Insufficient,None,Sufficient,Plummeting,Sufficient,None,Cycle7Strong
+Isleworks Sauerkraut,Low,Sufficient,None,Insufficient,Increasing,Insufficient,Increasing,Sufficient,Plummeting,Cycle3Weak
+Isleworks Baked Pumpkin,Average,Insufficient,Increasing,Insufficient,Increasing,Sufficient,Plummeting,Sufficient,None,Cycle2Weak
+Isleworks Tunic,Average,Sufficient,None,Insufficient,None,Sufficient,Plummeting,Sufficient,Increasing,Cycle7Weak
+Isleworks Culinary Knife,Very High,Sufficient,None,Sufficient,None,Insufficient,Increasing,Insufficient,Increasing,Cycle4Weak
+Isleworks Brush,Low,Sufficient,None,Sufficient,None,Insufficient,Skyrocketing,Nonexistent,Skyrocketing,Cycle4Strong
+Isleworks Boiled Egg,Average,Sufficient,None,Insufficient,Increasing,Insufficient,Increasing,Sufficient,Plummeting,Cycle3Weak
+Isleworks Hora,Average,Sufficient,None,Insufficient,None,Sufficient,Plummeting,Sufficient,None,Cycle7Strong
+Isleworks Earrings,High,Sufficient,None,Insufficient,Skyrocketing,Nonexistent,Skyrocketing,Sufficient,Plummeting,Cycle3Strong
+Isleworks Butter,Very High,Sufficient,None,Insufficient,None,Sufficient,Plummeting,Sufficient,Skyrocketing,Cycle6Strong
+Isleworks Brick Counter,Very High,Sufficient,None,Insufficient,None,Sufficient,Decreasing,Sufficient,Increasing,Cycle6Weak
+Bronze Sheep,Low,Sufficient,None,Sufficient,None,Sufficient,None,Insufficient,Skyrocketing,Cycle5Strong
+Isleworks Growth Formula,Very High,Sufficient,Plummeting,Insufficient,None,Sufficient,Plummeting,Sufficient,None,Cycle7Strong
+Isleworks Garnet Rapier,High,Sufficient,Plummeting,Sufficient,None,Insufficient,Skyrocketing,Nonexistent,Skyrocketing,Cycle4Strong
+Isleworks Spruce Round Shield,High,Sufficient,None,Insufficient,Increasing,Insufficient,Increasing,Surplus,Plummeting,Cycle3Weak
+Isleworks Shark Oil,Average,Sufficient,None,Insufficient,None,Sufficient,Plummeting,Sufficient,None,Cycle7Strong
+Isleworks Silver Ear Cuffs,Average,Sufficient,None,Sufficient,None,Sufficient,None,Insufficient,Skyrocketing,Cycle5Strong
+Isleworks Sweet Popoto,Very High,Sufficient,None,Insufficient,Increasing,Insufficient,Increasing,Sufficient,Plummeting,Cycle3Weak
+Isleworks Parsnip Salad,Average,Sufficient,None,Sufficient,None,Sufficient,None,Insufficient,Increasing,Cycle5Weak
+Isleworks Caramels,Very High,Insufficient,Skyrocketing,Nonexistent,Skyrocketing,Surplus,Plummeting,Surplus,None,Cycle2Strong
+Isleworks Ribbon,Average,Sufficient,None,Insufficient,None,Sufficient,Decreasing,Sufficient,Increasing,Cycle6Weak
+Isleworks Rope,Low,Sufficient,None,Insufficient,None,Sufficient,Plummeting,Sufficient,Skyrocketing,Cycle6Strong
+Isleworks Cavalier's Hat,High,Insufficient,Decreasing,Insufficient,Increasing,Sufficient,Plummeting,Sufficient,None,Cycle2Weak
+Isleworks Horn,High,Sufficient,None,Insufficient,None,Sufficient,Plummeting,Sufficient,Skyrocketing,Cycle6Strong
+Isleworks Salt Cod,High,Sufficient,Plummeting,Sufficient,None,Insufficient,Increasing,Insufficient,Increasing,Cycle4Weak
+Isleworks Squid Ink,High,Sufficient,Plummeting,Sufficient,None,Sufficient,None,Insufficient,Increasing,Cycle5Weak
+Isleworks Essential Draught,Low,Sufficient,Plummeting,Insufficient,None,Sufficient,Plummeting,Sufficient,Skyrocketing,Cycle6Strong
+Isleberry Jam,High,Sufficient,Plummeting,Sufficient,None,Insufficient,Skyrocketing,Nonexistent,Skyrocketing,Cycle4Strong
+Isleworks Tomato Relish,Average,Sufficient,None,Insufficient,None,Sufficient,Decreasing,Sufficient,Increasing,Cycle6Weak
+Isleworks Onion Soup,Very High,Sufficient,None,Insufficient,None,Sufficient,Plummeting,Sufficient,Increasing,Cycle7Weak
+Islefish Pie,Very High,Insufficient,Skyrocketing,Insufficient,Increasing,Surplus,Plummeting,Surplus,None,Cycle2Weak
+Isleworks Corn Flakes,High,Insufficient,Skyrocketing,Nonexistent,Skyrocketing,Sufficient,Plummeting,Sufficient,None,Cycle2Strong
+Isleworks Pickled Radish,Average,Sufficient,Plummeting,Sufficient,None,Sufficient,None,Insufficient,Skyrocketing,Cycle5Strong
+Isleworks Iron Axe,Low,Insufficient,Skyrocketing,Insufficient,Increasing,Sufficient,Plummeting,Sufficient,None,Cycle2Weak
+Isleworks Quartz Ring,Very High,Insufficient,Skyrocketing,Nonexistent,Skyrocketing,Sufficient,Plummeting,Sufficient,None,Cycle2Strong
+Isleworks Porcelain Vase,Average,Sufficient,None,Sufficient,None,Sufficient,None,Insufficient,Increasing,Cycle5Weak
+Isleworks Vegetable Juice,Very High,Sufficient,None,Sufficient,None,Insufficient,Increasing,Insufficient,Increasing,Cycle4Weak
+Isleworks Pumpkin Pudding,Average,Sufficient,None,Sufficient,None,Insufficient,Increasing,Insufficient,Increasing,Cycle4Weak
+Isleworks Sheepfluff Rug,High,Sufficient,None,Sufficient,None,Insufficient,Skyrocketing,Nonexistent,Skyrocketing,Cycle4Strong
+Isleworks Garden Scythe,Low,Sufficient,None,Sufficient,None,Sufficient,None,Insufficient,Increasing,Cycle5Weak
+Isleworks Bed,High,Sufficient,Plummeting,Insufficient,None,Sufficient,Plummeting,Sufficient,Increasing,Cycle7Weak
+Isleworks Scale Fingers,Average,Sufficient,None,Insufficient,Skyrocketing,Nonexistent,Skyrocketing,Sufficient,Plummeting,Cycle3Strong
+Isleworks Crook,Average,Sufficient,None,Insufficient,None,Sufficient,Plummeting,Sufficient,Increasing,Cycle7Weak
