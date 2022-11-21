@@ -10,4 +10,20 @@ public enum Popularity
     {
         this.multiplier = mult;
     }
+
+    public static Popularity fromIndex(int index)
+    {
+        switch (index)
+        {
+            case 1:
+                return VeryHigh;
+            case 2:
+                return High;
+            case 3:
+                return Average;
+            case 4:
+                return Low;
+        }
+        return Low;
+    }
 }

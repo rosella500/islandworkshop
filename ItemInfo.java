@@ -73,43 +73,18 @@ public class ItemInfo
     }
     
     //Set start-of-week data
-    public void setInitialData(Popularity pop, PeakCycle prevPeak)
-    {
-        setInitialData(pop, prevPeak, Sufficient, None);
-    }
-    public void setInitialData(Popularity pop, PeakCycle prevPeak, DemandShift startingDemand)
-    {
-        setInitialData(pop, prevPeak, Insufficient, startingDemand);
-    }
-    public void setInitialData(Popularity pop, PeakCycle prevPeak, Supply startingSupply, DemandShift startingDemand)
-    {
-        setInitialData(pop,prevPeak,new ObservedSupply(startingSupply, startingDemand));   
-    }
-    
-    public void setInitialData(Popularity pop, PeakCycle prev, ObservedSupply ob)
+    public void setInitialData(Popularity pop, PeakCycle currentPeak)
     {
         popularity = pop;
-        previousPeak = prev;
 
         craftedPerDay = new int[7];
-        observedSupplies = new ArrayList<ObservedSupply>();
-        addObservedDay(ob);
+        peak = currentPeak;
     }
+
     
-    public void addObservedDay(Supply supply, DemandShift demand)
+    public void setCrafted(int num, int day)
     {
-        addObservedDay(new ObservedSupply(supply, demand));
-    }
-    
-    public void addObservedDay(ObservedSupply ob)
-    {
-        observedSupplies.add(ob);
-        setPeakBasedOnObserved();
-    }
-    
-    public void addCrafted(int num, int day)
-    {
-        craftedPerDay[day]+=num;
+        craftedPerDay[day]=num;
     }
     
     private int getCraftedBeforeDay(int day)
@@ -120,91 +95,6 @@ public class ItemInfo
         
         return sum;
     }
-    
-    private void setPeakBasedOnObserved()
-    {      
-        if(peak.isTerminal && peak != Cycle2Weak)
-            return;
-        if(observedSupplies.get(0).supply == Insufficient)
-        {
-            DemandShift observedDemand = observedSupplies.get(0).demandShift;
-            
-            if(previousPeak.isReliable)
-            {
-                if (observedDemand==None || observedDemand == Skyrocketing)
-                {
-                    peak = Cycle2Strong;
-                    return;
-                }
-                else
-                {
-                    peak = Cycle2Weak;
-                    return;
-                }
-            }
-            else if(observedSupplies.size() > 1)
-            {
-                DemandShift observedDemand2 = observedSupplies.get(1).demandShift;
-                if (observedDemand2 == Skyrocketing)
-                {
-                    peak = Cycle2Strong;
-                    return;
-                }
-                else if(observedDemand2 == Increasing)
-                {
-                    peak = Cycle2Weak;
-                    return;
-                }
-                else
-                    System.out.println(item + " does not match any known patterns for day 2");
-            }
-            else
-            {
-                peak = Cycle2Weak;
-//                if(previousPeak == Cycle7Strong)
-//                    System.out.println("Warning! Can't tell if "+item+" is a weak or a strong 2 peak.");
-//                else
-//                    System.out.println("Need to craft "+item+" to determine weak or strong 2 peak, assuming weak."); 
-            }
-        }        
-        else if(observedSupplies.size() > 1)
-        {
-            int daysToCheck = Math.min(4, observedSupplies.size());
-            for(int day=1; day < daysToCheck; day++)
-            {
-                ObservedSupply observedToday = observedSupplies.get(day);
-                if(Solver.verboseCalculatorLogging)
-                  System.out.println(item+" observed: "+observedToday);
-                int crafted = getCraftedBeforeDay(day);
-                boolean found = false;
-                
-                for(int i=0; i<PEAKS_TO_CHECK[day-1].length; i++)
-                {
-                    PeakCycle potentialPeak = PEAKS_TO_CHECK[day-1][i];
-                    int expectedPrevious = getSupplyOnDayByPeak(potentialPeak, day-1);
-                    int expectedSupply = getSupplyOnDayByPeak(potentialPeak, day);
-                    ObservedSupply expectedObservation = new ObservedSupply(getSupplyBucket(crafted + expectedSupply), 
-                            getDemandShift(expectedPrevious, expectedSupply));
-                    if(Solver.verboseCalculatorLogging)
-                      System.out.println("Checking against peak "+potentialPeak+", expecting: "+expectedObservation);
-                    
-                    if(observedToday.equals(expectedObservation))
-                    {
-                        if(Solver.verboseCalculatorLogging)
-                            System.out.println("match found!");
-                        peak = potentialPeak;
-                        found = true;
-                        if(peak.isTerminal)
-                            return;
-                    }
-                }
-                
-                if(!found)
-                    System.out.println(item + " does not match any known patterns for day "+(day+1));
-            }
-        }
-    }
-    
     public int getValueWithSupply(Supply supply)
     {
         int base = baseValue * Solver.WORKSHOP_BONUS / 100;

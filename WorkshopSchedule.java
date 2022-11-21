@@ -1,9 +1,9 @@
 package islandworkshop;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.ArrayList;
-import java.util.HashMap;
+
+import static islandworkshop.Solver.reservedHelpers;
+import static islandworkshop.Solver.rested;
 
 public class WorkshopSchedule
 {
@@ -11,6 +11,7 @@ public class WorkshopSchedule
     private List<Item> items; //Just a dupe of crafts, but accessible
     List<Integer> completionHours;
     public int currentIndex = 0; //Used for cycle scheduler to figure out crafts stuff
+    public int grooveValue =0;
 
     Map<RareMaterial,Integer> rareMaterialsRequired;
     
@@ -104,45 +105,136 @@ public class WorkshopSchedule
         }
         return cost;
     }
-    
+
     public int getValueWithGrooveEstimate(int day, int startingGroove)
     {
-        int craftsAbove4 = 0;
-        craftsAbove4+=getNumCrafts()-4;
-        int daysToGroove = 5 - day;
-        if (!Solver.rested)
+        boolean verboseLogging = false;
+        /*if(day == 2 && items.get(0) == Item.CulinaryKnife && items.get(1) == Item.Earrings && items.get(2) == Item.ScaleFingers
+                && items.get(3) == Item.SpruceRoundShield)
+            verboseLogging = true;
+        if(day == 2 && items.get(0) == Item.Butter && items.get(1) == Item.Earrings && items.get(2) == Item.ScaleFingers
+                && items.get(3) == Item.SpruceRoundShield)
+            verboseLogging = true;*/
+
+        if(verboseLogging)
+            System.out.println("Getting value for workshop making "+Arrays.toString(items.toArray()));
+
+        int craftsAbove4 = getNumCrafts() - 4;
+        int daysToGroove = 6 - day;
+        if (!rested)
             daysToGroove--;
 
-        int grooveValue = 0;
+        //How many days will it take to hit max normally
+        int estimatedGroovePerDay = 3 * Solver.NUM_WORKSHOPS;
+        int expectedStartingGroove = startingGroove + estimatedGroovePerDay;
 
-        if (daysToGroove > 0)
+        boolean groovePenalty = false;
+
+        if (craftsAbove4 < 0)
         {
-            int fullGrooveBonus = (daysToGroove - 1) * Solver.groovePerFullDay;
-            grooveValue = fullGrooveBonus + Solver.groovePerPartDay;
-            
-            grooveValue *= craftsAbove4;
+            groovePenalty = true;
+            expectedStartingGroove += Solver.NUM_WORKSHOPS * craftsAbove4;
+
+            craftsAbove4 *= -1;
         }
-        if(Solver.verboseSolverLogging && craftsAbove4 != 0)
+
+        float grooveBonus = 0;
+        for (int i = 0; i < craftsAbove4; i++)
         {
-            //System.out.println("days to groove "+daysToGroove+", crafts above 4: "+craftsAbove4+" groove bonus: "+grooveValue);
+            int craftingDaysLeft = daysToGroove;
+            int fullDays = 0;
+            int numRowsOfPartialDay = 0;
+            int expectedEndingGroove = expectedStartingGroove;
+            while (craftingDaysLeft > 0 && expectedEndingGroove < Solver.GROOVE_MAX)
+            {
+                if (expectedEndingGroove + estimatedGroovePerDay + Solver.NUM_WORKSHOPS - 1 <= Solver.GROOVE_MAX)
+                {
+                    fullDays++;
+                    expectedEndingGroove += estimatedGroovePerDay;
+                    craftingDaysLeft--;
+                }
+                else
+                {
+                    int grooveToGo = Solver.GROOVE_MAX - expectedEndingGroove;
+                    numRowsOfPartialDay = (grooveToGo + 1) / Solver.NUM_WORKSHOPS;
+                    expectedEndingGroove = Solver.GROOVE_MAX;
+                }
+            }
+
+            switch (numRowsOfPartialDay) {
+                case 1 -> grooveBonus += fullDays + 0.10f;
+                case 2 -> grooveBonus += fullDays + .5f;
+                case 3 -> grooveBonus += fullDays + .60f;
+                case 4 -> grooveBonus += fullDays + 1;
+                default -> grooveBonus += fullDays;
+            }
+
+            expectedStartingGroove+=Solver.NUM_WORKSHOPS;
+            if(verboseLogging)
+                System.out.println("Groove bonus "+grooveBonus+"% over "+daysToGroove+" days, with the last day giving "+numRowsOfPartialDay+" rows");
         }
-        
+        float valuePerDay = Solver.averageDayValue;
+
+        grooveBonus = (grooveBonus * valuePerDay) / 100f;
+
+        if (groovePenalty)
+            grooveBonus *= -1;
+
+        grooveValue = 0;
+
+        if (daysToGroove > 0 && grooveBonus != 0)
+        {
+            grooveValue = (int)grooveBonus;
+        }
+
         int workshopValue = 0;
-        HashMap<Item,Integer> numCrafted = new HashMap<Item, Integer>(); 
+        HashMap<Item,Integer> numCrafted = new HashMap<>();
         currentIndex = 0;
         for(int i=0; i<getNumCrafts(); i++)
         {
             ItemInfo completedCraft = getCurrentCraft();
             boolean efficient = currentCraftIsEfficient();
-            workshopValue += getValueForCurrent(day, numCrafted.getOrDefault(completedCraft.item, 0), startingGroove + i*3, efficient);
+            int previouslyCrafted = numCrafted.getOrDefault(completedCraft.item, 0);
+            int nextGroove = Math.min(startingGroove + i*Solver.NUM_WORKSHOPS, Solver.GROOVE_MAX);
+            workshopValue += getValueForCurrent(day, previouslyCrafted, nextGroove, efficient);
             currentIndex++;
-            int amountCrafted = efficient? 6 : 3;
-            numCrafted.put(completedCraft.item, numCrafted.getOrDefault(completedCraft.item, 0) + amountCrafted);
+            int amountCrafted = efficient? Solver.NUM_WORKSHOPS*2 : Solver.NUM_WORKSHOPS;
+            numCrafted.put(completedCraft.item, previouslyCrafted + amountCrafted);
+
         }
-                
+
+
+        //Figure out if a penalty should apply for using a future item
+        int helperPenalty = 0;
+        for(var kvp : reservedHelpers.entrySet())
+        {
+            ItemInfo mainItem = Solver.items[kvp.getKey().ordinal()];
+            if(items.contains(kvp.getKey())) //We're using the main item so it's fine
+                continue;
+            if(mainItem.peaksOnOrBeforeDay(day)) //Item has peaked already so it's fine
+                continue;
+            if(!items.contains(kvp.getValue())) //We aren't using the helper so it's fine
+                continue;
+
+            if(verboseLogging)
+                System.out.println("Not using main item "+kvp.getKey()+" that hasn't peaked yet, but are using its helper "+kvp.getValue()+". Adding penalty of "+Solver.helperPenalty+" for each helper sold");
+            //None of the above conditions are true so it's not fine.
+            //apply a penalty for x usages (2x if efficient)
+            for(int i=0; i<items.size(); i++)
+            {
+                if(items.get(i) == kvp.getValue())
+                {
+                    helperPenalty+=Solver.helperPenalty*(i==0?1:2);
+                }
+            }
+        }
+        if(verboseLogging)
+            System.out.println("Workshop value: "+workshopValue+", grooveBonus: "+grooveValue+", material cost: "+getMaterialCost()+" x"+Solver.materialWeight+", helper penalty: "+helperPenalty);
+
         //Allow for the accounting for materials if desired
-        return grooveValue + workshopValue - (int)(getMaterialCost() * Solver.materialWeight);
+        return workshopValue + grooveValue - (int)(getMaterialCost() * Solver.materialWeight) - helperPenalty;
     }
+    
     
     public boolean usesTooMany(Map<Item,Integer> limitedUse)
     {
@@ -181,9 +273,9 @@ public class WorkshopSchedule
     {
         Map<Item,Integer> limitedUses;
         if(previousLimitedUses == null)
-            limitedUses = new HashMap<Item,Integer>();
+            limitedUses = new HashMap<>();
         else
-            limitedUses = new HashMap<Item,Integer>(previousLimitedUses);
+            limitedUses = new HashMap<>(previousLimitedUses);
         
         for(int i=0; i<items.size(); i++)
         {

@@ -1,4 +1,5 @@
 package islandworkshop;
+import java.util.Arrays;
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -6,16 +7,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class CSVImporter
 {
     
     public static List<List<Item>> allEfficientChains;
-    
-    public static PeakCycle[] lastWeekPeaks;
-    public static Popularity[] currentPopularity;
-    public static List<List<ObservedSupply>> observedSupplies;
-    public static PeakCycle[] currentPeaks;
+
+    public static Popularity[] currentPopularity = new Popularity[50]; // item
+    public static PeakCycle[][] currentPeaks; //item, day
     
     public static void initBruteForceChains()
     {
@@ -47,140 +47,49 @@ public class CSVImporter
         }
     }
     
-    public static void writeCurrentPeaks(int week)
-    {
-        String fileName = "Week"+(week)+"Supply.csv";
-        
-        //TODO: this
-        
-        Path path = Paths.get(fileName);
-        
-        /*
-         * byte[] strToBytes = str.getBytes();
-         * 
-         * Files.write(path, strToBytes);
-         */
-
-        try
-        {
-            List<String> original = Files.readAllLines(path);
-            List<String> updated = new ArrayList<>();
-            
-            for(int c=0; c<currentPeaks.length; c++)
-            {
-                String orig = original.get(c);
-                String[] split = orig.split(",");
-                if(split.length<11)
-                {
-                    updated.add(orig + "," + Solver.items[c].peak);
-                }
-                else
-                {
-                    updated.add(orig);
-                    System.out.println("Trying to write new peaks but we already have them? "+orig);
-                }
-            }
-            Files.write(path, updated);
-        }
-        catch(Exception e)
-        {
-            System.out.println("Error writing new peaks to csv "+path+": "+e.getMessage());
-        }
-        
-    }
-    
     public static void initSupplyData(int week)
     {
-        lastWeekPeaks = new PeakCycle[Solver.items.length];
-        String path = "Week"+(week-1)+"Supply.csv";
-        
-        if(week > 1)
-        {
-            try (BufferedReader br = new BufferedReader(new FileReader(path))) 
-            {
-                String line;
-                for(int c=0; (line = br.readLine()) != null && c < lastWeekPeaks.length; c++)
-                {
-                    String[] values = line.split(",");
-
-                    if(values.length >= 11)
-                    {
-                        String peak = values[10].replace(" ","");
-                        
-                        lastWeekPeaks[c] = PeakCycle.valueOf(peak);
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                System.out.println("Error importing csv "+path+": "+e.getMessage());
-            }
-        }
-        else
-        {
-            for(int c=0; c<lastWeekPeaks.length; c++)
-            {                   
-                lastWeekPeaks[c] = PeakCycle.Cycle2Weak;
-            }
-            lastWeekPeaks[Item.Barbut.ordinal()] = PeakCycle.Cycle7Strong;
-            lastWeekPeaks[Item.Tunic.ordinal()] = PeakCycle.Cycle7Strong;
-            lastWeekPeaks[Item.Brush.ordinal()] = PeakCycle.Cycle3Strong;
-            
-        }
-        
-        path = "Week"+week+"Supply.csv";
-        
-        currentPopularity = new Popularity[Solver.items.length];
-        observedSupplies = new ArrayList<>();
-        currentPeaks = new PeakCycle[Solver.items.length];
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) 
-        {
-            String line;
-            for (int row=0; (line = br.readLine()) != null; row++) 
-            {
-                String[] values = line.split(",");
-                for(int c=0; c<values.length; c+=2)
-                {
-                    String data1 = values[c];
-                    String data2 = "";
-                    if(c+1 < values.length)
-                        data2 = values[c+1];
-                    switch(c)
-                    {
-                    case 0:
-                        data2 = data2.replace(" ", "");
-                        currentPopularity[row] = Popularity.valueOf(data2);
-                        break;
-                    case 2:
-                        ObservedSupply d1 = new ObservedSupply(Supply.valueOf(data1), DemandShift.valueOf(data2));
-                        observedSupplies.add(new ArrayList<ObservedSupply>());
-                        observedSupplies.get(row).add(d1);
-                        break;
-                    case 4:
-                        ObservedSupply d2 = new ObservedSupply(Supply.valueOf(data1), DemandShift.valueOf(data2));
-                        observedSupplies.get(row).add(d2);
-                        break;
-                    case 6:
-                        ObservedSupply d3 = new ObservedSupply(Supply.valueOf(data1), DemandShift.valueOf(data2));
-                        observedSupplies.get(row).add(d3);
-                        break;
-                    case 8:
-                        ObservedSupply d4 = new ObservedSupply(Supply.valueOf(data1), DemandShift.valueOf(data2));
-                        observedSupplies.get(row).add(d4);
-                        break;
-                    case 10:
-                        data1 = data1.replace(" ","");
-                        currentPeaks[row] = PeakCycle.valueOf(data1);
-                        
-                    }
-                    
-                }
+        try (BufferedReader br = new BufferedReader(new FileReader("craft_peaks.csv"))) {
+            var peaks = br.lines().skip((week - 1) * 50).limit(Solver.items.length)
+                    .map(line -> Arrays.stream(line.split(",")).skip(2).limit(4).map(PeakCycle::fromString).collect(Collectors.toUnmodifiableList())
+                    ).collect(Collectors.toUnmodifiableList());
+            currentPeaks = new PeakCycle[peaks.size()][];
+            for (int i = 0; i < peaks.size(); i++) {
+                var itemPeaks = peaks.get(i);
+                PeakCycle[] itemPeakArray = new PeakCycle[itemPeaks.size()];
+                currentPeaks[i] = itemPeaks.toArray(itemPeakArray);
             }
         }
         catch(Exception e)
         {
-            System.out.println("Error importing csv "+path+": "+e.getMessage());
+            System.out.println("Error importing peaks for week "+week+": "+e.getMessage());
+        }
+        try (BufferedReader br = new BufferedReader(new FileReader("craft_peaks.csv"))) {
+            int index = br.lines().skip((week - 1) * 50).limit(1).map(line -> Arrays.stream(line.split(",")).skip(6).map(Integer::parseInt).findFirst().get()).findFirst().get();
+            //System.out.println("Getting popularity " + index + " for week " + week);
+            initPopularity(index);
+        }
+        catch(Exception e)
+        {
+            System.out.println("Error importing popularity index for week "+week+": "+e.getMessage());
+        }
+    }
+
+    private static void initPopularity(int index)
+    {
+        try (BufferedReader br = new BufferedReader(new FileReader("popularity.csv")))
+        {
+            var popularities = br.lines().skip(index).limit(1)
+                    .map(line -> Arrays.stream(line.split(","))
+                            .map(Integer::parseInt).map(Popularity::fromIndex)
+                            .collect(Collectors.toUnmodifiableList()))
+                    .findFirst().get();
+            popularities.toArray(currentPopularity);
+            //System.out.println("Popularities this week: "+Arrays.toString(currentPopularity));
+        }
+        catch(Exception e)
+        {
+            System.out.println("Error getting popularity for index "+index+" from popularity.csv: "+e.getMessage());
         }
     }
     

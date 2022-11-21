@@ -27,6 +27,63 @@ public enum PeakCycle
         isReliable = reliable;
         isTerminal = terminal;
     }
+
+
+
+    public static PeakCycle fromString(String str)
+    {
+        PeakCycle peakEnum = Unknown;
+        switch(str)
+        {
+            case "2S":
+                peakEnum = PeakCycle.Cycle2Strong;
+                break;
+            case "2W":
+            case "2U":
+                peakEnum = PeakCycle.Cycle2Weak;
+                break;
+            case "3S":
+                peakEnum = PeakCycle.Cycle3Strong;
+                break;
+            case "3W":
+                peakEnum = PeakCycle.Cycle3Weak;
+                break;
+            case "4S":
+                peakEnum = PeakCycle.Cycle4Strong;
+                break;
+            case "4W":
+                peakEnum = PeakCycle.Cycle4Weak;
+                break;
+            case "5S":
+                peakEnum = PeakCycle.Cycle5Strong;
+                break;
+            case "5W":
+                peakEnum = PeakCycle.Cycle5Weak;
+                break;
+            case "6S":
+                peakEnum = PeakCycle.Cycle6Strong;
+                break;
+            case "6W":
+                peakEnum = PeakCycle.Cycle6Weak;
+                break;
+            case "7S":
+                peakEnum = PeakCycle.Cycle7Strong;
+                break;
+            case "7W":
+                peakEnum = PeakCycle.Cycle7Weak;
+                break;
+            case "45":
+                peakEnum = PeakCycle.Cycle45;
+                break;
+            case "5U":
+                peakEnum = PeakCycle.Cycle5;
+                break;
+            case "67":
+                peakEnum = PeakCycle.Cycle67;
+                break;
+        }
+        return peakEnum;
+    }
     
     public String toDisplayName()
     {
