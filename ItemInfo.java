@@ -155,6 +155,15 @@ public class ItemInfo
         //If we don't have a confirmed peak day, then it definitely hasn't passed
         return false;
     }
+    public boolean couldPrePeak(int day)
+    {
+        if(peak == Cycle45)
+            return day==2;
+        if(peak == Unknown)
+            return day==1;
+
+        return false;
+    }
     
     public static Supply getSupplyBucket(int supply)
     {

@@ -189,6 +189,7 @@ public class Solver
         Entry<WorkshopSchedule, Integer> d2 = getBestSchedule(1, groove);
         alternatives = 0;
         boolean hasNextDay;
+        //verboseSolverLogging = true;
         if(isWorseThanAllFollowing(d2, 1)) {
             restDay(d2, 1);
             hasNextDay = setObservedFromCSV(1);
@@ -196,11 +197,13 @@ public class Solver
         else
         {
             hasNextDay = setObservedFromCSV(1);
-            setDay(d2.getKey().getItems(), 1);
+            recalculateTodayAndSet(1, d2.getKey());
+            //setDay(d2.getKey().getItems(), 1);
         }
+        verboseSolverLogging = false;
 
         if(hasNextDay)
-        { 
+        {
             Entry<WorkshopSchedule, Integer> d3 = getBestSchedule(2, groove);
             if(!rested && isWorseThanAllFollowing(d3,2)) {
                 restDay(d3, 2);
@@ -209,10 +212,11 @@ public class Solver
             else
             {
                 hasNextDay = setObservedFromCSV(2);
-                setDay(d3.getKey().getItems(), 2);
+                //setDay(d3.getKey().getItems(), 2);
+                recalculateTodayAndSet(2, d3.getKey());
             }
             if(hasNextDay) 
-            { 
+            {
                 Entry<WorkshopSchedule, Integer> d4 = getBestSchedule(3, groove);
                 
                 //verboseSolverLogging = true;
@@ -225,7 +229,7 @@ public class Solver
                     System.out.println("Guaranteed resting D5 so recalculating D4");
                     Entry<WorkshopSchedule, Integer> d4Again = getBestSchedule(3, groove, null, 4);
                     hasNextDay = setObservedFromCSV(3);
-                    setDay(d4Again.getKey().getItems(), 3);
+                    recalculateTodayAndSet(3, d4.getKey());
                 }
                 else if(!rested && worst)
                 {
@@ -235,7 +239,7 @@ public class Solver
                 else //We either rested already or we aren't the worst so add it
                 {
                     hasNextDay = setObservedFromCSV(3);
-                    setDay(d4.getKey().getItems(), 3);
+                    recalculateTodayAndSet(3, d4.getKey());
                 }
                 
                  
@@ -255,6 +259,19 @@ public class Solver
         }
 
     }
+
+    private static void recalculateTodayAndSet(int day, WorkshopSchedule prevSchedule)
+    {
+
+        var newSchedule = getBestBruteForceSchedule(day, groove, null, day, prevSchedule.getItems().get(0));
+
+        if(!prevSchedule.getItems().equals(newSchedule.getKey().getItems()))
+        {
+            System.out.println("Updated rec detected!");
+        }
+        setDay(newSchedule.getKey().getItems(), day, groove, true);
+    }
+
     
     private static void restDay(Entry<WorkshopSchedule, Integer> rec, int day)
     {
@@ -592,21 +609,30 @@ public class Solver
         });
         scheduledDays.put(day,schedule);
     }
-
     private static Map.Entry<WorkshopSchedule, Integer> getBestBruteForceSchedule(int day, int groove,
-            Map<Item,Integer> limitedUse, int allowUpToDay)
+                                                                                  Map<Item,Integer> limitedUse, int allowUpToDay)
     {
+        return getBestBruteForceSchedule(day, groove, limitedUse, allowUpToDay, null);
+    }
+    private static Map.Entry<WorkshopSchedule, Integer> getBestBruteForceSchedule(int day, int groove,
+            Map<Item,Integer> limitedUse, int allowUpToDay, Item startingItem) {
 
         HashMap<WorkshopSchedule, Integer> safeSchedules = new HashMap<>();
         List<List<Item>> filteredItemLists;
+
 
 
         filteredItemLists = CSVImporter.allEfficientChains.stream()
                 .filter(list -> list.stream().allMatch(
                         item -> items[item.ordinal()].rankUnlocked <= islandRank))
                 .filter(list -> list.stream().allMatch(
-                        item -> items[item.ordinal()].peaksOnOrBeforeDay(allowUpToDay)))
-                .collect(Collectors.toList());
+                        item -> items[item.ordinal()].peaksOnOrBeforeDay(allowUpToDay))).collect(Collectors.toList());
+
+        if (startingItem != null)
+        {
+            filteredItemLists = filteredItemLists.stream().filter (list -> list.stream().limit(1).allMatch(item -> item == startingItem)).collect(Collectors.toList());
+        }
+
 
 
 

@@ -109,11 +109,8 @@ public class WorkshopSchedule
     public int getValueWithGrooveEstimate(int day, int startingGroove)
     {
         boolean verboseLogging = false;
-        /*if(day == 2 && items.get(0) == Item.CulinaryKnife && items.get(1) == Item.Earrings && items.get(2) == Item.ScaleFingers
-                && items.get(3) == Item.SpruceRoundShield)
-            verboseLogging = true;
-        if(day == 2 && items.get(0) == Item.Butter && items.get(1) == Item.Earrings && items.get(2) == Item.ScaleFingers
-                && items.get(3) == Item.SpruceRoundShield)
+        /*if(day == 1 && items.size() == 6 && items.get(0) == Item.SquidInk && items.get(1) == Item.GrilledClam && items.get(2) == Item.ParsnipSalad
+                && items.get(3) == Item.BakedPumpkin && items.get(4) == Item.ParsnipSalad && items.get(5) == Item.B)
             verboseLogging = true;*/
 
         if(verboseLogging)
@@ -231,8 +228,15 @@ public class WorkshopSchedule
         if(verboseLogging)
             System.out.println("Workshop value: "+workshopValue+", grooveBonus: "+grooveValue+", material cost: "+getMaterialCost()+" x"+Solver.materialWeight+", helper penalty: "+helperPenalty);
 
+        int prepeakBonus = 0;
+        for(int i=0;i<crafts.size();i++)
+        {
+            if(crafts.get(i).couldPrePeak(day))
+                prepeakBonus+= Solver.helperPenalty*(i==0?1:2);
+        }
+
         //Allow for the accounting for materials if desired
-        return workshopValue + grooveValue - (int)(getMaterialCost() * Solver.materialWeight) - helperPenalty;
+        return workshopValue + grooveValue - (int)(getMaterialCost() * Solver.materialWeight) - helperPenalty + prepeakBonus;
     }
     
     
