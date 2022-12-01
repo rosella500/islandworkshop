@@ -56,7 +56,7 @@ public class CycleSchedule
                    
                    //System.out.println("Found completed "+completedCraft.item+" at hour "+hour+". Efficient? "+efficient);
                    
-                   cowriesThisHour += workshops[i].getValueForCurrent(day, numCrafted.getOrDefault(completedCraft.item, 0), currentGroove, efficient);
+                   cowriesThisHour += workshops[i].getValueForCurrent(day, numCrafted.getOrDefault(completedCraft.item, 0), currentGroove, efficient, false);
                    
                    workshops[i].currentIndex++;
                    if(workshops[i].currentCraftIsEfficient())

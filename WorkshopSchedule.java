@@ -72,7 +72,7 @@ public class WorkshopSchedule
         return false;
     }
     
-    public int getValueForCurrent(int day, int craftedSoFar, int currentGroove, boolean isEfficient)
+    public int getValueForCurrent(int day, int craftedSoFar, int currentGroove, boolean isEfficient, boolean verbose)
     {
         ItemInfo craft = crafts.get(currentIndex);        
         int baseValue = craft.baseValue * Solver.WORKSHOP_BONUS * (100+currentGroove) / 10000;
@@ -81,7 +81,7 @@ public class WorkshopSchedule
         
         if(isEfficient)
             adjustedValue *= 2;
-        if(Solver.verboseCalculatorLogging)
+        if(verbose)
             System.out.println(craft.item+" is worth "+adjustedValue +" with "+currentGroove+" groove at "+ItemInfo.getSupplyBucket(supply)+ " supply ("+supply+") and "+craft.popularity+" popularity");
         
         return adjustedValue;
@@ -109,8 +109,16 @@ public class WorkshopSchedule
     public int getValueWithGrooveEstimate(int day, int startingGroove)
     {
         boolean verboseLogging = false;
-        /*if(day == 1 && items.size() == 6 && items.get(0) == Item.SquidInk && items.get(1) == Item.GrilledClam && items.get(2) == Item.ParsnipSalad
-                && items.get(3) == Item.BakedPumpkin && items.get(4) == Item.ParsnipSalad && items.get(5) == Item.B)
+        /*if(day == 2 && items.size() == 4 && items.get(0) == Item.Firesand && items.get(1) == Item.GrowthFormula && items.get(2) == Item.Potion
+                && items.get(3) == Item.GrowthFormula )
+            verboseLogging = true;
+
+        if(day == 2 && items.size() == 4 && items.get(0) == Item.Potion && items.get(1) == Item.GrowthFormula && items.get(2) == Item.Firesand
+                && items.get(3) == Item.GrowthFormula )
+            verboseLogging = true;*/
+
+        /*if(day == 1 && items.size() == 6 && items.get(0) == Item.SquidInk && items.get(1) == Item.Butter && items.get(2) == Item.BoiledEgg
+                && items.get(3) == Item.ParsnipSalad && items.get(4) == Item.BoiledEgg && items.get(5) == Item.Butter)
             verboseLogging = true;*/
 
         if(verboseLogging)
@@ -167,8 +175,8 @@ public class WorkshopSchedule
             }
 
             expectedStartingGroove+=Solver.NUM_WORKSHOPS;
-            if(verboseLogging)
-                System.out.println("Groove bonus "+grooveBonus+"% over "+daysToGroove+" days, with the last day giving "+numRowsOfPartialDay+" rows");
+            //if(verboseLogging)
+                //System.out.println("Groove bonus "+grooveBonus+"% over "+daysToGroove+" days, with the last day giving "+numRowsOfPartialDay+" rows");
         }
         float valuePerDay = Solver.averageDayValue;
 
@@ -193,7 +201,7 @@ public class WorkshopSchedule
             boolean efficient = currentCraftIsEfficient();
             int previouslyCrafted = numCrafted.getOrDefault(completedCraft.item, 0);
             int nextGroove = Math.min(startingGroove + i*Solver.NUM_WORKSHOPS, Solver.GROOVE_MAX);
-            workshopValue += getValueForCurrent(day, previouslyCrafted, nextGroove, efficient);
+            workshopValue += getValueForCurrent(day, previouslyCrafted, nextGroove, efficient, verboseLogging);
             currentIndex++;
             int amountCrafted = efficient? Solver.NUM_WORKSHOPS*2 : Solver.NUM_WORKSHOPS;
             numCrafted.put(completedCraft.item, previouslyCrafted + amountCrafted);
@@ -210,18 +218,19 @@ public class WorkshopSchedule
                 continue;
             if(mainItem.peaksOnOrBeforeDay(day)) //Item has peaked already so it's fine
                 continue;
-            if(!items.contains(kvp.getValue())) //We aren't using the helper so it's fine
+            if(!items.contains(kvp.getValue().item)) //We aren't using the helper so it's fine
                 continue;
 
-            if(verboseLogging)
-                System.out.println("Not using main item "+kvp.getKey()+" that hasn't peaked yet, but are using its helper "+kvp.getValue()+". Adding penalty of "+Solver.helperPenalty+" for each helper sold");
+            
             //None of the above conditions are true so it's not fine.
             //apply a penalty for x usages (2x if efficient)
             for(int i=0; i<items.size(); i++)
             {
-                if(items.get(i) == kvp.getValue())
+                if(items.get(i) == kvp.getValue().item)
                 {
-                    helperPenalty+=Solver.helperPenalty*(i==0?1:2);
+                    if(verboseLogging)
+                        System.out.println("Not using main item "+kvp.getKey()+" that hasn't peaked yet, but are using its helper "+kvp.getValue().item+". Adding penalty of "+(i==0?1:2)+"x "+kvp.getValue().penalty);
+                    helperPenalty+=kvp.getValue().penalty*(i==0?1:2);
                 }
             }
         }
@@ -236,7 +245,7 @@ public class WorkshopSchedule
 
         int total = workshopValue + grooveValue - (int)(getMaterialCost() * Solver.materialWeight) - helperPenalty + prepeakBonus;
         if(verboseLogging)
-            System.out.println("Workshop value: "+workshopValue+", grooveBonus: "+grooveValue+", material cost: "+getMaterialCost()+" x"+Solver.materialWeight+", helper penalty: "+helperPenalty+", prepeak bonus: "+prepeakBonus+", total: "+total);
+            System.out.println("Day "+(day+1)+", "+startingGroove+" starting groove. Workshop value: "+workshopValue+", grooveBonus: "+grooveValue+", material cost: "+getMaterialCost()+" x"+Solver.materialWeight+", helper penalty: "+helperPenalty+", prepeak bonus: "+prepeakBonus+", total: "+total);
 
         //Allow for the accounting for materials if desired
         return total;

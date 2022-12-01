@@ -91,16 +91,16 @@ public class Solver
     public static double materialWeight = 0.5;
     public static boolean guaranteeRestD5 = false;
     public static Set<Item> reservedItems = new HashSet<>();
-    public static Map<Item, Item> reservedHelpers = new HashMap<>();
+    public static Map<Item, ReservedHelper> reservedHelpers = new HashMap<>();
     private static boolean valuePerHour = true;
     private static int itemsToReserve = 15;
 
-    private static Map<Integer, CycleSchedule> scheduledDays = new HashMap<>();
+    private static Map<Integer, TempSchedule> scheduledDays = new HashMap<>();
 
     public static void main(String[] args)
     {
 
-        for(int week = 1; week <= 14; week++)
+        for(int week = 15; week <= 15; week++)
         {
           System.out.println("__**Season "+week+" schedule:**__");
           groove = 0;
@@ -116,145 +116,165 @@ public class Solver
           reservedItems.clear();
           reservedHelpers.clear();
           scheduledDays.clear();
-          
-          
-        long time = System.currentTimeMillis();
-        CSVImporter.initSupplyData(week);
-        CSVImporter.initBruteForceChains();
-        setInitialFromCSV();
-        
-        //get reserved item list
-        Map<Item, Integer> itemValues = new HashMap<Item, Integer>();
-        for(ItemInfo item : items)
-        {
-            if(item.time == 4)
-                continue;
-            int value = item.getValueWithSupply(Supply.Sufficient);
-            if(valuePerHour)
-                value = value * 8 / item.time;
-            itemValues.put(item.item, value);
-        }
-        LinkedHashMap<Item,Integer> bestItems = itemValues
-                .entrySet().stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-                        (x, y) -> y, LinkedHashMap::new));
-        Iterator<Entry<Item, Integer>> itemIterator = bestItems.entrySet().iterator();
 
-        List<Item> itemsThatGetHelpers = new ArrayList<>();
-        for(int i=0;i<itemsToReserve && itemIterator.hasNext(); i++)
-        {
-            Item next = itemIterator.next().getKey();
-            //System.out.println("Reserving "+next);
-            reservedItems.add(next);
-            if(i<10)
-                itemsThatGetHelpers.add(next);
-        }
-        for(var itemEnum : itemsThatGetHelpers)
-        {
-            ItemInfo mainItem = items[itemEnum.ordinal()];
-            if(mainItem.time != 8)
-                continue;
-            int bestValue = 0;
-            Item bestHelper = Macuahuitl; //This is the most useless thing I can think of
-            boolean hasMultiple = false;
-            for(ItemInfo helper : items)
+            long time = System.currentTimeMillis();
+            CSVImporter.initSupplyData(week);
+            CSVImporter.initBruteForceChains();
+            setInitialFromCSV();
+
+            //get reserved item list
+            Map<Item, Integer> itemValues = new HashMap<Item, Integer>();
+            for(ItemInfo item : items)
             {
-                if(helper.time != 4 || !helper.getsEfficiencyBonus(mainItem))
+                if(item.time == 4)
                     continue;
-
-                int value = helper.getValueWithSupply(Supply.Sufficient);
-                if(value > bestValue)
-                {
-                    hasMultiple = false;
-                    bestValue = value;
-                    bestHelper = helper.item;
-                }
-                else if(value == bestValue)
-                {
-                    hasMultiple = true;
-                }
+                int value = item.getValueWithSupply(Supply.Sufficient);
+                if(valuePerHour)
+                    value = value * 8 / item.time;
+                itemValues.put(item.item, value);
             }
-            if(!hasMultiple)
+            LinkedHashMap<Item,Integer> bestItems = itemValues
+                    .entrySet().stream()
+                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                            (x, y) -> y, LinkedHashMap::new));
+            Iterator<Entry<Item, Integer>> itemIterator = bestItems.entrySet().iterator();
+
+            List<Item> itemsThatGetHelpers = new ArrayList<>();
+            for(int i=0;i<itemsToReserve && itemIterator.hasNext(); i++)
             {
-                //System.out.println("Reserving helper "+bestHelper+" to go with main item "+itemEnum);
-                reservedHelpers.put(itemEnum, bestHelper);
+                Item next = itemIterator.next().getKey();
+                //System.out.println("Reserving "+next);
+                reservedItems.add(next);
+                if(i<10)
+                    itemsThatGetHelpers.add(next);
+            }
+            int itemRank = 1;
+            for(var itemEnum : itemsThatGetHelpers)
+            {
+                ItemInfo mainItem = items[itemEnum.ordinal()];
+                if(mainItem.time != 8)
+                    continue;
+                int bestValue = 0;
+                Item bestHelper = Macuahuitl; //This is the most useless thing I can think of
+                int secondBest = 0;
+                Item secondHelper = Macuahuitl;
+                for(ItemInfo helper : items)
+                {
+                    if(helper.time != 4 || !helper.getsEfficiencyBonus(mainItem))
+                        continue;
+
+                    int value = helper.getValueWithSupply(Supply.Sufficient);
+                    if(value > bestValue)
+                    {
+                        secondBest = bestValue;
+                        secondHelper = bestHelper;
+                        bestValue = value;
+                        bestHelper = helper.item;
+                    }
+                    else if(value > secondBest)
+                    {
+                        secondBest = value;
+                        secondHelper = helper.item;
+                    }
+                }
+                int swap = bestValue - secondBest;
+                int stepDown = bestValue - (int)(bestValue  * .6);
+                if(swap > 0)
+                {
+                    int penalty = Math.min(swap, stepDown);
+                    int finalPenalty = penalty/Math.max(itemRank-1, 1)  + 1;
+                    System.out.println("Reserving helper "+bestHelper+" to go with main item "+itemEnum+" (#"+itemRank+"), difference between "+bestHelper+" and "+secondHelper+"? "+ swap+" cost of stepping down? "+stepDown+" Penalty: "+finalPenalty);
+
+                    reservedHelpers.put(itemEnum, new ReservedHelper(bestHelper, finalPenalty));
+                }
+                itemRank++;
+            }
+
+
+            //alternatives = 10;
+            Entry<WorkshopSchedule, Integer> d2 = getBestSchedule(1, groove);
+            alternatives = 0;
+            boolean hasNextDay;
+            //verboseSolverLogging = true;
+            if(isWorseThanAllFollowing(d2, 1)) {
+                restDay(d2, 1);
+                hasNextDay = setObservedFromCSV(1);
             }
             else
             {
-                //System.out.println("Main item "+itemEnum+" has multiple best helpers, so it gets none");
+                hasNextDay = setObservedFromCSV(1);
+                recalculateTodayAndSet(1, d2.getKey());
+                //setDay(d2.getKey().getItems(), 1);
             }
-        }
+            verboseSolverLogging = false;
 
-        Entry<WorkshopSchedule, Integer> d2 = getBestSchedule(1, groove);
-        alternatives = 0;
-        boolean hasNextDay;
-        //verboseSolverLogging = true;
-        if(isWorseThanAllFollowing(d2, 1)) {
-            restDay(d2, 1);
-            hasNextDay = setObservedFromCSV(1);
-        }
-        else
-        {
-            hasNextDay = setObservedFromCSV(1);
-            recalculateTodayAndSet(1, d2.getKey());
-            //setDay(d2.getKey().getItems(), 1);
-        }
-        verboseSolverLogging = false;
-
-        if(hasNextDay)
-        {
-            Entry<WorkshopSchedule, Integer> d3 = getBestSchedule(2, groove);
-            if(!rested && isWorseThanAllFollowing(d3,2)) {
-                restDay(d3, 2);
-                hasNextDay = setObservedFromCSV(2);
-            }
-            else
+            if(hasNextDay)
             {
-                hasNextDay = setObservedFromCSV(2);
-                //setDay(d3.getKey().getItems(), 2);
-                recalculateTodayAndSet(2, d3.getKey());
+                Entry<WorkshopSchedule, Integer> d3 = getBestSchedule(2, groove);
+                if(!rested && isWorseThanAllFollowing(d3,2)) {
+                    restDay(d3, 2);
+                    hasNextDay = setObservedFromCSV(2);
+                }
+                else
+                {
+                    hasNextDay = setObservedFromCSV(2);
+                    //setDay(d3.getKey().getItems(), 2);
+                    recalculateTodayAndSet(2, d3.getKey());
+                }
+                if(hasNextDay)
+                {
+                    Entry<WorkshopSchedule, Integer> d4 = getBestSchedule(3, groove);
+
+                    //verboseSolverLogging = true;
+                    boolean worst = isWorseThanAllFollowing(d4, 3, true);
+
+                    verboseSolverLogging = false;
+                    //System.out.println("Rested? "+rested+". Resting D5? " +guaranteeRestD5);
+                    if(!rested && guaranteeRestD5)
+                    {
+                        System.out.println("Guaranteed resting C5 so recalculating C4");
+                        Entry<WorkshopSchedule, Integer> d4Again = getBestSchedule(3, groove, null, 4);
+                        hasNextDay = setObservedFromCSV(3);
+                        recalculateTodayAndSet(3, d4.getKey());
+                    }
+                    else if(!rested && worst)
+                    {
+                        restDay(d4, 3);
+                        hasNextDay = setObservedFromCSV(3);
+                    }
+                    else //We either rested already or we aren't the worst so add it
+                    {
+                        hasNextDay = setObservedFromCSV(3);
+                        recalculateTodayAndSet(3, d4.getKey());
+                    }
+
+
+                    if(hasNextDay)
+                    {
+                        setLateDays();
+                    }
+                }
             }
-            if(hasNextDay) 
+
+
+            //setDay(Arrays.asList(Rope,SharkOil,CulinaryKnife,SharkOil), 4);
+
+            System.out.println("Season total: " + totalGross + " (" + totalNet + ")\n" + "Took "
+                    + (System.currentTimeMillis() - time) + "ms.\n");
+
+            time = System.currentTimeMillis();
+            if(hasNextDay)
             {
-                Entry<WorkshopSchedule, Integer> d4 = getBestSchedule(3, groove);
-                
-                //verboseSolverLogging = true;
-                boolean worst = isWorseThanAllFollowing(d4, 3, true);
-
-                verboseSolverLogging = false;
-                //System.out.println("Rested? "+rested+". Resting D5? " +guaranteeRestD5);
-                if(!rested && guaranteeRestD5)
-                {
-                    System.out.println("Guaranteed resting C5 so recalculating C4");
-                    Entry<WorkshopSchedule, Integer> d4Again = getBestSchedule(3, groove, null, 4);
-                    hasNextDay = setObservedFromCSV(3);
-                    recalculateTodayAndSet(3, d4.getKey());
-                }
-                else if(!rested && worst)
-                {
-                    restDay(d4, 3);
-                    hasNextDay = setObservedFromCSV(3);
-                }
-                else //We either rested already or we aren't the worst so add it
-                {
-                    hasNextDay = setObservedFromCSV(3);
-                    recalculateTodayAndSet(3, d4.getKey());
-                }
-                
-                 
-                if(hasNextDay) 
-                {
-                    setLateDays();
-                }
+                System.out.println("Crime time recs:");
+                setDay(Arrays.asList(BoiledEgg, BakedPumpkin, ParsnipSalad, GrilledClam, SquidInk, TomatoRelish), 1, 0, false);
+                setDay(new ArrayList<>(), 2, groove, false);
+                rested = true;
+                setDay(Arrays.asList(BoiledEgg, BakedPumpkin, ParsnipSalad, GrilledClam, SquidInk, TomatoRelish), 3, groove, false);
+                setLateDays();
+                System.out.println("Season total: " + totalGross + " (" + totalNet + ")\n" + "Took "
+                        + (System.currentTimeMillis() - time) + "ms.\n\n");
             }
-        }
-
-
-        //addDay(Arrays.asList(Potion, GrowthFormula, Potion, GrowthFormula), 2);
-
-        System.out.println("Season total: " + totalGross + " (" + totalNet + ")\n" + "Took "
-                + (System.currentTimeMillis() - time) + "ms.\n\n");
         
         }
 
@@ -396,6 +416,7 @@ public class Solver
                 setDay(cycle5Sched.getKey().getItems(), 4, startingGroove, false);
                 Entry<WorkshopSchedule, Integer> basedOn56Sched = getBestSchedule(5, groove, reserved7Set, 6);
                 setDay(basedOn56Sched.getKey().getItems(), 5, groove, false);
+
                 int total56 = totalGross + totalNet;
                 /*System.out.println("Trying to prioritize day 5:"+Arrays.toString(cycle5Sched.getKey().getItems().toArray())
                         +" ("+cycle5Sched.getValue()+"), so day 6: "+Arrays.toString(basedOn56Sched.getKey().getItems().toArray())
@@ -611,9 +632,10 @@ public class Solver
         if(scheduledDays.containsKey(day))
         {
             //System.out.println("Removing old schedule for day "+(day+1));
-            int prevGross = scheduledDays.get(day).getValue();
+            int prevGross = scheduledDays.get(day).getGrossValue();
             totalGross-=prevGross;
-            totalNet-=(prevGross - scheduledDays.get(day).getMaterialCost());
+            //System.out.println("Subtracting "+prevGross+ " from total. Now "+totalGross+" Removed schedule for day "+(day+1));
+            totalNet-=scheduledDays.get(day).getNetValue();
             for (var item : items)
                 item.setCrafted(0, day);
             scheduledDays.remove(day);
@@ -627,6 +649,7 @@ public class Solver
         verboseCalculatorLogging = false;
         totalGross += gross;
 
+
         int net = gross - schedule.getMaterialCost();
         totalNet += net;
         Solver.groove = schedule.endingGroove;
@@ -637,12 +660,14 @@ public class Solver
             System.out.println("Cycle " + (day + 1) + " total, 0 groove: " + groovelessValue
                 + ". Starting groove " + startingGroove + ": " + gross + ", net " + net
                 + ".");
+        /*else
+            System.out.println("Adding "+gross+ " to total. Now "+totalGross+" Added schedule "+Arrays.toString(schedule.workshops[0].getItems().toArray())+" for day "+(day+1));*/
         verboseCalculatorLogging = oldVerbose;
         schedule.numCrafted.forEach((k, v) ->
         {
             items[k.ordinal()].setCrafted(v, day);
         });
-        scheduledDays.put(day,schedule);
+        scheduledDays.put(day,new TempSchedule(gross, net));
     }
     private static Map.Entry<WorkshopSchedule, Integer> getBestBruteForceSchedule(int day, int groove,
                                                                                   Map<Item,Integer> limitedUse, int allowUpToDay)
