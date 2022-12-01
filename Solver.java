@@ -760,7 +760,7 @@ public class Solver
 
     private static boolean setObservedFromCSV(int day)
     {
-        if (day >= CSVImporter.currentPeaks[0].length)
+        if (day >= CSVImporter.currentPeaks[1].length)
             return false;
 
         for (int i = 0; i < items.length; i++)

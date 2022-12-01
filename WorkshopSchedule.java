@@ -225,8 +225,7 @@ public class WorkshopSchedule
                 }
             }
         }
-        if(verboseLogging)
-            System.out.println("Workshop value: "+workshopValue+", grooveBonus: "+grooveValue+", material cost: "+getMaterialCost()+" x"+Solver.materialWeight+", helper penalty: "+helperPenalty);
+
 
         int prepeakBonus = 0;
         for(int i=0;i<crafts.size();i++)
@@ -235,8 +234,12 @@ public class WorkshopSchedule
                 prepeakBonus+= Solver.helperPenalty*(i==0?1:2);
         }
 
+        int total = workshopValue + grooveValue - (int)(getMaterialCost() * Solver.materialWeight) - helperPenalty + prepeakBonus;
+        if(verboseLogging)
+            System.out.println("Workshop value: "+workshopValue+", grooveBonus: "+grooveValue+", material cost: "+getMaterialCost()+" x"+Solver.materialWeight+", helper penalty: "+helperPenalty+", prepeak bonus: "+prepeakBonus+", total: "+total);
+
         //Allow for the accounting for materials if desired
-        return workshopValue + grooveValue - (int)(getMaterialCost() * Solver.materialWeight) - helperPenalty + prepeakBonus;
+        return total;
     }
     
     
