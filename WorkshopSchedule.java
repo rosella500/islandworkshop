@@ -77,7 +77,9 @@ public class WorkshopSchedule
         ItemInfo craft = crafts.get(currentIndex);        
         int baseValue = craft.baseValue * Solver.WORKSHOP_BONUS * (100+currentGroove) / 10000;
         int supply = craft.getSupplyOnDay(day) + craftedSoFar;
-        int adjustedValue = baseValue * craft.popularity.multiplier * ItemInfo.getSupplyBucket(supply).multiplier  / 10000;       
+        int adjustedValue = baseValue * craft.popularity.multiplier * ItemInfo.getSupplyBucket(supply).multiplier  / 10000;
+        if(verbose)
+            System.out.println(craft.item+": Found "+craft.getSupplyOnDay(day)+" supply with "+craftedSoFar+" crafts done today");
         
         if(isEfficient)
             adjustedValue *= 2;

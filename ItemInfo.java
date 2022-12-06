@@ -10,7 +10,7 @@ import static islandworkshop.PeakCycle.*;
 public class ItemInfo
 {
     //Contains exact supply values for concrete paths and worst-case supply values for tentative ones
-    private static final int[][] SUPPLY_PATH = {{0, 0, -6, 0, 0, 0, 0}, //Unknown
+    private static final int[][] SUPPLY_PATH = {{0, 0, -8, 0, 0, 0, 0}, //Unknown
             {-4, -4, 10, 0, 0, 0, 0}, //Cycle2Weak 
             {-8, -7, 15, 0, 0, 0, 0}, //Cycle2Strong
             {0, -4, -4, 10, 0, 0, 0}, //Cycle3Weak
@@ -108,11 +108,19 @@ public class ItemInfo
     
     public int getSupplyOnDay(int day)
     {
+        boolean verbose = false;
+       /* if(day==6 && item==Item.ParsnipSalad)
+            verbose = true;*/
+
         int supply = SUPPLY_PATH[peak.ordinal()][0];
+        if(verbose)
+            System.out.println("Starting supply: "+supply);
         for(int c=1;c <= day; c++)
         {
             supply += craftedPerDay[c-1];
             supply += SUPPLY_PATH[peak.ordinal()][c];
+            if(verbose)
+                System.out.println("Adding "+craftedPerDay[c-1]+" crafted on day "+c+" and "+SUPPLY_PATH[peak.ordinal()][c]+" added by game on day "+(c+1));
         }
         
         return supply;
@@ -153,6 +161,28 @@ public class ItemInfo
             return day > 5;
             
         //If we don't have a confirmed peak day, then it definitely hasn't passed
+        return false;
+    }
+
+    public boolean peaksOnDay(int day)
+    {
+        if(Solver.reservedItems.size()>0 && !Solver.reservedItems.contains(item))
+            return false;
+
+        if(time == 4)
+            return false;
+        if(peak == Cycle2Weak || peak == Cycle2Strong)
+            return day == 1;
+        if (peak == Cycle3Weak || peak == Cycle3Strong)
+            return day == 2 ;
+        if(peak == Cycle4Weak || peak == Cycle4Strong)
+            return day == 3 ;
+        if(peak == Cycle5Weak || peak == Cycle5Strong )
+            return day == 4 ;
+        if(peak == Cycle6Weak || peak == Cycle6Strong)
+            return day == 5 ;
+        if(peak == Cycle7Weak || peak == Cycle7Strong)
+            return day == 6;
         return false;
     }
     public boolean couldPrePeak(int day)

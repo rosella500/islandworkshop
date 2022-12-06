@@ -33,7 +33,9 @@ public class CycleSchedule
     
     public int getValue() 
     {
-       numCrafted = new HashMap<Item, Integer>(); 
+        numCrafted = new HashMap<Item, Integer>();
+        if(workshops.length == 0 || workshops[0].getItems().size() == 0)
+            return 0;
        
        for(int i=0; i<workshops.length;i++)
            workshops[i].currentIndex = 0;
@@ -56,7 +58,7 @@ public class CycleSchedule
                    
                    //System.out.println("Found completed "+completedCraft.item+" at hour "+hour+". Efficient? "+efficient);
                    
-                   cowriesThisHour += workshops[i].getValueForCurrent(day, numCrafted.getOrDefault(completedCraft.item, 0), currentGroove, efficient, false);
+                   cowriesThisHour += workshops[i].getValueForCurrent(day, numCrafted.getOrDefault(completedCraft.item, 0), currentGroove, efficient, Solver.verboseCalculatorLogging);
                    
                    workshops[i].currentIndex++;
                    if(workshops[i].currentCraftIsEfficient())
