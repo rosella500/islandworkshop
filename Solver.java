@@ -117,8 +117,8 @@ public class Solver
 
         int totalCowries = 0;
         int totalTotalNet = 0;
-        int startWeek = 10;
-        int endWeek = 10;
+        int startWeek = 1;
+        int endWeek = 16;
         for(int week = startWeek; week <= endWeek; week++)
         {
             System.out.println("__**Season "+week+" schedule:**__");
@@ -140,6 +140,7 @@ public class Solver
             CSVImporter.initSupplyData(week);
             setInitialFromCSV();
 
+            //solveRecsWithNoSupply();
             solveRecsForWeek();
             //bruteForceWeek();
 
@@ -150,6 +151,53 @@ public class Solver
         System.out.println("Average cowries/week: "+(totalCowries/(endWeek-startWeek+1))+" Average net: "+(totalTotalNet/(endWeek-startWeek+1)));
 
     }
+
+    private static void solveRecsWithNoSupply()
+    {
+        //reservedItems.add(Barbut);
+        for(ItemInfo item : items)
+        {
+            item.peak = Unknown;
+        }
+        verboseSolverLogging = true;
+
+        long time = System.currentTimeMillis();
+        populateReservedItems(itemsToReserve);
+        Map<Item,Integer> reservedSet = new HashMap<>();
+        List<List<Item>> scheduleList = new ArrayList<>();
+
+        for (int d = 0; d < 6; d++)
+        {
+            Entry<WorkshopSchedule, Integer> solution;
+
+            solution = getBestSchedule(2, 15, reservedSet, 2);
+            scheduleList.add(solution.getKey().getItems());
+            if (verboseSolverLogging)
+                System.out.println("Cycle " + (d+1) + ", crafts: "
+                        + Arrays.toString(solution.getKey().getItems().toArray())
+                        + " value: " + solution.getValue());
+
+            reservedSet = solution.getKey().getLimitedUses(reservedSet);
+
+        }
+
+        setObservedFromCSV(3);
+        //Alternating
+        for(int i=0;i<5; i++)
+        {
+            int evenOdd = i%2;
+            setDay(scheduleList.get(evenOdd*3), scheduleList.get(1+ evenOdd*3), scheduleList.get(2+ evenOdd*3), i+1, groove, true);
+        }
+
+        //Staggered
+        /*for(int i=0;i<5; i++)
+        {
+            setDay(scheduleList.get(i%5), scheduleList.get((i+1)%5), scheduleList.get((i+2)%5), i+1, groove, true);
+        }*/
+        System.out.println("Season total: " + totalGross + " (" + totalNet + ")\n" + "Took "
+                + (System.currentTimeMillis() - time) + "ms.\n");
+    }
+
 
     private static void bruteForceWeek()
     {
@@ -851,14 +899,22 @@ public class Solver
     }
     public static void setDay(List<Item> crafts, int day, int groove, boolean real)
     {
-        if(real)
-            System.out.println("Cycle " + (day + 1) + ", crafts: " + Arrays.toString(crafts.toArray()));
-
         setDay(crafts, crafts, crafts, day, groove, real);
     }
 
     public static void setDay(List<Item> crafts0, List<Item> crafts1, List<Item> crafts2,
                               int day, int groove, boolean real) {
+
+        if(real)
+        {
+            if(crafts0 == crafts1 && crafts1 == crafts2)
+                System.out.println("Cycle " + (day + 1) + ", crafts: " + Arrays.toString(crafts0.toArray()));
+            else
+            {
+                System.out.println("Cycle " + (day + 1) + ", crafts: "+crafts0+", "+crafts1+", "+crafts2);
+            }
+        }
+
         CycleSchedule schedule = new CycleSchedule(day, groove);
         schedule.setWorkshop(0, crafts0);
         schedule.setWorkshop(1, crafts1);
