@@ -140,8 +140,8 @@ public class Solver
             CSVImporter.initSupplyData(week);
             setInitialFromCSV();
 
-            //solveRecsWithNoSupply();
-            solveRecsForWeek();
+            solveRecsWithNoSupply();
+            //solveRecsForWeek();
             //bruteForceWeek();
 
             //solveCrimeTime();
@@ -154,7 +154,6 @@ public class Solver
 
     private static void solveRecsWithNoSupply()
     {
-        //reservedItems.add(Barbut);
         for(ItemInfo item : items)
         {
             item.peak = Unknown;
@@ -162,16 +161,14 @@ public class Solver
         verboseSolverLogging = true;
 
         long time = System.currentTimeMillis();
-        populateReservedItems(itemsToReserve);
         Map<Item,Integer> reservedSet = new HashMap<>();
         List<List<Item>> scheduleList = new ArrayList<>();
 
         for (int d = 0; d < 6; d++)
         {
-            Entry<WorkshopSchedule, Integer> solution;
-
-            solution = getBestSchedule(2, 15, reservedSet, 2);
+            Entry<WorkshopSchedule, Integer> solution = getBestSchedule(2, 15, reservedSet, 2);
             scheduleList.add(solution.getKey().getItems());
+
             if (verboseSolverLogging)
                 System.out.println("Cycle " + (d+1) + ", crafts: "
                         + Arrays.toString(solution.getKey().getItems().toArray())
