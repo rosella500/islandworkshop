@@ -6,17 +6,9 @@ import static islandworkshop.PeakCycle.*;
 import static islandworkshop.Item.*;
 
 import java.math.BigInteger;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Solver
@@ -121,7 +113,20 @@ public class Solver
         int endWeek = 16;
         for(int week = startWeek; week <= endWeek; week++)
         {
-            System.out.println("__**Season "+week+" schedule:**__");
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM d");
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date(1661241600000L));
+            calendar.add(Calendar.DAY_OF_YEAR, (week-1)*7);
+            var month = calendar.get(Calendar.MONTH);
+            String dateStr = sdf.format(calendar.getTime());
+
+            calendar.add(Calendar.DAY_OF_YEAR, 6);
+            if(calendar.get(Calendar.MONTH) == month)
+                sdf = new SimpleDateFormat("d");
+
+            dateStr += " - " + sdf.format(calendar.getTime());
+
+            System.out.println("__**Season "+week+" ("+dateStr+") schedule:**__");
             groove = 0;
             totalGross = 0;
             totalNet = 0;
@@ -140,8 +145,8 @@ public class Solver
             CSVImporter.initSupplyData(week);
             setInitialFromCSV();
 
-            solveRecsWithNoSupply();
-            //solveRecsForWeek();
+            //solveRecsWithNoSupply();
+            solveRecsForWeek();
             //bruteForceWeek();
 
             //solveCrimeTime();
@@ -660,7 +665,7 @@ public class Solver
         }
         else if (bestDay == 6) // Day 7 is best
         {
-            System.out.println("Day 7 is best");
+            //System.out.println("Day 7 is best");
             Map<Item,Integer> reserved7Set = cycle7Sched.getKey().getLimitedUses();
 
             if(!rested)//We only care about one of 5 or 6
@@ -801,10 +806,10 @@ public class Solver
         int bestD5 = 0;
         if(verboseSolverLogging) System.out.println("Comparing c" + (day + 1) + " (" + rec.getValue()+ ") to worst-case future days");
         
-        Map<Item,Integer> reservedSet = rec.getKey().getLimitedUses();
+        Map<Item,Integer> reservedSet = new HashMap<>(); //rec.getKey().getLimitedUses();
 
-        for(Item item : rec.getKey().getItems())
-            reservedSet.put(item, 0);
+        /*for(Item item : rec.getKey().getItems())
+            reservedSet.put(item, 0);*/
         for (int d = day + 1; d < 7; d++)
         {
             Entry<WorkshopSchedule, Integer> solution;
