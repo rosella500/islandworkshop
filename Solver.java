@@ -9,6 +9,7 @@ import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Solver
@@ -106,54 +107,124 @@ public class Solver
         schedulesToCheck.put(5, schedules);
 
         verboseReservations = true;*/
+       /* List<Integer> list = Arrays.asList(0, 1, 2, 3, 4);
+        List<List<Integer>> result = new ArrayList<>();
+        iteratePermutations(list, result::add);
+        List<Integer> bestOrder = null;
+        int bestAverage = -1;
+        for(int orderIndex = 0; orderIndex < result.size(); orderIndex++)
+        {
 
+            var order = result.get(orderIndex);
+            System.out.println("Order: "+order);*/
         int totalCowries = 0;
         int totalTotalNet = 0;
         int startWeek = 1;
-        int endWeek = 16;
-        for(int week = startWeek; week <= endWeek; week++)
-        {
-            SimpleDateFormat sdf = new SimpleDateFormat("MMM d");
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(new Date(1661241600000L));
-            calendar.add(Calendar.DAY_OF_YEAR, (week-1)*7);
-            var month = calendar.get(Calendar.MONTH);
-            String dateStr = sdf.format(calendar.getTime());
+        int endWeek = 17;
 
-            calendar.add(Calendar.DAY_OF_YEAR, 6);
-            if(calendar.get(Calendar.MONTH) == month)
-                sdf = new SimpleDateFormat("d");
 
-            dateStr += " - " + sdf.format(calendar.getTime());
-
-            System.out.println("__**Season "+week+" ("+dateStr+") schedule:**__");
-            groove = 0;
-            totalGross = 0;
-            totalNet = 0;
-            rested = false;
-            guaranteeRestD5 = false;
-            for(ItemInfo item : items)
+            for(int week = startWeek; week <= endWeek; week++)
             {
-              item.craftedPerDay = new int[7];
-              item.peak = Unknown;
+                SimpleDateFormat sdf = new SimpleDateFormat("MMM d");
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(new Date(1661241600000L));
+                calendar.add(Calendar.DAY_OF_YEAR, (week-1)*7);
+                var month = calendar.get(Calendar.MONTH);
+                String dateStr = sdf.format(calendar.getTime());
+
+                calendar.add(Calendar.DAY_OF_YEAR, 6);
+                if(calendar.get(Calendar.MONTH) == month)
+                    sdf = new SimpleDateFormat("d");
+
+                dateStr += " - " + sdf.format(calendar.getTime());
+
+                System.out.println("__**Season "+week+" ("+dateStr+") schedule:**__");
+                groove = 0;
+                totalGross = 0;
+                totalNet = 0;
+                rested = false;
+                guaranteeRestD5 = false;
+                for(ItemInfo item : items)
+                {
+                    item.craftedPerDay = new int[7];
+                    item.peak = Unknown;
+                }
+                reservedItems.clear();
+                reservedHelpers.clear();
+                scheduledDays.clear();
+
+
+                CSVImporter.initSupplyData(week);
+                setInitialFromCSV();
+
+                solveRecsWithNoSupply();
+                //solveRecsForWeek();
+                //bruteForceWeek();
+
+                //solveCrimeTime();
+                totalCowries += totalGross;
+                totalTotalNet += totalNet;
             }
-            reservedItems.clear();
-            reservedHelpers.clear();
-            scheduledDays.clear();
+            int averageGross = (totalCowries/(endWeek-startWeek+1));
+            System.out.println("Average cowries/week: "+averageGross+" Average net: "+(totalTotalNet/(endWeek-startWeek+1)));
 
-
-            CSVImporter.initSupplyData(week);
-            setInitialFromCSV();
-
-            //solveRecsWithNoSupply();
-            solveRecsForWeek();
-            //bruteForceWeek();
-
-            //solveCrimeTime();
-            totalCowries += totalGross;
-            totalTotalNet += totalNet;
+            /*if(averageGross > bestAverage) {
+                bestAverage = averageGross;
+                bestOrder = order;
+            }
         }
-        System.out.println("Average cowries/week: "+(totalCowries/(endWeek-startWeek+1))+" Average net: "+(totalTotalNet/(endWeek-startWeek+1)));
+
+        System.out.println("Best average: "+bestAverage+", so best order: "+bestOrder);*/
+
+
+    }
+
+    public static void solveRestOfWeek(int currentDay)
+    {
+        int worstIndex = -1;
+        int worstValue = 99999;
+        int estGroove = (groove + GROOVE_MAX) / 2;
+        setObservedFromCSV(Math.min(currentDay, 3));
+        Map<Item,Integer> reservedSet = new HashMap<>();
+        List<List<Item>> restOfWeek = new ArrayList<>();
+
+        for (int d = currentDay + 2; d < 7; d++)
+        {
+            var solution = getBestSchedule(d, estGroove, reservedSet, d);
+            if(solution.getValue() < worstValue)
+            {
+                worstValue = solution.getValue();
+                worstIndex = restOfWeek.size();
+            }
+
+            restOfWeek.add(solution.getKey().getItems());
+            reservedSet = solution.getKey().getLimitedUses(reservedSet);
+            System.out.println("day "+(d+1)+" schedule: "+solution.getKey().getItems()+" ("+solution.getValue()+")");
+        }
+
+        if(!rested)
+        {
+            //If we haven't rested, rest the worst day
+            restOfWeek.remove(worstIndex);
+            restOfWeek.add(worstIndex, new ArrayList<>());
+        }
+
+
+        if(restOfWeek.size() == 5) //If we're at day 1, we have no real idea, so put our best guess at C6, the second-best day to craft
+        {
+            //Swap C3 and C6
+            var best = restOfWeek.get(0);
+            var c6 = restOfWeek.get(3);
+            restOfWeek.set(0, c6);
+            restOfWeek.set(3, best);
+        }
+
+        setObservedFromCSV(3);
+
+        for(int i=0; i<restOfWeek.size();i++)
+        {
+            setDay(restOfWeek.get(i), i+currentDay+2, groove, true);
+        }
 
     }
 
@@ -185,19 +256,26 @@ public class Solver
 
         setObservedFromCSV(3);
         //Alternating
-        for(int i=0;i<5; i++)
+        /*for(int i=0;i<5; i++)
         {
             int evenOdd = i%2;
             setDay(scheduleList.get(evenOdd*3), scheduleList.get(1+ evenOdd*3), scheduleList.get(2+ evenOdd*3), i+1, groove, true);
-        }
+        }*/
 
         //Staggered
         /*for(int i=0;i<5; i++)
         {
             setDay(scheduleList.get(i%5), scheduleList.get((i+1)%5), scheduleList.get((i+2)%5), i+1, groove, true);
         }*/
-        System.out.println("Season total: " + totalGross + " (" + totalNet + ")\n" + "Took "
-                + (System.currentTimeMillis() - time) + "ms.\n");
+
+        //Committing to the bit
+        setDay(scheduleList.get(1), 1, 0, verboseSolverLogging);
+        setDay(scheduleList.get(4), 2, groove, verboseSolverLogging);
+        setDay(scheduleList.get(2), 3, groove, verboseSolverLogging);
+        setDay(scheduleList.get(3), 4, groove, verboseSolverLogging);
+        setDay(scheduleList.get(0), 5, groove, verboseSolverLogging);
+
+        System.out.println("Season total: " + totalGross + " (" + totalNet + ")\n" + "Took "+ (System.currentTimeMillis() - time) + "ms.\n");
     }
 
 
@@ -456,6 +534,8 @@ public class Solver
             }
         }
 
+        //solveRestOfWeek(0);
+
         System.out.println("Season total: " + totalGross + " (" + totalNet + ")\n" + "Took "
                 + (System.currentTimeMillis() - time) + "ms.\n");
         //setDay(Arrays.asList(Rope,SharkOil,CulinaryKnife,SharkOil), 4);
@@ -478,15 +558,15 @@ public class Solver
         boolean completeWeek = setObservedFromCSV(3);
         if(completeWeek)
         {
-            System.out.println("Modified crime time recs (B):");
+            System.out.println("Standard crime time recs:");
             setDay(Arrays.asList(BoiledEgg, BakedPumpkin, ParsnipSalad, GrilledClam, SquidInk, TomatoRelish),
-                    Arrays.asList(Sauerkraut, CornFlakes, Sauerkraut, CornFlakes, Sauerkraut, CornFlakes),
-                    Arrays.asList(Rope, Brush, Necklace, Earrings, CulinaryKnife, Butter),  1, 0, false);
+                    /*Arrays.asList(Potion, Firesand, Sauerkraut, CornFlakes, Sauerkraut, CornFlakes),
+                    Arrays.asList(Rope, Brush, Necklace, Earrings, CulinaryKnife, Butter),*/  1, 0, false);
             //setDay(new ArrayList<>(), 2, groove, false);
             rested = true;
             setDay(Arrays.asList(BoiledEgg, BakedPumpkin, ParsnipSalad, GrilledClam, SquidInk, TomatoRelish),
-                    Arrays.asList(Sauerkraut, CornFlakes,Sauerkraut, CornFlakes,Sauerkraut, CornFlakes),
-                    Arrays.asList(Rope, Brush, Necklace, Earrings, CulinaryKnife, Butter),3, groove, false);
+                    /*Arrays.asList(Sauerkraut, CornFlakes,Sauerkraut, CornFlakes,Sauerkraut, CornFlakes),
+                    Arrays.asList(Rope, Brush, Necklace, Earrings, CulinaryKnife, Butter),*/3, groove, false);
             setLateDays();
             System.out.println("Season total: " + totalGross + " (" + totalNet + ")\n" + "Took "
                     + (System.currentTimeMillis() - time) + "ms.\n\n");
@@ -910,7 +990,9 @@ public class Solver
         if(real)
         {
             if(crafts0 == crafts1 && crafts1 == crafts2)
+            {
                 System.out.println("Cycle " + (day + 1) + ", crafts: " + Arrays.toString(crafts0.toArray()));
+            }
             else
             {
                 System.out.println("Cycle " + (day + 1) + ", crafts: "+crafts0+", "+crafts1+", "+crafts2);
@@ -1129,5 +1211,24 @@ public class Solver
         if (diff < 6)
             return DemandShift.Decreasing;
         return DemandShift.Plummeting;
+    }
+    public static <E> void iteratePermutations(List<E> original, Consumer<List<E>> consumer) {
+        Objects.requireNonNull(original);
+        consumer.accept(original);
+        iteratePermutationsRecursively(original, 0, consumer);
+    }
+
+    public static <E> void iteratePermutationsRecursively(List<E> original, int start, Consumer<List<E>> consumer) {
+        Objects.requireNonNull(original);
+        for (int i = start; i < original.size() - 1; i++) {
+            for (int j = i + 1; j < original.size(); j++) {
+                List<E> temp = new ArrayList<>(original);
+                E tempVal = temp.get(i);
+                temp.set(i, temp.get(j));
+                temp.set(j, tempVal);
+                consumer.accept(temp);
+                iteratePermutationsRecursively(temp, i + 1, consumer);
+            }
+        }
     }
 }
