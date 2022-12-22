@@ -119,14 +119,21 @@ public class Solver
             System.out.println("Order: "+order);*/
         int totalCowries = 0;
         int totalTotalNet = 0;
-        int startWeek = 1;
-        int endWeek = 17;
-
+        int startWeek = 15;
+        int endWeek = 18;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        var hour = calendar.get(Calendar.HOUR_OF_DAY);
+        if(hour < 3)
+            hour += 24;
+        hour = (hour - 3) % 24;
+        int hoursLeft = 24 - (((hour / 2) + 1) * 2);
+        System.out.println("Hours left in schedule: "+hoursLeft);
 
             for(int week = startWeek; week <= endWeek; week++)
             {
                 SimpleDateFormat sdf = new SimpleDateFormat("MMM d");
-                Calendar calendar = Calendar.getInstance();
+
                 calendar.setTime(new Date(1661241600000L));
                 calendar.add(Calendar.DAY_OF_YEAR, (week-1)*7);
                 var month = calendar.get(Calendar.MONTH);
@@ -136,7 +143,10 @@ public class Solver
                 if(calendar.get(Calendar.MONTH) == month)
                     sdf = new SimpleDateFormat("d");
 
+
+
                 dateStr += " - " + sdf.format(calendar.getTime());
+
 
                 System.out.println("__**Season "+week+" ("+dateStr+") schedule:**__");
                 groove = 0;
@@ -157,11 +167,13 @@ public class Solver
                 CSVImporter.initSupplyData(week);
                 setInitialFromCSV();
 
-                solveRecsWithNoSupply();
-                //solveRecsForWeek();
+                //solveRecsWithNoSupply();
+                solveRecsForWeek();
                 //bruteForceWeek();
-
                 //solveCrimeTime();
+
+                /*var schedule = getBestBruteForceSchedule(2, 18, null, 3, null, 16);
+                System.out.println("Best C3 schedule: "+schedule.getKey().getItems()+" ("+schedule.getValue()+")");*/
                 totalCowries += totalGross;
                 totalTotalNet += totalNet;
             }
@@ -279,7 +291,7 @@ public class Solver
     }
 
 
-    private static void bruteForceWeek()
+    /*private static void bruteForceWeek()
     {
         List<Item> empty = new ArrayList<>();
         List<Item>[] bestSchedules = new List[6];
@@ -459,7 +471,7 @@ public class Solver
                 setDay(bestSchedules[day], day+1);
         }
 
-    }
+    }*/
 
     private static void solveRecsForWeek()
     {
@@ -649,7 +661,7 @@ public class Solver
     private static void recalculateTodayAndSet(int day, WorkshopSchedule prevSchedule)
     {
 
-        var newSchedule = getBestBruteForceSchedule(day, groove, null, day, prevSchedule.getItems().get(0));
+        var newSchedule = getBestBruteForceSchedule(day, groove, null, day, prevSchedule.getItems().get(0), 24);
 
         if(!prevSchedule.getItems().equals(newSchedule.getKey().getItems()))
         {
@@ -1051,12 +1063,12 @@ public class Solver
     private static Map.Entry<WorkshopSchedule, Integer> getBestBruteForceSchedule(int day, int groove,
                                                                                   Map<Item,Integer> limitedUse, int allowUpToDay)
     {
-        return getBestBruteForceSchedule(day, groove, limitedUse, allowUpToDay, null);
+        return getBestBruteForceSchedule(day, groove, limitedUse, allowUpToDay, null, 24);
     }
     private static Map.Entry<WorkshopSchedule, Integer> getBestBruteForceSchedule(int day, int groove,
-            Map<Item,Integer> limitedUse, int allowUpToDay, Item startingItem) {
+            Map<Item,Integer> limitedUse, int allowUpToDay, Item startingItem, int hoursLeft) {
 
-        var sortedSchedules = getBestSchedules(day, groove, limitedUse, allowUpToDay, startingItem, alternatives, false);
+        var sortedSchedules = getBestSchedules(day, groove, limitedUse, allowUpToDay, startingItem, alternatives, false, hoursLeft);
 
         Iterator<Entry<WorkshopSchedule, Integer>> finalIterator = sortedSchedules
                 .entrySet().iterator();
@@ -1080,7 +1092,7 @@ public class Solver
     }
 
     public static LinkedHashMap<WorkshopSchedule, Integer> getBestSchedules(int day, int groove,
-                                                                     Map<Item,Integer> limitedUse, int allowUpToDay, Item startingItem, int limit, boolean forcePeaks)
+                                                                     Map<Item,Integer> limitedUse, int allowUpToDay, Item startingItem, int limit, boolean forcePeaks, int hoursLeft)
     {
         HashMap<WorkshopSchedule, Integer> safeSchedules = new HashMap<>();
         List<List<Item>> filteredItemLists;
@@ -1104,6 +1116,18 @@ public class Solver
             filteredItemLists = filteredItemLists.stream().filter (list -> list.stream().limit(1).allMatch(item -> item == startingItem)).collect(Collectors.toList());
         }
 
+        if(hoursLeft < 24)
+        {
+            for(int i=0; i<filteredItemLists.size(); i++)
+            {
+                var schedule = filteredItemLists.get(i);
+                while(getHoursUsed(schedule)>hoursLeft && schedule.size() > 0)
+                {
+                    schedule.remove(schedule.size()-1);
+                }
+            }
+        }
+
 
 
 
@@ -1117,6 +1141,16 @@ public class Solver
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).limit(limit)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                         (x, y) -> y, LinkedHashMap::new));
+    }
+
+    private static int getHoursUsed(List<Item> schedule)
+    {
+        int hours = 0;
+        for(Item item : schedule)
+        {
+            hours += items[item.ordinal()].time;
+        }
+        return hours;
     }
 
     private static Map.Entry<WorkshopSchedule, Integer> getBestSchedule(int day, int groove)
