@@ -6,4 +6,5 @@ from (select item_id, week, peak from craft_peaks where day = 0) as p1,
 where p1.item_id = p2.item_id and p1.week=p2.week 
 and p1.item_id = p3.item_id and p1.week=p3.week 
 and p1.item_id = p4.item_id and p1.week=p4.week 
-order by week, item_id;
+and p1.week = 19
+order by item_id;
