@@ -2,6 +2,8 @@ package islandworkshop;
 
 import java.util.List;
 import java.util.HashMap;
+import java.util.Map;
+
 public class CycleSchedule
 {
     int day;
@@ -90,6 +92,17 @@ public class CycleSchedule
             cost+=shop.getMaterialCost();
         }
         return cost;
+    }
+
+    public void addMaterials(Map<RareMaterial, Integer> matsUsed)
+    {
+        for(var workshop : workshops)
+        {
+            for(var mat : workshop.rareMaterialsRequired.entrySet())
+            {
+                matsUsed.put(mat.getKey(), matsUsed.getOrDefault(mat.getKey(), 0)+mat.getValue());
+            }
+        }
     }
     
     

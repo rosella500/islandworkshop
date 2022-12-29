@@ -5,7 +5,6 @@ import static islandworkshop.RareMaterial.*;
 import static islandworkshop.PeakCycle.*;
 import static islandworkshop.Item.*;
 
-import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
@@ -95,9 +94,13 @@ public class Solver
 
     private static Map<Integer, TempSchedule> scheduledDays = new HashMap<>();
 
+    private static Map<RareMaterial, Integer> matsUsed = new TreeMap<>();
+    private static boolean logMats = false;
+
     public static void main(String[] args)
     {
         CSVImporter.initBruteForceChains();
+
         //CSVImporter.generateBruteForceChains();
 
         /*schedulesToCheck = new HashMap<>();
@@ -167,8 +170,8 @@ public class Solver
                 CSVImporter.initSupplyData(week);
                 setInitialFromCSV();
 
-                //solveRecsWithNoSupply();
-                solveRecsForWeek();
+                solveRecsWithNoSupply();
+                //solveRecsForWeek();
                 //bruteForceWeek();
                 //solveCrimeTime();
 
@@ -179,6 +182,15 @@ public class Solver
             }
             int averageGross = (totalCowries/(endWeek-startWeek+1));
             System.out.println("Average cowries/week: "+averageGross+" Average net: "+(totalTotalNet/(endWeek-startWeek+1)));
+
+            if(logMats)
+            {
+                for(var mat : RareMaterial.values())
+                {
+                    System.out.println("Total "+mat+" used: "+matsUsed.getOrDefault(mat,0)+" Per week: "+matsUsed.getOrDefault(mat,0)/((double)endWeek-startWeek+1));
+                }
+            }
+
 
             /*if(averageGross > bestAverage) {
                 bestAverage = averageGross;
@@ -252,19 +264,20 @@ public class Solver
         Map<Item,Integer> reservedSet = new HashMap<>();
         List<List<Item>> scheduleList = new ArrayList<>();
 
-        for (int d = 0; d < 6; d++)
+        for (int d = 0; d < 5; d++)
         {
             Entry<WorkshopSchedule, Integer> solution = getBestSchedule(2, 15, reservedSet, 2);
             scheduleList.add(solution.getKey().getItems());
 
             if (verboseSolverLogging)
-                System.out.println("Cycle " + (d+1) + ", crafts: "
+                System.out.println("Schedule " + (d+1) + ", crafts: "
                         + Arrays.toString(solution.getKey().getItems().toArray())
                         + " value: " + solution.getValue());
 
             reservedSet = solution.getKey().getLimitedUses(reservedSet);
-
         }
+        if(verboseSolverLogging)
+            System.out.println();
 
         setObservedFromCSV(3);
         //Alternating
@@ -493,7 +506,6 @@ public class Solver
             //setDay(d2.getKey().getItems(), 1);
         }
         verboseSolverLogging = false;
-
         if(hasNextDay)
         {
             //alternatives = 10;
@@ -537,8 +549,6 @@ public class Solver
                     recalculateTodayAndSet(3, d4.getKey());
                 }
 
-
-
                 if(hasNextDay)
                 {
                     setLateDays();
@@ -547,7 +557,7 @@ public class Solver
         }
 
         if(!hasNextDay)
-            solveRestOfWeek(scheduledDays.size()-1);
+            solveRestOfWeek(scheduledDays.size()-1 + (rested? 1 : 0));
 
         System.out.println("Season total: " + totalGross + " (" + totalNet + ")\n" + "Took "
                 + (System.currentTimeMillis() - time) + "ms.\n");
@@ -1038,6 +1048,8 @@ public class Solver
             groovelessValue = schedule.getValue();
             schedule.startingGroove = startingGroove;
             verboseCalculatorLogging = oldVerbose;
+            if(logMats)
+                schedule.addMaterials(matsUsed);
         }
 
         int gross = schedule.getValue();
