@@ -23,9 +23,9 @@ public class ItemInfo
             {0, -1, 8, -7, -8, -7, 15}, //6Strong
             {0, -1, 8, -3, -4, -4, -4}, //7Weak
             {0, -1, 8, 0, -7, -8, -7}, //7Strong
-            {0, 0, 0, -6, 0, 10, 0}, //4/5
+            {0, 0, 0, -8, 0, 10, 0}, //4/5
             {0, 0, 0, -4, -4, 10, 0}, //5
-            {0, -1, 8, 0, -7, -6, 0} //6/7
+            {0, -1, 8, 0, -7, -8, 0} //6/7
             };
     
     private static final PeakCycle[][] PEAKS_TO_CHECK = {{Cycle3Weak, Cycle3Strong, Cycle67, Cycle45}, //Day2

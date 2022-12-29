@@ -119,8 +119,8 @@ public class Solver
             System.out.println("Order: "+order);*/
         int totalCowries = 0;
         int totalTotalNet = 0;
-        int startWeek = 15;
-        int endWeek = 18;
+        int startWeek = 1;
+        int endWeek = 19;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         var hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -546,7 +546,8 @@ public class Solver
             }
         }
 
-        //solveRestOfWeek(0);
+        if(!hasNextDay)
+            solveRestOfWeek(scheduledDays.size()-1);
 
         System.out.println("Season total: " + totalGross + " (" + totalNet + ")\n" + "Took "
                 + (System.currentTimeMillis() - time) + "ms.\n");
