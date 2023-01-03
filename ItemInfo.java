@@ -42,10 +42,10 @@ public class ItemInfo
     int materialValue;
     
     //Weekly info
-    Popularity popularity;
+    Popularity popularity = Popularity.VeryHigh;
     PeakCycle previousPeak;
     PeakCycle peak = Unknown;
-    int[] craftedPerDay;
+    int[] craftedPerDay = new int[7];
     ArrayList<ObservedSupply> observedSupplies;
     int rankUnlocked;
     

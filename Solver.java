@@ -18,7 +18,7 @@ public class Solver
 
     final static int NUM_WORKSHOPS = 3;
     final static int helperPenalty = 5;
-    final static int averageDayValue = 4044;
+    static int averageDayValue = 4002;
     
     final static ItemInfo[] items = {
             new ItemInfo(Potion,Concoctions,Invalid,28,4,1,null),
@@ -75,6 +75,8 @@ public class Solver
     private static int groove = 0;
     private static int totalGross = 0;
     private static int totalNet = 0;
+
+    private static int totalGrooveless = 0;
     public static boolean verboseCalculatorLogging = false;
     public static boolean verboseSolverLogging = false;
     public static boolean verboseReservations = false;
@@ -101,7 +103,9 @@ public class Solver
     {
         CSVImporter.initBruteForceChains();
 
+        //Things that need to be regenerated in 6.3
         //CSVImporter.generateBruteForceChains();
+        averageDayValue = CSVImporter.getAverageTrueGroovelessValue();
 
         /*schedulesToCheck = new HashMap<>();
         List<List<Item>> schedules = new ArrayList<>();
@@ -122,6 +126,7 @@ public class Solver
             System.out.println("Order: "+order);*/
         int totalCowries = 0;
         int totalTotalNet = 0;
+        totalGrooveless = 0;
         int startWeek = 1;
         int endWeek = 19;
         Calendar calendar = Calendar.getInstance();
@@ -170,8 +175,8 @@ public class Solver
                 CSVImporter.initSupplyData(week);
                 setInitialFromCSV();
 
-                solveRecsWithNoSupply();
-                //solveRecsForWeek();
+                //solveRecsWithNoSupply();
+                solveRecsForWeek();
                 //bruteForceWeek();
                 //solveCrimeTime();
 
@@ -183,6 +188,8 @@ public class Solver
             int averageGross = (totalCowries/(endWeek-startWeek+1));
             System.out.println("Average cowries/week: "+averageGross+" Average net: "+(totalTotalNet/(endWeek-startWeek+1)));
 
+            System.out.println("Average true grooveless: "+(totalGrooveless/((endWeek-startWeek+1)*5)));
+
             if(logMats)
             {
                 for(var mat : RareMaterial.values())
@@ -190,6 +197,14 @@ public class Solver
                     System.out.println("Total "+mat+" used: "+matsUsed.getOrDefault(mat,0)+" Per week: "+matsUsed.getOrDefault(mat,0)/((double)endWeek-startWeek+1));
                 }
             }
+
+
+        /*items[Brush.ordinal()].setInitialData(Popularity.VeryHigh, Cycle7Strong);
+        items[GardenScythe.ordinal()].setInitialData(Popularity.VeryHigh, Cycle7Strong);
+        items[SilverEarCuffs.ordinal()].setInitialData(Popularity.VeryHigh, Cycle7Strong);
+        groove = 35;
+        setDay(Arrays.asList(Brush, GardenScythe, SilverEarCuffs, GardenScythe), 6);*/
+
 
 
             /*if(averageGross > bestAverage) {
@@ -503,7 +518,6 @@ public class Solver
         {
             hasNextDay = setObservedFromCSV(1);
             recalculateTodayAndSet(1, d2.getKey());
-            //setDay(d2.getKey().getItems(), 1);
         }
         verboseSolverLogging = false;
         if(hasNextDay)
@@ -536,7 +550,7 @@ public class Solver
                     System.out.println("Guaranteed resting C5 so recalculating C4");
                     Entry<WorkshopSchedule, Integer> d4Again = getBestSchedule(3, groove, null, 4);
                     hasNextDay = setObservedFromCSV(3);
-                    recalculateTodayAndSet(3, d4.getKey());
+                    recalculateTodayAndSet(3, d4Again.getKey());
                 }
                 else if(!rested && worst)
                 {
@@ -673,12 +687,16 @@ public class Solver
     {
 
         var newSchedule = getBestBruteForceSchedule(day, groove, null, day, prevSchedule.getItems().get(0), 24);
+        int prevValue = prevSchedule.getValueWithGrooveEstimate(day, groove);
 
-        if(!prevSchedule.getItems().equals(newSchedule.getKey().getItems()))
+        if(!prevSchedule.getItems().equals(newSchedule.getKey().getItems()) && newSchedule.getValue() > prevValue)
         {
             System.out.println("Updated rec detected!");
+
+            setDay(newSchedule.getKey().getItems(), day, groove, true);
         }
-        setDay(newSchedule.getKey().getItems(), day, groove, true);
+        else
+            setDay(prevSchedule.getItems(), day, groove, true);
     }
 
     
@@ -1047,9 +1065,12 @@ public class Solver
             schedule.startingGroove = 0;
             groovelessValue = schedule.getValue();
             schedule.startingGroove = startingGroove;
-            verboseCalculatorLogging = oldVerbose;
             if(logMats)
                 schedule.addMaterials(matsUsed);
+            //verboseCalculatorLogging = true;
+            totalGrooveless+=schedule.getTrueGroovelessValue();
+            verboseCalculatorLogging = oldVerbose;
+
         }
 
         int gross = schedule.getValue();

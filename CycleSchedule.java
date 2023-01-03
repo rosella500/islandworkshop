@@ -32,6 +32,42 @@ public class CycleSchedule
         else
             workshops[index].setCrafts(crafts);
     }
+
+    public int getTrueGroovelessValue()
+    {
+        for(int i=0; i<workshops.length;i++)
+            workshops[i].currentIndex = 0;
+
+        int value = 0;
+        Map<Item, Integer> numCrafted = new HashMap<>();
+        for(int hour = 4; hour <=24; hour+=2) //Nothing can finish until hour 4
+        {
+            HashMap<Item, Integer> craftsToAdd = new HashMap<>();
+            int cowriesThisHour = 0;
+            for(int i=0; i<workshops.length;i++)
+            {
+                if(workshops[i].currentCraftCompleted(hour))
+                {
+                    ItemInfo completedCraft = workshops[i].getCurrentCraft();
+                    boolean efficient = workshops[i].currentCraftIsEfficient();
+                    craftsToAdd.put(completedCraft.item, craftsToAdd.getOrDefault(completedCraft.item, 0) + (efficient? 2 : 1));
+
+                    //System.out.println("Found completed "+completedCraft.item+" at hour "+hour+". Efficient? "+efficient);
+
+                    cowriesThisHour += workshops[i].getValueForCurrent(day, numCrafted.getOrDefault(completedCraft.item, 0), 0, efficient, Solver.verboseCalculatorLogging);
+
+                    workshops[i].currentIndex++;
+                }
+            }
+            if(Solver.verboseCalculatorLogging && cowriesThisHour>0)
+                System.out.println("hour "+hour+": "+cowriesThisHour);
+
+            value += cowriesThisHour;
+            craftsToAdd.forEach((k, v) ->  {numCrafted.put(k, numCrafted.getOrDefault(k, 0) + v); });
+
+        }
+        return value;
+    }
     
     public int getValue() 
     {
