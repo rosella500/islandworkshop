@@ -504,7 +504,7 @@ public class Solver
     private static void solveRecsForWeek()
     {
         long time = System.currentTimeMillis();
-        populateReservedItems(itemsToReserve);
+
 
         Entry<WorkshopSchedule, Integer> d2 = getBestSchedule(1, groove);
         alternatives = 0;
@@ -609,13 +609,15 @@ public class Solver
                     + (System.currentTimeMillis() - time) + "ms.\n\n");
         }
     }
-    private static void populateReservedItems(int itemsToReserve)
+    private static void populateReservedItems(int itemsToReserve, int day)
     {
+        reservedItems.clear();
+        reservedHelpers.clear();
         //get reserved item list
         Map<Item, Integer> itemValues = new HashMap<>();
         for(ItemInfo item : items)
         {
-            if(item.time == 4)
+            if(item.time == 4 || item.peaksOnOrBeforeDay(day))
                 continue;
             int value = item.getValueWithSupply(Supply.Sufficient);
             if(valuePerHour)
@@ -636,7 +638,7 @@ public class Solver
             if(verboseReservations)
                 System.out.println("Reserving "+next);
             reservedItems.add(next);
-            if(i<10)
+            if(i<(5-day)*2)
                 itemsThatGetHelpers.add(next);
         }
         int itemRank = 1;
@@ -1189,6 +1191,7 @@ public class Solver
 
     private static Map.Entry<WorkshopSchedule, Integer> getBestSchedule(int day, int groove)
     {
+        populateReservedItems(itemsToReserve, day);
         return getBestSchedule(day, groove, null, day);
     }
 
