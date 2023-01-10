@@ -5,7 +5,6 @@ import static islandworkshop.RareMaterial.*;
 import static islandworkshop.PeakCycle.*;
 import static islandworkshop.Item.*;
 
-import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
@@ -19,7 +18,7 @@ public class Solver
 
     final static int NUM_WORKSHOPS = 3;
     final static int helperPenalty = 5;
-    final static int averageDayValue = 4044;
+    static int averageDayValue = 4002;
     
     final static ItemInfo[] items = {
             new ItemInfo(Potion,Concoctions,Invalid,28,4,1,null),
@@ -76,6 +75,8 @@ public class Solver
     private static int groove = 0;
     private static int totalGross = 0;
     private static int totalNet = 0;
+
+    private static int totalGrooveless = 0;
     public static boolean verboseCalculatorLogging = false;
     public static boolean verboseSolverLogging = false;
     public static boolean verboseReservations = false;
@@ -95,19 +96,16 @@ public class Solver
 
     private static Map<Integer, TempSchedule> scheduledDays = new HashMap<>();
 
+    private static Map<RareMaterial, Integer> matsUsed = new TreeMap<>();
+    private static boolean logMats = false;
+
     public static void main(String[] args)
     {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        var hour = calendar.get(Calendar.HOUR_OF_DAY);
-        if(hour < 3)
-            hour += 24;
-        hour = (hour - 3) % 24;
-        int hoursLeft = 24 - (((hour / 2) + 1) * 2);
-        System.out.println("Hours left in schedule: "+hoursLeft);
-
         CSVImporter.initBruteForceChains();
+
+        //Things that need to be regenerated in 6.3
         //CSVImporter.generateBruteForceChains();
+        averageDayValue = CSVImporter.getAverageTrueGroovelessValue();
 
         /*schedulesToCheck = new HashMap<>();
         List<List<Item>> schedules = new ArrayList<>();
@@ -128,9 +126,17 @@ public class Solver
             System.out.println("Order: "+order);*/
         int totalCowries = 0;
         int totalTotalNet = 0;
+        totalGrooveless = 0;
         int startWeek = 1;
-        int endWeek = 17;
-
+        int endWeek = 19;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        var hour = calendar.get(Calendar.HOUR_OF_DAY);
+        if(hour < 3)
+            hour += 24;
+        hour = (hour - 3) % 24;
+        int hoursLeft = 24 - (((hour / 2) + 1) * 2);
+        System.out.println("Hours left in schedule: "+hoursLeft);
 
             for(int week = startWeek; week <= endWeek; week++)
             {
@@ -161,34 +167,45 @@ public class Solver
                     item.craftedPerDay = new int[7];
                     item.peak = Unknown;
                 }
-
+                reservedItems.clear();
+                reservedHelpers.clear();
                 scheduledDays.clear();
 
 
                 CSVImporter.initSupplyData(week);
                 setInitialFromCSV();
 
-                //verboseReservations = true;
                 //solveRecsWithNoSupply();
                 solveRecsForWeek();
                 //bruteForceWeek();
                 //solveCrimeTime();
 
-
-                /*int lastDaySet = 3;
-                Map<Item, Integer> limitedUse = null;
-                WorkshopSchedule c4 = new WorkshopSchedule(Arrays.asList(CornFlakes, PickledRadish, CornFlakes, PickledRadish));
-                limitedUse = c4.getLimitedUses();
-
-                var schedule = getBestBruteForceSchedule(2, 18, limitedUse, lastDaySet, null, 14);
+                /*var schedule = getBestBruteForceSchedule(2, 18, null, 3, null, 16);
                 System.out.println("Best C3 schedule: "+schedule.getKey().getItems()+" ("+schedule.getValue()+")");*/
-
-
                 totalCowries += totalGross;
                 totalTotalNet += totalNet;
             }
             int averageGross = (totalCowries/(endWeek-startWeek+1));
             System.out.println("Average cowries/week: "+averageGross+" Average net: "+(totalTotalNet/(endWeek-startWeek+1)));
+
+            System.out.println("Average true grooveless: "+(totalGrooveless/((endWeek-startWeek+1)*5)));
+
+            if(logMats)
+            {
+                for(var mat : RareMaterial.values())
+                {
+                    System.out.println("Total "+mat+" used: "+matsUsed.getOrDefault(mat,0)+" Per week: "+matsUsed.getOrDefault(mat,0)/((double)endWeek-startWeek+1));
+                }
+            }
+
+
+        /*items[Brush.ordinal()].setInitialData(Popularity.VeryHigh, Cycle7Strong);
+        items[GardenScythe.ordinal()].setInitialData(Popularity.VeryHigh, Cycle7Strong);
+        items[SilverEarCuffs.ordinal()].setInitialData(Popularity.VeryHigh, Cycle7Strong);
+        groove = 35;
+        setDay(Arrays.asList(Brush, GardenScythe, SilverEarCuffs, GardenScythe), 6);*/
+
+
 
             /*if(averageGross > bestAverage) {
                 bestAverage = averageGross;
@@ -262,19 +279,20 @@ public class Solver
         Map<Item,Integer> reservedSet = new HashMap<>();
         List<List<Item>> scheduleList = new ArrayList<>();
 
-        for (int d = 0; d < 6; d++)
+        for (int d = 0; d < 5; d++)
         {
             Entry<WorkshopSchedule, Integer> solution = getBestSchedule(2, 15, reservedSet, 2);
             scheduleList.add(solution.getKey().getItems());
 
             if (verboseSolverLogging)
-                System.out.println("Cycle " + (d+1) + ", crafts: "
+                System.out.println("Schedule " + (d+1) + ", crafts: "
                         + Arrays.toString(solution.getKey().getItems().toArray())
                         + " value: " + solution.getValue());
 
             reservedSet = solution.getKey().getLimitedUses(reservedSet);
-
         }
+        if(verboseSolverLogging)
+            System.out.println();
 
         setObservedFromCSV(3);
         //Alternating
@@ -486,7 +504,7 @@ public class Solver
     private static void solveRecsForWeek()
     {
         long time = System.currentTimeMillis();
-
+        populateReservedItems(itemsToReserve);
 
         Entry<WorkshopSchedule, Integer> d2 = getBestSchedule(1, groove);
         alternatives = 0;
@@ -500,10 +518,8 @@ public class Solver
         {
             hasNextDay = setObservedFromCSV(1);
             recalculateTodayAndSet(1, d2.getKey());
-            //setDay(d2.getKey().getItems(), 1);
         }
         verboseSolverLogging = false;
-
         if(hasNextDay)
         {
             //alternatives = 10;
@@ -534,7 +550,7 @@ public class Solver
                     System.out.println("Guaranteed resting C5 so recalculating C4");
                     Entry<WorkshopSchedule, Integer> d4Again = getBestSchedule(3, groove, null, 4);
                     hasNextDay = setObservedFromCSV(3);
-                    recalculateTodayAndSet(3, d4.getKey());
+                    recalculateTodayAndSet(3, d4Again.getKey());
                 }
                 else if(!rested && worst)
                 {
@@ -547,8 +563,6 @@ public class Solver
                     recalculateTodayAndSet(3, d4.getKey());
                 }
 
-
-
                 if(hasNextDay)
                 {
                     setLateDays();
@@ -556,7 +570,8 @@ public class Solver
             }
         }
 
-        //solveRestOfWeek(0);
+        if(!hasNextDay)
+            solveRestOfWeek(scheduledDays.size()-1 + (rested? 1 : 0));
 
         System.out.println("Season total: " + totalGross + " (" + totalNet + ")\n" + "Took "
                 + (System.currentTimeMillis() - time) + "ms.\n");
@@ -594,15 +609,13 @@ public class Solver
                     + (System.currentTimeMillis() - time) + "ms.\n\n");
         }
     }
-    private static void populateReservedItems(int itemsToReserve, int day)
+    private static void populateReservedItems(int itemsToReserve)
     {
-        reservedItems.clear();
-        reservedHelpers.clear();
         //get reserved item list
         Map<Item, Integer> itemValues = new HashMap<>();
         for(ItemInfo item : items)
         {
-            if(item.time == 4 || item.peaksOnOrBeforeDay(day))
+            if(item.time == 4)
                 continue;
             int value = item.getValueWithSupply(Supply.Sufficient);
             if(valuePerHour)
@@ -623,7 +636,7 @@ public class Solver
             if(verboseReservations)
                 System.out.println("Reserving "+next);
             reservedItems.add(next);
-            if(i<(5-day)*2)
+            if(i<10)
                 itemsThatGetHelpers.add(next);
         }
         int itemRank = 1;
@@ -674,12 +687,16 @@ public class Solver
     {
 
         var newSchedule = getBestBruteForceSchedule(day, groove, null, day, prevSchedule.getItems().get(0), 24);
+        int prevValue = prevSchedule.getValueWithGrooveEstimate(day, groove);
 
-        if(!prevSchedule.getItems().equals(newSchedule.getKey().getItems()))
+        if(!prevSchedule.getItems().equals(newSchedule.getKey().getItems()) && newSchedule.getValue() > prevValue)
         {
             System.out.println("Updated rec detected!");
+
+            setDay(newSchedule.getKey().getItems(), day, groove, true);
         }
-        setDay(newSchedule.getKey().getItems(), day, groove, true);
+        else
+            setDay(prevSchedule.getItems(), day, groove, true);
     }
 
     
@@ -1048,7 +1065,12 @@ public class Solver
             schedule.startingGroove = 0;
             groovelessValue = schedule.getValue();
             schedule.startingGroove = startingGroove;
+            if(logMats)
+                schedule.addMaterials(matsUsed);
+            //verboseCalculatorLogging = true;
+            totalGrooveless+=schedule.getTrueGroovelessValue();
             verboseCalculatorLogging = oldVerbose;
+
         }
 
         int gross = schedule.getValue();
@@ -1130,18 +1152,17 @@ public class Solver
 
         if(hoursLeft < 24)
         {
-            Set<List<Item>> listSet = new HashSet<>();
-            for (List<Item> schedule : filteredItemLists)
+            for(int i=0; i<filteredItemLists.size(); i++)
             {
-                while (getHoursUsed(schedule) > hoursLeft && schedule.size() > 0)
+                var schedule = filteredItemLists.get(i);
+                while(getHoursUsed(schedule)>hoursLeft && schedule.size() > 0)
                 {
-                    schedule.remove(schedule.size() - 1);
+                    schedule.remove(schedule.size()-1);
                 }
-                if(schedule.size() > 0)
-                    listSet.add(schedule);
             }
-            filteredItemLists = new ArrayList<>(listSet);
         }
+
+
 
 
         for (List<Item> list : filteredItemLists)
@@ -1168,7 +1189,6 @@ public class Solver
 
     private static Map.Entry<WorkshopSchedule, Integer> getBestSchedule(int day, int groove)
     {
-        populateReservedItems(itemsToReserve, day);
         return getBestSchedule(day, groove, null, day);
     }
 

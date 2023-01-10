@@ -1,11 +1,9 @@
 package islandworkshop;
 import java.io.*;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class CSVImporter
@@ -15,6 +13,8 @@ public class CSVImporter
 
     public static Popularity[] currentPopularity = new Popularity[50]; // item
     public static PeakCycle[][] currentPeaks; //item, day
+
+    private static final int SCHEDULES_TO_AVERAGE = 1000;
     
     public static void initBruteForceChains()
     {
@@ -209,6 +209,36 @@ public class CSVImporter
             throw new RuntimeException(e);
         }
         System.out.println("Wrote "+chains+" chains to file.");
+    }
+
+
+    public static int getAverageTrueGroovelessValue()
+    {
+        Map<List<Item>, Integer> schedulesByValue = new HashMap<>();
+        for(var schedule : allEfficientChains)
+        {
+            CycleSchedule cycleSchedule = new CycleSchedule(3, 0);
+            cycleSchedule.setForAllWorkshops(schedule);
+
+            schedulesByValue.put(schedule, cycleSchedule.getTrueGroovelessValue());
+        }
+        var sortedSchedules  = schedulesByValue
+                .entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))//.limit(limit)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (x, y) -> y, LinkedHashMap::new));
+
+        var finalIterator = sortedSchedules.entrySet().iterator();
+        int totalValue = 0;
+        for (int c = 0; c < SCHEDULES_TO_AVERAGE && finalIterator.hasNext(); c++)
+        {
+            var alt = finalIterator.next();
+            //System.out.println("Top schedule: " + Arrays.toString(alt.getKey().toArray()) + ": " + alt.getValue());
+            totalValue += alt.getValue();
+        }
+        int average = totalValue / SCHEDULES_TO_AVERAGE;
+        System.out.println("Average: "+average);
+        return average;
     }
 
     private static void addChainToList(List<Item> efficientChain)
