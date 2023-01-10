@@ -51,7 +51,17 @@ public enum Item
     GardenScythe("Garden Scythe"),
     Bed("Bed"),
     ScaleFingers("Scale Fingers"),
-    Crook("Crook");
+    Crook("Crook"),
+    CoralSword("Coral Sword"),
+    CoconutJuice("Coconut Juice"),
+    Honey("Honey"),
+    SeashineOpal("Seashine Opal"),
+    DriedFlowers("Dried Flowers"),
+    PowderedPaprika("Powdered Paprika"),
+    CawlCennin("Cawl Cennin"),
+    Isloaf("Isloaf"),
+    PopotoSalad("Popoto Salad"),
+    Dressing("Dressing");
     
     private String displayName;
     private Item(String display)

@@ -18,7 +18,7 @@ public class Solver
 
     final static int NUM_WORKSHOPS = 3;
     final static int helperPenalty = 5;
-    static int averageDayValue = 4002;
+    static int averageDayValue = 4139;
     
     final static ItemInfo[] items = {
             new ItemInfo(Potion,Concoctions,Invalid,28,4,1,null),
@@ -70,7 +70,17 @@ public class Solver
             new ItemInfo(GardenScythe,Sundries,Metalworks,90,6,9,Map.of(Claw,3)),
             new ItemInfo(Bed,Furnishings,Textiles,120,8,9,Map.of(Fur,4)),
             new ItemInfo(ScaleFingers,Attire,CreatureCreations,120,8,9,Map.of(Carapace,4)),
-            new ItemInfo(Crook,Arms,Woodworks,120,8,9,Map.of(Fang,4))};
+            new ItemInfo(Crook,Arms,Woodworks,120,8,9,Map.of(Fang,4)),
+            new ItemInfo(CoralSword,Arms,MarineMerchandise,72,8,10,null),
+            new ItemInfo(CoconutJuice,Confections,Concoctions,36,4,10,null),
+            new ItemInfo(Honey,Confections,Ingredients,36,4,10,null),
+            new ItemInfo(SeashineOpal,UnburiedTreasures,Invalid,80,8,10,null),
+            new ItemInfo(DriedFlowers,Sundries,Furnishings,54,6,10,null),
+            new ItemInfo(PowderedPaprika,Ingredients,Concoctions,52,4,11,Map.of(Paprika,2)),
+            new ItemInfo(CawlCennin,Concoctions,CreatureCreations,90,6,11,Map.of(Leek,3,Milk,1)),
+            new ItemInfo(Isloaf,Foodstuffs,Concoctions,52,4,11,Map.of(Wheat,2)),
+            new ItemInfo(PopotoSalad,Foodstuffs,Invalid,52,4,11,Map.of(Popoto,2)),
+            new ItemInfo(Dressing,Ingredients,Invalid,52,4,11,Map.of(Onion,2))};
     
     private static int groove = 0;
     private static int totalGross = 0;
@@ -105,7 +115,7 @@ public class Solver
 
         //Things that need to be regenerated in 6.3
         //CSVImporter.generateBruteForceChains();
-        averageDayValue = CSVImporter.getAverageTrueGroovelessValue();
+        //averageDayValue = CSVImporter.getAverageTrueGroovelessValue();
 
         /*schedulesToCheck = new HashMap<>();
         List<List<Item>> schedules = new ArrayList<>();
@@ -127,8 +137,8 @@ public class Solver
         int totalCowries = 0;
         int totalTotalNet = 0;
         totalGrooveless = 0;
-        int startWeek = 1;
-        int endWeek = 19;
+        int startWeek = 18;
+        int endWeek = 21;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         var hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -140,6 +150,10 @@ public class Solver
 
             for(int week = startWeek; week <= endWeek; week++)
             {
+                if(week<=20)
+                    islandRank=9;
+                else
+                    islandRank=11;
                 SimpleDateFormat sdf = new SimpleDateFormat("MMM d");
 
                 calendar.setTime(new Date(1661241600000L));
@@ -944,6 +958,12 @@ public class Solver
             }
             else
                 solution = getBestSchedule(d, groove, reservedSet, d);
+            if(solution == null)
+            {
+                System.out.println("Null schedule attempting to get future schedule for cycle "+(d+1));
+                continue;
+            }
+
             if (verboseSolverLogging)
                 System.out.println("Cycle " + (d + 1) + ", crafts: "
                         + Arrays.toString(solution.getKey().getItems().toArray())
@@ -1108,6 +1128,8 @@ public class Solver
 
         Iterator<Entry<WorkshopSchedule, Integer>> finalIterator = sortedSchedules
                 .entrySet().iterator();
+        if(!finalIterator.hasNext())
+            return null;
         Entry<WorkshopSchedule, Integer> bestSchedule = finalIterator.next();
         if (alternatives > 1)
         {
@@ -1247,7 +1269,7 @@ public class Solver
 
     private static boolean setObservedFromCSV(int day)
     {
-        if (day >= CSVImporter.currentPeaks[1].length)
+        if (day >= CSVImporter.currentPeaks[11].length)
             return false;
 
         for (int i = 0; i < items.length; i++)

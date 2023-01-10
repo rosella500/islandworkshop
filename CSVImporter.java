@@ -11,7 +11,7 @@ public class CSVImporter
     
     public static List<List<Item>> allEfficientChains;
 
-    public static Popularity[] currentPopularity = new Popularity[50]; // item
+    public static Popularity[] currentPopularity = new Popularity[Solver.items.length]; // item
     public static PeakCycle[][] currentPeaks; //item, day
 
     private static final int SCHEDULES_TO_AVERAGE = 1000;
@@ -48,8 +48,11 @@ public class CSVImporter
     
     public static void initSupplyData(int week)
     {
+
+        int skipAmount=week<21?((week-1)*50):(20*50+(week-21)*60);
         try (BufferedReader br = new BufferedReader(new FileReader("craft_peaks.csv"))) {
-            var peaks = br.lines().skip((week - 1) * 50).limit(Solver.items.length)
+
+            var peaks = br.lines().skip(skipAmount).limit(Solver.items.length)
                     .map(line -> Arrays.stream(line.split(",")).skip(2).limit(4).map(PeakCycle::fromString).collect(Collectors.toUnmodifiableList())
                     ).collect(Collectors.toUnmodifiableList());
             currentPeaks = new PeakCycle[peaks.size()][];
@@ -64,7 +67,7 @@ public class CSVImporter
             System.out.println("Error importing peaks for week "+week+": "+e.getMessage());
         }
         try (BufferedReader br = new BufferedReader(new FileReader("craft_peaks.csv"))) {
-            int index = br.lines().skip((week - 1) * 50).limit(1).map(line -> Arrays.stream(line.split(",")).skip(6).map(Integer::parseInt).findFirst().get()).findFirst().get();
+            int index = br.lines().skip(skipAmount).limit(1).map(line -> Arrays.stream(line.split(",")).skip(6).map(Integer::parseInt).findFirst().get()).findFirst().get();
             //System.out.println("Getting popularity " + index + " for week " + week);
             initPopularity(index);
         }
