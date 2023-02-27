@@ -137,8 +137,8 @@ public class Solver
         int totalCowries = 0;
         int totalTotalNet = 0;
         totalGrooveless = 0;
-        int startWeek = 18;
-        int endWeek = 21;
+        int startWeek = 1;
+        int endWeek = 27;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         var hour = calendar.get(Calendar.HOUR_OF_DAY);
