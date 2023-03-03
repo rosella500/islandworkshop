@@ -138,7 +138,7 @@ public class Solver
         int totalTotalNet = 0;
         totalGrooveless = 0;
         int startWeek = 1;
-        int endWeek = 27;
+        int endWeek = 28;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         var hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -147,6 +147,9 @@ public class Solver
         hour = (hour - 3) % 24;
         int hoursLeft = 24 - (((hour / 2) + 1) * 2);
         System.out.println("Hours left in schedule: "+hoursLeft);
+
+        int lowestWeek = 99999;
+        int highestWeek = 0;
 
             for(int week = startWeek; week <= endWeek; week++)
             {
@@ -192,15 +195,21 @@ public class Solver
                 //solveRecsWithNoSupply();
                 solveRecsForWeek();
                 //bruteForceWeek();
-                //solveCrimeTime();
+                //solveCrimeTime(week);
+
 
                 /*var schedule = getBestBruteForceSchedule(2, 18, null, 3, null, 16);
                 System.out.println("Best C3 schedule: "+schedule.getKey().getItems()+" ("+schedule.getValue()+")");*/
+                if(totalGross > highestWeek)
+                    highestWeek = totalGross;
+                if(totalGross < lowestWeek)
+                    lowestWeek = totalGross;
+
                 totalCowries += totalGross;
                 totalTotalNet += totalNet;
             }
             int averageGross = (totalCowries/(endWeek-startWeek+1));
-            System.out.println("Average cowries/week: "+averageGross+" Average net: "+(totalTotalNet/(endWeek-startWeek+1)));
+            System.out.println("Average cowries/week: "+averageGross+" Average net: "+(totalTotalNet/(endWeek-startWeek+1))+" Lowest week: "+lowestWeek+" Highest week: "+highestWeek);
 
             System.out.println("Average true grooveless: "+(totalGrooveless/((endWeek-startWeek+1)*5)));
 
@@ -592,7 +601,7 @@ public class Solver
         //setDay(Arrays.asList(Rope,SharkOil,CulinaryKnife,SharkOil), 4);
     }
 
-    private static void solveCrimeTime()
+    private static void solveCrimeTime(int week)
     {
         groove = 0;
         totalGross = 0;
@@ -605,19 +614,32 @@ public class Solver
         }
         scheduledDays.clear();
 
+        List<Item> crafts1;
+        List<Item> crafts2;
+        List<Item> crafts3;
+
+        if(week <= 20)
+        {
+            crafts1 = List.of(BoiledEgg, BakedPumpkin, ParsnipSalad, GrilledClam, SquidInk, TomatoRelish);
+            crafts2 = crafts1;
+            crafts3 = crafts1;
+        }
+        else
+        {
+            crafts1 = List.of(Potion, CoconutJuice, Honey, TomatoRelish, SquidInk, TomatoRelish);
+            crafts2 = List.of(Firesand, PowderedPaprika, Isloaf, PopotoSalad, ParsnipSalad, PopotoSalad);
+            crafts3 = List.of(Necklace, Brush, Rope, CulinaryKnife, Earrings, CulinaryKnife);
+        }
+
         var time = System.currentTimeMillis();
         boolean completeWeek = setObservedFromCSV(3);
         if(completeWeek)
         {
             System.out.println("Standard crime time recs:");
-            setDay(Arrays.asList(BoiledEgg, BakedPumpkin, ParsnipSalad, GrilledClam, SquidInk, TomatoRelish),
-                    /*Arrays.asList(Potion, Firesand, Sauerkraut, CornFlakes, Sauerkraut, CornFlakes),
-                    Arrays.asList(Rope, Brush, Necklace, Earrings, CulinaryKnife, Butter),*/  1, 0, false);
+            setDay(crafts1, crafts2, crafts3,  1, 0, false);
             //setDay(new ArrayList<>(), 2, groove, false);
             rested = true;
-            setDay(Arrays.asList(BoiledEgg, BakedPumpkin, ParsnipSalad, GrilledClam, SquidInk, TomatoRelish),
-                    /*Arrays.asList(Sauerkraut, CornFlakes,Sauerkraut, CornFlakes,Sauerkraut, CornFlakes),
-                    Arrays.asList(Rope, Brush, Necklace, Earrings, CulinaryKnife, Butter),*/3, groove, false);
+            setDay(crafts1, crafts2, crafts3, 3, groove, false);
             setLateDays();
             System.out.println("Season total: " + totalGross + " (" + totalNet + ")\n" + "Took "
                     + (System.currentTimeMillis() - time) + "ms.\n\n");
