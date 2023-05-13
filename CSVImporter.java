@@ -92,7 +92,7 @@ public class CSVImporter
         }
     }
 
-    public static void generateUsefulChains()
+    /*public static void generateUsefulChains()
     {
         allEfficientChains = new ArrayList<>();
         var fourHour = new ArrayList<ItemInfo>();
@@ -277,7 +277,7 @@ public class CSVImporter
         }
 
         writeEfficientChainsToFile();
-    }
+    }*/
     public static void generateBruteForceChains()
     {
         int minScheduleLength=20; //Exclusive

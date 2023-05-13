@@ -18,7 +18,7 @@ public class Solver
 
     final static int NUM_WORKSHOPS = 3;
     final static int helperPenalty = 5;
-    static int averageDayValue = 4139;
+    static int averageDayValue = 4044;
     
     final static ItemInfo[] items = {
             new ItemInfo(Potion,Concoctions,Invalid,28,4,1,null),
@@ -91,8 +91,6 @@ public class Solver
     public static boolean verboseSolverLogging = false;
     public static boolean verboseReservations = false;
     private static int alternatives = 0;
-    public static int groovePerFullDay = 40;
-    public static int groovePerPartDay = 20;
     public static boolean rested = false;
     private static int islandRank = 10;
     public static double materialWeight = 0.5;
@@ -137,8 +135,8 @@ public class Solver
         int totalCowries = 0;
         int totalTotalNet = 0;
         totalGrooveless = 0;
-        int startWeek = 1;
-        int endWeek = 28;
+        int startWeek = 30;
+        int endWeek = 38;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         var hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -155,7 +153,7 @@ public class Solver
             {
                 if(week<=20)
                     islandRank=9;
-                else
+                else if(week <= 39)
                     islandRank=11;
                 SimpleDateFormat sdf = new SimpleDateFormat("MMM d");
 
@@ -715,6 +713,7 @@ public class Solver
                 if(verboseReservations)
                     System.out.println("Reserving helper "+bestHelper+" to go with main item "+itemEnum+" (#"+itemRank+"), difference between "+bestHelper+" and "+secondHelper+"? "+ swap+" cost of stepping down? "+stepDown+" Penalty: "+finalPenalty);
 
+                finalPenalty *= .3;
                 reservedHelpers.put(itemEnum, new ReservedHelper(bestHelper, finalPenalty));
             }
             itemRank++;
@@ -1171,42 +1170,389 @@ public class Solver
 
     }
 
+    private static Collection<List<Item>> getGeneratedSchedules(int day, int allowUpToDay, int islandRank, Map<Item,Integer> limitedUse)
+    {
+        Set<List<Item>> allEfficientChains = new HashSet<>();
+        var fourHour = new ArrayList<ItemInfo>();
+        var eightHour = new ArrayList<ItemInfo>();
+        var sixHour = new ArrayList<ItemInfo>();
+
+        int topEightsAllowed=5;
+        int topSixesAllowed=4;
+        int topFoursAllowed=3;
+
+        int eightMatchesAllowed = 3;
+        int sixMatchesAllowed = 4;
+        int fourMatchesAllowed = 5;
+
+        for (ItemInfo item : items)
+        {
+            List<ItemInfo> bucket = null;
+
+
+            if (item.time == 4)
+                bucket = fourHour;
+            else if (item.time == 6)
+                bucket = sixHour;
+            else if (item.time == 8)
+                bucket = eightHour;
+
+            if(!item.peaksOnOrBeforeDay(allowUpToDay) || item.rankUnlocked > islandRank)
+                bucket = null;
+            else if(limitedUse != null && limitedUse.containsKey(item.item) && limitedUse.get(item.item) == 0)
+                bucket = null;
+
+            if(bucket != null)
+                bucket.add(item);
+        }
+        Comparator<ItemInfo> compareByValue = Comparator.comparingInt(o -> -1 * o.getValueWithSupply(o.getSupplyBucketOnDay(day)));
+        fourHour.sort(compareByValue);
+        sixHour.sort(compareByValue);
+        eightHour.sort(compareByValue);
+
+        List<Item> four = new ArrayList<>();
+        List<Item> eight = new ArrayList<>();
+        //Find schedules based on 8-hour crafts
+        for (int i=0; i<topEightsAllowed && i < eightHour.size(); i++)
+        {
+            var topItem = eightHour.get(i);
+            List<ItemInfo> eightMatches = new ArrayList<>();
+            //8-8-8
+
+            for (ItemInfo eightMatchMatch : eightHour) {
+                if (!eightMatchMatch.getsEfficiencyBonus(topItem))
+                    continue;
+                eightMatches.add(eightMatchMatch);
+                allEfficientChains.add(List.of(topItem.item, eightMatchMatch.item, topItem.item));
+            }
+
+            //4-8-4-8 and 4-4-4-4-8
+            int firstFourMatchCount = 0;
+            for (ItemInfo firstFourMatch : fourHour)
+            {
+                if(firstFourMatchCount > fourMatchesAllowed)
+                    break;
+                if (!firstFourMatch.getsEfficiencyBonus(topItem))
+                    continue;
+
+                firstFourMatchCount++;
+                //Add all efficient 4-8 pairs to parallel lists. We'll deal with them later
+                four.add(firstFourMatch.item);
+                eight.add(topItem.item);
+
+                int secondFourMatchCount = 0;
+                for (ItemInfo secondFourMatch : fourHour) {
+                    if(secondFourMatchCount > fourMatchesAllowed)
+                        break;
+                    if (!secondFourMatch.getsEfficiencyBonus(firstFourMatch))
+                        continue;
+
+                    secondFourMatchCount++;
+
+                    //4-4-8-8
+                    for (var eightMatch : eightMatches)
+                        allEfficientChains.add(List.of(secondFourMatch.item, firstFourMatch.item, topItem.item, eightMatch.item));
+
+                    //4-4-4-4-8
+                    int thirdFourMatchCount=0;
+                    for (ItemInfo thirdFourMatch : fourHour) {
+                        if(thirdFourMatchCount > fourMatchesAllowed)
+                            break;
+                        if (!secondFourMatch.getsEfficiencyBonus(thirdFourMatch))
+                            continue;
+
+                        thirdFourMatchCount++;
+
+                        int fourthFourMatchCount = 0;
+                        for (ItemInfo fourthFourMatch : fourHour)
+                        {
+                            if(fourthFourMatchCount > fourMatchesAllowed)
+                                break;
+
+                            if (fourthFourMatch.getsEfficiencyBonus(thirdFourMatch))
+                            {
+                                fourthFourMatchCount++;
+                                allEfficientChains.add(List.of(fourthFourMatch.item, thirdFourMatch.item, secondFourMatch.item, firstFourMatch.item, topItem.item));
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            int sixHourMatchCount = 0;
+            for (ItemInfo sixHourMatch : sixHour)
+            {
+                if(sixHourMatchCount > sixMatchesAllowed)
+                    break;
+                if (!sixHourMatch.getsEfficiencyBonus(topItem))
+                    continue;
+                sixHourMatchCount++;
+
+                //4-6-6-8
+                int sixSixMatchCount = 0;
+                for (ItemInfo sixSixMatch : sixHour)
+                {
+                    if(sixSixMatchCount > sixMatchesAllowed)
+                        break;
+                    if (!sixSixMatch.getsEfficiencyBonus(sixHourMatch))
+                        continue;
+                    sixSixMatchCount++;
+
+                    int fourSixMatchCount = 0;
+                    for(var fourSixMatch : fourHour)
+                    {
+                        if(fourSixMatchCount > fourMatchesAllowed)
+                            break;
+                        if(fourSixMatch.getsEfficiencyBonus(sixSixMatch))
+                        {
+                            fourSixMatchCount++;
+                            allEfficientChains.add(List.of(fourSixMatch.item, sixSixMatch.item, sixHourMatch.item, topItem.item));
+                        }
+                    }
+                    int fourEightMatchCount = 0;
+                    for(var fourEightMatch : fourHour)
+                    {
+                        if(fourEightMatchCount > fourMatchesAllowed)
+                            break;
+                        if(fourEightMatch.getsEfficiencyBonus(topItem))
+                        {
+                            fourEightMatchCount++;
+                            allEfficientChains.add(List.of(fourEightMatch.item, topItem.item, sixHourMatch.item, sixSixMatch.item));
+                        }
+                    }
+                }
+
+                //4-6-8-6
+                int fourMatchCount = 0;
+                for (ItemInfo fourMatch : fourHour)
+                {
+                    if(fourMatchCount > fourMatchesAllowed)
+                        break;
+                    if (!fourMatch.getsEfficiencyBonus(sixHourMatch))
+                        continue;
+                    fourMatchCount++;
+                    int other6MatchCount = 0;
+                    for(var other6Match : sixHour)
+                    {
+                        if(other6MatchCount > sixMatchesAllowed)
+                            break;
+                        if(other6Match.getsEfficiencyBonus(topItem))
+                        {
+                            other6MatchCount++;
+                            allEfficientChains.add(List.of(fourMatch.item, sixHourMatch.item, topItem.item, other6Match.item));
+                        }
+                    }
+                }
+            }
+        }
+
+        for(int i=0; i<four.size(); i++)
+        {
+            for(int j=0; j<four.size(); j++)
+            {
+                allEfficientChains.add(List.of(four.get(i), eight.get(i), four.get(j), eight.get(j)));
+            }
+        }
+
+        //Find schedules based on 6-hour crafts
+        for (int i=0; i<topSixesAllowed && i < sixHour.size(); i++)
+        {
+            var topItem = sixHour.get(i);
+            //6-6-6-6
+
+            HashSet<ItemInfo> sixMatches = new HashSet<>();
+            int sixMatchCount = 0;
+            for (ItemInfo sixMatch : sixHour) {
+                if(sixMatchCount > sixMatchesAllowed)
+                    break;
+                if (!sixMatch.getsEfficiencyBonus(topItem))
+                    continue;
+                sixMatchCount++;
+                sixMatches.add(sixMatch);
+            }
+            for (ItemInfo firstSix : sixMatches)
+            {
+                for (ItemInfo secondSix : sixMatches)
+                {
+                    allEfficientChains.add(List.of( secondSix.item, topItem.item, firstSix.item, topItem.item ));
+                }
+            }
+
+
+            for (ItemInfo firstFourMatch : fourHour)
+            {
+                if (!firstFourMatch.getsEfficiencyBonus(topItem))
+                    continue;
+                for(var sixMatch : sixHour)
+                {
+                    if(!sixMatch.getsEfficiencyBonus(firstFourMatch))
+                        continue;
+
+                    for (ItemInfo secondFourMatch : fourHour)
+                    {
+                        if (!secondFourMatch.getsEfficiencyBonus(sixMatch))
+                            continue;
+
+                        for (ItemInfo thirdFourMatch : fourHour)
+                        {
+                            //4-4-6-4-6
+                            if(!thirdFourMatch.getsEfficiencyBonus(secondFourMatch))
+                                continue;
+
+                            allEfficientChains.add(List.of(thirdFourMatch.item, secondFourMatch.item, sixMatch.item, firstFourMatch.item, topItem.item));
+                        }
+
+                    }
+                }
+            }
+
+            //4-6-6-8
+            int eightMatchCount = 0;
+            for(var eightMatch : eightHour)
+            {
+                if(eightMatchCount > eightMatchesAllowed)
+                    break;
+                if(!eightMatch.getsEfficiencyBonus(topItem))
+                    continue;
+                eightMatchCount++;
+                for (ItemInfo sixSixMatch : sixMatches)
+                {
+                    int fourSixMatchCount = 0;
+                    for(var fourSixMatch : fourHour)
+                    {
+                        if(fourSixMatchCount > fourMatchesAllowed)
+                            break;
+                        if(fourSixMatch.getsEfficiencyBonus(sixSixMatch))
+                        {
+                            fourSixMatchCount++;
+                            allEfficientChains.add(List.of(fourSixMatch.item, sixSixMatch.item, topItem.item, eightMatch.item));
+                        }
+                    }
+                }
+            }
+
+
+            //4-6-8-6
+            eightMatchCount = 0;
+            for(var eightMatch : eightHour)
+            {
+                if(eightMatchCount > eightMatchesAllowed)
+                    break;
+                if(!eightMatch.getsEfficiencyBonus(topItem))
+                    continue;
+                eightMatchCount++;
+
+                int sixEightMatchCount = 0;
+                for(var sixEightMatch : sixHour)
+                {
+                    if(sixEightMatchCount > sixMatchesAllowed)
+                        break;
+                    if(!sixEightMatch.getsEfficiencyBonus(eightMatch))
+                        continue;
+                    sixEightMatchCount++;
+                    int fourMatchCount = 0;
+                    for (ItemInfo fourMatch : fourHour)
+                    {
+                        if(fourMatchCount > fourMatchesAllowed)
+                            break;
+                        if (fourMatch.getsEfficiencyBonus(sixEightMatch)) {
+                            allEfficientChains.add(List.of(fourMatch.item, sixEightMatch.item, eightMatch.item, topItem.item));
+                            fourMatchCount++;
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int i=0; i<topFoursAllowed && i < fourHour.size(); i++)
+        {
+            var topItem = fourHour.get(i);
+            int fourMatchCount = 0;
+            for(var fourMatch : fourHour)
+            {
+                if(fourMatchCount > fourMatchesAllowed)
+                    break;
+                if(!fourMatch.getsEfficiencyBonus(topItem))
+                    continue;
+                fourMatchCount++;
+                int secondFourMatchCount = 0;
+                for(var secondFourMatch : fourHour)
+                {
+                    if(secondFourMatchCount > fourMatchesAllowed)
+                        break;
+                    if(!secondFourMatch.getsEfficiencyBonus(fourMatch))
+                        continue;
+                    secondFourMatchCount++;
+                    int thirdFourMatchCount = 0;
+                    for(var thirdFourMatch : fourHour)
+                    {
+                        if(thirdFourMatchCount > fourMatchesAllowed)
+                            break;
+                        if(!secondFourMatch.getsEfficiencyBonus(thirdFourMatch))
+                            continue;
+                        thirdFourMatchCount++;
+                        int fourthFourMatchCount = 0;
+                        for(var fourthFourMatch : fourHour)
+                        {
+                            if(fourthFourMatchCount > fourMatchesAllowed)
+                                break;
+                            if(fourthFourMatch.getsEfficiencyBonus(topItem))
+                            {
+                                fourthFourMatchCount++;
+                                allEfficientChains.add(List.of(thirdFourMatch.item, secondFourMatch.item, fourMatch.item,
+                                        topItem.item, fourthFourMatch.item, topItem.item));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return allEfficientChains;
+    }
+
     public static LinkedHashMap<WorkshopSchedule, Integer> getBestSchedules(int day, int groove,
                                                                      Map<Item,Integer> limitedUse, int allowUpToDay, Item startingItem, int limit, boolean forcePeaks, int hoursLeft)
     {
         HashMap<WorkshopSchedule, Integer> safeSchedules = new HashMap<>();
-        List<List<Item>> filteredItemLists;
+        Collection<List<Item>> filteredItemLists;
 
         if(limit == 0)
             limit = 1;
 
-
-
-        filteredItemLists = CSVImporter.allEfficientChains.stream()
-                .filter(list -> list.stream().allMatch(item -> items[item.ordinal()].rankUnlocked <= islandRank))
-                .filter(list -> list.stream().allMatch(item -> items[item.ordinal()].peaksOnOrBeforeDay(allowUpToDay))).collect(Collectors.toList());
-        
-        if(forcePeaks)
+        if(startingItem != null || hoursLeft < 24)
+        {
             filteredItemLists = CSVImporter.allEfficientChains.stream()
-                    .filter(list -> list.stream().anyMatch(item -> items[item.ordinal()].peaksOnDay(day)))
-                    .collect(Collectors.toList());
+                    .filter(list -> list.stream().allMatch(item -> items[item.ordinal()].rankUnlocked <= islandRank))
+                    .filter(list -> list.stream().allMatch(item -> items[item.ordinal()].peaksOnOrBeforeDay(allowUpToDay))).collect(Collectors.toList());
 
-        if (startingItem != null)
-        {
-            filteredItemLists = filteredItemLists.stream().filter (list -> list.stream().limit(1).allMatch(item -> item == startingItem)).collect(Collectors.toList());
-        }
-
-        if(hoursLeft < 24)
-        {
-            for(int i=0; i<filteredItemLists.size(); i++)
+            if(forcePeaks)
+                filteredItemLists = CSVImporter.allEfficientChains.stream()
+                        .filter(list -> list.stream().anyMatch(item -> items[item.ordinal()].peaksOnDay(day)))
+                        .collect(Collectors.toList());
+            if (startingItem != null)
             {
-                var schedule = filteredItemLists.get(i);
-                while(getHoursUsed(schedule)>hoursLeft && schedule.size() > 0)
+                filteredItemLists = filteredItemLists.stream().filter (list -> list.stream().limit(1).allMatch(item -> item == startingItem)).collect(Collectors.toList());
+            }
+
+            if(hoursLeft < 24)
+            {
+                for(int i=0; i<filteredItemLists.size(); i++)
                 {
-                    schedule.remove(schedule.size()-1);
+                    for(var schedule : filteredItemLists)
+                    {
+                        while(getHoursUsed(schedule)>hoursLeft && schedule.size() > 0)
+                        {
+                            schedule.remove(schedule.size()-1);
+                        }
+                    }
                 }
             }
         }
+        else
+            filteredItemLists = getGeneratedSchedules(day, allowUpToDay, islandRank, limitedUse);
+
 
 
 
