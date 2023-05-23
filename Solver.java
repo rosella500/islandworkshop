@@ -16,9 +16,9 @@ public class Solver
     final static int WORKSHOP_BONUS = 130;
     final static int GROOVE_MAX = 35;
 
-    final static int NUM_WORKSHOPS = 3;
+    final static int NUM_WORKSHOPS = 4;
     final static int helperPenalty = 5;
-    static int averageDayValue = 4044;
+    static int averageDayValue = 4344;
     
     final static ItemInfo[] items = {
             new ItemInfo(Potion,Concoctions,Invalid,28,4,1,null),
