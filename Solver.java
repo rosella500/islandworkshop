@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class Solver
 {
-    final static int WORKSHOP_BONUS = 120;
+    final static int WORKSHOP_BONUS = 130;
     final static int GROOVE_MAX = 35;
 
     final static int NUM_WORKSHOPS = 3;
@@ -80,7 +80,20 @@ public class Solver
             new ItemInfo(CawlCennin,Concoctions,CreatureCreations,90,6,11,Map.of(Leek,3,Milk,1)),
             new ItemInfo(Isloaf,Foodstuffs,Concoctions,52,4,11,Map.of(Wheat,2)),
             new ItemInfo(PopotoSalad,Foodstuffs,Invalid,52,4,11,Map.of(Popoto,2)),
-            new ItemInfo(Dressing,Ingredients,Invalid,52,4,11,Map.of(Onion,2))};
+            new ItemInfo(Dressing,Ingredients,Invalid,52,4,11,Map.of(Onion,2)),
+            new ItemInfo(Stove, Furnishings, Metalworks, 54, 6, 12, null),
+            new ItemInfo(Lantern, Sundries, Invalid, 80, 8, 12, null),
+            new ItemInfo(Natron, Sundries, Concoctions, 36, 4,12,null),
+            new ItemInfo(Bouillabaisse, Foodstuffs, MarineMerchandise, 136, 8,12,Map.of(CaveShrimp, 2, Tomato, 2)),
+            new ItemInfo(FossilDisplay, CreatureCreations, UnburiedTreasures, 54,6,13,null),
+            new ItemInfo(Bathtub, Furnishings, UnburiedTreasures, 72, 8,13,null),
+            new ItemInfo(Spectacles, Attire, Sundries, 54, 6,13,null),
+            new ItemInfo(CoolingGlass, UnburiedTreasures, Invalid, 80, 8,13,null),
+            new ItemInfo(RunnerBeanSaute, Foodstuffs, Invalid, 52, 4, 14,Map.of(RunnerBean, 2)),
+            new ItemInfo(BeetSoup, Foodstuffs, Invalid, 78, 6, 14,Map.of(Beet, 3, Popoto, 1, Milk, 1)),
+            new ItemInfo(ImamBayildi, Foodstuffs, Invalid, 90, 6, 14,Map.of(Eggplant, 2, Onion, 2, Tomato, 2)),
+            new ItemInfo(PickledZucchini, PreservedFood, Invalid, 104, 8, 14,Map.of(Zucchini, 4)),
+    };
     
     private static int groove = 0;
     private static int totalGross = 0;
@@ -135,7 +148,7 @@ public class Solver
         int totalCowries = 0;
         int totalTotalNet = 0;
         totalGrooveless = 0;
-        int startWeek = 30;
+        int startWeek = 21;
         int endWeek = 38;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
@@ -155,6 +168,8 @@ public class Solver
                     islandRank=9;
                 else if(week <= 39)
                     islandRank=11;
+                else
+                    islandRank=14;
                 SimpleDateFormat sdf = new SimpleDateFormat("MMM d");
 
                 calendar.setTime(new Date(1661241600000L));
@@ -1643,6 +1658,8 @@ public class Solver
         for (int i = 0; i < items.length; i++)
         {
             items[i].peak = CSVImporter.currentPeaks[i][day];
+            /*if(day==1 && items[i].peak == Cycle3Weak)
+                items[i].peak = Cycle67;*/
         }
         return true;
     }

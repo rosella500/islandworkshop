@@ -61,7 +61,20 @@ public enum Item
     CawlCennin("Cawl Cennin"),
     Isloaf("Isloaf"),
     PopotoSalad("Popoto Salad"),
-    Dressing("Dressing");
+    Dressing("Dressing"),
+    Stove ("Stove"),
+    Lantern ("Lantern"),
+    Natron ("Natron"),
+    Bouillabaisse("Bouillabaisse"),
+    FossilDisplay("Fossil Display"),
+    Bathtub ("Bathtub"),
+    Spectacles("Spectacles"),
+    CoolingGlass("Cooling Glass"),
+    RunnerBeanSaute("Runner Bean Saute"),
+    BeetSoup("Beet Soup"),
+    ImamBayildi("Imam Bayildi"),
+    PickledZucchini("Pickled Zucchini");
+
     
     private String displayName;
     private Item(String display)

@@ -27,7 +27,12 @@ public enum RareMaterial
     Corn(6),
     Radish(6),
     Paprika(6),
-    Leek(6);
+    Leek(6),
+    CaveShrimp(25),
+    RunnerBean(6),
+    Beet(6),
+    Eggplant(6),
+    Zucchini(6);
     public final int cowrieValue;
     
     private RareMaterial(int value)
