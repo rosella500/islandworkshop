@@ -46,7 +46,13 @@ public class CSVImporter
     public static void initSupplyData(int week)
     {
 
-        int skipAmount=week<21?((week-1)*50):(20*50+(week-21)*60);
+        int skipAmount=0;
+        if(week<21)
+            skipAmount = ((week-1)*50);
+        else if(week < 40)
+            skipAmount = (20*50+(week-21)*60);
+        else
+            skipAmount = 20*50 + 19*60 + week-40 * 72;
         try (BufferedReader br = new BufferedReader(new FileReader("craft_peaks.csv"))) {
 
             var peaks = br.lines().skip(skipAmount).limit(Solver.items.length)
