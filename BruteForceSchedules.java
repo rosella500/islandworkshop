@@ -22,6 +22,8 @@ public class BruteForceSchedules extends ArrayList<Map.Entry<WorkshopSchedule, I
     {
         this.bestSubItems = bestSubItems;
         bestRec = new CycleSchedule(day, startingGroove);
+        if(size() == 0)
+            return;
         bestRec.setForFirstThreeWorkshops(get(0).getKey().getItems());
         bestRec.setFourthWorkshop(bestSubItems);
         if (!get(0).getKey().getItems().equals(bestSubItems) && bestSubItems.size() > 0)
