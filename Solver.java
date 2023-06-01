@@ -4,6 +4,8 @@ import static islandworkshop.ItemCategory.*;
 import static islandworkshop.RareMaterial.*;
 import static islandworkshop.PeakCycle.*;
 import static islandworkshop.Item.*;
+import static islandworkshop.CSVExporter.*;
+import static islandworkshop.WeekSchedule.*;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -111,6 +113,8 @@ public class Solver
     public static int bestD5 = 0;
     public static Set<Item> reservedItems = new HashSet<>();
     public static Map<Item, ReservedHelper> reservedHelpers = new HashMap<>();
+    public static CSVExporter csvexp = new CSVExporter("output.csv");
+    public static WeekSchedule weekSchedule = new WeekSchedule();
     private static boolean valuePerHour = true;
     private static int itemsToReserve = 15;
 
@@ -149,8 +153,8 @@ public class Solver
         int totalCowries = 0;
         int totalTotalNet = 0;
         totalGrooveless = 0;
-        int startWeek = 20;
-        int endWeek = 40;
+        int startWeek = 41;
+        int endWeek = 1040;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         var hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -165,6 +169,7 @@ public class Solver
 
             for(int week = startWeek; week <= endWeek; week++)
             {
+                weekSchedule.clear();
                 if(week<=20)
                     islandRank=9;
                 else if(week <= 39)
@@ -222,12 +227,16 @@ public class Solver
 
                 totalCowries += totalGross;
                 totalTotalNet += totalNet;
+
+                weekSchedule.setMetaData(week,totalGross,totalNet);
+                csvexp.printCSVweek(weekSchedule);
             }
             int averageGross = (totalCowries/(endWeek-startWeek+1));
             System.out.println("Average cowries/week: "+averageGross+" Average net: "+(totalTotalNet/(endWeek-startWeek+1))+" Lowest week: "+lowestWeek+" Highest week: "+highestWeek);
 
             System.out.println("Average true grooveless: "+(totalGrooveless/((endWeek-startWeek+1)*5)));
-
+            
+            csvexp.close();
             if(logMats)
             {
                 for(var mat : RareMaterial.values())
@@ -917,6 +926,7 @@ public class Solver
     {
         if(real)
         {
+            weekSchedule.setCycle(day-1,schedule.getItems(),schedule.getSubItems());
             System.out.println("Cycle " + (day + 1) + ", crafts: " + Arrays.toString(schedule.getItems().toArray())+". Subcrafts: "+schedule.getSubItems());
         }
 
