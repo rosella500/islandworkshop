@@ -52,7 +52,9 @@ public class CSVImporter
         else if(week < 40)
             skipAmount = (20*50+(week-21)*60);
         else
-            skipAmount = 20*50 + 19*60 + week-40 * 72;
+            skipAmount = 20*50 + 19*60 + (week-40) * 72;
+
+        //System.out.println("Skipping "+ skipAmount+" rows for week "+week);
         try (BufferedReader br = new BufferedReader(new FileReader("craft_peaks.csv"))) {
 
             var peaks = br.lines().skip(skipAmount).limit(Solver.items.length)
@@ -86,7 +88,7 @@ public class CSVImporter
         {
             var popularities = br.lines().skip(index).limit(1)
                     .map(line -> Arrays.stream(line.split(","))
-                            .map(Integer::parseInt).map(Popularity::fromIndex)
+                            .map(Integer::parseInt).map(Popularity::fromIndex).limit(Solver.items.length)
                             .collect(Collectors.toUnmodifiableList()))
                     .findFirst().get();
             popularities.toArray(currentPopularity);
@@ -415,7 +417,7 @@ public class CSVImporter
         for(var schedule : allEfficientChains)
         {
             CycleSchedule cycleSchedule = new CycleSchedule(3, 0);
-            cycleSchedule.setForAllWorkshops(schedule);
+            cycleSchedule.setForFirstThreeWorkshops(schedule);
 
             schedulesByValue.put(schedule, cycleSchedule.getTrueGroovelessValue());
         }

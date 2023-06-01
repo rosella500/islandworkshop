@@ -107,6 +107,10 @@ public class WorkshopSchedule
         }
         return cost;
     }
+    public int getGrooveValue()
+    {
+        return grooveValue;
+    }
 
     public int getValueWithGrooveEstimate(int day, int startingGroove)
     {
@@ -140,6 +144,9 @@ public class WorkshopSchedule
         {
             groovePenalty = true;
             expectedStartingGroove += Solver.NUM_WORKSHOPS * deltaGroove;
+
+            if(expectedStartingGroove < 0)
+                expectedStartingGroove = 0;
 
             deltaGroove *= -1;
         }
@@ -280,28 +287,30 @@ public class WorkshopSchedule
         }
         return false;
     }
-    
-    public Map<Item, Integer> getLimitedUses()
+
+    public Map<Item, Integer> getLimitedUses(Map<Item,Integer> previousLimitedUses, boolean subSchedule)
     {
-        return getLimitedUses(null);
-    }
-    
-    public Map<Item, Integer> getLimitedUses(Map<Item,Integer> previousLimitedUses)
-    {
+        int numWorkshops = 3;
+        if(subSchedule)
+            numWorkshops = 1;
         Map<Item,Integer> limitedUses;
         if(previousLimitedUses == null)
             limitedUses = new HashMap<>();
         else
             limitedUses = new HashMap<>(previousLimitedUses);
-        
+
         for(int i=0; i<items.size(); i++)
         {
             if(!limitedUses.containsKey(items.get(i)))
                 limitedUses.put(items.get(i), 12);
-            
-            limitedUses.put(items.get(i), limitedUses.get(items.get(i))-3 - (i>0?3:0));
+
+            boolean isEfficient = false;
+            if(i > 0)
+                isEfficient = Solver.items[items.get(i-1).ordinal()].getsEfficiencyBonus(Solver.items[items.get(i).ordinal()]);
+
+            limitedUses.put(items.get(i), Math.max(limitedUses.get(items.get(i))-numWorkshops - (isEfficient?numWorkshops:0), 0));
         }
-        
+
         return limitedUses;
     }
     
@@ -315,6 +324,35 @@ public class WorkshopSchedule
             
         }
         return false;
+    }
+
+    public boolean interferesWithMe(List<Item> subSchedule)
+    {
+        int currentHour = 0;
+        for(var item : subSchedule)
+        {
+            if(items.contains(item))
+            {
+                int lastStartingHour = lastStartingHourForItem(item);
+                if(currentHour < lastStartingHour)
+                    return true;
+            }
+            currentHour += Solver.items[item.ordinal()].time;
+        }
+        return false;
+    }
+
+    private int lastStartingHourForItem(Item item)
+    {
+        int currentHour = 24;
+        for(int i=items.size()-1; i>=0; i--)
+        {
+            var currentItem = items.get(i);
+            currentHour -= Solver.items[currentItem.ordinal()].time;
+            if(currentItem==item)
+                return currentHour;
+        }
+        return -1;
     }
     
     public int hashCode()

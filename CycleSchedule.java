@@ -1,5 +1,6 @@
 package islandworkshop;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +10,8 @@ public class CycleSchedule
     int day;
     int startingGroove;
     int endingGroove;
-    WorkshopSchedule[] workshops = new WorkshopSchedule[3];
+    int grooveBonus = -1;
+    WorkshopSchedule[] workshops = new WorkshopSchedule[Solver.NUM_WORKSHOPS];
     HashMap<Item, Integer> numCrafted;
     
     public CycleSchedule(int day, int groove)
@@ -18,13 +20,20 @@ public class CycleSchedule
         startingGroove = groove;
     }
     
-    public void setForAllWorkshops(List<Item> crafts)
+    public void setForFirstThreeWorkshops(List<Item> crafts)
     {
         workshops[0] = new WorkshopSchedule(crafts);
         workshops[1] = new WorkshopSchedule(crafts);
         workshops[2] = new WorkshopSchedule(crafts);
+        if(workshops[3] == null)
+            workshops[3] = new WorkshopSchedule(new ArrayList<>());
     }
-    
+    public void setFourthWorkshop(List<Item> crafts)
+{
+    workshops[3] = new WorkshopSchedule(crafts);
+}
+
+
     public void setWorkshop(int index, List<Item> crafts)
     {
         if(workshops[index] == null)
@@ -119,6 +128,11 @@ public class CycleSchedule
        return totalCowries;
        
     }
+    public List<Item> getItems()
+    {
+        return workshops[0].getItems();
+    }
+    public List<Item> getSubItems() { return workshops[3].getItems(); }
     
     public int getMaterialCost()
     {
@@ -140,7 +154,31 @@ public class CycleSchedule
             }
         }
     }
-    
+
+    public int getGrooveBonus()
+    {
+        if(grooveBonus >= 0)
+            return grooveBonus;
+
+        grooveBonus = 0;
+        for(var workshop : workshops)
+        {
+            workshop.getValueWithGrooveEstimate(day, startingGroove);
+            grooveBonus+= workshop.getGrooveValue();
+        }
+        return grooveBonus;
+    }
+    public int getWeightedValue()
+    {
+        return getValue() + getGrooveBonus() - (int)(getMaterialCost() * Solver.materialWeight);
+    }
+
+    public Map<Item, Integer> getLimitedUses(Map<Item, Integer> limitedUse)
+    {
+        limitedUse = workshops[0].getLimitedUses(limitedUse, false);
+        limitedUse = workshops[3].getLimitedUses(limitedUse, true);
+        return limitedUse;
+    }
     
     public boolean equals(Object other)
     {
@@ -154,6 +192,12 @@ public class CycleSchedule
     public int hashCode()
     {
         return workshops.hashCode();
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Day: "+(day+1)+", Items: " + workshops[0].getItems() + " Sub items: "+workshops[3].getItems()+", Starting groove: "+startingGroove+", Ending groove: "+endingGroove;
     }
     
 }
