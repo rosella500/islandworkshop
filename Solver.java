@@ -4,8 +4,6 @@ import static islandworkshop.ItemCategory.*;
 import static islandworkshop.RareMaterial.*;
 import static islandworkshop.PeakCycle.*;
 import static islandworkshop.Item.*;
-import static islandworkshop.CSVExporter.*;
-import static islandworkshop.WeekSchedule.*;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -113,7 +111,7 @@ public class Solver
     public static int bestD5 = 0;
     public static Set<Item> reservedItems = new HashSet<>();
     public static Map<Item, ReservedHelper> reservedHelpers = new HashMap<>();
-    public static CSVExporter csvexp = new CSVExporter("output.csv");
+    public static CSVExporter csvexp;
     public static WeekSchedule weekSchedule = new WeekSchedule();
     private static boolean valuePerHour = true;
     private static int itemsToReserve = 15;
@@ -124,14 +122,17 @@ public class Solver
 
     private static Map<RareMaterial, Integer> matsUsed = new TreeMap<>();
     private static boolean logMats = false;
+    private static boolean writeCraftsToCSV = false;
 
     public static void main(String[] args)
     {
         CSVImporter.initBruteForceChains();
 
+        if(writeCraftsToCSV)
+            csvexp = new CSVExporter("output.csv");
+
         //Things that need to be regenerated in 6.3
         //CSVImporter.generateBruteForceChains();
-        //averageDayValue = CSVImporter.getAverageTrueGroovelessValue();
 
         /*schedulesToCheck = new HashMap<>();
         List<List<Item>> schedules = new ArrayList<>();
@@ -153,8 +154,8 @@ public class Solver
         int totalCowries = 0;
         int totalTotalNet = 0;
         totalGrooveless = 0;
-        int startWeek = 41;
-        int endWeek = 1040;
+        int startWeek = 40;
+        int endWeek = 60;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         var hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -192,7 +193,7 @@ public class Solver
                 dateStr += " - " + sdf.format(calendar.getTime());
 
 
-                System.out.println("__**Season "+week+" ("+dateStr+") schedule:**__");
+                System.out.println("Season "+week+" ("+dateStr+"):");
                 groove = 0;
                 totalGross = 0;
                 totalNet = 0;
@@ -228,15 +229,20 @@ public class Solver
                 totalCowries += totalGross;
                 totalTotalNet += totalNet;
 
-                weekSchedule.setMetaData(week,totalGross,totalNet);
-                csvexp.printCSVweek(weekSchedule);
+                if(writeCraftsToCSV)
+                {
+                    weekSchedule.setMetaData(week,totalGross,totalNet);
+                    csvexp.printCSVweek(weekSchedule);
+                }
+
             }
             int averageGross = (totalCowries/(endWeek-startWeek+1));
             System.out.println("Average cowries/week: "+averageGross+" Average net: "+(totalTotalNet/(endWeek-startWeek+1))+" Lowest week: "+lowestWeek+" Highest week: "+highestWeek);
 
             System.out.println("Average true grooveless: "+(totalGrooveless/((endWeek-startWeek+1)*5)));
-            
-            csvexp.close();
+
+            if(writeCraftsToCSV)
+                csvexp.close();
             if(logMats)
             {
                 for(var mat : RareMaterial.values())
@@ -437,8 +443,7 @@ public class Solver
         /*if(!hasNextDay)
             solveRestOfWeek(scheduledDays.size()-1 + (rested? 1 : 0));*/
 
-        System.out.println("Season total: " + totalGross + " (" + totalNet + ")\n" + "Took "
-                + (System.currentTimeMillis() - time) + "ms.\n");
+        System.out.println("Total: " + totalGross + " (" + totalNet + ")\n" + "Took " + (System.currentTimeMillis() - time) + "ms.\n");
         //setDay(Arrays.asList(Rope,SharkOil,CulinaryKnife,SharkOil), 4);
     }
 
@@ -613,8 +618,8 @@ public class Solver
     private static void printRestDayInfo(CycleSchedule rec, int day)
     {
         rec.startingGroove = 0;
-        System.out.println("Rest cycle " + (day + 1)+". Think we'll make more than "
-                + rec.getValue() + " grooveless with " + rec + ". ");
+        if(!writeCraftsToCSV)
+            System.out.println("Rest cycle " + (day + 1)+". Think we'll make more than " + rec.getValue() + " grooveless with " + rec + ". ");
     }
 
     private static void setLateDays()
@@ -926,8 +931,10 @@ public class Solver
     {
         if(real)
         {
-            weekSchedule.setCycle(day-1,schedule.getItems(),schedule.getSubItems());
-            System.out.println("Cycle " + (day + 1) + ", crafts: " + Arrays.toString(schedule.getItems().toArray())+". Subcrafts: "+schedule.getSubItems());
+            if(writeCraftsToCSV)
+                weekSchedule.setCycle(day-1,schedule.getItems(),schedule.getSubItems());
+            else
+                System.out.println("Cycle " + (day + 1) + ", crafts: " + Arrays.toString(schedule.getItems().toArray())+". Subcrafts: "+schedule.getSubItems());
         }
 
         if (scheduledDays.containsKey(day)) {
@@ -966,7 +973,7 @@ public class Solver
         totalNet += net;
         Solver.groove = schedule.endingGroove;
 
-        if(real)
+        if(real && !writeCraftsToCSV)
             System.out.println("Cycle " + (day + 1) + " total, 0 groove: " + groovelessValue
                 + ". Starting groove " + startingGroove + ": " + gross + ", net " + net
                 + ".");
