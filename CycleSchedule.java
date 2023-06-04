@@ -25,13 +25,14 @@ public class CycleSchedule
         workshops[0] = new WorkshopSchedule(crafts);
         workshops[1] = new WorkshopSchedule(crafts);
         workshops[2] = new WorkshopSchedule(crafts);
-        if(workshops[3] == null)
+        if(workshops.length > 3 && workshops[3] == null)
             workshops[3] = new WorkshopSchedule(new ArrayList<>());
     }
     public void setFourthWorkshop(List<Item> crafts)
-{
-    workshops[3] = new WorkshopSchedule(crafts);
-}
+    {
+        if(workshops.length > 3)
+            workshops[3] = new WorkshopSchedule(crafts);
+    }
 
 
     public void setWorkshop(int index, List<Item> crafts)
@@ -132,7 +133,7 @@ public class CycleSchedule
     {
         return workshops[0].getItems();
     }
-    public List<Item> getSubItems() { return workshops[3].getItems(); }
+    public List<Item> getSubItems() { return workshops.length>3?workshops[3].getItems():new ArrayList<>(); }
     
     public int getMaterialCost()
     {
@@ -176,7 +177,8 @@ public class CycleSchedule
     public Map<Item, Integer> getLimitedUses(Map<Item, Integer> limitedUse)
     {
         limitedUse = workshops[0].getLimitedUses(limitedUse, false);
-        limitedUse = workshops[3].getLimitedUses(limitedUse, true);
+        if(workshops.length>3)
+            limitedUse = workshops[3].getLimitedUses(limitedUse, true);
         return limitedUse;
     }
     
@@ -197,7 +199,7 @@ public class CycleSchedule
     @Override
     public String toString()
     {
-        return "Day: "+(day+1)+", Items: " + workshops[0].getItems() + " Sub items: "+workshops[3].getItems()+", Starting groove: "+startingGroove+", Ending groove: "+endingGroove;
+        return "Day: "+(day+1)+", Items: " + workshops[0].getItems() + " Sub items: "+(workshops.length>3?workshops[3].getItems():null)+", Starting groove: "+startingGroove+", Ending groove: "+endingGroove;
     }
     
 }

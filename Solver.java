@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
 
 public class Solver
 {
-    final static int WORKSHOP_BONUS = 130;
+    static int WORKSHOP_BONUS = 130;
     final static int GROOVE_MAX = 45;
 
-    final static int NUM_WORKSHOPS = 4;
+    static int NUM_WORKSHOPS = 4;
     final static int helperPenalty = 5;
     static int averageDayValue = 1123 * WORKSHOP_BONUS * NUM_WORKSHOPS / 100;
     
@@ -154,8 +154,8 @@ public class Solver
         int totalCowries = 0;
         int totalTotalNet = 0;
         totalGrooveless = 0;
-        int startWeek = 40;
-        int endWeek = 60;
+        int startWeek = 39;
+        int endWeek = 39;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         var hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -172,11 +172,23 @@ public class Solver
             {
                 weekSchedule.clear();
                 if(week<=20)
-                    islandRank=9;
+                {
+                    WORKSHOP_BONUS = 120;
+                    islandRank = 9;
+                    NUM_WORKSHOPS = 3;
+                }
                 else if(week <= 39)
+                {
+                    WORKSHOP_BONUS = 120;
                     islandRank=11;
+                    NUM_WORKSHOPS = 3;
+                }
                 else
-                    islandRank=15;
+                {
+                    WORKSHOP_BONUS = 130;
+                    islandRank = 15;
+                    NUM_WORKSHOPS = 4;
+                }
                 SimpleDateFormat sdf = new SimpleDateFormat("MMM d");
 
                 calendar.setTime(new Date(1661241600000L));
