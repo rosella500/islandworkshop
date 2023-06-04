@@ -2,7 +2,8 @@ package islandworkshop;
 import java.util.*;
 import java.util.Map.Entry;
 
-import static islandworkshop.Solver.*;
+import static islandworkshop.Solver.reservedHelpers;
+import static islandworkshop.Solver.rested;
 
 public class WorkshopSchedule
 {
@@ -325,32 +326,16 @@ public class WorkshopSchedule
         return false;
     }
 
-    public boolean interferesWithMe(List<Item> subSchedule, int day)
+    public boolean interferesWithMe(List<Item> subSchedule)
     {
         int currentHour = 0;
-        Map<Item, Integer> subCrafted = new HashMap<>();
-        for(int i=0; i<subSchedule.size(); i++)
+        for(var item : subSchedule)
         {
-            var item = subSchedule.get(i);
-            int crafted = subCrafted.getOrDefault(item, 0) + 1;
-            if(i>0 &&  Solver.items[item.ordinal()].getsEfficiencyBonus(Solver.items[subSchedule.get(i-1).ordinal()]))
-                crafted++;
-            subCrafted.put(item, crafted);
             if(items.contains(item))
             {
                 int lastStartingHour = lastStartingHourForItem(item);
                 if(currentHour < lastStartingHour)
-                {
-                    int mainCrafted = getCraftedBeforeHour(item, lastStartingHour);
-
-                    int beforeLastCraftedMain = Solver.items[item.ordinal()].getSupplyAfterCraft(day, mainCrafted);
-                    int beforeLastCraftedWithMe = beforeLastCraftedMain + subCrafted.get(item);
-                    //System.out.println("sub: "+subSchedule+" Crafted in main: "+mainCrafted+". Crafted in sub: "+subCrafted.get(item)+". Starting supply: "+Solver.items[item.ordinal()].getSupplyOnDay(day));
-                    //System.out.println("Supply bucket without me: "+ItemInfo.getSupplyBucket(beforeLastCraftedMain)+" Supply bucket with me: "+ItemInfo.getSupplyBucket(beforeLastCraftedWithMe));
-                    if(ItemInfo.getSupplyBucket(beforeLastCraftedMain) != ItemInfo.getSupplyBucket(beforeLastCraftedWithMe))
-                        return true;
-                }
-
+                    return true;
             }
             currentHour += Solver.items[item.ordinal()].time;
         }
@@ -368,30 +353,6 @@ public class WorkshopSchedule
                 return currentHour;
         }
         return -1;
-    }
-
-
-    private int getCraftedBeforeHour(Item item, int hour)
-    {
-        currentIndex = 0;
-        int crafted = 0;
-        for(int i=4; i<=hour; i+=2)
-        {
-            if(currentCraftCompleted(i))
-            {
-
-                if(items.get(currentIndex) == item)
-                {
-                    crafted += 3;
-                    if(currentCraftIsEfficient())
-                        crafted += 3;
-
-                    //System.out.println("Found "+item+" completed at hour "+i+" in main schedule "+items+". Num shipped: "+crafted);
-                }
-                currentIndex++;
-            }
-        }
-        return crafted;
     }
     
     public int hashCode()

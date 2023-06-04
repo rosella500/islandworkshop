@@ -1422,7 +1422,7 @@ public class Solver
             for (Entry<WorkshopSchedule, Integer>  sortedSchedule : sortedSchedules)
             {
                 var subItems = sortedSchedule.getKey().getItems();
-                if (!sortedSchedules.get(0).getKey().interferesWithMe(subItems, day))
+                if (!sortedSchedules.get(0).getKey().interferesWithMe(subItems))
                 {
                     firstNonInterfering = subItems;
                     break;
