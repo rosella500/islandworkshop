@@ -260,21 +260,19 @@ public class WorkshopSchedule
     }
     
     
-    public boolean usesTooMany(Map<Item,Integer> limitedUse)
+    public boolean usesTooMany(Map<Item,Integer> limitedUse, boolean sub)
     {
         if(limitedUse == null)
             return false;
         boolean tooMany = false;
        
         Map<Item, Integer> used = new HashMap<Item,Integer>();
+        int numWorkshops = sub?1:3;
             
             
         for(int i=0; i<items.size(); i++)
         {
-            if(!used.containsKey(items.get(i)))
-                used.put(items.get(i), 3+(i>0?3:0));
-            else
-                used.put(items.get(i), used.get(items.get(i)) + 3+(i>0?3:0));
+            used.put(items.get(i), used.getOrDefault(items.get(i), 0) + numWorkshops+(i>0?numWorkshops:0));
         }
         for(Item key : used.keySet())
         {
@@ -354,7 +352,7 @@ public class WorkshopSchedule
         }
         return -1;
     }
-    
+
     public int hashCode()
     {
         return rareMaterialsRequired.hashCode();

@@ -154,8 +154,8 @@ public class Solver
         int totalCowries = 0;
         int totalTotalNet = 0;
         totalGrooveless = 0;
-        int startWeek = 39;
-        int endWeek = 39;
+        int startWeek = 40;
+        int endWeek = 60;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         var hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -1377,6 +1377,7 @@ public class Solver
                                                                      Map<Item,Integer> limitedUse, int allowUpToDay, Item startingItem, int limit, boolean forcePeaks, int hoursLeft)
     {
         HashMap<WorkshopSchedule, Integer> safeSchedules = new HashMap<>();
+        Map<WorkshopSchedule, Integer> semiSafeSchedules = new HashMap<>();
         Collection<List<Item>> filteredItemLists;
 
         if(limit == 0)
@@ -1420,7 +1421,7 @@ public class Solver
 
         for (List<Item> list : filteredItemLists)
         {
-            addToScheduleMap(list, day, limitedUse, safeSchedules, groove);
+            addToScheduleMap(list, day, limitedUse, safeSchedules, semiSafeSchedules, groove);
         }
 
         var sortedSchedules = safeSchedules
@@ -1428,10 +1429,14 @@ public class Solver
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .collect(Collectors.toList());
 
+        var sortedSemiSafe = semiSafeSchedules.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(Collectors.toList());
+
         List<Item> firstNonInterfering = new ArrayList<>();
         if(islandRank >= 15)
         {
-            for (Entry<WorkshopSchedule, Integer>  sortedSchedule : sortedSchedules)
+            for (Entry<WorkshopSchedule, Integer>  sortedSchedule : sortedSemiSafe)
             {
                 var subItems = sortedSchedule.getKey().getItems();
                 if (!sortedSchedules.get(0).getKey().interferesWithMe(subItems))
@@ -1470,38 +1475,49 @@ public class Solver
             return getBestBruteForceSchedule(day, groove, limitedUse, allowUpToDay);
     }
     
-    private static int addToScheduleMap(List<Item> list, int day,Map<Item,Integer> limitedUse,
-            HashMap<WorkshopSchedule, Integer> safeSchedules, int groove)
+    private static void addToScheduleMap(List<Item> list, int day,Map<Item,Integer> limitedUse,
+            HashMap<WorkshopSchedule, Integer> safeSchedules, Map<WorkshopSchedule, Integer> semiSafeSchedules, int groove)
     {
         WorkshopSchedule workshop = new WorkshopSchedule(list);
-        if(workshop.usesTooMany(limitedUse))
-            return 0;
+        if(workshop.usesTooMany(limitedUse, true))
+            return;
+
+
         
         int value = workshop.getValueWithGrooveEstimate(day, groove);
-        // Only add if we don't already have one with this schedule or ours is better
-        int oldValue = safeSchedules.getOrDefault(workshop, -1);
 
-        if (oldValue < value)
+
+        if(!workshop.usesTooMany(limitedUse, false))
         {
+            // Only add if we don't already have one with this schedule or ours is better
+            int oldValue = safeSchedules.getOrDefault(workshop, -1);
+
+            if (oldValue < value)
+            {
 //            if (verboseSolverLogging && oldValue > 0)
 //                System.out.println("Replacing schedule with mats "
 //                        + workshop.rareMaterialsRequired + " with " + list + " because "
 //                        + value + " is higher than " + oldValue);
-            safeSchedules.remove(workshop); // It doesn't seem to update the key when
-                                            // updating the value, so we delete the key
-                                            // first
-            safeSchedules.put(workshop, value);
-        } else
-        {
+                safeSchedules.remove(workshop); // It doesn't seem to update the key when
+                // updating the value, so we delete the key
+                // first
+                safeSchedules.put(workshop, value);
+            } else
+            {
 //            if (verboseSolverLogging)
 //                System.out.println("Not replacing schedule with mats "
 //                        + workshop.rareMaterialsRequired + " with " + list + " because "
 //                        + value + " is lower than " + oldValue);
 
-            value = 0;
+                value = 0;
+            }
         }
-
-        return value;
+        int oldSubValue = semiSafeSchedules.getOrDefault(workshop, -1);
+        if(oldSubValue < value)
+        {
+            semiSafeSchedules.remove(workshop);
+            semiSafeSchedules.put(workshop, value);
+        }
 
     }
 
