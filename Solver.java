@@ -1482,12 +1482,9 @@ public class Solver
             return;
 
 
-        
-        int value = workshop.getValueWithGrooveEstimate(day, groove);
-
-
         if(!workshop.usesTooMany(limitedUse, false))
         {
+            int value = workshop.getValueWithGrooveEstimate(day, groove, false);
             // Only add if we don't already have one with this schedule or ours is better
             int oldValue = safeSchedules.getOrDefault(workshop, -1);
 
@@ -1511,11 +1508,12 @@ public class Solver
                 value = 0;
             }
         }
+        int subValue = workshop.getValueWithGrooveEstimate(day, groove, true);
         int oldSubValue = semiSafeSchedules.getOrDefault(workshop, -1);
-        if(oldSubValue < value)
+        if(oldSubValue < subValue)
         {
             semiSafeSchedules.remove(workshop);
-            semiSafeSchedules.put(workshop, value);
+            semiSafeSchedules.put(workshop, subValue);
         }
 
     }

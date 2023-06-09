@@ -113,7 +113,7 @@ public class WorkshopSchedule
         return grooveValue;
     }
 
-    public int getValueWithGrooveEstimate(int day, int startingGroove)
+    public int getValueWithGrooveEstimate(int day, int startingGroove, boolean subSchedule)
     {
         boolean verboseLogging = false;
 
@@ -204,6 +204,7 @@ public class WorkshopSchedule
         int workshopValue = 0;
         HashMap<Item,Integer> numCrafted = new HashMap<>();
         currentIndex = 0;
+        int numWorkshops = subSchedule?1:3;
         for(int i=0; i<getNumCrafts(); i++)
         {
             ItemInfo completedCraft = getCurrentCraft();
@@ -212,7 +213,7 @@ public class WorkshopSchedule
             int nextGroove = Math.min(startingGroove + i*Solver.NUM_WORKSHOPS, Solver.GROOVE_MAX);
             workshopValue += getValueForCurrent(day, previouslyCrafted, nextGroove, efficient, verboseLogging);
             currentIndex++;
-            int amountCrafted = efficient? Solver.NUM_WORKSHOPS*2 : Solver.NUM_WORKSHOPS;
+            int amountCrafted = efficient? numWorkshops*2 : numWorkshops;
             numCrafted.put(completedCraft.item, previouslyCrafted + amountCrafted);
 
         }

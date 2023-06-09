@@ -163,9 +163,10 @@ public class CycleSchedule
             return grooveBonus;
 
         grooveBonus = 0;
-        for(var workshop : workshops)
+        for(int i=0;i<workshops.length;i++)
         {
-            workshop.getValueWithGrooveEstimate(day, startingGroove);
+            var workshop = workshops[i];
+            workshop.getValueWithGrooveEstimate(day, startingGroove, i>=3);
             grooveBonus+= workshop.getGrooveValue();
             otherBonus += workshop.otherBonus;
         }
