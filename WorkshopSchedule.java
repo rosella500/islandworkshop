@@ -12,6 +12,7 @@ public class WorkshopSchedule
     List<Integer> completionHours;
     public int currentIndex = 0; //Used for cycle scheduler to figure out crafts stuff
     public int grooveValue =0;
+    public int otherBonus = 0;
 
     Map<RareMaterial,Integer> rareMaterialsRequired;
     
@@ -255,6 +256,7 @@ public class WorkshopSchedule
         if(verboseLogging)
             System.out.println("Day "+(day+1)+", "+startingGroove+" starting groove. Workshop value: "+workshopValue+", grooveBonus: "+grooveValue+", material cost: "+getMaterialCost()+" x"+Solver.materialWeight+", helper penalty: "+helperPenalty+", prepeak bonus: "+prepeakBonus+", total: "+total);
 
+        otherBonus = prepeakBonus - helperPenalty;
         //Allow for the accounting for materials if desired
         return total;
     }
@@ -318,7 +320,7 @@ public class WorkshopSchedule
         {
             WorkshopSchedule otherWorkshop = (WorkshopSchedule)other;
             
-            return rareMaterialsRequired.equals(otherWorkshop.rareMaterialsRequired);
+            return items.equals(otherWorkshop.items);
             
         }
         return false;
@@ -355,6 +357,6 @@ public class WorkshopSchedule
 
     public int hashCode()
     {
-        return rareMaterialsRequired.hashCode();
+        return items.hashCode();
     }
 }

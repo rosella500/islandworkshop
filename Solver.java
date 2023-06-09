@@ -154,8 +154,8 @@ public class Solver
         int totalCowries = 0;
         int totalTotalNet = 0;
         totalGrooveless = 0;
-        int startWeek = 40;
-        int endWeek = 60;
+        int startWeek = 42;
+        int endWeek = 42;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         var hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -220,7 +220,6 @@ public class Solver
                 reservedItems.clear();
                 reservedHelpers.clear();
                 scheduledDays.clear();
-
 
                 CSVImporter.initSupplyData(week);
                 setInitialFromCSV();

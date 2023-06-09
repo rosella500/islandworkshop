@@ -11,6 +11,7 @@ public class CycleSchedule
     int startingGroove;
     int endingGroove;
     int grooveBonus = -1;
+    int otherBonus = -1;
     WorkshopSchedule[] workshops = new WorkshopSchedule[Solver.NUM_WORKSHOPS];
     HashMap<Item, Integer> numCrafted;
     
@@ -166,12 +167,13 @@ public class CycleSchedule
         {
             workshop.getValueWithGrooveEstimate(day, startingGroove);
             grooveBonus+= workshop.getGrooveValue();
+            otherBonus += workshop.otherBonus;
         }
         return grooveBonus;
     }
     public int getWeightedValue()
     {
-        return getValue() + getGrooveBonus() - (int)(getMaterialCost() * Solver.materialWeight);
+        return getValue() + getGrooveBonus() + otherBonus - (int)(getMaterialCost() * Solver.materialWeight);
     }
 
     public Map<Item, Integer> getLimitedUses(Map<Item, Integer> limitedUse)
