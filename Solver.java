@@ -189,6 +189,8 @@ public class Solver
                     islandRank = 15;
                     NUM_WORKSHOPS = 4;
                 }
+                averageDayValue = 1123 * WORKSHOP_BONUS * NUM_WORKSHOPS / 100;
+
                 SimpleDateFormat sdf = new SimpleDateFormat("MMM d");
 
                 calendar.setTime(new Date(1661241600000L));
@@ -200,10 +202,7 @@ public class Solver
                 if(calendar.get(Calendar.MONTH) == month)
                     sdf = new SimpleDateFormat("d");
 
-
-
                 dateStr += " - " + sdf.format(calendar.getTime());
-
 
                 System.out.println("Season "+week+" ("+dateStr+"):");
                 groove = 0;
@@ -223,6 +222,7 @@ public class Solver
 
                 CSVImporter.initSupplyData(week);
                 setInitialFromCSV();
+
 
                 //solveRecsWithNoSupply();
                 solveRecsForWeek();
@@ -282,14 +282,14 @@ public class Solver
 
     }
 
-    /*public static void solveRestOfWeek(int currentDay)
+    public static void solveRestOfWeek(int currentDay)
     {
         int worstIndex = -1;
         int worstValue = 99999;
         int estGroove = (groove + GROOVE_MAX) / 2;
         setObservedFromCSV(Math.min(currentDay, 3));
         Map<Item,Integer> reservedSet = new HashMap<>();
-        List<List<Item>> restOfWeek = new ArrayList<>();
+        List<CycleSchedule> restOfWeek = new ArrayList<>();
 
         for (int d = currentDay + 2; d < 7; d++)
         {
@@ -300,16 +300,17 @@ public class Solver
                 worstIndex = restOfWeek.size();
             }
 
-            restOfWeek.add(solution.getKey().getItems());
+            restOfWeek.add(solution);
             reservedSet = solution.getLimitedUses(reservedSet);
-            System.out.println("day "+(d+1)+" schedule: "+solution.getKey().getItems()+" ("+solution.getValue()+")");
+            System.out.println("day "+(d+1)+" schedule: "+solution+" ("+solution.getValue()+")");
         }
 
         if(!rested)
         {
+            CycleSchedule empty = new CycleSchedule(0, 0);
             //If we haven't rested, rest the worst day
             restOfWeek.remove(worstIndex);
-            restOfWeek.add(worstIndex, new ArrayList<>());
+            restOfWeek.add(worstIndex, empty);
         }
 
 
@@ -326,12 +327,15 @@ public class Solver
 
         for(int i=0; i<restOfWeek.size();i++)
         {
-            setDay(restOfWeek.get(i), i+currentDay+2, groove, true);
+            if(restOfWeek.get(i).day == 0)
+                continue;
+            restOfWeek.get(i).startingGroove = groove;
+            setDay(restOfWeek.get(i), i+currentDay+2, true);
         }
 
-    }*/
+    }
 
-    /*private static void solveRecsWithNoSupply()
+    private static void solveRecsWithNoSupply()
     {
         for(ItemInfo item : items)
         {
@@ -341,19 +345,19 @@ public class Solver
 
         long time = System.currentTimeMillis();
         Map<Item,Integer> reservedSet = new HashMap<>();
-        List<List<Item>> scheduleList = new ArrayList<>();
+        List<CycleSchedule> scheduleList = new ArrayList<>();
 
         for (int d = 0; d < 5; d++)
         {
-            Entry<WorkshopSchedule, Integer> solution = getBestSchedule(2, 15, reservedSet, 2);
-            scheduleList.add(solution.getKey().getItems());
+            var solution = getBestSchedule(2, 15, reservedSet, 2);
+            scheduleList.add(solution);
 
             if (verboseSolverLogging)
                 System.out.println("Schedule " + (d+1) + ", crafts: "
-                        + Arrays.toString(solution.getKey().getItems().toArray())
+                        + solution
                         + " value: " + solution.getValue());
 
-            reservedSet = solution.getKey().getLimitedUses(reservedSet);
+            reservedSet = solution.getLimitedUses(reservedSet);
         }
         if(verboseSolverLogging)
             System.out.println();
@@ -361,14 +365,22 @@ public class Solver
         setObservedFromCSV(3);
 
         //Committing to the bit
-        setDay(scheduleList.get(1), 1, 0, verboseSolverLogging);
-        setDay(scheduleList.get(4), 2, groove, verboseSolverLogging);
-        setDay(scheduleList.get(2), 3, groove, verboseSolverLogging);
-        setDay(scheduleList.get(3), 4, groove, verboseSolverLogging);
-        setDay(scheduleList.get(0), 5, groove, verboseSolverLogging);
+        scheduleList.get(1).startingGroove = 0;
+        setDay(scheduleList.get(1), 1, verboseSolverLogging);
+        scheduleList.get(4).startingGroove = groove;
+        setDay(scheduleList.get(4), 2, verboseSolverLogging);
+
+        scheduleList.get(2).startingGroove = groove;
+        setDay(scheduleList.get(2), 3, verboseSolverLogging);
+
+        scheduleList.get(3).startingGroove = groove;
+        setDay(scheduleList.get(3), 4, verboseSolverLogging);
+
+        scheduleList.get(5).startingGroove = groove;
+        setDay(scheduleList.get(0), 5, verboseSolverLogging);
 
         System.out.println("Season total: " + totalGross + " (" + totalNet + ")\n" + "Took "+ (System.currentTimeMillis() - time) + "ms.\n");
-    }*/
+    }
 
     private static void solveRecsForWeek()
     {
@@ -451,8 +463,8 @@ public class Solver
             }
         }
 
-        /*if(!hasNextDay)
-            solveRestOfWeek(scheduledDays.size()-1 + (rested? 1 : 0));*/
+        if(!hasNextDay)
+            solveRestOfWeek(scheduledDays.size()-1 + (rested? 1 : 0));
 
         System.out.println("Total: " + totalGross + " (" + totalNet + ")\n" + "Took " + (System.currentTimeMillis() - time) + "ms.\n");
         //setDay(Arrays.asList(Rope,SharkOil,CulinaryKnife,SharkOil), 4);
