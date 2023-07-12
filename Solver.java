@@ -154,8 +154,8 @@ public class Solver
         int totalCowries = 0;
         int totalTotalNet = 0;
         totalGrooveless = 0;
-        int startWeek = 42;
-        int endWeek = 42;
+        int startWeek = 41;
+        int endWeek = 1040;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         var hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -225,9 +225,9 @@ public class Solver
                 setInitialFromCSV();
 
                 //solveRecsWithNoSupply();
-                solveRecsForWeek();
+                //solveRecsForWeek();
                 //bruteForceWeek();
-                //solveCrimeTime(week);
+                testStaticSchedule();
 
 
                 /*var schedule = getBestBruteForceSchedule(2, 18, null, 3, null, 16);
@@ -1586,4 +1586,63 @@ public class Solver
             }
         }
     }
+
+    public static void testStaticSchedule() {
+        List<Item> c2Craft1 = Arrays.asList(Earrings,SheepfluffRug,Earrings,Hora,CawlCennin);
+        List<Item> c2Craft2 = Arrays.asList(PopotoSalad,ParsnipSalad,Isloaf,PopotoSalad,ParsnipSalad,PopotoSalad);
+
+        List<Item> c3Craft1 = Arrays.asList(Pie,PumpkinPudding,Pie,PumpkinPudding);
+        List<Item> c3Craft2 = Arrays.asList(Firesand,SeashineOpal,BrickCounter,CoolingGlass);
+
+        List<Item> c4Craft1 = Arrays.asList(Necklace,Macuahuitl,Crook,Hora);
+        List<Item> c4Craft2 = Arrays.asList(Necklace,Macuahuitl,SpruceRoundShield,CavaliersHat);
+
+        List<Item> c5Craft1 = Arrays.asList(CoconutJuice,EssentialDraught,Bouillabaisse,ImamBayildi);
+        List<Item> c5Craft2 = Arrays.asList(Necklace,SilverEarCuffs,GardenScythe,Item.Horn);
+
+        List<Item> c6Craft1 = Arrays.asList(BeetSoup,OnionSoup,BeetSoup,ImamBayildi);
+        List<Item> c6Craft2 = Arrays.asList(BakedPumpkin,Bouillabaisse,BeetSoup,ImamBayildi);
+
+
+        CycleSchedule c2 = new CycleSchedule(1,0);
+        CycleSchedule c3 = new CycleSchedule(2,0);
+        CycleSchedule c4 = new CycleSchedule(3,0);
+        CycleSchedule c5 = new CycleSchedule(4,0);
+        CycleSchedule c6 = new CycleSchedule(5,0);
+
+        c2.workshops[0]= new WorkshopSchedule(c2Craft1);
+        c2.workshops[1]= new WorkshopSchedule(c2Craft1);
+        c2.workshops[2]= new WorkshopSchedule(c2Craft2);
+        c2.workshops[3]= new WorkshopSchedule(c2Craft2);
+
+        c3.workshops[0]= new WorkshopSchedule(c3Craft1);
+        c3.workshops[1]= new WorkshopSchedule(c3Craft1);
+        c3.workshops[2]= new WorkshopSchedule(c3Craft2);
+        c3.workshops[3]= new WorkshopSchedule(c3Craft2);
+
+        c4.workshops[0]= new WorkshopSchedule(c4Craft1);
+        c4.workshops[1]= new WorkshopSchedule(c4Craft1);
+        c4.workshops[2]= new WorkshopSchedule(c4Craft2);
+        c4.workshops[3]= new WorkshopSchedule(c4Craft2);
+
+        c5.workshops[0]= new WorkshopSchedule(c5Craft1);
+        c5.workshops[1]= new WorkshopSchedule(c5Craft1);
+        c5.workshops[2]= new WorkshopSchedule(c5Craft2);
+        c5.workshops[3]= new WorkshopSchedule(c5Craft2);
+
+        c6.workshops[0]= new WorkshopSchedule(c6Craft1);
+        c6.workshops[1]= new WorkshopSchedule(c6Craft1);
+        c6.workshops[2]= new WorkshopSchedule(c6Craft2);
+        c6.workshops[3]= new WorkshopSchedule(c6Craft2);
+
+        setDay(c2,1);
+        c3.startingGroove=groove;
+        setDay(c3,2);
+        c4.startingGroove=groove;
+        setDay(c4,3);
+        c5.startingGroove=groove;
+        setDay(c5,4);
+        c6.startingGroove=groove;
+        setDay(c6,5);
+        }
 }
