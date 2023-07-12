@@ -82,7 +82,7 @@ public class CycleSchedule
     
     public int getValue() 
     {
-        numCrafted = new HashMap<Item, Integer>();
+        numCrafted = new HashMap<>();
         if(workshops.length == 0 || workshops[0].getItems().size() == 0)
             return 0;
        
