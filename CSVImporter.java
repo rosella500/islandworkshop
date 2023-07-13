@@ -55,7 +55,7 @@ public class CSVImporter
             skipAmount = 20*50 + 19*60 + (week-40) * 72;
 
         //System.out.println("Skipping "+ skipAmount+" rows for week "+week);
-        try (BufferedReader br = new BufferedReader(new FileReader("craft_peaks.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("craft_peaks_fake.csv"))) {
 
             var peaks = br.lines().skip(skipAmount).limit(Solver.items.length)
                     .map(line -> Arrays.stream(line.split(",")).skip(2).limit(4).map(PeakCycle::fromString).collect(Collectors.toUnmodifiableList())
@@ -71,7 +71,7 @@ public class CSVImporter
         {
             System.out.println("Error importing peaks for week "+week+": "+e.getMessage());
         }
-        try (BufferedReader br = new BufferedReader(new FileReader("craft_peaks.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("craft_peaks_fake.csv"))) {
             int index = br.lines().skip(skipAmount).limit(1).map(line -> Arrays.stream(line.split(",")).skip(6).map(Integer::parseInt).findFirst().get()).findFirst().get();
             //System.out.println("Getting popularity " + index + " for week " + week);
             initPopularity(index);

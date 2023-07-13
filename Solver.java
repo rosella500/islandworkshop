@@ -141,7 +141,7 @@ public class Solver
         schedulesToCheck.put(5, schedules);
 
         verboseReservations = true;*/
-       /* List<Integer> list = Arrays.asList(0, 1, 2, 3, 4);
+        /*List<Integer> list = Arrays.asList(0, 1, 2, 3, 4);
         List<List<Integer>> result = new ArrayList<>();
         iteratePermutations(list, result::add);
         List<Integer> bestOrder = null;
@@ -151,6 +151,11 @@ public class Solver
 
             var order = result.get(orderIndex);
             System.out.println("Order: "+order);*/
+        int bestAverage = -1;
+        int bestRest = -1;
+        for(int rest=1;rest<7;rest++)
+        {
+            System.out.println("Rest: "+rest);
         int totalCowries = 0;
         int totalTotalNet = 0;
         totalGrooveless = 0;
@@ -205,7 +210,7 @@ public class Solver
                 dateStr += " - " + sdf.format(calendar.getTime());
 
 
-                System.out.println("Season "+week+" ("+dateStr+"):");
+                //System.out.println("Season "+week+" ("+dateStr+"):");
                 groove = 0;
                 totalGross = 0;
                 totalNet = 0;
@@ -227,8 +232,10 @@ public class Solver
                 //solveRecsWithNoSupply();
                 //solveRecsForWeek();
                 //bruteForceWeek();
-                testStaticSchedule();
+                testStaticSchedule(List.of(0,1,4,2,3), rest);
 
+
+                //System.out.println("Total: " + totalGross + " (" + totalNet + ")\n");
 
                 /*var schedule = getBestBruteForceSchedule(2, 18, null, 3, null, 16);
                 System.out.println("Best C3 schedule: "+schedule.getKey().getItems()+" ("+schedule.getValue()+")");*/
@@ -263,21 +270,15 @@ public class Solver
             }
 
 
-        /*items[Brush.ordinal()].setInitialData(Popularity.VeryHigh, Cycle7Strong);
-        items[GardenScythe.ordinal()].setInitialData(Popularity.VeryHigh, Cycle7Strong);
-        items[SilverEarCuffs.ordinal()].setInitialData(Popularity.VeryHigh, Cycle7Strong);
-        groove = 35;
-        setDay(Arrays.asList(Brush, GardenScythe, SilverEarCuffs, GardenScythe), 6);*/
-
-
-
-            /*if(averageGross > bestAverage) {
+            if(averageGross > bestAverage) {
                 bestAverage = averageGross;
-                bestOrder = order;
+                bestRest = rest;
+                //bestOrder = order;
             }
         }
 
-        System.out.println("Best average: "+bestAverage+", so best order: "+bestOrder);*/
+        System.out.println("Best average: "+bestAverage+", so best rest: "+bestRest);
+        //System.out.println("Best average: "+bestAverage+", so best order: "+bestOrder);
 
 
     }
@@ -454,7 +455,6 @@ public class Solver
         /*if(!hasNextDay)
             solveRestOfWeek(scheduledDays.size()-1 + (rested? 1 : 0));*/
 
-        System.out.println("Total: " + totalGross + " (" + totalNet + ")\n" + "Took " + (System.currentTimeMillis() - time) + "ms.\n");
         //setDay(Arrays.asList(Rope,SharkOil,CulinaryKnife,SharkOil), 4);
     }
 
@@ -938,14 +938,15 @@ public class Solver
     public static void setDay(CycleSchedule schedule, int day) {
     setDay(schedule, day, true);
     }
-    public static void setDay(CycleSchedule schedule, int day, boolean real)
+    public static void setDay(CycleSchedule schedule, int _ignored, boolean real)
     {
+        int day = schedule.day;
         if(real)
         {
             if(writeCraftsToCSV)
                 weekSchedule.setCycle(day-1,schedule.getItems(),schedule.getSubItems());
-            else
-                System.out.println("Cycle " + (day + 1) + ", crafts: " + Arrays.toString(schedule.getItems().toArray())+". Subcrafts: "+schedule.getSubItems());
+            /*else
+                System.out.println("Cycle " + (day + 1) + ", crafts: " + Arrays.toString(schedule.getItems().toArray())+". Subcrafts: "+schedule.getSubItems());*/
         }
 
         if (scheduledDays.containsKey(day)) {
@@ -984,10 +985,10 @@ public class Solver
         totalNet += net;
         Solver.groove = schedule.endingGroove;
 
-        if(real && !writeCraftsToCSV)
+        /*if(real && !writeCraftsToCSV)
             System.out.println("Cycle " + (day + 1) + " total, 0 groove: " + groovelessValue
                 + ". Starting groove " + startingGroove + ": " + gross + ", net " + net
-                + ".");
+                + ".");*/
         /*else
             System.out.println("Adding "+gross+ " to total. Now "+totalGross+" Added schedule "+Arrays.toString(schedule.workshops[0].getItems().toArray())+" for day "+(day+1));*/
 
@@ -1587,7 +1588,10 @@ public class Solver
         }
     }
 
-    public static void testStaticSchedule() {
+    public static void testStaticSchedule(List<Integer> order, int rest) {
+
+        //order will be like 0,1,2,3,4
+        setObservedFromCSV(3);
         List<Item> c2Craft1 = Arrays.asList(Earrings,SheepfluffRug,Earrings,Hora,CawlCennin);
         List<Item> c2Craft2 = Arrays.asList(PopotoSalad,ParsnipSalad,Isloaf,PopotoSalad,ParsnipSalad,PopotoSalad);
 
@@ -1603,12 +1607,27 @@ public class Solver
         List<Item> c6Craft1 = Arrays.asList(BeetSoup,OnionSoup,BeetSoup,ImamBayildi);
         List<Item> c6Craft2 = Arrays.asList(BakedPumpkin,Bouillabaisse,BeetSoup,ImamBayildi);
 
+        List<Integer> daysInOrder = new ArrayList<>();
+        for(int i : order)
+        {
+            if(rest <= i+1)
+                daysInOrder.add(i+2);
+            else
+                daysInOrder.add(i+1);
+        }
+        //System.out.println("Days: "+daysInOrder);
 
-        CycleSchedule c2 = new CycleSchedule(1,0);
-        CycleSchedule c3 = new CycleSchedule(2,0);
-        CycleSchedule c4 = new CycleSchedule(3,0);
-        CycleSchedule c5 = new CycleSchedule(4,0);
-        CycleSchedule c6 = new CycleSchedule(5,0);
+
+        //System.out.println("Setting earrings/popoto to cycle "+(order.get(0)+1));
+        CycleSchedule c2 = new CycleSchedule(daysInOrder.get(0),0);
+        //System.out.println("Setting pie/firesand to cycle "+(order.get(1)+1));
+        CycleSchedule c3 = new CycleSchedule(daysInOrder.get(1),0);
+        //System.out.println("Setting necklace/necklace to cycle "+(order.get(2)+1));
+        CycleSchedule c4 = new CycleSchedule(daysInOrder.get(2),0);
+        //System.out.println("Setting coconut/necklace to cycle "+(order.get(3)+1));
+        CycleSchedule c5 = new CycleSchedule(daysInOrder.get(3),0);
+        //System.out.println("Setting beetsoup/bakedpump to cycle "+(order.get(4)+1));
+        CycleSchedule c6 = new CycleSchedule(daysInOrder.get(4),0);
 
         c2.workshops[0]= new WorkshopSchedule(c2Craft1);
         c2.workshops[1]= new WorkshopSchedule(c2Craft1);
@@ -1635,14 +1654,22 @@ public class Solver
         c6.workshops[2]= new WorkshopSchedule(c6Craft2);
         c6.workshops[3]= new WorkshopSchedule(c6Craft2);
 
-        setDay(c2,1);
-        c3.startingGroove=groove;
-        setDay(c3,2);
-        c4.startingGroove=groove;
-        setDay(c4,3);
-        c5.startingGroove=groove;
-        setDay(c5,4);
-        c6.startingGroove=groove;
-        setDay(c6,5);
+        Map<Integer,CycleSchedule> cyclesInOrder = new HashMap<>();
+        cyclesInOrder.put(c2.day, c2);
+        cyclesInOrder.put(c3.day, c3);
+        cyclesInOrder.put(c4.day, c4);
+        cyclesInOrder.put(c5.day, c5);
+        cyclesInOrder.put(c6.day, c6);
+
+        groove = 0;
+        for(int i=1; i<7; i++)
+        {
+            if(cyclesInOrder.containsKey(i))
+            {
+                cyclesInOrder.get(i).startingGroove = groove;
+                setDay(cyclesInOrder.get(i), i);
+            }
+
+        }
         }
 }
