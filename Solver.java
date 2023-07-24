@@ -154,8 +154,8 @@ public class Solver
         int totalCowries = 0;
         int totalTotalNet = 0;
         totalGrooveless = 0;
-        int startWeek = 42;
-        int endWeek = 42;
+        int startWeek = 48;
+        int endWeek = 48;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         var hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -228,6 +228,33 @@ public class Solver
                 solveRecsForWeek();
                 //bruteForceWeek();
                 //solveCrimeTime(week);
+
+                //verboseCalculatorLogging = true;
+                /*setObservedFromCSV(3);
+                CycleSchedule schedule = new CycleSchedule(1,0);
+                schedule.setForFirstThreeWorkshops(Arrays.asList(Earrings, Item.Horn, ScaleFingers, CavaliersHat));
+                schedule.setFourthWorkshop(Arrays.asList(Earrings, Item.Horn, ScaleFingers, CavaliersHat));
+                setDay(schedule, 1);
+
+                CycleSchedule schedule2 = new CycleSchedule(3,groove);
+                schedule2.setForFirstThreeWorkshops(Arrays.asList(Earrings, SilverEarCuffs, Earrings, SilverEarCuffs));
+                schedule2.setFourthWorkshop(Arrays.asList(RunnerBeanSaute, OnionSoup, RunnerBeanSaute, OnionSoup, RunnerBeanSaute));
+                setDay(schedule2, 3);
+
+                CycleSchedule schedule3 = new CycleSchedule(4,groove);
+                schedule3.setForFirstThreeWorkshops(Arrays.asList(Brush, SharkOil, Brush, SharkOil));
+                schedule3.setFourthWorkshop(Arrays.asList(RunnerBeanSaute, Isloaf, RunnerBeanSaute, GrilledClam, SharkOil));
+                setDay(schedule3, 4);
+
+                CycleSchedule schedule4 = new CycleSchedule(5,groove);
+                schedule4.setForFirstThreeWorkshops(Arrays.asList(BoiledEgg, SheepfluffRug, Bed, SheepfluffRug));
+                schedule4.setFourthWorkshop(Arrays.asList(Rope, Tunic, Bed, SheepfluffRug));
+                setDay(schedule4, 5);
+
+                CycleSchedule schedule5 = new CycleSchedule(6,groove);
+                schedule5.setForFirstThreeWorkshops(Arrays.asList(Firesand, GarnetRapier, Firesand, GarnetRapier));
+                schedule5.setFourthWorkshop(Arrays.asList(SquidInk, Bouillabaisse, Firesand, GarnetRapier));
+                setDay(schedule5, 6);*/
 
 
                 /*var schedule = getBestBruteForceSchedule(2, 18, null, 3, null, 16);
