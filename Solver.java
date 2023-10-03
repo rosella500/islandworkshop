@@ -163,8 +163,8 @@ public class Solver
         int totalCowries = 0;
         int totalTotalNet = 0;
         totalGrooveless = 0;
-        int startWeek = 48;
-        int endWeek = 48;
+        int startWeek = 59;
+        int endWeek = 59;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         var hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -192,10 +192,16 @@ public class Solver
                     islandRank=11;
                     NUM_WORKSHOPS = 3;
                 }
-                else
+                else if(week <=58)
                 {
                     WORKSHOP_BONUS = 130;
                     islandRank = 15;
+                    NUM_WORKSHOPS = 4;
+                }
+                else
+                {
+                    WORKSHOP_BONUS = 140;
+                    islandRank = 20;
                     NUM_WORKSHOPS = 4;
                 }
                 averageDayValue = 1123 * WORKSHOP_BONUS * NUM_WORKSHOPS / 100;
