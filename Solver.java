@@ -45,7 +45,7 @@ public class Solver
             new ItemInfo(SpruceRoundShield,Attire,Woodworks,136,8,5,Map.of(Spruce,2)),
             new ItemInfo(SharkOil,Sundries,MarineMerchandise,136,8,5,Map.of(Shark,2)),
             new ItemInfo(SilverEarCuffs,Accessories,Metalworks,136,8,5,Map.of(Silver,2)),
-            new ItemInfo(SweetPopoto,Confections,Invalid,72,6,5,Map.of(Popoto, 2, Milk,1)),
+            new ItemInfo(Item.SweetPopoto,Confections,Invalid,72,6,5,Map.of(Popoto, 2, Milk,1)),
             new ItemInfo(ParsnipSalad,Foodstuffs,Invalid,48,4,5,Map.of(Parsnip,2)),
             new ItemInfo(Caramels,Confections,Invalid,81,6,6,Map.of(Milk,2)),
             new ItemInfo(Ribbon,Accessories,Textiles,54,6,6,null),
@@ -93,6 +93,15 @@ public class Solver
             new ItemInfo(BeetSoup, Foodstuffs, Invalid, 78, 6, 14,Map.of(Beet, 3, Popoto, 1, Milk, 1)),
             new ItemInfo(ImamBayildi, Foodstuffs, Invalid, 90, 6, 14,Map.of(Eggplant, 2, Onion, 2, Tomato, 2)),
             new ItemInfo(PickledZucchini, PreservedFood, Invalid, 104, 8, 14,Map.of(Zucchini, 4)),
+            new ItemInfo(ServingDish, Sundries, Metalworks, 36, 4, 16, null),
+            new ItemInfo(GrindingWheel, Sundries, Invalid, 60, 6, 16, null),
+            new ItemInfo(Tathlums, Arms, Metalworks, 54, 6,17, null),
+            new ItemInfo(GoldHairpin, Accessories, Metalworks, 72, 8,17, null),
+            new ItemInfo(MammetAward, Furnishings, Invalid, 80, 8, 17, null),
+            new ItemInfo(FruitPunch, Confections, Invalid, 52, 4, 18, Map.of(Watermelon, 1, Isleberry, 1)),
+            new ItemInfo(SweetPopotoPie, Foodstuffs, Confections, 120, 8, 18, Map.of(RareMaterial.SweetPopoto, 3, Wheat, 1, Egg, 1)),
+            new ItemInfo(Peperoncino, Foodstuffs, Invalid, 75, 6, 18, Map.of(Broccoli, 2, Wheat, 1)),
+            new ItemInfo(BuffaloBeanSalad, Foodstuffs, CreatureCreations, 52, 4, 18, Map.of(BuffaloBeans, 2, Milk, 2)),
     };
     
     private static int groove = 0;

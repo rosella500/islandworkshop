@@ -51,8 +51,10 @@ public class CSVImporter
             skipAmount = ((week-1)*50);
         else if(week < 40)
             skipAmount = (20*50+(week-21)*60);
-        else
+        else if(week < 59)
             skipAmount = 20*50 + 19*60 + (week-40) * 72;
+        else
+            skipAmount = 20*50 + 19*60 + 19*72 + (week-59) * 81;
 
         //System.out.println("Skipping "+ skipAmount+" rows for week "+week);
         try (BufferedReader br = new BufferedReader(new FileReader("craft_peaks.csv"))) {

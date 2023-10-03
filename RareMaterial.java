@@ -32,7 +32,11 @@ public enum RareMaterial
     RunnerBean(6),
     Beet(6),
     Eggplant(6),
-    Zucchini(6);
+    Zucchini(6),
+    Watermelon(6),
+    SweetPopoto(6),
+    Broccoli(6),
+    BuffaloBeans(6);
     public final int cowrieValue;
     
     private RareMaterial(int value)

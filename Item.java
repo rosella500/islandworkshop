@@ -73,7 +73,16 @@ public enum Item
     RunnerBeanSaute("Runner Bean Saute"),
     BeetSoup("Beet Soup"),
     ImamBayildi("Imam Bayildi"),
-    PickledZucchini("Pickled Zucchini");
+    PickledZucchini("Pickled Zucchini"),
+    ServingDish("Serving Dish"),
+    GrindingWheel("Grinding Wheel"),
+    Tathlums("Tathlums"),
+    GoldHairpin("Gold Hairpin"),
+    MammetAward("Mammet Award"),
+    FruitPunch("Fruit Punch"),
+    SweetPopotoPie("Sweet Popoto Pie"),
+    Peperoncino("Peperoncino"),
+    BuffaloBeanSalad("Buffalo Bean Salad");
 
     
     private String displayName;
