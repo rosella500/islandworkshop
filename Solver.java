@@ -324,14 +324,16 @@ public class Solver
 
     }
 
-    public static void printFavorInfo(CycleSchedule currentSchedule, List<Item> favors)
+    public static void checkFavorsAndSet(CycleSchedule currentSchedule, List<Item> favors)
     {
         int weightedValue = currentSchedule.getWeightedValue();
+        setDay(currentSchedule, currentSchedule.day, false);
         var restOfWeek = solveRestOfWeek(currentSchedule.day-1, false);
+        List<FavorModification> recsModifications = new ArrayList<>();
         for(Item favor : favors)
         {
             var bestCycle = getBestFavorCycle(currentSchedule, favor);
-            System.out.println("Best schedule for favor "+favor+" is "+bestCycle.getKey().printWorkshops()+" with a value of "+bestCycle.getValue());
+            System.out.println("Best schedule for favor "+favor+" is "+bestCycle.getSchedule().printWorkshops()+" with a value of "+bestCycle.getValue());
             int tomorrowDelta = weightedValue - bestCycle.getValue();
             System.out.println("Value is "+tomorrowDelta+" less than main recs");
 
@@ -340,7 +342,7 @@ public class Solver
 
             //get worst cycle value we're not resting on
             int bestDelta = 99999;
-            Map.Entry<CycleSchedule,Integer> bestFutureReplacement = null;
+            FavorModification bestFutureReplacement = null;
             for(var sched : restOfWeek)
             {
                 if(sched.day != 0)
@@ -349,7 +351,7 @@ public class Solver
 
                     int delta = sched.getWeightedValue() - bestFutureCycle.getValue();
                     System.out.println("Best future schedule for favor "+favor+" on cycle "+(sched.day+1)+" is "
-                            +bestFutureCycle.getKey().printWorkshops()+" with a value of "+bestFutureCycle.getValue()
+                            +bestFutureCycle.getSchedule().printWorkshops()+" with a value of "+bestFutureCycle.getValue()
                             +" and a delta of "+delta);
 
                     if(delta < bestDelta)
@@ -359,24 +361,66 @@ public class Solver
                     }
                 }
             }
-            System.out.println("Best delta is "+bestDelta+" less than anticipated future recs");
+            System.out.println("Best future delta is "+bestDelta+" less than anticipated future recs");
             futureDelta = bestDelta;
 
 
             if(futureDelta < tomorrowDelta)
                 System.out.println("Future delta seems smaller. Make "+favor+" later in the week!");
             else
+            {
                 System.out.println("This seems like the best it's going to get. Make "+favor+" tomorrow!");
+                bestCycle.setDelta(futureDelta-tomorrowDelta);
+                recsModifications.add(bestCycle);
+            }
+
             System.out.println("\n\n\n\n");
+        }
+
+        recsModifications.sort(Comparator.comparingInt(FavorModification::getDelta));
+        Collections.reverse(recsModifications);
+
+        if(recsModifications.size() >= 2 && recsModifications.get(0).getNumWorkshops() == 2 && recsModifications.get(1).getNumWorkshops() == 2)
+        {
+            //Use both
+            CycleSchedule newSched = new CycleSchedule(currentSchedule.day, currentSchedule.startingGroove);
+            newSched.setWorkshop(0, recsModifications.get(0).getWorkshop().getItems());
+            newSched.setWorkshop(1, recsModifications.get(0).getWorkshop().getItems());
+            newSched.setWorkshop(2, recsModifications.get(1).getWorkshop().getItems());
+            newSched.setWorkshop(3, recsModifications.get(1).getWorkshop().getItems());
+            favors.remove(recsModifications.get(0).getFavor());
+            favors.remove(recsModifications.get(1).getFavor());
+            setDay(newSched, currentSchedule.day, true);
+        }
+        else if(recsModifications.size() == 3 && recsModifications.get(0).getNumWorkshops() == 3 && recsModifications.get(1).getDelta() + recsModifications.get(2).getDelta() > recsModifications.get(0).getDelta())
+        {
+            //Use both
+            CycleSchedule newSched = new CycleSchedule(currentSchedule.day, currentSchedule.startingGroove);
+            newSched.setWorkshop(0, recsModifications.get(2).getWorkshop().getItems());
+            newSched.setWorkshop(1, recsModifications.get(2).getWorkshop().getItems());
+            newSched.setWorkshop(2, recsModifications.get(1).getWorkshop().getItems());
+            newSched.setWorkshop(3, recsModifications.get(1).getWorkshop().getItems());
+            favors.remove(recsModifications.get(2).getFavor());
+            favors.remove(recsModifications.get(1).getFavor());
+            setDay(newSched, currentSchedule.day, true);
+        }
+        else if (recsModifications.size() > 0)
+        {
+            favors.remove(recsModifications.get(0).getFavor());
+            setDay(recsModifications.get(0).getSchedule(), currentSchedule.day, true);
+        }
+        else
+        {
+            setDay(currentSchedule, currentSchedule.day, true);
         }
     }
 
-    public static Map.Entry<CycleSchedule, Integer> getBestFavorCycle(CycleSchedule currentSchedule, Item favor)
+    public static FavorModification getBestFavorCycle(CycleSchedule currentSchedule, Item favor)
     {
         //See how it is if we sub the current schedule for it
         var twoWsSchedule = getBestFavorWorkshop(currentSchedule.day, favor, false, null, currentSchedule.startingGroove);
         //System.out.println("Best schedule with 2x favor "+favor+" is "+twoWsSchedule.getKey().getItems()+" ("+twoWsSchedule.getValue()+")");
-        Map<CycleSchedule, Integer> possibleCycles = new HashMap<>();
+        List<FavorModification> possibleCycles = new ArrayList<>();
 
         CycleSchedule replaceMain = new CycleSchedule(currentSchedule.day, currentSchedule.startingGroove);
         replaceMain.setWorkshop(0, twoWsSchedule.getKey().getItems());
@@ -385,7 +429,7 @@ public class Solver
         replaceMain.setWorkshop(3, currentSchedule.getSubItems());
         int value = replaceMain.getWeightedValue();
         //System.out.println("Value replacing 2 main schedules: "+value);
-        possibleCycles.put(replaceMain, replaceMain.getWeightedValue());
+        possibleCycles.add(new FavorModification(replaceMain, favor, 2, twoWsSchedule.getKey(), value));
 
         CycleSchedule replaceSub = new CycleSchedule(currentSchedule.day, currentSchedule.startingGroove);
         replaceSub.setWorkshop(0, currentSchedule.getItems());
@@ -394,7 +438,7 @@ public class Solver
         replaceSub.setWorkshop(3, twoWsSchedule.getKey().getItems());
         value = replaceSub.getWeightedValue();
         //System.out.println("Value replacing 1 main and sub schedules: "+value);
-        possibleCycles.put(replaceSub, value);
+        possibleCycles.add(new FavorModification(replaceSub, favor, 2, twoWsSchedule.getKey(), value));
 
         if(items[favor.ordinal()].time == 6)
         {
@@ -406,22 +450,20 @@ public class Solver
             replaceMainThree.setFourthWorkshop(currentSchedule.getSubItems());
             value = replaceMainThree.getWeightedValue();
             //System.out.println("Value replacing main schedule: "+value);
-            possibleCycles.put(replaceMainThree, value);
+            possibleCycles.add(new FavorModification(replaceMainThree, favor, 3, threeWsSchedule.getKey(), value));
 
             CycleSchedule replaceSubThree = new CycleSchedule(currentSchedule.day, currentSchedule.startingGroove);
             replaceSubThree.setForFirstThreeWorkshops(threeWsSchedule.getKey().getItems());
             replaceSubThree.setFourthWorkshop( currentSchedule.getItems());
             value = replaceSubThree.getWeightedValue();
             //System.out.println("Value replacing sub schedule and 2x main schedule: "+value);
-            possibleCycles.put(replaceSubThree, value);
+            possibleCycles.add(new FavorModification(replaceSubThree, favor, 3, threeWsSchedule.getKey(), value));
         }
 
-        var sortedCycles = possibleCycles
-                .entrySet().stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .collect(Collectors.toList());
+        Collections.sort(possibleCycles);
+        Collections.reverse(possibleCycles);
 
-        return sortedCycles.get(0);
+        return possibleCycles.get(0);
     }
 
     public static Entry<WorkshopSchedule, Integer> getBestFavorWorkshop(int day, Item requiredFavor, boolean allow3, Map<Item,Integer> limitedUse, int groove)
@@ -573,6 +615,7 @@ public class Solver
     {
         long time = System.currentTimeMillis();
 
+        List<Item> favors = List.of(Stove, GoldHairpin, RunnerBeanSaute);
 
         CycleSchedule d2 = getBestSchedule(1, groove);
         alternatives = 0;
@@ -584,9 +627,9 @@ public class Solver
         }
         else
         {
-            printFavorInfo(d2, List.of(Stove, GoldHairpin, RunnerBeanSaute));
             hasNextDay = setObservedFromCSV(1);
-            recalculateTodayAndSet(1, d2);
+            //checkFavorsAndSet(d2, favors);
+            setDay(d2, d2.day, true);
         }
         verboseSolverLogging = false;
         if(hasNextDay)
@@ -600,11 +643,11 @@ public class Solver
             }
             else
             {
-                printFavorInfo(d3, List.of(Stove, GoldHairpin, RunnerBeanSaute));
+
                 hasNextDay = setObservedFromCSV(2);
 
-                //setDay(d3.getKey().getItems(), 2);
-                recalculateTodayAndSet(2, d3);
+                setDay(d3, 2);
+                //checkFavorsAndSet(d3, favors);
             }
             if(hasNextDay)
             {
@@ -625,7 +668,8 @@ public class Solver
                     {
                         //System.out.println("It is! Using C4 schedule "+d4Again);
                         hasNextDay = setObservedFromCSV(3);
-                        recalculateTodayAndSet(3, d4Again);
+                        setDay(d4Again, 3);
+                        //checkFavorsAndSet(d4Again, favors);
                     }
                     else
                     {
@@ -643,7 +687,8 @@ public class Solver
                 else //We either rested already or we aren't the worst so add it
                 {
                     hasNextDay = setObservedFromCSV(3);
-                    recalculateTodayAndSet(3, d4);
+                    setDay(d4, 3);
+                    //checkFavorsAndSet(d4, favors);
                 }
 
                 if(hasNextDay)
