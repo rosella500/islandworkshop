@@ -27,8 +27,6 @@ public class CSVImporter
                 {
                     itemStr = itemStr.replace(" ", "");
                     itemStr = itemStr.replace("'", "");
-                    itemStr = itemStr.replace("Islefish", "");
-                    itemStr = itemStr.replace("Isleberry", "");
                     
                     if(!itemStr.isBlank())
                         items.add(Item.valueOf(itemStr));

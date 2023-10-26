@@ -55,10 +55,10 @@ public class Solver
             new ItemInfo(SaltCod,PreservedFood,MarineMerchandise,54,6,7,null),
             new ItemInfo(SquidInk,Ingredients,MarineMerchandise,36,4,7,null),
             new ItemInfo(EssentialDraught,Concoctions,MarineMerchandise,54,6,7,null),
-            new ItemInfo(Jam,Ingredients,Invalid,78,6,7,Map.of(Isleberry,3)),
+            new ItemInfo(IsleberryJam,Ingredients,Invalid,78,6,7,Map.of(Isleberry,3)),
             new ItemInfo(TomatoRelish,Ingredients,Invalid,52,4,7,Map.of(Tomato,2)),
             new ItemInfo(OnionSoup,Foodstuffs,Invalid,78,6,7,Map.of(Onion,3)),
-            new ItemInfo(Pie,Confections,MarineMerchandise,78,6,7,Map.of(Wheat,3)),
+            new ItemInfo(IslefishPie,Confections,MarineMerchandise,78,6,7,Map.of(Wheat,3)),
             new ItemInfo(CornFlakes,PreservedFood,Invalid,52,4,7,Map.of(Corn,2)),
             new ItemInfo(PickledRadish,PreservedFood,Invalid,104,8,7,Map.of(Radish,4)),
             new ItemInfo(IronAxe,Arms,Metalworks,72,8,8,null),
@@ -166,7 +166,7 @@ public class Solver
         int totalTotalNet = 0;
         totalGrooveless = 0;
         int startWeek = 59;
-        int endWeek = 1058;
+        int endWeek = 59;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         var hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -302,7 +302,7 @@ public class Solver
                     .collect(Collectors.toList());
 
             System.out.println("Top schedules: ");
-            for(int i=0;i<15;i++)
+            for(int i=0;i<15 && i<sortedSchedules.size();i++)
             {
                 var sched = sortedSchedules.get(i);
                 System.out.println(sched.getKey()+": "+sched.getValue());
