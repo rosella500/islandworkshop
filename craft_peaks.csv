@@ -3506,84 +3506,3405 @@
 58,Beet Soup,U1,67,67,7S,
 58,Imam Bayildi,U1,45,5U,5S,
 58,Pickled Zucchini,U1,67,3W,3W,
-59,Potion,2U,2S,2S,,70
-59,Firesand,U1,45,4W,,
-59,WoodenChair,U1,45,4W,,
-59,GrilledClam,U1,45,5U,,
-59,Necklace,U1,67,67,,
-59,CoralRing,U1,45,5U,,
-59,Barbut,U1,45,4S,,
-59,Macuahuitl,U1,45,4W,,
-59,Sauerkraut,U1,3S,3S,,
-59,BakedPumpkin,2U,2W,2W,,
-59,Tunic,2W,2W,2W,,
-59,CulinaryKnife,U1,67,67,,
-59,Brush,2S,2S,2S,,
-59,BoiledEgg,U1,67,67,,
-59,Hora,U1,67,67,,
-59,Earrings,U1,67,67,,
-59,Butter,U1,45,4S,,
-59,BrickCounter,U1,67,67,,
-59,BronzeSheep,U1,45,5U,,
-59,GrowthFormula,U1,45,5U,,
-59,GarnetRapier,2U,2W,2W,,
-59,SpruceRoundShield,U1,67,67,,
-59,SharkOil,U1,45,5U,,
-59,SilverEarCuffs,2U,2W,2W,,
-59,SweetPopoto,U1,67,6W,,
-59,ParsnipSalad,U1,45,4S,,
-59,Caramels,U1,67,6W,,
-59,Ribbon,U1,67,67,,
-59,Rope,U1,67,67,,
-59,CavaliersHat,U1,67,67,,
-59,Horn,2S,2S,2S,,
-59,SaltCod,U1,67,67,,
-59,SquidInk,U1,67,67,,
-59,EssentialDraught,U1,67,3W,,
-59,Jam,U1,67,3W,,
-59,TomatoRelish,U1,67,67,,
-59,OnionSoup,U1,3S,3S,,
-59,Pie,U1,67,3W,,
-59,CornFlakes,U1,3S,3S,,
-59,PickledRadish,U1,45,5U,,
-59,IronAxe,U1,45,5U,,
-59,QuartzRing,U1,45,4W,,
-59,PorcelainVase,2S,2S,2S,,
-59,VegetableJuice,U1,45,5U,,
-59,PumpkinPudding,U1,45,4S,,
-59,SheepfluffRug,U1,67,6W,,
-59,GardenScythe,U1,3S,3S,,
-59,Bed,U1,67,3W,,
-59,ScaleFingers,U1,67,67,,
-59,Crook,U1,67,6W,,
-59,Coral Sword,U1,45,5U,,
-59,Coconut Juice,U1,45,4W,,
-59,Honey,U1,3S,3S,,
-59,Seashine Opal,U1,45,4S,,
-59,Dried Flowers,U1,67,6W,,
-59,Powdered Paprika,U1,67,67,,
-59,Cawl Cennin,2U,2W,2W,,
-59,Isloaf,2U,2S,2S,,
-59,Popoto Salad,U1,67,67,,
-59,Dressing,U1,67,67,,
-59,Stove,U1,67,3W,,
-59,Lantern,U1,45,5U,,
-59,Natron,U1,67,67,,
-59,Bouillabaisse,U1,45,4S,,
-59,Fossil Display,U1,45,4W,,
-59,Bathtub,2W,2W,2W,,
-59,Spectacles,U1,45,5U,,
-59,Cooling Glass,2S,2S,2S,,
-59,Runner Bean Saute,U1,67,67,,
-59,Beet Soup,U1,67,67,,
-59,Imam Bayildi,U1,67,6W,,
-59,Pickled Zucchini,U1,45,5U,,
-59,Serving Dish,U1,67,3W,,
-59,Grinding Wheel,U1,3S,3S,,
-59,Tathlums,U1,45,5U,,
-59,Gold Hairpin,U1,45,4W,,
-59,Mammet Award,U1,67,6W,,
-59,Fruit Punch,2S,2S,2S,,
-59,Sweet Popoto Pie,2W,2W,2W,,
-59,Peperoncino,U1,3S,3S,,
-59,Buffalo Bean Salad,U1,67,3W,,
+59,Potion,2U,2S,2S,2S,70
+59,Firesand,U1,45,4W,4W,
+59,WoodenChair,U1,45,4W,4W,
+59,GrilledClam,U1,45,5U,5S,
+59,Necklace,U1,67,67,7S,
+59,CoralRing,U1,45,5U,5W,
+59,Barbut,U1,45,4S,4S,
+59,Macuahuitl,U1,45,4W,4W,
+59,Sauerkraut,U1,3S,3S,3S,
+59,BakedPumpkin,2U,2W,2W,2W,
+59,Tunic,2W,2W,2W,2W,
+59,CulinaryKnife,U1,67,67,7S,
+59,Brush,2S,2S,2S,2S,
+59,BoiledEgg,U1,67,67,6S,
+59,Hora,U1,67,67,7W,
+59,Earrings,U1,67,67,7W,
+59,Butter,U1,45,4S,4S,
+59,BrickCounter,U1,67,67,7S,
+59,BronzeSheep,U1,45,5U,5S,
+59,GrowthFormula,U1,45,5U,5S,
+59,GarnetRapier,2U,2W,2W,2W,
+59,SpruceRoundShield,U1,67,67,6S,
+59,SharkOil,U1,45,5U,5W,
+59,SilverEarCuffs,2U,2W,2W,2W,
+59,SweetPopoto,U1,67,6W,6W,
+59,ParsnipSalad,U1,45,4S,4S,
+59,Caramels,U1,67,6W,6W,
+59,Ribbon,U1,67,67,7W,
+59,Rope,U1,67,67,7S,
+59,CavaliersHat,U1,67,67,7W,
+59,Horn,2S,2S,2S,2S,
+59,SaltCod,U1,67,67,7S,
+59,SquidInk,U1,67,67,6S,
+59,EssentialDraught,U1,67,3W,3W,
+59,Jam,U1,67,3W,3W,
+59,TomatoRelish,U1,67,67,7W,
+59,OnionSoup,U1,3S,3S,3S,
+59,Pie,U1,67,3W,3W,
+59,CornFlakes,U1,3S,3S,3S,
+59,PickledRadish,U1,45,5U,5W,
+59,IronAxe,U1,45,5U,5S,
+59,QuartzRing,U1,45,4W,4W,
+59,PorcelainVase,2S,2S,2S,2S,
+59,VegetableJuice,U1,45,5U,5W,
+59,PumpkinPudding,U1,45,4S,4S,
+59,SheepfluffRug,U1,67,6W,6W,
+59,GardenScythe,U1,3S,3S,3S,
+59,Bed,U1,67,3W,3W,
+59,ScaleFingers,U1,67,67,6S,
+59,Crook,U1,67,6W,6W,
+59,Coral Sword,U1,45,5U,5W,
+59,Coconut Juice,U1,45,4W,4W,
+59,Honey,U1,3S,3S,3S,
+59,Seashine Opal,U1,45,4S,4S,
+59,Dried Flowers,U1,67,6W,6W,
+59,Powdered Paprika,U1,67,67,7W,
+59,Cawl Cennin,2U,2W,2W,2W,
+59,Isloaf,2U,2S,2S,2S,
+59,Popoto Salad,U1,67,67,7S,
+59,Dressing,U1,67,67,6S,
+59,Stove,U1,67,3W,3W,
+59,Lantern,U1,45,5U,5S,
+59,Natron,U1,67,67,6S,
+59,Bouillabaisse,U1,45,4S,4S,
+59,Fossil Display,U1,45,4W,4W,
+59,Bathtub,2W,2W,2W,2W,
+59,Spectacles,U1,45,5U,5S,
+59,Cooling Glass,2S,2S,2S,2S,
+59,Runner Bean Saute,U1,67,67,7W,
+59,Beet Soup,U1,67,67,7S,
+59,Imam Bayildi,U1,67,6W,6W,
+59,Pickled Zucchini,U1,45,5U,5W,
+59,Serving Dish,U1,67,3W,3W,
+59,Grinding Wheel,U1,3S,3S,3S,
+59,Tathlums,U1,45,5U,5W,
+59,Gold Hairpin,U1,45,4W,4W,
+59,Mammet Award,U1,67,6W,6W,
+59,Fruit Punch,2S,2S,2S,2S,
+59,Sweet Popoto Pie,2W,2W,2W,2W,
+59,Peperoncino,U1,3S,3S,3S,
+59,Buffalo Bean Salad,U1,67,3W,3W,
+60,Potion,U1,67,67,6S,43
+60,Firesand,U1,67,67,7S,
+60,WoodenChair,U1,67,67,6S,
+60,GrilledClam,U1,67,67,6S,
+60,Necklace,U1,67,67,7W,
+60,CoralRing,U1,67,6W,6W,
+60,Barbut,U1,67,67,7S,
+60,Macuahuitl,U1,45,4S,4S,
+60,Sauerkraut,U1,67,6W,6W,
+60,BakedPumpkin,U1,67,67,7S,
+60,Tunic,U1,67,67,7W,
+60,CulinaryKnife,2U,2S,2S,2S,
+60,Brush,2W,2W,2W,2W,
+60,BoiledEgg,U1,67,3W,3W,
+60,Hora,U1,67,3W,3W,
+60,Earrings,U1,67,6W,6W,
+60,Butter,U1,67,67,7W,
+60,BrickCounter,U1,67,67,7S,
+60,BronzeSheep,U1,45,4W,4W,
+60,GrowthFormula,U1,45,4S,4S,
+60,GarnetRapier,2U,2W,2W,2W,
+60,SpruceRoundShield,U1,3S,3S,3S,
+60,SharkOil,2U,2W,2W,2W,
+60,SilverEarCuffs,U1,3S,3S,3S,
+60,SweetPopoto,U1,67,3W,3W,
+60,ParsnipSalad,U1,67,67,7W,
+60,Caramels,U1,45,5U,5S,
+60,Ribbon,U1,45,4W,4W,
+60,Rope,U1,67,6W,6W,
+60,CavaliersHat,U1,45,4S,4S,
+60,Horn,U1,45,4W,4W,
+60,SaltCod,U1,45,4W,4W,
+60,SquidInk,U1,45,5U,5S,
+60,EssentialDraught,U1,67,67,6S,
+60,Jam,U1,67,3W,3W,
+60,TomatoRelish,U1,3S,3S,3S,
+60,OnionSoup,U1,45,4S,4S,
+60,Pie,2U,2S,2S,2S,
+60,CornFlakes,2W,2W,2W,2W,
+60,PickledRadish,U1,45,5U,5W,
+60,IronAxe,U1,67,67,7S,
+60,QuartzRing,U1,45,5U,5W,
+60,PorcelainVase,2S,2S,2S,2S,
+60,VegetableJuice,U1,45,5U,5W,
+60,PumpkinPudding,U1,45,5U,5S,
+60,SheepfluffRug,U1,67,67,7W,
+60,GardenScythe,U1,45,5U,5W,
+60,Bed,2U,2S,2S,2S,
+60,ScaleFingers,U1,3S,3S,3S,
+60,Crook,U1,45,5U,5S,
+60,Coral Sword,U1,67,67,7W,
+60,Coconut Juice,U1,45,4S,4S,
+60,Honey,U1,67,67,7S,
+60,Seashine Opal,U1,67,3W,3W,
+60,Dried Flowers,2U,2W,2W,2W,
+60,Powdered Paprika,2U,2S,2S,2S,
+60,Cawl Cennin,U1,3S,3S,3S,
+60,Isloaf,U1,45,4W,4W,
+60,Popoto Salad,U1,67,6W,6W,
+60,Dressing,U1,45,5U,5S,
+60,Stove,U1,45,5U,5W,
+60,Lantern,U1,67,67,6S,
+60,Natron,U1,67,3W,3W,
+60,Bouillabaisse,U1,67,67,6S,
+60,Fossil Display,U1,45,5U,5S,
+60,Bathtub,U1,45,5U,5W,
+60,Spectacles,2S,2S,2S,2S,
+60,Cooling Glass,U1,3S,3S,3S,
+60,Runner Bean Saute,U1,45,4W,4W,
+60,Beet Soup,U1,67,6W,6W,
+60,Imam Bayildi,U1,67,67,7S,
+60,Pickled Zucchini,U1,45,4S,4S,
+60,Serving Dish,2W,2W,2W,2W,
+60,Grinding Wheel,U1,67,67,7W,
+60,Tathlums,U1,67,67,7S,
+60,Gold Hairpin,U1,45,4S,4S,
+60,Mammet Award,U1,45,4W,4W,
+60,Fruit Punch,2W,2W,2W,2W,
+60,Sweet Popoto Pie,2S,2S,2S,2S,
+60,Peperoncino,U1,67,6W,6W,
+60,Buffalo Bean Salad,U1,67,67,7W,
+61,Potion,U1,67,3W,3W,3
+61,Firesand,U1,67,67,7S,
+61,WoodenChair,U1,45,5U,5W,
+61,GrilledClam,U1,3S,3S,3S,
+61,Necklace,U1,45,5U,5W,
+61,CoralRing,U1,67,67,6S,
+61,Barbut,U1,3S,3S,3S,
+61,Macuahuitl,U1,45,4S,4S,
+61,Sauerkraut,2U,2W,2W,2W,
+61,BakedPumpkin,U1,67,3W,3W,
+61,Tunic,U1,45,4W,4W,
+61,CulinaryKnife,U1,67,67,7W,
+61,Brush,U1,3S,3S,3S,
+61,BoiledEgg,U1,67,67,7S,
+61,Hora,U1,3S,3S,3S,
+61,Earrings,U1,67,67,7S,
+61,Butter,U1,45,5U,5S,
+61,BrickCounter,2U,2W,2W,2W,
+61,BronzeSheep,U1,45,4S,4S,
+61,GrowthFormula,U1,67,3W,3W,
+61,GarnetRapier,U1,67,67,7W,
+61,SpruceRoundShield,U1,67,67,7S,
+61,SharkOil,2U,2S,2S,2S,
+61,SilverEarCuffs,U1,45,5U,5S,
+61,SweetPopoto,U1,67,67,7W,
+61,ParsnipSalad,U1,67,6W,6W,
+61,Caramels,2W,2W,2W,2W,
+61,Ribbon,U1,45,4W,4W,
+61,Rope,2U,2W,2W,2W,
+61,CavaliersHat,U1,67,6W,6W,
+61,Horn,U1,67,6W,6W,
+61,SaltCod,U1,45,5U,5W,
+61,SquidInk,2S,2S,2S,2S,
+61,EssentialDraught,U1,45,5U,5S,
+61,Jam,U1,45,4S,4S,
+61,TomatoRelish,U1,45,4W,4W,
+61,OnionSoup,U1,67,67,6S,
+61,Pie,U1,67,67,7W,
+61,CornFlakes,U1,67,67,7S,
+61,PickledRadish,U1,67,67,6S,
+61,IronAxe,U1,67,3W,3W,
+61,QuartzRing,U1,45,4W,4W,
+61,PorcelainVase,U1,45,5U,5W,
+61,VegetableJuice,U1,45,4S,4S,
+61,PumpkinPudding,2S,2S,2S,2S,
+61,SheepfluffRug,U1,67,67,7W,
+61,GardenScythe,U1,67,67,6S,
+61,Bed,2S,2S,2S,2S,
+61,ScaleFingers,U1,45,5U,5S,
+61,Crook,U1,67,6W,6W,
+61,Coral Sword,U1,45,5U,5S,
+61,Coconut Juice,2S,2S,2S,2S,
+61,Honey,U1,45,4S,4S,
+61,Seashine Opal,2W,2W,2W,2W,
+61,Dried Flowers,U1,67,6W,6W,
+61,Powdered Paprika,U1,67,67,6S,
+61,Cawl Cennin,U1,67,67,7W,
+61,Isloaf,U1,67,3W,3W,
+61,Popoto Salad,U1,45,4W,4W,
+61,Dressing,U1,67,67,7S,
+61,Stove,U1,45,5U,5W,
+61,Lantern,U1,3S,3S,3S,
+61,Natron,U1,67,67,7S,
+61,Bouillabaisse,U1,67,67,6S,
+61,Fossil Display,2W,2W,2W,2W,
+61,Bathtub,2S,2S,2S,2S,
+61,Spectacles,U1,45,4W,4W,
+61,Cooling Glass,U1,67,3W,3W,
+61,Runner Bean Saute,U1,45,5U,5W,
+61,Beet Soup,U1,3S,3S,3S,
+61,Imam Bayildi,U1,67,67,7W,
+61,Pickled Zucchini,U1,45,4S,4S,
+61,Serving Dish,U1,67,6W,6W,
+61,Grinding Wheel,U1,45,5U,5S,
+61,Tathlums,U1,67,67,7W,
+61,Gold Hairpin,U1,45,4W,4W,
+61,Mammet Award,U1,3S,3S,3S,
+61,Fruit Punch,U1,45,4S,4S,
+61,Sweet Popoto Pie,U1,67,3W,3W,
+61,Peperoncino,U1,45,5U,5S,
+61,Buffalo Bean Salad,2U,2S,2S,2S,
+62,Potion,2U,2S,2S,2S,42
+62,Firesand,U1,67,67,7W,
+62,WoodenChair,2U,2W,2W,2W,
+62,GrilledClam,U1,45,5U,5S,
+62,Necklace,U1,67,3W,3W,
+62,CoralRing,U1,45,5U,5S,
+62,Barbut,U1,45,4W,4W,
+62,Macuahuitl,U1,67,67,7W,
+62,Sauerkraut,U1,45,4W,4W,
+62,BakedPumpkin,U1,67,6W,6W,
+62,Tunic,U1,67,67,6S,
+62,CulinaryKnife,2U,2W,2W,2W,
+62,Brush,U1,45,4S,4S,
+62,BoiledEgg,2U,2W,2W,2W,
+62,Hora,U1,67,6W,6W,
+62,Earrings,U1,67,67,7W,
+62,Butter,U1,67,67,7S,
+62,BrickCounter,U1,45,4S,4S,
+62,BronzeSheep,U1,45,4S,4S,
+62,GrowthFormula,U1,67,3W,3W,
+62,GarnetRapier,U1,67,67,7S,
+62,SpruceRoundShield,U1,67,67,7S,
+62,SharkOil,U1,45,4S,4S,
+62,SilverEarCuffs,U1,67,3W,3W,
+62,SweetPopoto,U1,45,5U,5W,
+62,ParsnipSalad,U1,3S,3S,3S,
+62,Caramels,U1,45,5U,5S,
+62,Ribbon,U1,45,5U,5S,
+62,Rope,U1,67,67,6S,
+62,CavaliersHat,2U,2S,2S,2S,
+62,Horn,U1,67,6W,6W,
+62,SaltCod,U1,3S,3S,3S,
+62,SquidInk,U1,67,67,7S,
+62,EssentialDraught,U1,67,67,7S,
+62,Jam,U1,45,4W,4W,
+62,TomatoRelish,U1,67,67,6S,
+62,OnionSoup,U1,67,67,7W,
+62,Pie,U1,45,5U,5W,
+62,CornFlakes,U1,45,5U,5W,
+62,PickledRadish,2S,2S,2S,2S,
+62,IronAxe,2U,2W,2W,2W,
+62,QuartzRing,U1,45,5U,5W,
+62,PorcelainVase,U1,67,67,7W,
+62,VegetableJuice,2S,2S,2S,2S,
+62,PumpkinPudding,U1,45,4W,4W,
+62,SheepfluffRug,U1,67,67,6S,
+62,GardenScythe,U1,67,3W,3W,
+62,Bed,U1,67,6W,6W,
+62,ScaleFingers,U1,3S,3S,3S,
+62,Crook,U1,3S,3S,3S,
+62,Coral Sword,U1,45,4S,4S,
+62,Coconut Juice,U1,67,6W,6W,
+62,Honey,U1,67,3W,3W,
+62,Seashine Opal,U1,3S,3S,3S,
+62,Dried Flowers,U1,45,4W,4W,
+62,Powdered Paprika,U1,67,67,6S,
+62,Cawl Cennin,2U,2W,2W,2W,
+62,Isloaf,U1,67,67,7S,
+62,Popoto Salad,U1,45,5U,5W,
+62,Dressing,2U,2S,2S,2S,
+62,Stove,U1,45,5U,5S,
+62,Lantern,U1,67,67,7W,
+62,Natron,U1,3S,3S,3S,
+62,Bouillabaisse,U1,45,5U,5W,
+62,Fossil Display,U1,45,4S,4S,
+62,Bathtub,U1,67,67,7S,
+62,Spectacles,U1,45,5U,5S,
+62,Cooling Glass,U1,67,67,7W,
+62,Runner Bean Saute,U1,67,3W,3W,
+62,Beet Soup,U1,67,6W,6W,
+62,Imam Bayildi,2W,2W,2W,2W,
+62,Pickled Zucchini,U1,45,4W,4W,
+62,Serving Dish,U1,67,67,6S,
+62,Grinding Wheel,2S,2S,2S,2S,
+62,Tathlums,U1,3S,3S,3S,
+62,Gold Hairpin,2U,2S,2S,2S,
+62,Mammet Award,U1,67,67,7W,
+62,Fruit Punch,U1,45,5U,5W,
+62,Sweet Popoto Pie,2U,2W,2W,2W,
+62,Peperoncino,U1,67,67,6S,
+62,Buffalo Bean Salad,U1,45,4W,4W,
+63,Potion,U1,67,6W,6W,34
+63,Firesand,U1,67,3W,3W,34
+63,WoodenChair,2U,2W,2W,2W,34
+63,GrilledClam,U1,45,5U,5W,34
+63,Necklace,2U,2S,2S,2S,34
+63,CoralRing,U1,67,67,7S,34
+63,Barbut,2U,2W,2W,2W,34
+63,Macuahuitl,U1,67,6W,6W,34
+63,Sauerkraut,U1,45,5U,5W,34
+63,BakedPumpkin,U1,67,67,7W,34
+63,Tunic,U1,67,67,7W,34
+63,CulinaryKnife,U1,67,67,7W,34
+63,Brush,U1,67,67,7S,34
+63,BoiledEgg,U1,45,4S,4S,34
+63,Hora,U1,67,6W,6W,34
+63,Earrings,2U,2W,2W,2W,34
+63,Butter,2U,2S,2S,2S,34
+63,BrickCounter,U1,3S,3S,3S,34
+63,BronzeSheep,U1,45,4W,4W,34
+63,GrowthFormula,U1,67,67,7S,34
+63,GarnetRapier,U1,45,4W,4W,34
+63,SpruceRoundShield,U1,45,4W,4W,34
+63,SharkOil,U1,67,67,6S,34
+63,SilverEarCuffs,U1,67,67,7S,34
+63,SweetPopoto,U1,67,67,6S,34
+63,ParsnipSalad,U1,45,5U,5W,34
+63,Caramels,U1,67,6W,6W,34
+63,Ribbon,U1,67,67,7S,34
+63,Rope,U1,45,5U,5S,34
+63,CavaliersHat,U1,45,4S,4S,34
+63,Horn,U1,67,67,6S,34
+63,SaltCod,2W,2W,2W,2W,34
+63,SquidInk,U1,45,5U,5S,34
+63,EssentialDraught,U1,67,3W,3W,34
+63,Jam,U1,45,5U,5S,34
+63,TomatoRelish,2S,2S,2S,2S,34
+63,OnionSoup,U1,67,67,7W,34
+63,Pie,U1,45,4W,4W,34
+63,CornFlakes,U1,45,5U,5W,34
+63,PickledRadish,U1,45,4S,4S,34
+63,IronAxe,U1,67,67,6S,34
+63,QuartzRing,U1,67,67,7W,34
+63,PorcelainVase,U1,3S,3S,3S,34
+63,VegetableJuice,U1,3S,3S,3S,34
+63,PumpkinPudding,U1,45,4S,4S,34
+63,SheepfluffRug,U1,45,5U,5S,34
+63,GardenScythe,U1,67,3W,3W,34
+63,Bed,U1,67,3W,3W,34
+63,ScaleFingers,2S,2S,2S,2S,34
+63,Crook,U1,3S,3S,3S,34
+63,Coral Sword,U1,3S,3S,3S,34
+63,Coconut Juice,U1,67,67,7W,34
+63,Honey,U1,45,4S,4S,34
+63,Seashine Opal,2S,2S,2S,2S,34
+63,Dried Flowers,U1,45,4W,4W,34
+63,Powdered Paprika,U1,45,5U,5W,34
+63,Cawl Cennin,U1,67,67,6S,34
+63,Isloaf,U1,67,6W,6W,34
+63,Popoto Salad,U1,45,5U,5S,34
+63,Dressing,U1,67,3W,3W,34
+63,Stove,U1,67,67,7S,34
+63,Lantern,2W,2W,2W,2W,34
+63,Natron,U1,45,4S,4S,34
+63,Bouillabaisse,U1,67,6W,6W,34
+63,Fossil Display,U1,45,4W,4W,34
+63,Bathtub,2U,2S,2S,2S,34
+63,Spectacles,U1,45,5U,5S,34
+63,Cooling Glass,2U,2W,2W,2W,34
+63,Runner Bean Saute,U1,67,67,7S,34
+63,Beet Soup,U1,67,67,7W,34
+63,Imam Bayildi,U1,3S,3S,3S,34
+63,Pickled Zucchini,U1,67,3W,3W,34
+63,Serving Dish,U1,67,67,6S,34
+63,Grinding Wheel,U1,45,5U,5W,34
+63,Tathlums,2S,2S,2S,2S,34
+63,Gold Hairpin,U1,67,67,6S,34
+63,Mammet Award,U1,67,3W,3W,34
+63,Fruit Punch,U1,67,67,7S,34
+63,Sweet Popoto Pie,U1,3S,3S,3S,34
+63,Peperoncino,U1,45,4S,4S,34
+63,Buffalo Bean Salad,U1,45,5U,5S,34
+64,Potion,U1,45,4W,4W,24
+64,Firesand,U1,67,6W,6W,24
+64,WoodenChair,U1,67,67,7S,24
+64,GrilledClam,U1,67,6W,6W,24
+64,Necklace,2W,2W,2W,2W,24
+64,CoralRing,U1,67,6W,6W,24
+64,Barbut,U1,45,4S,4S,24
+64,Macuahuitl,U1,45,4S,4S,24
+64,Sauerkraut,U1,3S,3S,3S,24
+64,BakedPumpkin,2U,2S,2S,2S,24
+64,Tunic,U1,67,67,7W,24
+64,CulinaryKnife,U1,3S,3S,3S,24
+64,Brush,U1,3S,3S,3S,24
+64,BoiledEgg,U1,45,5U,5S,24
+64,Hora,U1,45,4W,4W,24
+64,Earrings,U1,67,67,7W,24
+64,Butter,2W,2W,2W,2W,24
+64,BrickCounter,U1,67,3W,3W,24
+64,BronzeSheep,U1,45,5U,5W,24
+64,GrowthFormula,U1,67,67,7W,24
+64,GarnetRapier,U1,67,67,7S,24
+64,SpruceRoundShield,U1,45,5U,5S,24
+64,SharkOil,U1,45,5U,5W,24
+64,SilverEarCuffs,U1,67,67,7S,24
+64,SweetPopoto,U1,67,3W,3W,24
+64,ParsnipSalad,2U,2S,2S,2S,24
+64,Caramels,2U,2S,2S,2S,24
+64,Ribbon,U1,67,67,6S,24
+64,Rope,U1,67,6W,6W,24
+64,CavaliersHat,U1,3S,3S,3S,24
+64,Horn,U1,45,5U,5S,24
+64,SaltCod,2U,2W,2W,2W,24
+64,SquidInk,U1,45,5U,5W,24
+64,EssentialDraught,U1,45,5U,5S,24
+64,Jam,U1,45,4W,4W,24
+64,TomatoRelish,U1,67,3W,3W,24
+64,OnionSoup,U1,67,3W,3W,24
+64,Pie,U1,67,67,6S,24
+64,CornFlakes,U1,67,67,6S,24
+64,PickledRadish,U1,45,4S,4S,24
+64,IronAxe,U1,45,4W,4W,24
+64,QuartzRing,2U,2S,2S,2S,24
+64,PorcelainVase,2W,2W,2W,2W,24
+64,VegetableJuice,U1,67,67,6S,24
+64,PumpkinPudding,U1,45,5U,5W,24
+64,SheepfluffRug,U1,67,67,7S,24
+64,GardenScythe,U1,45,4S,4S,24
+64,Bed,U1,67,67,7W,24
+64,ScaleFingers,U1,67,67,7W,24
+64,Crook,U1,67,67,7S,24
+64,Coral Sword,U1,45,5U,5S,24
+64,Coconut Juice,U1,45,4W,4W,24
+64,Honey,U1,67,3W,3W,24
+64,Seashine Opal,U1,67,67,6S,24
+64,Dried Flowers,U1,3S,3S,3S,24
+64,Powdered Paprika,U1,67,67,7W,24
+64,Cawl Cennin,2S,2S,2S,2S,24
+64,Isloaf,U1,45,4S,4S,24
+64,Popoto Salad,U1,67,6W,6W,24
+64,Dressing,U1,45,5U,5W,24
+64,Stove,U1,67,67,7S,24
+64,Lantern,2W,2W,2W,2W,24
+64,Natron,U1,45,5U,5S,24
+64,Bouillabaisse,U1,67,67,7W,24
+64,Fossil Display,U1,67,3W,3W,24
+64,Bathtub,2W,2W,2W,2W,24
+64,Spectacles,U1,67,6W,6W,24
+64,Cooling Glass,U1,45,5U,5W,24
+64,Runner Bean Saute,U1,45,4W,4W,24
+64,Beet Soup,U1,3S,3S,3S,24
+64,Imam Bayildi,U1,45,4S,4S,24
+64,Pickled Zucchini,2S,2S,2S,2S,24
+64,Serving Dish,U1,67,67,6S,24
+64,Grinding Wheel,U1,67,67,7S,24
+64,Tathlums,2S,2S,2S,2S,24
+64,Gold Hairpin,U1,45,4S,4S,24
+64,Mammet Award,U1,67,67,7S,24
+64,Fruit Punch,U1,3S,3S,3S,24
+64,Sweet Popoto Pie,U1,67,3W,3W,24
+64,Peperoncino,2W,2W,2W,2W,24
+64,Buffalo Bean Salad,U1,45,5U,5W,24
+65,Potion,U1,67,67,6S,65
+65,Firesand,U1,45,5U,5S,65
+65,WoodenChair,U1,45,4W,4W,65
+65,GrilledClam,U1,3S,3S,3S,65
+65,Necklace,U1,45,4S,4S,65
+65,CoralRing,U1,45,4S,4S,65
+65,Barbut,U1,45,5U,5W,65
+65,Macuahuitl,U1,67,67,7S,65
+65,Sauerkraut,U1,3S,3S,3S,65
+65,BakedPumpkin,U1,45,5U,5W,65
+65,Tunic,2U,2S,2S,2S,65
+65,CulinaryKnife,U1,67,67,7S,65
+65,Brush,U1,67,67,6S,65
+65,BoiledEgg,2S,2S,2S,2S,65
+65,Hora,U1,67,67,7W,65
+65,Earrings,U1,67,67,7S,65
+65,Butter,U1,67,67,6S,65
+65,BrickCounter,U1,67,3W,3W,65
+65,BronzeSheep,U1,67,6W,6W,65
+65,GrowthFormula,2U,2W,2W,2W,65
+65,GarnetRapier,U1,67,3W,3W,65
+65,SpruceRoundShield,2S,2S,2S,2S,65
+65,SharkOil,U1,67,67,7W,65
+65,SilverEarCuffs,2U,2W,2W,2W,65
+65,SweetPopoto,2U,2W,2W,2W,65
+65,ParsnipSalad,U1,45,4W,4W,65
+65,Caramels,U1,45,4W,4W,65
+65,Ribbon,U1,67,6W,6W,65
+65,Rope,U1,45,5U,5S,65
+65,CavaliersHat,U1,45,5U,5W,65
+65,Horn,U1,3S,3S,3S,65
+65,SaltCod,U1,45,5U,5S,65
+65,SquidInk,U1,67,67,7W,65
+65,EssentialDraught,U1,67,67,7W,65
+65,Jam,U1,45,4W,4W,65
+65,TomatoRelish,U1,67,6W,6W,65
+65,OnionSoup,U1,67,67,7W,65
+65,Pie,U1,67,3W,3W,65
+65,CornFlakes,U1,3S,3S,3S,65
+65,PickledRadish,U1,45,4S,4S,65
+65,IronAxe,U1,67,6W,6W,65
+65,QuartzRing,U1,67,67,7S,65
+65,PorcelainVase,U1,67,3W,3W,65
+65,VegetableJuice,U1,45,5U,5W,65
+65,PumpkinPudding,2U,2S,2S,2S,65
+65,SheepfluffRug,U1,45,5U,5S,65
+65,GardenScythe,2W,2W,2W,2W,65
+65,Bed,U1,45,4S,4S,65
+65,ScaleFingers,U1,67,67,7S,65
+65,Crook,U1,67,67,6S,65
+65,Coral Sword,U1,67,67,7W,65
+65,Coconut Juice,U1,45,5U,5S,65
+65,Honey,U1,45,5U,5W,65
+65,Seashine Opal,U1,3S,3S,3S,65
+65,Dried Flowers,U1,67,67,7S,65
+65,Powdered Paprika,U1,67,3W,3W,65
+65,Cawl Cennin,U1,67,6W,6W,65
+65,Isloaf,U1,45,4S,4S,65
+65,Popoto Salad,2U,2S,2S,2S,65
+65,Dressing,U1,67,67,6S,65
+65,Stove,U1,45,4W,4W,65
+65,Lantern,2U,2W,2W,2W,65
+65,Natron,2W,2W,2W,2W,65
+65,Bouillabaisse,U1,3S,3S,3S,65
+65,Fossil Display,U1,67,3W,3W,65
+65,Bathtub,U1,45,5U,5W,65
+65,Spectacles,U1,67,67,6S,65
+65,Cooling Glass,2S,2S,2S,2S,65
+65,Runner Bean Saute,U1,67,67,7W,65
+65,Beet Soup,U1,45,4W,4W,65
+65,Imam Bayildi,U1,67,67,7S,65
+65,Pickled Zucchini,U1,45,5U,5S,65
+65,Serving Dish,U1,67,6W,6W,65
+65,Grinding Wheel,U1,45,4S,4S,65
+65,Tathlums,U1,3S,3S,3S,65
+65,Gold Hairpin,U1,45,5U,5S,65
+65,Mammet Award,U1,45,5U,5W,65
+65,Fruit Punch,U1,67,67,7S,65
+65,Sweet Popoto Pie,U1,67,3W,3W,65
+65,Peperoncino,U1,67,67,7W,65
+65,Buffalo Bean Salad,U1,67,67,6S,65
+66,Potion,U1,45,4W,4W,95
+66,Firesand,U1,67,6W,6W,95
+66,WoodenChair,2U,2W,2W,2W,95
+66,GrilledClam,U1,67,6W,6W,95
+66,Necklace,U1,67,3W,3W,95
+66,CoralRing,U1,67,67,7W,95
+66,Barbut,U1,45,5U,5W,95
+66,Macuahuitl,U1,3S,3S,3S,95
+66,Sauerkraut,U1,67,67,6S,95
+66,BakedPumpkin,U1,67,67,7S,95
+66,Tunic,U1,67,67,7S,95
+66,CulinaryKnife,U1,67,67,7W,95
+66,Brush,U1,67,6W,6W,95
+66,BoiledEgg,U1,67,67,6S,95
+66,Hora,2U,2S,2S,2S,95
+66,Earrings,U1,67,3W,3W,95
+66,Butter,U1,45,5U,5S,95
+66,BrickCounter,U1,67,67,6S,95
+66,BronzeSheep,U1,45,4W,4W,95
+66,GrowthFormula,U1,67,67,7S,95
+66,GarnetRapier,U1,45,4S,4S,95
+66,SpruceRoundShield,U1,45,5U,5S,95
+66,SharkOil,U1,45,5U,5W,95
+66,SilverEarCuffs,U1,45,4W,4W,95
+66,SweetPopoto,U1,45,5U,5W,95
+66,ParsnipSalad,2U,2S,2S,2S,95
+66,Caramels,2U,2W,2W,2W,95
+66,Ribbon,U1,45,5U,5W,95
+66,Rope,2S,2S,2S,2S,95
+66,CavaliersHat,U1,3S,3S,3S,95
+66,Horn,U1,67,67,7W,95
+66,SaltCod,U1,45,4S,4S,95
+66,SquidInk,U1,67,67,7W,95
+66,EssentialDraught,U1,67,6W,6W,95
+66,Jam,U1,67,67,7W,95
+66,TomatoRelish,U1,45,5U,5S,95
+66,OnionSoup,2U,2S,2S,2S,95
+66,Pie,U1,67,67,7S,95
+66,CornFlakes,U1,45,4S,4S,95
+66,PickledRadish,U1,67,3W,3W,95
+66,IronAxe,U1,67,67,6S,95
+66,QuartzRing,2U,2W,2W,2W,95
+66,PorcelainVase,U1,45,4S,4S,95
+66,VegetableJuice,U1,45,5U,5S,95
+66,PumpkinPudding,U1,67,3W,3W,95
+66,SheepfluffRug,U1,3S,3S,3S,95
+66,GardenScythe,U1,67,67,7S,95
+66,Bed,U1,3S,3S,3S,95
+66,ScaleFingers,2U,2W,2W,2W,95
+66,Crook,U1,45,4W,4W,95
+66,Coral Sword,U1,45,4W,4W,95
+66,Coconut Juice,U1,45,5U,5S,95
+66,Honey,U1,67,67,6S,95
+66,Seashine Opal,2S,2S,2S,2S,95
+66,Dried Flowers,U1,67,67,7S,95
+66,Powdered Paprika,2W,2W,2W,2W,95
+66,Cawl Cennin,U1,3S,3S,3S,95
+66,Isloaf,U1,45,5U,5W,95
+66,Popoto Salad,U1,67,6W,6W,95
+66,Dressing,U1,67,67,7W,95
+66,Stove,U1,45,4S,4S,95
+66,Lantern,U1,67,3W,3W,95
+66,Natron,U1,67,3W,3W,95
+66,Bouillabaisse,U1,67,67,7W,95
+66,Fossil Display,U1,67,6W,6W,95
+66,Bathtub,U1,45,5U,5S,95
+66,Spectacles,U1,67,67,7S,95
+66,Cooling Glass,2W,2W,2W,2W,95
+66,Runner Bean Saute,U1,3S,3S,3S,95
+66,Beet Soup,2S,2S,2S,2S,95
+66,Imam Bayildi,U1,67,67,6S,95
+66,Pickled Zucchini,U1,45,4S,4S,95
+66,Serving Dish,U1,45,5U,5W,95
+66,Grinding Wheel,U1,45,4W,4W,95
+66,Tathlums,U1,67,3W,3W,95
+66,Gold Hairpin,U1,67,67,7W,95
+66,Mammet Award,U1,67,6W,6W,95
+66,Fruit Punch,U1,45,5U,5W,95
+66,Sweet Popoto Pie,U1,67,67,6S,95
+66,Peperoncino,2W,2W,2W,2W,95
+66,Buffalo Bean Salad,U1,45,5U,5S,95
+67,Potion,U1,45,4S,4S,30
+67,Firesand,U1,67,6W,6W,30
+67,WoodenChair,2U,2S,2S,2S,30
+67,GrilledClam,2U,2S,2S,2S,30
+67,Necklace,U1,67,67,6S,30
+67,CoralRing,2U,2W,2W,2W,30
+67,Barbut,U1,67,6W,6W,30
+67,Macuahuitl,U1,45,5U,5S,30
+67,Sauerkraut,U1,67,6W,6W,30
+67,BakedPumpkin,U1,45,4S,4S,30
+67,Tunic,U1,3S,3S,3S,30
+67,CulinaryKnife,U1,67,6W,6W,30
+67,Brush,U1,67,67,7S,30
+67,BoiledEgg,2S,2S,2S,2S,30
+67,Hora,U1,67,67,7S,30
+67,Earrings,2U,2W,2W,2W,30
+67,Butter,U1,3S,3S,3S,30
+67,BrickCounter,U1,67,3W,3W,30
+67,BronzeSheep,2U,2W,2W,2W,30
+67,GrowthFormula,U1,45,5U,5W,30
+67,GarnetRapier,U1,67,67,7W,30
+67,SpruceRoundShield,U1,45,4S,4S,30
+67,SharkOil,U1,45,4W,4W,30
+67,SilverEarCuffs,U1,45,4W,4W,30
+67,SweetPopoto,U1,67,67,7W,30
+67,ParsnipSalad,U1,67,67,6S,30
+67,Caramels,U1,67,67,7W,30
+67,Ribbon,U1,67,67,7S,30
+67,Rope,U1,45,5U,5W,30
+67,CavaliersHat,U1,67,3W,3W,30
+67,Horn,2U,2S,2S,2S,30
+67,SaltCod,U1,45,5U,5W,30
+67,SquidInk,U1,67,3W,3W,30
+67,EssentialDraught,U1,45,5U,5S,30
+67,Jam,U1,67,3W,3W,30
+67,TomatoRelish,U1,3S,3S,3S,30
+67,OnionSoup,U1,45,4S,4S,30
+67,Pie,U1,45,5U,5S,30
+67,CornFlakes,U1,67,67,7S,30
+67,PickledRadish,U1,45,4W,4W,30
+67,IronAxe,U1,67,67,7W,30
+67,QuartzRing,U1,45,5U,5W,30
+67,PorcelainVase,U1,3S,3S,3S,30
+67,VegetableJuice,U1,45,4W,4W,30
+67,PumpkinPudding,U1,45,5U,5S,30
+67,SheepfluffRug,2W,2W,2W,2W,30
+67,GardenScythe,U1,67,67,6S,30
+67,Bed,U1,67,67,6S,30
+67,ScaleFingers,U1,67,67,7W,30
+67,Crook,U1,67,67,7S,30
+67,Coral Sword,U1,67,3W,3W,30
+67,Coconut Juice,U1,67,67,7W,30
+67,Honey,U1,67,67,6S,30
+67,Seashine Opal,U1,67,6W,6W,30
+67,Dried Flowers,U1,3S,3S,3S,30
+67,Powdered Paprika,2U,2W,2W,2W,30
+67,Cawl Cennin,U1,45,4W,4W,30
+67,Isloaf,2U,2S,2S,2S,30
+67,Popoto Salad,U1,45,5U,5S,30
+67,Dressing,U1,45,4S,4S,30
+67,Stove,U1,67,67,7S,30
+67,Lantern,U1,45,5U,5W,30
+67,Natron,U1,45,4W,4W,30
+67,Bouillabaisse,U1,45,5U,5S,30
+67,Fossil Display,2S,2S,2S,2S,30
+67,Bathtub,U1,67,67,7W,30
+67,Spectacles,U1,3S,3S,3S,30
+67,Cooling Glass,U1,45,4S,4S,30
+67,Runner Bean Saute,U1,67,67,6S,30
+67,Beet Soup,U1,45,5U,5W,30
+67,Imam Bayildi,2W,2W,2W,2W,30
+67,Pickled Zucchini,U1,67,3W,3W,30
+67,Serving Dish,U1,67,6W,6W,30
+67,Grinding Wheel,U1,67,67,7S,30
+67,Tathlums,U1,67,67,6S,30
+67,Gold Hairpin,U1,45,4W,4W,30
+67,Mammet Award,U1,45,5U,5S,30
+67,Fruit Punch,2W,2W,2W,2W,30
+67,Sweet Popoto Pie,U1,67,3W,3W,30
+67,Peperoncino,U1,3S,3S,3S,30
+67,Buffalo Bean Salad,U1,67,67,7S,30
+68,Potion,U1,3S,3S,3S,47
+68,Firesand,U1,67,3W,3W,47
+68,WoodenChair,U1,67,67,6S,47
+68,GrilledClam,U1,67,67,7W,47
+68,Necklace,U1,67,67,7W,47
+68,CoralRing,2U,2W,2W,2W,47
+68,Barbut,2U,2W,2W,2W,47
+68,Macuahuitl,U1,67,6W,6W,47
+68,Sauerkraut,U1,67,67,6S,47
+68,BakedPumpkin,U1,45,4W,4W,47
+68,Tunic,U1,67,67,7S,47
+68,CulinaryKnife,U1,45,5U,5W,47
+68,Brush,U1,3S,3S,3S,47
+68,BoiledEgg,2W,2W,2W,2W,47
+68,Hora,2U,2S,2S,2S,47
+68,Earrings,U1,67,6W,6W,47
+68,Butter,U1,45,5U,5W,47
+68,BrickCounter,U1,67,67,7S,47
+68,BronzeSheep,U1,45,5U,5W,47
+68,GrowthFormula,U1,45,4S,4S,47
+68,GarnetRapier,U1,67,67,7W,47
+68,SpruceRoundShield,U1,67,6W,6W,47
+68,SharkOil,U1,45,4S,4S,47
+68,SilverEarCuffs,U1,45,5U,5S,47
+68,SweetPopoto,U1,67,3W,3W,47
+68,ParsnipSalad,U1,67,6W,6W,47
+68,Caramels,U1,67,67,6S,47
+68,Ribbon,U1,3S,3S,3S,47
+68,Rope,2U,2S,2S,2S,47
+68,CavaliersHat,U1,45,5U,5S,47
+68,Horn,U1,67,67,7S,47
+68,SaltCod,U1,45,4W,4W,47
+68,SquidInk,U1,3S,3S,3S,47
+68,EssentialDraught,U1,67,67,6S,47
+68,Jam,2U,2S,2S,2S,47
+68,TomatoRelish,U1,67,3W,3W,47
+68,OnionSoup,U1,45,5U,5W,47
+68,Pie,2S,2S,2S,2S,47
+68,CornFlakes,U1,45,4S,4S,47
+68,PickledRadish,2U,2W,2W,2W,47
+68,IronAxe,U1,67,3W,3W,47
+68,QuartzRing,U1,45,4W,4W,47
+68,PorcelainVase,U1,45,5U,5S,47
+68,VegetableJuice,U1,45,5U,5S,47
+68,PumpkinPudding,U1,67,67,7S,47
+68,SheepfluffRug,U1,67,67,7S,47
+68,GardenScythe,U1,45,4S,4S,47
+68,Bed,U1,45,4W,4W,47
+68,ScaleFingers,U1,67,67,7W,47
+68,Crook,U1,67,67,7W,47
+68,Coral Sword,2S,2S,2S,2S,47
+68,Coconut Juice,U1,67,3W,3W,47
+68,Honey,U1,3S,3S,3S,47
+68,Seashine Opal,U1,67,67,7W,47
+68,Dried Flowers,U1,45,5U,5S,47
+68,Powdered Paprika,U1,67,6W,6W,47
+68,Cawl Cennin,U1,45,4W,4W,47
+68,Isloaf,U1,45,4S,4S,47
+68,Popoto Salad,2W,2W,2W,2W,47
+68,Dressing,U1,45,5U,5W,47
+68,Stove,U1,67,67,7S,47
+68,Lantern,U1,67,67,6S,47
+68,Natron,2U,2S,2S,2S,47
+68,Bouillabaisse,U1,3S,3S,3S,47
+68,Fossil Display,U1,67,67,6S,47
+68,Bathtub,U1,45,4S,4S,47
+68,Spectacles,U1,45,4W,4W,47
+68,Cooling Glass,U1,45,5U,5S,47
+68,Runner Bean Saute,U1,45,5U,5W,47
+68,Beet Soup,2U,2W,2W,2W,47
+68,Imam Bayildi,U1,67,67,7S,47
+68,Pickled Zucchini,U1,67,67,7W,47
+68,Serving Dish,U1,67,6W,6W,47
+68,Grinding Wheel,U1,67,3W,3W,47
+68,Tathlums,U1,67,67,7S,47
+68,Gold Hairpin,2W,2W,2W,2W,47
+68,Mammet Award,U1,67,67,7W,47
+68,Fruit Punch,U1,45,5U,5W,47
+68,Sweet Popoto Pie,U1,3S,3S,3S,47
+68,Peperoncino,2S,2S,2S,2S,47
+68,Buffalo Bean Salad,U1,67,67,6S,47
+69,Potion,U1,67,67,7S,54
+69,Firesand,U1,67,6W,6W,54
+69,WoodenChair,U1,45,5U,5W,54
+69,GrilledClam,U1,45,5U,5W,54
+69,Necklace,U1,67,67,7W,54
+69,CoralRing,U1,45,5U,5S,54
+69,Barbut,U1,45,5U,5S,54
+69,Macuahuitl,U1,67,3W,3W,54
+69,Sauerkraut,U1,45,4S,4S,54
+69,BakedPumpkin,U1,67,67,7S,54
+69,Tunic,U1,45,5U,5W,54
+69,CulinaryKnife,U1,67,3W,3W,54
+69,Brush,U1,45,4S,4S,54
+69,BoiledEgg,U1,3S,3S,3S,54
+69,Hora,2S,2S,2S,2S,54
+69,Earrings,U1,3S,3S,3S,54
+69,Butter,U1,67,6W,6W,54
+69,BrickCounter,2U,2W,2W,2W,54
+69,BronzeSheep,U1,45,4S,4S,54
+69,GrowthFormula,U1,67,67,7W,54
+69,GarnetRapier,U1,67,6W,6W,54
+69,SpruceRoundShield,U1,45,5U,5S,54
+69,SharkOil,2W,2W,2W,2W,54
+69,SilverEarCuffs,U1,67,67,7S,54
+69,SweetPopoto,U1,67,67,7W,54
+69,ParsnipSalad,U1,45,5U,5S,54
+69,Caramels,U1,67,67,7W,54
+69,Ribbon,U1,67,3W,3W,54
+69,Rope,U1,67,67,6S,54
+69,CavaliersHat,U1,67,67,6S,54
+69,Horn,U1,67,67,7W,54
+69,SaltCod,2U,2S,2S,2S,54
+69,SquidInk,2W,2W,2W,2W,54
+69,EssentialDraught,U1,67,67,7S,54
+69,Jam,2S,2S,2S,2S,54
+69,TomatoRelish,U1,45,4W,4W,54
+69,OnionSoup,U1,67,67,7S,54
+69,Pie,U1,67,67,6S,54
+69,CornFlakes,U1,3S,3S,3S,54
+69,PickledRadish,U1,45,5U,5W,54
+69,IronAxe,U1,45,4S,4S,54
+69,QuartzRing,U1,45,4W,4W,54
+69,PorcelainVase,U1,45,4W,4W,54
+69,VegetableJuice,2W,2W,2W,2W,54
+69,PumpkinPudding,2U,2S,2S,2S,54
+69,SheepfluffRug,U1,3S,3S,3S,54
+69,GardenScythe,U1,67,3W,3W,54
+69,Bed,U1,67,67,6S,54
+69,ScaleFingers,U1,67,6W,6W,54
+69,Crook,U1,45,4W,4W,54
+69,Coral Sword,2W,2W,2W,2W,54
+69,Coconut Juice,U1,67,67,7W,54
+69,Honey,U1,67,6W,6W,54
+69,Seashine Opal,U1,45,5U,5S,54
+69,Dried Flowers,U1,45,4S,4S,54
+69,Powdered Paprika,U1,67,3W,3W,54
+69,Cawl Cennin,U1,3S,3S,3S,54
+69,Isloaf,U1,45,4W,4W,54
+69,Popoto Salad,U1,67,67,6S,54
+69,Dressing,U1,67,67,7S,54
+69,Stove,U1,45,5U,5W,54
+69,Lantern,2S,2S,2S,2S,54
+69,Natron,U1,3S,3S,3S,54
+69,Bouillabaisse,U1,45,4W,4W,54
+69,Fossil Display,U1,67,67,7W,54
+69,Bathtub,2S,2S,2S,2S,54
+69,Spectacles,U1,67,6W,6W,54
+69,Cooling Glass,U1,67,3W,3W,54
+69,Runner Bean Saute,U1,67,67,6S,54
+69,Beet Soup,U1,45,4S,4S,54
+69,Imam Bayildi,U1,45,5U,5S,54
+69,Pickled Zucchini,2W,2W,2W,2W,54
+69,Serving Dish,U1,67,67,7S,54
+69,Grinding Wheel,U1,45,5U,5W,54
+69,Tathlums,U1,67,67,7W,54
+69,Gold Hairpin,U1,45,5U,5W,54
+69,Mammet Award,U1,67,6W,6W,54
+69,Fruit Punch,2U,2W,2W,2W,54
+69,Sweet Popoto Pie,U1,67,3W,3W,54
+69,Peperoncino,U1,3S,3S,3S,54
+69,Buffalo Bean Salad,U1,67,67,7S,54
+70,Potion,2U,2S,2S,2S,4
+70,Firesand,U1,67,3W,3W,4
+70,WoodenChair,U1,45,4W,4W,4
+70,GrilledClam,U1,67,6W,6W,4
+70,Necklace,U1,67,67,6S,4
+70,CoralRing,2W,2W,2W,2W,4
+70,Barbut,U1,45,5U,5W,4
+70,Macuahuitl,2U,2W,2W,2W,4
+70,Sauerkraut,U1,67,67,7W,4
+70,BakedPumpkin,U1,45,4S,4S,4
+70,Tunic,U1,67,3W,3W,4
+70,CulinaryKnife,2U,2S,2S,2S,4
+70,Brush,U1,3S,3S,3S,4
+70,BoiledEgg,U1,45,4W,4W,4
+70,Hora,U1,45,5U,5S,4
+70,Earrings,U1,67,67,6S,4
+70,Butter,U1,67,6W,6W,4
+70,BrickCounter,U1,67,67,7W,4
+70,BronzeSheep,2S,2S,2S,2S,4
+70,GrowthFormula,2U,2W,2W,2W,4
+70,GarnetRapier,U1,67,67,7S,4
+70,SpruceRoundShield,U1,67,67,6S,4
+70,SharkOil,U1,45,5U,5S,4
+70,SilverEarCuffs,2U,2W,2W,2W,4
+70,SweetPopoto,U1,67,6W,6W,4
+70,ParsnipSalad,2S,2S,2S,2S,4
+70,Caramels,U1,45,5U,5S,4
+70,Ribbon,U1,67,6W,6W,4
+70,Rope,U1,67,67,7S,4
+70,CavaliersHat,U1,45,5U,5S,4
+70,Horn,U1,45,4W,4W,4
+70,SaltCod,U1,45,4S,4S,4
+70,SquidInk,U1,67,67,7S,4
+70,EssentialDraught,U1,67,3W,3W,4
+70,Jam,U1,3S,3S,3S,4
+70,TomatoRelish,U1,67,67,7W,4
+70,OnionSoup,U1,67,67,6S,4
+70,Pie,U1,45,4S,4S,4
+70,CornFlakes,U1,67,67,7S,4
+70,PickledRadish,U1,45,5U,5W,4
+70,IronAxe,U1,3S,3S,3S,4
+70,QuartzRing,U1,67,3W,3W,4
+70,PorcelainVase,U1,67,67,7W,4
+70,VegetableJuice,U1,45,4S,4S,4
+70,PumpkinPudding,U1,67,67,7W,4
+70,SheepfluffRug,U1,45,4W,4W,4
+70,GardenScythe,U1,45,5U,5W,4
+70,Bed,U1,67,67,7S,4
+70,ScaleFingers,U1,45,5U,5W,4
+70,Crook,U1,3S,3S,3S,4
+70,Coral Sword,U1,45,5U,5S,4
+70,Coconut Juice,U1,3S,3S,3S,4
+70,Honey,U1,67,3W,3W,4
+70,Seashine Opal,U1,67,67,7S,4
+70,Dried Flowers,U1,67,6W,6W,4
+70,Powdered Paprika,U1,67,67,6S,4
+70,Cawl Cennin,2W,2W,2W,2W,4
+70,Isloaf,2S,2S,2S,2S,4
+70,Popoto Salad,U1,45,5U,5W,4
+70,Dressing,U1,67,67,7W,4
+70,Stove,U1,45,4S,4S,4
+70,Lantern,U1,45,4W,4W,4
+70,Natron,U1,45,4W,4W,4
+70,Bouillabaisse,U1,67,67,7S,4
+70,Fossil Display,U1,67,3W,3W,4
+70,Bathtub,U1,45,4S,4S,4
+70,Spectacles,U1,45,5U,5S,4
+70,Cooling Glass,U1,67,67,6S,4
+70,Runner Bean Saute,U1,3S,3S,3S,4
+70,Beet Soup,U1,67,6W,6W,4
+70,Imam Bayildi,U1,67,67,7W,4
+70,Pickled Zucchini,U1,45,5U,5W,4
+70,Serving Dish,2U,2S,2S,2S,4
+70,Grinding Wheel,2U,2W,2W,2W,4
+70,Tathlums,2S,2S,2S,2S,4
+70,Gold Hairpin,U1,67,3W,3W,4
+70,Mammet Award,U1,45,5U,5S,4
+70,Fruit Punch,U1,67,67,6S,4
+70,Sweet Popoto Pie,U1,45,5U,5W,4
+70,Peperoncino,2W,2W,2W,2W,4
+70,Buffalo Bean Salad,U1,3S,3S,3S,4
+71,Potion,2S,2S,2S,2S,69
+71,Firesand,U1,67,3W,3W,69
+71,WoodenChair,U1,67,67,7W,69
+71,GrilledClam,U1,45,4S,4S,69
+71,Necklace,U1,67,67,7W,69
+71,CoralRing,U1,45,4W,4W,69
+71,Barbut,2U,2S,2S,2S,69
+71,Macuahuitl,U1,45,5U,5W,69
+71,Sauerkraut,U1,67,3W,3W,69
+71,BakedPumpkin,U1,67,6W,6W,69
+71,Tunic,U1,67,67,6S,69
+71,CulinaryKnife,U1,67,67,7S,69
+71,Brush,U1,45,4W,4W,69
+71,BoiledEgg,U1,67,6W,6W,69
+71,Hora,U1,45,4S,4S,69
+71,Earrings,U1,67,67,7W,69
+71,Butter,U1,45,5U,5S,69
+71,BrickCounter,U1,67,67,6S,69
+71,BronzeSheep,U1,45,4S,4S,69
+71,GrowthFormula,U1,67,6W,6W,69
+71,GarnetRapier,U1,67,67,7S,69
+71,SpruceRoundShield,U1,67,67,7W,69
+71,SharkOil,U1,45,4S,4S,69
+71,SilverEarCuffs,U1,3S,3S,3S,69
+71,SweetPopoto,U1,67,67,7W,69
+71,ParsnipSalad,U1,45,5U,5S,69
+71,Caramels,2W,2W,2W,2W,69
+71,Ribbon,U1,67,67,7S,69
+71,Rope,U1,45,5U,5S,69
+71,CavaliersHat,U1,3S,3S,3S,69
+71,Horn,U1,67,3W,3W,69
+71,SaltCod,2S,2S,2S,2S,69
+71,SquidInk,U1,67,6W,6W,69
+71,EssentialDraught,2U,2W,2W,2W,69
+71,Jam,U1,67,67,6S,69
+71,TomatoRelish,U1,67,67,7S,69
+71,OnionSoup,U1,45,5U,5W,69
+71,Pie,U1,45,4W,4W,69
+71,CornFlakes,U1,45,4W,4W,69
+71,PickledRadish,2U,2W,2W,2W,69
+71,IronAxe,U1,67,3W,3W,69
+71,QuartzRing,U1,3S,3S,3S,69
+71,PorcelainVase,2U,2W,2W,2W,69
+71,VegetableJuice,U1,45,5U,5S,69
+71,PumpkinPudding,U1,3S,3S,3S,69
+71,SheepfluffRug,U1,67,67,7S,69
+71,GardenScythe,U1,45,5U,5W,69
+71,Bed,U1,67,67,6S,69
+71,ScaleFingers,2U,2S,2S,2S,69
+71,Crook,U1,45,5U,5W,69
+71,Coral Sword,U1,67,3W,3W,69
+71,Coconut Juice,U1,67,6W,6W,69
+71,Honey,U1,45,5U,5W,69
+71,Seashine Opal,U1,45,4W,4W,69
+71,Dried Flowers,U1,67,67,6S,69
+71,Powdered Paprika,2W,2W,2W,2W,69
+71,Cawl Cennin,U1,67,67,7W,69
+71,Isloaf,U1,45,5U,5S,69
+71,Popoto Salad,2S,2S,2S,2S,69
+71,Dressing,U1,45,4S,4S,69
+71,Stove,U1,3S,3S,3S,69
+71,Lantern,U1,67,67,7S,69
+71,Natron,2U,2W,2W,2W,69
+71,Bouillabaisse,U1,67,67,7W,69
+71,Fossil Display,U1,67,67,7S,69
+71,Bathtub,U1,45,4S,4S,69
+71,Spectacles,U1,67,67,6S,69
+71,Cooling Glass,U1,45,5U,5W,69
+71,Runner Bean Saute,U1,3S,3S,3S,69
+71,Beet Soup,2U,2S,2S,2S,69
+71,Imam Bayildi,U1,45,5U,5S,69
+71,Pickled Zucchini,U1,67,3W,3W,69
+71,Serving Dish,U1,45,4W,4W,69
+71,Grinding Wheel,U1,67,6W,6W,69
+71,Tathlums,2W,2W,2W,2W,69
+71,Gold Hairpin,U1,3S,3S,3S,69
+71,Mammet Award,U1,45,5U,5W,69
+71,Fruit Punch,U1,45,4S,4S,69
+71,Sweet Popoto Pie,U1,67,67,7S,69
+71,Peperoncino,U1,67,3W,3W,69
+71,Buffalo Bean Salad,U1,45,4W,4W,69
+72,Potion,2S,2S,2S,2S,73
+72,Firesand,U1,45,4W,4W,73
+72,WoodenChair,U1,67,67,7W,73
+72,GrilledClam,U1,45,5U,5S,73
+72,Necklace,U1,67,67,7W,73
+72,CoralRing,U1,45,4S,4S,73
+72,Barbut,U1,45,5U,5S,73
+72,Macuahuitl,U1,67,67,6S,73
+72,Sauerkraut,U1,67,3W,3W,73
+72,BakedPumpkin,U1,45,5U,5W,73
+72,Tunic,U1,45,5U,5W,73
+72,CulinaryKnife,U1,67,67,7S,73
+72,Brush,U1,45,5U,5S,73
+72,BoiledEgg,U1,67,3W,3W,73
+72,Hora,U1,45,4S,4S,73
+72,Earrings,U1,67,67,6S,73
+72,Butter,U1,67,3W,3W,73
+72,BrickCounter,U1,67,67,7W,73
+72,BronzeSheep,U1,67,67,7W,73
+72,GrowthFormula,U1,67,6W,6W,73
+72,GarnetRapier,U1,3S,3S,3S,73
+72,SpruceRoundShield,U1,3S,3S,3S,73
+72,SharkOil,U1,67,6W,6W,73
+72,SilverEarCuffs,U1,67,67,6S,73
+72,SweetPopoto,U1,45,5U,5W,73
+72,ParsnipSalad,U1,67,67,7S,73
+72,Caramels,2U,2W,2W,2W,73
+72,Ribbon,U1,45,5U,5W,73
+72,Rope,U1,67,6W,6W,73
+72,CavaliersHat,U1,67,67,7W,73
+72,Horn,U1,67,67,7S,73
+72,SaltCod,U1,3S,3S,3S,73
+72,SquidInk,2U,2W,2W,2W,73
+72,EssentialDraught,U1,45,4W,4W,73
+72,Jam,U1,67,67,7S,73
+72,TomatoRelish,U1,67,67,7S,73
+72,OnionSoup,U1,45,4S,4S,73
+72,Pie,U1,45,4W,4W,73
+72,CornFlakes,2U,2S,2S,2S,73
+72,PickledRadish,U1,67,67,6S,73
+72,IronAxe,U1,45,5U,5S,73
+72,QuartzRing,U1,67,3W,3W,73
+72,PorcelainVase,2U,2S,2S,2S,73
+72,VegetableJuice,2W,2W,2W,2W,73
+72,PumpkinPudding,U1,67,6W,6W,73
+72,SheepfluffRug,U1,45,4W,4W,73
+72,GardenScythe,U1,3S,3S,3S,73
+72,Bed,U1,45,4S,4S,73
+72,ScaleFingers,2W,2W,2W,2W,73
+72,Crook,2U,2S,2S,2S,73
+72,Coral Sword,U1,67,67,7W,73
+72,Coconut Juice,2S,2S,2S,2S,73
+72,Honey,U1,67,3W,3W,73
+72,Seashine Opal,U1,45,4W,4W,73
+72,Dried Flowers,U1,45,5U,5S,73
+72,Powdered Paprika,U1,67,67,7S,73
+72,Cawl Cennin,U1,67,6W,6W,73
+72,Isloaf,U1,3S,3S,3S,73
+72,Popoto Salad,U1,67,67,6S,73
+72,Dressing,2W,2W,2W,2W,73
+72,Stove,U1,45,5U,5W,73
+72,Lantern,U1,45,4S,4S,73
+72,Natron,U1,45,5U,5S,73
+72,Bouillabaisse,U1,45,4S,4S,73
+72,Fossil Display,U1,67,67,6S,73
+72,Bathtub,U1,67,6W,6W,73
+72,Spectacles,2S,2S,2S,2S,73
+72,Cooling Glass,U1,45,5U,5W,73
+72,Runner Bean Saute,U1,3S,3S,3S,73
+72,Beet Soup,U1,67,3W,3W,73
+72,Imam Bayildi,U1,67,67,7W,73
+72,Pickled Zucchini,U1,67,67,7S,73
+72,Serving Dish,U1,45,4W,4W,73
+72,Grinding Wheel,2W,2W,2W,2W,73
+72,Tathlums,2W,2W,2W,2W,73
+72,Gold Hairpin,U1,67,6W,6W,73
+72,Mammet Award,U1,45,5U,5W,73
+72,Fruit Punch,U1,45,5U,5S,73
+72,Sweet Popoto Pie,U1,45,4S,4S,73
+72,Peperoncino,U1,3S,3S,3S,73
+72,Buffalo Bean Salad,U1,45,4W,4W,73
+73,Potion,U1,67,6W,6W,94
+73,Firesand,U1,67,6W,6W,94
+73,WoodenChair,U1,67,67,6S,94
+73,GrilledClam,U1,45,5U,5S,94
+73,Necklace,U1,67,67,6S,94
+73,CoralRing,U1,3S,3S,3S,94
+73,Barbut,U1,45,5U,5S,94
+73,Macuahuitl,U1,67,67,7W,94
+73,Sauerkraut,U1,45,4S,4S,94
+73,BakedPumpkin,U1,67,67,7S,94
+73,Tunic,U1,45,5U,5S,94
+73,CulinaryKnife,U1,67,67,7W,94
+73,Brush,2S,2S,2S,2S,94
+73,BoiledEgg,U1,45,5U,5W,94
+73,Hora,U1,67,67,7W,94
+73,Earrings,U1,67,67,7W,94
+73,Butter,U1,3S,3S,3S,94
+73,BrickCounter,U1,45,4W,4W,94
+73,BronzeSheep,U1,3S,3S,3S,94
+73,GrowthFormula,U1,67,67,7S,94
+73,GarnetRapier,U1,67,67,6S,94
+73,SpruceRoundShield,U1,3S,3S,3S,94
+73,SharkOil,U1,67,67,7S,94
+73,SilverEarCuffs,U1,45,4W,4W,94
+73,SweetPopoto,2U,2W,2W,2W,94
+73,ParsnipSalad,U1,45,5U,5W,94
+73,Caramels,U1,67,6W,6W,94
+73,Ribbon,U1,45,5U,5W,94
+73,Rope,U1,67,67,7S,94
+73,CavaliersHat,U1,67,3W,3W,94
+73,Horn,2U,2W,2W,2W,94
+73,SaltCod,2S,2S,2S,2S,94
+73,SquidInk,U1,67,3W,3W,94
+73,EssentialDraught,U1,45,4W,4W,94
+73,Jam,U1,67,3W,3W,94
+73,TomatoRelish,U1,67,67,6S,94
+73,OnionSoup,U1,45,4S,4S,94
+73,Pie,U1,45,4W,4W,94
+73,CornFlakes,U1,67,67,7W,94
+73,PickledRadish,U1,67,67,7S,94
+73,IronAxe,2W,2W,2W,2W,94
+73,QuartzRing,U1,67,3W,3W,94
+73,PorcelainVase,U1,45,4S,4S,94
+73,VegetableJuice,2U,2S,2S,2S,94
+73,PumpkinPudding,U1,45,5U,5S,94
+73,SheepfluffRug,U1,45,5U,5W,94
+73,GardenScythe,2W,2W,2W,2W,94
+73,Bed,U1,67,6W,6W,94
+73,ScaleFingers,U1,45,4S,4S,94
+73,Crook,2S,2S,2S,2S,94
+73,Coral Sword,U1,45,5U,5W,94
+73,Coconut Juice,U1,67,67,7W,94
+73,Honey,U1,45,5U,5S,94
+73,Seashine Opal,2W,2W,2W,2W,94
+73,Dried Flowers,U1,67,67,7S,94
+73,Powdered Paprika,U1,67,6W,6W,94
+73,Cawl Cennin,U1,67,67,6S,94
+73,Isloaf,U1,67,3W,3W,94
+73,Popoto Salad,U1,45,4S,4S,94
+73,Dressing,U1,3S,3S,3S,94
+73,Stove,U1,45,4W,4W,94
+73,Lantern,2S,2S,2S,2S,94
+73,Natron,U1,67,3W,3W,94
+73,Bouillabaisse,U1,67,67,7W,94
+73,Fossil Display,U1,67,6W,6W,94
+73,Bathtub,U1,45,5U,5W,94
+73,Spectacles,U1,67,67,7S,94
+73,Cooling Glass,U1,67,67,6S,94
+73,Runner Bean Saute,U1,3S,3S,3S,94
+73,Beet Soup,2U,2W,2W,2W,94
+73,Imam Bayildi,U1,45,4W,4W,94
+73,Pickled Zucchini,2U,2S,2S,2S,94
+73,Serving Dish,U1,45,5U,5S,94
+73,Grinding Wheel,U1,45,4S,4S,94
+73,Tathlums,U1,67,67,6S,94
+73,Gold Hairpin,U1,67,67,7W,94
+73,Mammet Award,2S,2S,2S,2S,94
+73,Fruit Punch,U1,45,4W,4W,94
+73,Sweet Popoto Pie,U1,67,3W,3W,94
+73,Peperoncino,2W,2W,2W,2W,94
+73,Buffalo Bean Salad,U1,3S,3S,3S,94
+74,Potion,U1,67,6W,6W,91
+74,Firesand,U1,3S,3S,3S,91
+74,WoodenChair,U1,45,4W,4W,91
+74,GrilledClam,U1,45,5U,5W,91
+74,Necklace,2S,2S,2S,2S,91
+74,CoralRing,U1,67,6W,6W,91
+74,Barbut,U1,67,67,7W,91
+74,Macuahuitl,2U,2S,2S,2S,91
+74,Sauerkraut,U1,45,4W,4W,91
+74,BakedPumpkin,2U,2S,2S,2S,91
+74,Tunic,U1,45,5U,5W,91
+74,CulinaryKnife,U1,45,5U,5S,91
+74,Brush,U1,45,4S,4S,91
+74,BoiledEgg,U1,67,67,7S,91
+74,Hora,U1,67,67,7W,91
+74,Earrings,U1,67,67,6S,91
+74,Butter,U1,67,67,7W,91
+74,BrickCounter,U1,67,67,6S,91
+74,BronzeSheep,U1,45,4W,4W,91
+74,GrowthFormula,U1,67,67,6S,91
+74,GarnetRapier,U1,45,5U,5S,91
+74,SpruceRoundShield,U1,3S,3S,3S,91
+74,SharkOil,U1,67,3W,3W,91
+74,SilverEarCuffs,U1,45,4S,4S,91
+74,SweetPopoto,U1,45,5U,5S,91
+74,ParsnipSalad,2U,2W,2W,2W,91
+74,Caramels,U1,67,67,7S,91
+74,Ribbon,U1,3S,3S,3S,91
+74,Rope,2U,2W,2W,2W,91
+74,CavaliersHat,U1,67,3W,3W,91
+74,Horn,U1,67,3W,3W,91
+74,SaltCod,U1,67,67,7W,91
+74,SquidInk,U1,45,5U,5W,91
+74,EssentialDraught,U1,67,6W,6W,91
+74,Jam,U1,3S,3S,3S,91
+74,TomatoRelish,U1,67,67,7S,91
+74,OnionSoup,U1,67,67,7S,91
+74,Pie,2U,2W,2W,2W,91
+74,CornFlakes,U1,67,67,7W,91
+74,PickledRadish,U1,45,5U,5W,91
+74,IronAxe,U1,45,4W,4W,91
+74,QuartzRing,2U,2S,2S,2S,91
+74,PorcelainVase,U1,45,4S,4S,91
+74,VegetableJuice,U1,67,67,6S,91
+74,PumpkinPudding,U1,67,6W,6W,91
+74,SheepfluffRug,2U,2W,2W,2W,91
+74,GardenScythe,U1,45,5U,5S,91
+74,Bed,U1,67,67,7S,91
+74,ScaleFingers,U1,45,4S,4S,91
+74,Crook,U1,67,3W,3W,91
+74,Coral Sword,2U,2W,2W,2W,91
+74,Coconut Juice,U1,67,67,7W,91
+74,Honey,U1,67,3W,3W,91
+74,Seashine Opal,U1,45,5U,5S,91
+74,Dried Flowers,U1,67,67,6S,91
+74,Powdered Paprika,2U,2S,2S,2S,91
+74,Cawl Cennin,U1,45,4S,4S,91
+74,Isloaf,U1,67,6W,6W,91
+74,Popoto Salad,U1,45,5U,5W,91
+74,Dressing,U1,45,4W,4W,91
+74,Stove,U1,67,67,7S,91
+74,Lantern,U1,3S,3S,3S,91
+74,Natron,U1,67,67,7W,91
+74,Bouillabaisse,U1,67,6W,6W,91
+74,Fossil Display,U1,67,3W,3W,91
+74,Bathtub,U1,67,67,6S,91
+74,Spectacles,U1,45,4W,4W,91
+74,Cooling Glass,U1,3S,3S,3S,91
+74,Runner Bean Saute,U1,45,4S,4S,91
+74,Beet Soup,U1,67,67,7S,91
+74,Imam Bayildi,2W,2W,2W,2W,91
+74,Pickled Zucchini,U1,45,5U,5W,91
+74,Serving Dish,U1,45,5U,5S,91
+74,Grinding Wheel,2S,2S,2S,2S,91
+74,Tathlums,U1,3S,3S,3S,91
+74,Gold Hairpin,U1,67,67,7W,91
+74,Mammet Award,U1,67,67,7S,91
+74,Fruit Punch,U1,45,4W,4W,91
+74,Sweet Popoto Pie,2W,2W,2W,2W,91
+74,Peperoncino,U1,67,6W,6W,91
+74,Buffalo Bean Salad,U1,67,67,6S,91
+75,Potion,U1,45,5U,5W,38
+75,Firesand,U1,45,4W,4W,38
+75,WoodenChair,U1,45,4S,4S,38
+75,GrilledClam,U1,45,5U,5S,38
+75,Necklace,U1,45,5U,5W,38
+75,CoralRing,2U,2W,2W,2W,38
+75,Barbut,U1,67,67,7S,38
+75,Macuahuitl,U1,45,4S,4S,38
+75,Sauerkraut,U1,67,67,6S,38
+75,BakedPumpkin,U1,67,67,6S,38
+75,Tunic,U1,67,6W,6W,38
+75,CulinaryKnife,U1,67,6W,6W,38
+75,Brush,U1,67,3W,3W,38
+75,BoiledEgg,U1,3S,3S,3S,38
+75,Hora,U1,45,5U,5S,38
+75,Earrings,U1,67,67,7W,38
+75,Butter,U1,67,3W,3W,38
+75,BrickCounter,U1,67,67,7W,38
+75,BronzeSheep,2U,2W,2W,2W,38
+75,GrowthFormula,U1,45,5U,5S,38
+75,GarnetRapier,2W,2W,2W,2W,38
+75,SpruceRoundShield,U1,67,67,7W,38
+75,SharkOil,U1,67,3W,3W,38
+75,SilverEarCuffs,U1,67,67,6S,38
+75,SweetPopoto,U1,45,4W,4W,38
+75,ParsnipSalad,2U,2S,2S,2S,38
+75,Caramels,U1,45,4S,4S,38
+75,Ribbon,U1,45,5U,5S,38
+75,Rope,U1,45,4S,4S,38
+75,CavaliersHat,U1,45,4W,4W,38
+75,Horn,2U,2S,2S,2S,38
+75,SaltCod,U1,45,5U,5W,38
+75,SquidInk,U1,67,6W,6W,38
+75,EssentialDraught,U1,67,3W,3W,38
+75,Jam,U1,67,67,7S,38
+75,TomatoRelish,U1,45,4W,4W,38
+75,OnionSoup,2U,2S,2S,2S,38
+75,Pie,U1,3S,3S,3S,38
+75,CornFlakes,U1,67,67,7W,38
+75,PickledRadish,U1,67,67,6S,38
+75,IronAxe,U1,45,5U,5W,38
+75,QuartzRing,U1,3S,3S,3S,38
+75,PorcelainVase,2W,2W,2W,2W,38
+75,VegetableJuice,U1,67,67,7W,38
+75,PumpkinPudding,U1,3S,3S,3S,38
+75,SheepfluffRug,U1,67,67,7S,38
+75,GardenScythe,U1,67,6W,6W,38
+75,Bed,U1,67,67,7S,38
+75,ScaleFingers,2S,2S,2S,2S,38
+75,Crook,U1,67,67,7S,38
+75,Coral Sword,U1,45,5U,5W,38
+75,Coconut Juice,U1,67,6W,6W,38
+75,Honey,U1,45,4S,4S,38
+75,Seashine Opal,U1,67,67,7S,38
+75,Dried Flowers,U1,3S,3S,3S,38
+75,Powdered Paprika,U1,67,67,7W,38
+75,Cawl Cennin,2W,2W,2W,2W,38
+75,Isloaf,U1,67,3W,3W,38
+75,Popoto Salad,U1,67,67,6S,38
+75,Dressing,U1,45,4W,4W,38
+75,Stove,U1,45,5U,5S,38
+75,Lantern,2S,2S,2S,2S,38
+75,Natron,U1,67,3W,3W,38
+75,Bouillabaisse,U1,67,67,7S,38
+75,Fossil Display,U1,45,5U,5S,38
+75,Bathtub,U1,67,67,7W,38
+75,Spectacles,U1,45,5U,5W,38
+75,Cooling Glass,U1,3S,3S,3S,38
+75,Runner Bean Saute,U1,45,4W,4W,38
+75,Beet Soup,U1,45,4S,4S,38
+75,Imam Bayildi,U1,67,67,6S,38
+75,Pickled Zucchini,2W,2W,2W,2W,38
+75,Serving Dish,U1,67,6W,6W,38
+75,Grinding Wheel,2S,2S,2S,2S,38
+75,Tathlums,U1,67,67,6S,38
+75,Gold Hairpin,U1,67,6W,6W,38
+75,Mammet Award,2W,2W,2W,2W,38
+75,Fruit Punch,U1,3S,3S,3S,38
+75,Sweet Popoto Pie,U1,67,3W,3W,38
+75,Peperoncino,U1,67,67,7W,38
+75,Buffalo Bean Salad,U1,45,5U,5W,38
+76,Potion,U1,45,5U,5W,82
+76,Firesand,U1,45,4W,4W,82
+76,WoodenChair,2S,2S,2S,2S,82
+76,GrilledClam,2S,2S,2S,2S,82
+76,Necklace,U1,45,4S,4S,82
+76,CoralRing,U1,67,67,7S,82
+76,Barbut,U1,67,67,7S,82
+76,Macuahuitl,U1,67,67,7W,82
+76,Sauerkraut,U1,3S,3S,3S,82
+76,BakedPumpkin,U1,67,6W,6W,82
+76,Tunic,U1,45,5U,5S,82
+76,CulinaryKnife,U1,67,67,6S,82
+76,Brush,2U,2W,2W,2W,82
+76,BoiledEgg,U1,67,67,7S,82
+76,Hora,U1,45,5U,5W,82
+76,Earrings,U1,67,3W,3W,82
+76,Butter,U1,67,3W,3W,82
+76,BrickCounter,U1,45,4S,4S,82
+76,BronzeSheep,U1,3S,3S,3S,82
+76,GrowthFormula,U1,45,4W,4W,82
+76,GarnetRapier,U1,67,67,7W,82
+76,SpruceRoundShield,U1,67,67,6S,82
+76,SharkOil,U1,45,5U,5W,82
+76,SilverEarCuffs,U1,3S,3S,3S,82
+76,SweetPopoto,U1,67,6W,6W,82
+76,ParsnipSalad,U1,45,5U,5S,82
+76,Caramels,U1,67,67,6S,82
+76,Ribbon,2W,2W,2W,2W,82
+76,Rope,U1,45,5U,5W,82
+76,CavaliersHat,2U,2W,2W,2W,82
+76,Horn,U1,45,4S,4S,82
+76,SaltCod,U1,67,67,7S,82
+76,SquidInk,2U,2S,2S,2S,82
+76,EssentialDraught,U1,67,6W,6W,82
+76,Jam,U1,67,67,7W,82
+76,TomatoRelish,U1,45,4S,4S,82
+76,OnionSoup,U1,45,5U,5S,82
+76,Pie,U1,67,67,7W,82
+76,CornFlakes,U1,67,3W,3W,82
+76,PickledRadish,2W,2W,2W,2W,82
+76,IronAxe,U1,45,4W,4W,82
+76,QuartzRing,U1,67,67,7W,82
+76,PorcelainVase,U1,67,3W,3W,82
+76,VegetableJuice,U1,67,6W,6W,82
+76,PumpkinPudding,U1,67,67,7S,82
+76,SheepfluffRug,U1,3S,3S,3S,82
+76,GardenScythe,U1,67,67,6S,82
+76,Bed,U1,45,4W,4W,82
+76,ScaleFingers,2S,2S,2S,2S,82
+76,Crook,U1,45,5U,5S,82
+76,Coral Sword,U1,45,4S,4S,82
+76,Coconut Juice,2S,2S,2S,2S,82
+76,Honey,U1,45,5U,5W,82
+76,Seashine Opal,U1,67,67,7W,82
+76,Dried Flowers,U1,45,4W,4W,82
+76,Powdered Paprika,U1,67,67,6S,82
+76,Cawl Cennin,U1,45,5U,5S,82
+76,Isloaf,U1,67,67,7S,82
+76,Popoto Salad,U1,67,6W,6W,82
+76,Dressing,U1,3S,3S,3S,82
+76,Stove,U1,67,3W,3W,82
+76,Lantern,2W,2W,2W,2W,82
+76,Natron,U1,3S,3S,3S,82
+76,Bouillabaisse,U1,67,6W,6W,82
+76,Fossil Display,U1,45,5U,5W,82
+76,Bathtub,U1,67,67,7W,82
+76,Spectacles,U1,45,4S,4S,82
+76,Cooling Glass,2S,2S,2S,2S,82
+76,Runner Bean Saute,U1,67,3W,3W,82
+76,Beet Soup,U1,45,5U,5S,82
+76,Imam Bayildi,U1,45,4W,4W,82
+76,Pickled Zucchini,2W,2W,2W,2W,82
+76,Serving Dish,U1,67,67,6S,82
+76,Grinding Wheel,U1,67,67,7S,82
+76,Tathlums,U1,45,4S,4S,82
+76,Gold Hairpin,U1,67,67,7S,82
+76,Mammet Award,U1,67,67,6S,82
+76,Fruit Punch,2S,2S,2S,2S,82
+76,Sweet Popoto Pie,U1,45,4W,4W,82
+76,Peperoncino,U1,67,67,7W,82
+76,Buffalo Bean Salad,U1,67,3W,3W,82
+77,Potion,U1,45,5U,5W,13
+77,Firesand,U1,45,4W,4W,13
+77,WoodenChair,U1,45,4S,4S,13
+77,GrilledClam,U1,45,5U,5W,13
+77,Necklace,U1,67,67,7S,13
+77,CoralRing,U1,67,6W,6W,13
+77,Barbut,U1,3S,3S,3S,13
+77,Macuahuitl,U1,67,67,7W,13
+77,Sauerkraut,U1,67,6W,6W,13
+77,BakedPumpkin,2U,2W,2W,2W,13
+77,Tunic,U1,67,3W,3W,13
+77,CulinaryKnife,U1,45,5U,5W,13
+77,Brush,U1,45,4S,4S,13
+77,BoiledEgg,U1,67,67,7W,13
+77,Hora,U1,45,4W,4W,13
+77,Earrings,2U,2W,2W,2W,13
+77,Butter,U1,67,67,7S,13
+77,BrickCounter,2W,2W,2W,2W,13
+77,BronzeSheep,U1,67,3W,3W,13
+77,GrowthFormula,U1,3S,3S,3S,13
+77,GarnetRapier,U1,45,5U,5W,13
+77,SpruceRoundShield,2S,2S,2S,2S,13
+77,SharkOil,U1,45,4S,4S,13
+77,SilverEarCuffs,U1,45,4W,4W,13
+77,SweetPopoto,2U,2S,2S,2S,13
+77,ParsnipSalad,2S,2S,2S,2S,13
+77,Caramels,U1,3S,3S,3S,13
+77,Ribbon,U1,67,67,7W,13
+77,Rope,U1,67,67,6S,13
+77,CavaliersHat,U1,67,67,7S,13
+77,Horn,U1,45,5U,5S,13
+77,SaltCod,U1,67,67,6S,13
+77,SquidInk,U1,45,5U,5S,13
+77,EssentialDraught,U1,45,4S,4S,13
+77,Jam,U1,67,3W,3W,13
+77,TomatoRelish,U1,67,67,7S,13
+77,OnionSoup,U1,45,5U,5S,13
+77,Pie,2U,2W,2W,2W,13
+77,CornFlakes,U1,45,4W,4W,13
+77,PickledRadish,U1,67,67,7W,13
+77,IronAxe,2U,2S,2S,2S,13
+77,QuartzRing,U1,67,67,7S,13
+77,PorcelainVase,U1,67,3W,3W,13
+77,VegetableJuice,U1,45,5U,5S,13
+77,PumpkinPudding,U1,67,67,6S,13
+77,SheepfluffRug,U1,3S,3S,3S,13
+77,GardenScythe,U1,67,67,7W,13
+77,Bed,U1,67,67,6S,13
+77,ScaleFingers,U1,67,6W,6W,13
+77,Crook,U1,67,6W,6W,13
+77,Coral Sword,U1,3S,3S,3S,13
+77,Coconut Juice,U1,45,4S,4S,13
+77,Honey,U1,67,67,7S,13
+77,Seashine Opal,U1,67,67,7W,13
+77,Dried Flowers,2S,2S,2S,2S,13
+77,Powdered Paprika,U1,67,67,6S,13
+77,Cawl Cennin,U1,45,5U,5W,13
+77,Isloaf,U1,45,5U,5S,13
+77,Popoto Salad,U1,45,4W,4W,13
+77,Dressing,2W,2W,2W,2W,13
+77,Stove,U1,67,6W,6W,13
+77,Lantern,U1,67,3W,3W,13
+77,Natron,2S,2S,2S,2S,13
+77,Bouillabaisse,2W,2W,2W,2W,13
+77,Fossil Display,U1,67,67,7S,13
+77,Bathtub,U1,45,4S,4S,13
+77,Spectacles,U1,45,5U,5S,13
+77,Cooling Glass,U1,45,5U,5W,13
+77,Runner Bean Saute,U1,67,67,7W,13
+77,Beet Soup,U1,45,4W,4W,13
+77,Imam Bayildi,U1,67,3W,3W,13
+77,Pickled Zucchini,U1,67,67,6S,13
+77,Serving Dish,U1,67,6W,6W,13
+77,Grinding Wheel,U1,3S,3S,3S,13
+77,Tathlums,U1,45,5U,5W,13
+77,Gold Hairpin,U1,3S,3S,3S,13
+77,Mammet Award,U1,45,5U,5S,13
+77,Fruit Punch,U1,67,67,7W,13
+77,Sweet Popoto Pie,U1,67,67,7S,13
+77,Peperoncino,U1,67,6W,6W,13
+77,Buffalo Bean Salad,U1,45,4S,4S,13
+78,Potion,U1,67,6W,6W,85
+78,Firesand,U1,67,3W,3W,85
+78,WoodenChair,U1,67,67,7W,85
+78,GrilledClam,U1,45,5U,5W,85
+78,Necklace,2U,2W,2W,2W,85
+78,CoralRing,U1,67,67,7S,85
+78,Barbut,U1,45,4S,4S,85
+78,Macuahuitl,U1,67,67,7S,85
+78,Sauerkraut,U1,3S,3S,3S,85
+78,BakedPumpkin,U1,45,4W,4W,85
+78,Tunic,U1,45,5U,5S,85
+78,CulinaryKnife,U1,67,67,7W,85
+78,Brush,U1,67,6W,6W,85
+78,BoiledEgg,U1,67,67,6S,85
+78,Hora,U1,45,4W,4W,85
+78,Earrings,U1,67,67,7W,85
+78,Butter,U1,67,67,7S,85
+78,BrickCounter,U1,67,67,6S,85
+78,BronzeSheep,U1,67,67,7W,85
+78,GrowthFormula,2S,2S,2S,2S,85
+78,GarnetRapier,U1,67,67,7W,85
+78,SpruceRoundShield,U1,67,3W,3W,85
+78,SharkOil,2W,2W,2W,2W,85
+78,SilverEarCuffs,2U,2S,2S,2S,85
+78,SweetPopoto,U1,67,6W,6W,85
+78,ParsnipSalad,2W,2W,2W,2W,85
+78,Caramels,U1,3S,3S,3S,85
+78,Ribbon,U1,45,5U,5W,85
+78,Rope,U1,45,4S,4S,85
+78,CavaliersHat,U1,45,5U,5W,85
+78,Horn,2W,2W,2W,2W,85
+78,SaltCod,U1,67,67,7S,85
+78,SquidInk,U1,45,4W,4W,85
+78,EssentialDraught,U1,67,6W,6W,85
+78,Jam,U1,45,4W,4W,85
+78,TomatoRelish,U1,67,3W,3W,85
+78,OnionSoup,U1,67,67,6S,85
+78,Pie,U1,3S,3S,3S,85
+78,CornFlakes,U1,45,5U,5W,85
+78,PickledRadish,U1,67,67,7S,85
+78,IronAxe,U1,45,4S,4S,85
+78,QuartzRing,U1,45,5U,5S,85
+78,PorcelainVase,2U,2S,2S,2S,85
+78,VegetableJuice,U1,45,5U,5S,85
+78,PumpkinPudding,U1,3S,3S,3S,85
+78,SheepfluffRug,U1,67,3W,3W,85
+78,GardenScythe,U1,45,5U,5S,85
+78,Bed,U1,67,67,6S,85
+78,ScaleFingers,2U,2S,2S,2S,85
+78,Crook,U1,45,4S,4S,85
+78,Coral Sword,U1,45,4W,4W,85
+78,Coconut Juice,2W,2W,2W,2W,85
+78,Honey,U1,67,67,6S,85
+78,Seashine Opal,U1,67,67,7W,85
+78,Dried Flowers,U1,3S,3S,3S,85
+78,Powdered Paprika,2S,2S,2S,2S,85
+78,Cawl Cennin,U1,45,5U,5W,85
+78,Isloaf,U1,45,4S,4S,85
+78,Popoto Salad,U1,67,6W,6W,85
+78,Dressing,U1,67,3W,3W,85
+78,Stove,U1,67,67,7S,85
+78,Lantern,U1,45,5U,5S,85
+78,Natron,U1,67,67,7S,85
+78,Bouillabaisse,U1,67,6W,6W,85
+78,Fossil Display,U1,45,5U,5W,85
+78,Bathtub,U1,45,4S,4S,85
+78,Spectacles,U1,45,5U,5S,85
+78,Cooling Glass,2U,2W,2W,2W,85
+78,Runner Bean Saute,U1,67,3W,3W,85
+78,Beet Soup,2U,2S,2S,2S,85
+78,Imam Bayildi,U1,45,4W,4W,85
+78,Pickled Zucchini,U1,67,67,7W,85
+78,Serving Dish,U1,67,67,6S,85
+78,Grinding Wheel,U1,3S,3S,3S,85
+78,Tathlums,U1,45,5U,5S,85
+78,Gold Hairpin,U1,67,67,6S,85
+78,Mammet Award,2S,2S,2S,2S,85
+78,Fruit Punch,U1,45,5U,5W,85
+78,Sweet Popoto Pie,2W,2W,2W,2W,85
+78,Peperoncino,U1,3S,3S,3S,85
+78,Buffalo Bean Salad,U1,45,4S,4S,85
+79,Potion,U1,67,67,7S,23
+79,Firesand,U1,67,3W,3W,23
+79,WoodenChair,U1,67,67,7W,23
+79,GrilledClam,U1,67,3W,3W,23
+79,Necklace,U1,45,5U,5S,23
+79,CoralRing,U1,45,5U,5W,23
+79,Barbut,U1,67,67,7W,23
+79,Macuahuitl,U1,3S,3S,3S,23
+79,Sauerkraut,U1,67,67,7W,23
+79,BakedPumpkin,2U,2S,2S,2S,23
+79,Tunic,U1,67,67,7S,23
+79,CulinaryKnife,2U,2S,2S,2S,23
+79,Brush,U1,45,4W,4W,23
+79,BoiledEgg,U1,67,67,7S,23
+79,Hora,U1,3S,3S,3S,23
+79,Earrings,U1,67,6W,6W,23
+79,Butter,U1,45,5U,5W,23
+79,BrickCounter,U1,67,67,7W,23
+79,BronzeSheep,2U,2S,2S,2S,23
+79,GrowthFormula,U1,67,6W,6W,23
+79,GarnetRapier,2U,2W,2W,2W,23
+79,SpruceRoundShield,U1,3S,3S,3S,23
+79,SharkOil,2U,2S,2S,2S,23
+79,SilverEarCuffs,U1,67,67,6S,23
+79,SweetPopoto,U1,45,5U,5W,23
+79,ParsnipSalad,2U,2W,2W,2W,23
+79,Caramels,U1,45,5U,5S,23
+79,Ribbon,U1,45,4W,4W,23
+79,Rope,U1,45,5U,5S,23
+79,CavaliersHat,2U,2W,2W,2W,23
+79,Horn,U1,67,67,6S,23
+79,SaltCod,U1,45,4W,4W,23
+79,SquidInk,U1,45,4S,4S,23
+79,EssentialDraught,U1,67,6W,6W,23
+79,Jam,U1,67,67,7W,23
+79,TomatoRelish,U1,67,67,7S,23
+79,OnionSoup,U1,45,4W,4W,23
+79,Pie,U1,67,67,7S,23
+79,CornFlakes,U1,45,4S,4S,23
+79,PickledRadish,U1,45,5U,5S,23
+79,IronAxe,U1,67,67,6S,23
+79,QuartzRing,U1,45,4S,4S,23
+79,PorcelainVase,U1,45,5U,5W,23
+79,VegetableJuice,U1,67,3W,3W,23
+79,PumpkinPudding,U1,67,67,6S,23
+79,SheepfluffRug,U1,3S,3S,3S,23
+79,GardenScythe,U1,45,4S,4S,23
+79,Bed,2W,2W,2W,2W,23
+79,ScaleFingers,U1,67,6W,6W,23
+79,Crook,U1,67,3W,3W,23
+79,Coral Sword,2U,2W,2W,2W,23
+79,Coconut Juice,U1,45,5U,5S,23
+79,Honey,U1,67,3W,3W,23
+79,Seashine Opal,U1,3S,3S,3S,23
+79,Dried Flowers,U1,67,67,7W,23
+79,Powdered Paprika,U1,67,67,6S,23
+79,Cawl Cennin,2U,2S,2S,2S,23
+79,Isloaf,U1,67,6W,6W,23
+79,Popoto Salad,U1,67,67,7S,23
+79,Dressing,U1,45,5U,5W,23
+79,Stove,U1,45,4W,4W,23
+79,Lantern,U1,45,4S,4S,23
+79,Natron,U1,67,67,6S,23
+79,Bouillabaisse,2S,2S,2S,2S,23
+79,Fossil Display,U1,67,3W,3W,23
+79,Bathtub,U1,45,4W,4W,23
+79,Spectacles,2W,2W,2W,2W,23
+79,Cooling Glass,U1,3S,3S,3S,23
+79,Runner Bean Saute,U1,67,6W,6W,23
+79,Beet Soup,U1,45,4S,4S,23
+79,Imam Bayildi,U1,67,67,7W,23
+79,Pickled Zucchini,U1,45,5U,5S,23
+79,Serving Dish,U1,45,5U,5W,23
+79,Grinding Wheel,U1,67,67,7S,23
+79,Tathlums,U1,45,4S,4S,23
+79,Gold Hairpin,U1,45,5U,5S,23
+79,Mammet Award,U1,45,4W,4W,23
+79,Fruit Punch,U1,67,67,6S,23
+79,Sweet Popoto Pie,U1,67,3W,3W,23
+79,Peperoncino,U1,67,67,7S,23
+79,Buffalo Bean Salad,U1,45,5U,5W,23
+80,Potion,U1,3S,3S,3S,99
+80,Firesand,2U,2W,2W,2W,99
+80,WoodenChair,U1,3S,3S,3S,99
+80,GrilledClam,U1,45,5U,5S,99
+80,Necklace,U1,45,5U,5W,99
+80,CoralRing,2U,2S,2S,2S,99
+80,Barbut,U1,45,4S,4S,99
+80,Macuahuitl,U1,45,4S,4S,99
+80,Sauerkraut,U1,45,5U,5W,99
+80,BakedPumpkin,U1,67,67,6S,99
+80,Tunic,U1,45,5U,5W,99
+80,CulinaryKnife,U1,67,67,6S,99
+80,Brush,U1,67,3W,3W,99
+80,BoiledEgg,U1,67,3W,3W,99
+80,Hora,U1,67,6W,6W,99
+80,Earrings,2U,2W,2W,2W,99
+80,Butter,U1,3S,3S,3S,99
+80,BrickCounter,U1,67,67,7W,99
+80,BronzeSheep,U1,67,3W,3W,99
+80,GrowthFormula,U1,67,67,6S,99
+80,GarnetRapier,U1,67,6W,6W,99
+80,SpruceRoundShield,U1,67,67,6S,99
+80,SharkOil,2W,2W,2W,2W,99
+80,SilverEarCuffs,2S,2S,2S,2S,99
+80,SweetPopoto,U1,45,5U,5S,99
+80,ParsnipSalad,U1,67,67,7W,99
+80,Caramels,U1,45,4W,4W,99
+80,Ribbon,U1,67,67,7S,99
+80,Rope,U1,67,3W,3W,99
+80,CavaliersHat,U1,45,4W,4W,99
+80,Horn,U1,45,4W,4W,99
+80,SaltCod,U1,67,67,7S,99
+80,SquidInk,U1,45,4S,4S,99
+80,EssentialDraught,2U,2W,2W,2W,99
+80,Jam,U1,45,5U,5W,99
+80,TomatoRelish,U1,67,67,7W,99
+80,OnionSoup,U1,45,4S,4S,99
+80,Pie,U1,67,67,7S,99
+80,CornFlakes,U1,45,5U,5S,99
+80,PickledRadish,2S,2S,2S,2S,99
+80,IronAxe,U1,45,4W,4W,99
+80,QuartzRing,U1,67,67,7S,99
+80,PorcelainVase,U1,67,67,7W,99
+80,VegetableJuice,U1,67,6W,6W,99
+80,PumpkinPudding,U1,67,6W,6W,99
+80,SheepfluffRug,U1,3S,3S,3S,99
+80,GardenScythe,2S,2S,2S,2S,99
+80,Bed,U1,45,5U,5S,99
+80,ScaleFingers,U1,67,67,7S,99
+80,Crook,U1,67,67,7W,99
+80,Coral Sword,U1,45,4S,4S,99
+80,Coconut Juice,2W,2W,2W,2W,99
+80,Honey,U1,67,67,7S,99
+80,Seashine Opal,U1,45,4W,4W,99
+80,Dried Flowers,U1,45,5U,5W,99
+80,Powdered Paprika,U1,67,67,7W,99
+80,Cawl Cennin,U1,67,67,6S,99
+80,Isloaf,U1,67,3W,3W,99
+80,Popoto Salad,2S,2S,2S,2S,99
+80,Dressing,U1,3S,3S,3S,99
+80,Stove,U1,67,6W,6W,99
+80,Lantern,U1,45,5U,5S,99
+80,Natron,2W,2W,2W,2W,99
+80,Bouillabaisse,U1,3S,3S,3S,99
+80,Fossil Display,U1,45,5U,5S,99
+80,Bathtub,U1,45,4S,4S,99
+80,Spectacles,U1,45,5U,5W,99
+80,Cooling Glass,U1,67,67,7S,99
+80,Runner Bean Saute,U1,67,6W,6W,99
+80,Beet Soup,U1,67,67,7W,99
+80,Imam Bayildi,U1,67,3W,3W,99
+80,Pickled Zucchini,U1,67,67,6S,99
+80,Serving Dish,2S,2S,2S,2S,99
+80,Grinding Wheel,U1,45,4W,4W,99
+80,Tathlums,U1,67,67,6S,99
+80,Gold Hairpin,2S,2S,2S,2S,99
+80,Mammet Award,2W,2W,2W,2W,99
+80,Fruit Punch,U1,45,5U,5S,99
+80,Sweet Popoto Pie,U1,3S,3S,3S,99
+80,Peperoncino,U1,67,67,7S,99
+80,Buffalo Bean Salad,U1,45,5U,5W,99
+81,Potion,U1,67,67,7W,84
+81,Firesand,U1,67,67,6S,84
+81,WoodenChair,U1,67,67,6S,84
+81,GrilledClam,U1,67,67,7S,84
+81,Necklace,U1,45,4W,4W,84
+81,CoralRing,U1,67,67,6S,84
+81,Barbut,U1,67,67,7S,84
+81,Macuahuitl,U1,67,3W,3W,84
+81,Sauerkraut,U1,67,67,7W,84
+81,BakedPumpkin,U1,45,4S,4S,84
+81,Tunic,U1,3S,3S,3S,84
+81,CulinaryKnife,U1,67,3W,3W,84
+81,Brush,U1,67,67,7W,84
+81,BoiledEgg,2U,2S,2S,2S,84
+81,Hora,U1,45,5U,5W,84
+81,Earrings,U1,67,67,7S,84
+81,Butter,U1,67,6W,6W,84
+81,BrickCounter,U1,45,5U,5S,84
+81,BronzeSheep,U1,67,67,7S,84
+81,GrowthFormula,U1,67,3W,3W,84
+81,GarnetRapier,U1,45,4W,4W,84
+81,SpruceRoundShield,U1,67,6W,6W,84
+81,SharkOil,U1,67,67,7S,84
+81,SilverEarCuffs,U1,3S,3S,3S,84
+81,SweetPopoto,U1,67,6W,6W,84
+81,ParsnipSalad,2U,2S,2S,2S,84
+81,Caramels,U1,45,4W,4W,84
+81,Ribbon,U1,45,5U,5W,84
+81,Rope,U1,67,67,7W,84
+81,CavaliersHat,U1,45,5U,5W,84
+81,Horn,U1,67,67,7W,84
+81,SaltCod,2U,2W,2W,2W,84
+81,SquidInk,U1,45,4S,4S,84
+81,EssentialDraught,2U,2W,2W,2W,84
+81,Jam,U1,45,4W,4W,84
+81,TomatoRelish,U1,67,3W,3W,84
+81,OnionSoup,U1,67,6W,6W,84
+81,Pie,2U,2W,2W,2W,84
+81,CornFlakes,U1,45,5U,5S,84
+81,PickledRadish,U1,45,5U,5W,84
+81,IronAxe,U1,67,67,6S,84
+81,QuartzRing,U1,45,4S,4S,84
+81,PorcelainVase,U1,45,4S,4S,84
+81,VegetableJuice,U1,3S,3S,3S,84
+81,PumpkinPudding,2U,2W,2W,2W,84
+81,SheepfluffRug,U1,45,5U,5S,84
+81,GardenScythe,2S,2S,2S,2S,84
+81,Bed,2S,2S,2S,2S,84
+81,ScaleFingers,U1,45,5U,5S,84
+81,Crook,U1,3S,3S,3S,84
+81,Coral Sword,2S,2S,2S,2S,84
+81,Coconut Juice,U1,67,67,6S,84
+81,Honey,U1,45,5U,5S,84
+81,Seashine Opal,U1,67,67,7S,84
+81,Dried Flowers,2W,2W,2W,2W,84
+81,Powdered Paprika,U1,67,3W,3W,84
+81,Cawl Cennin,U1,45,5U,5W,84
+81,Isloaf,U1,3S,3S,3S,84
+81,Popoto Salad,U1,67,6W,6W,84
+81,Dressing,U1,45,4S,4S,84
+81,Stove,U1,45,4W,4W,84
+81,Lantern,U1,67,67,7W,84
+81,Natron,U1,67,67,7W,84
+81,Bouillabaisse,U1,45,4S,4S,84
+81,Fossil Display,U1,45,4W,4W,84
+81,Bathtub,2W,2W,2W,2W,84
+81,Spectacles,U1,67,6W,6W,84
+81,Cooling Glass,2S,2S,2S,2S,84
+81,Runner Bean Saute,U1,3S,3S,3S,84
+81,Beet Soup,U1,67,67,6S,84
+81,Imam Bayildi,U1,67,3W,3W,84
+81,Pickled Zucchini,U1,45,5U,5S,84
+81,Serving Dish,U1,45,5U,5W,84
+81,Grinding Wheel,U1,67,67,7S,84
+81,Tathlums,U1,67,67,7S,84
+81,Gold Hairpin,U1,45,5U,5W,84
+81,Mammet Award,U1,45,4W,4W,84
+81,Fruit Punch,U1,67,67,6S,84
+81,Sweet Popoto Pie,2W,2W,2W,2W,84
+81,Peperoncino,U1,67,3W,3W,84
+81,Buffalo Bean Salad,2S,2S,2S,2S,84
+82,Potion,U1,67,67,7S,26
+82,Firesand,U1,45,4W,4W,26
+82,WoodenChair,2W,2W,2W,2W,26
+82,GrilledClam,2U,2S,2S,2S,26
+82,Necklace,U1,45,5U,5W,26
+82,CoralRing,2W,2W,2W,2W,26
+82,Barbut,U1,67,67,7S,26
+82,Macuahuitl,U1,67,67,7S,26
+82,Sauerkraut,U1,45,4S,4S,26
+82,BakedPumpkin,U1,45,5U,5S,26
+82,Tunic,U1,67,6W,6W,26
+82,CulinaryKnife,U1,67,6W,6W,26
+82,Brush,2U,2W,2W,2W,26
+82,BoiledEgg,U1,3S,3S,3S,26
+82,Hora,U1,45,4W,4W,26
+82,Earrings,2U,2S,2S,2S,26
+82,Butter,U1,67,67,7S,26
+82,BrickCounter,U1,3S,3S,3S,26
+82,BronzeSheep,U1,67,67,7S,26
+82,GrowthFormula,U1,67,67,7W,26
+82,GarnetRapier,U1,67,3W,3W,26
+82,SpruceRoundShield,U1,45,4S,4S,26
+82,SharkOil,U1,45,4S,4S,26
+82,SilverEarCuffs,U1,67,3W,3W,26
+82,SweetPopoto,U1,67,67,6S,26
+82,ParsnipSalad,U1,67,3W,3W,26
+82,Caramels,2U,2W,2W,2W,26
+82,Ribbon,U1,67,67,7W,26
+82,Rope,U1,67,67,7W,26
+82,CavaliersHat,U1,67,67,6S,26
+82,Horn,U1,67,6W,6W,26
+82,SaltCod,U1,67,3W,3W,26
+82,SquidInk,U1,45,4W,4W,26
+82,EssentialDraught,U1,45,4W,4W,26
+82,Jam,U1,45,5U,5S,26
+82,TomatoRelish,U1,67,67,6S,26
+82,OnionSoup,U1,45,5U,5W,26
+82,Pie,U1,45,4S,4S,26
+82,CornFlakes,U1,67,67,7W,26
+82,PickledRadish,U1,67,6W,6W,26
+82,IronAxe,U1,67,67,7W,26
+82,QuartzRing,U1,45,5U,5W,26
+82,PorcelainVase,2S,2S,2S,2S,26
+82,VegetableJuice,U1,67,67,6S,26
+82,PumpkinPudding,U1,3S,3S,3S,26
+82,SheepfluffRug,2S,2S,2S,2S,26
+82,GardenScythe,U1,45,5U,5W,26
+82,Bed,U1,45,5U,5S,26
+82,ScaleFingers,U1,3S,3S,3S,26
+82,Crook,U1,45,5U,5S,26
+82,Coral Sword,U1,67,6W,6W,26
+82,Coconut Juice,U1,45,4W,4W,26
+82,Honey,2W,2W,2W,2W,26
+82,Seashine Opal,U1,67,67,7W,26
+82,Dried Flowers,U1,67,3W,3W,26
+82,Powdered Paprika,U1,45,4S,4S,26
+82,Cawl Cennin,2S,2S,2S,2S,26
+82,Isloaf,U1,3S,3S,3S,26
+82,Popoto Salad,U1,45,5U,5S,26
+82,Dressing,U1,67,67,7S,26
+82,Stove,U1,67,67,6S,26
+82,Lantern,U1,45,5U,5W,26
+82,Natron,U1,67,67,6S,26
+82,Bouillabaisse,U1,67,3W,3W,26
+82,Fossil Display,U1,67,67,7S,26
+82,Bathtub,U1,67,6W,6W,26
+82,Spectacles,U1,45,4W,4W,26
+82,Cooling Glass,U1,45,4S,4S,26
+82,Runner Bean Saute,U1,3S,3S,3S,26
+82,Beet Soup,2W,2W,2W,2W,26
+82,Imam Bayildi,U1,45,5U,5W,26
+82,Pickled Zucchini,U1,67,67,7W,26
+82,Serving Dish,2S,2S,2S,2S,26
+82,Grinding Wheel,U1,45,5U,5S,26
+82,Tathlums,U1,45,4W,4W,26
+82,Gold Hairpin,U1,67,3W,3W,26
+82,Mammet Award,U1,3S,3S,3S,26
+82,Fruit Punch,U1,67,67,6S,26
+82,Sweet Popoto Pie,U1,67,67,7S,26
+82,Peperoncino,U1,45,5U,5W,26
+82,Buffalo Bean Salad,U1,45,4S,4S,26
+83,Potion,U1,3S,3S,3S,45
+83,Firesand,U1,45,4W,4W,45
+83,WoodenChair,U1,67,67,6S,45
+83,GrilledClam,U1,45,4S,4S,45
+83,Necklace,U1,67,67,7S,45
+83,CoralRing,2U,2W,2W,2W,45
+83,Barbut,U1,67,67,6S,45
+83,Macuahuitl,U1,67,6W,6W,45
+83,Sauerkraut,U1,67,67,7W,45
+83,BakedPumpkin,U1,67,3W,3W,45
+83,Tunic,2U,2W,2W,2W,45
+83,CulinaryKnife,U1,3S,3S,3S,45
+83,Brush,U1,45,5U,5W,45
+83,BoiledEgg,U1,45,5U,5W,45
+83,Hora,U1,67,67,7W,45
+83,Earrings,2S,2S,2S,2S,45
+83,Butter,U1,67,67,7W,45
+83,BrickCounter,U1,67,3W,3W,45
+83,BronzeSheep,U1,67,3W,3W,45
+83,GrowthFormula,U1,45,5U,5W,45
+83,GarnetRapier,U1,45,4S,4S,45
+83,SpruceRoundShield,U1,45,5U,5S,45
+83,SharkOil,U1,3S,3S,3S,45
+83,SilverEarCuffs,2U,2S,2S,2S,45
+83,SweetPopoto,U1,67,67,7S,45
+83,ParsnipSalad,2U,2W,2W,2W,45
+83,Caramels,U1,67,6W,6W,45
+83,Ribbon,U1,67,6W,6W,45
+83,Rope,U1,67,6W,6W,45
+83,CavaliersHat,U1,67,67,6S,45
+83,Horn,U1,45,4W,4W,45
+83,SaltCod,U1,45,5U,5S,45
+83,SquidInk,U1,67,67,7S,45
+83,EssentialDraught,U1,67,67,7S,45
+83,Jam,U1,67,67,6S,45
+83,TomatoRelish,2S,2S,2S,2S,45
+83,OnionSoup,U1,67,3W,3W,45
+83,Pie,U1,45,5U,5S,45
+83,CornFlakes,U1,3S,3S,3S,45
+83,PickledRadish,U1,45,4W,4W,45
+83,IronAxe,2U,2W,2W,2W,45
+83,QuartzRing,U1,45,5U,5S,45
+83,PorcelainVase,U1,45,4W,4W,45
+83,VegetableJuice,U1,45,4S,4S,45
+83,PumpkinPudding,U1,45,5U,5W,45
+83,SheepfluffRug,U1,67,67,7W,45
+83,GardenScythe,2U,2S,2S,2S,45
+83,Bed,U1,67,67,7S,45
+83,ScaleFingers,U1,45,4S,4S,45
+83,Crook,U1,67,67,7W,45
+83,Coral Sword,U1,3S,3S,3S,45
+83,Coconut Juice,U1,67,67,6S,45
+83,Honey,U1,67,3W,3W,45
+83,Seashine Opal,U1,45,4S,4S,45
+83,Dried Flowers,2U,2S,2S,2S,45
+83,Powdered Paprika,U1,67,67,7W,45
+83,Cawl Cennin,U1,45,5U,5S,45
+83,Isloaf,U1,67,6W,6W,45
+83,Popoto Salad,U1,67,67,7S,45
+83,Dressing,2U,2W,2W,2W,45
+83,Stove,U1,45,5U,5W,45
+83,Lantern,U1,45,4W,4W,45
+83,Natron,U1,45,4S,4S,45
+83,Bouillabaisse,U1,67,67,6S,45
+83,Fossil Display,2U,2W,2W,2W,45
+83,Bathtub,U1,67,67,7W,45
+83,Spectacles,U1,45,4W,4W,45
+83,Cooling Glass,U1,67,3W,3W,45
+83,Runner Bean Saute,U1,67,67,7S,45
+83,Beet Soup,U1,45,5U,5S,45
+83,Imam Bayildi,U1,67,6W,6W,45
+83,Pickled Zucchini,2U,2S,2S,2S,45
+83,Serving Dish,U1,3S,3S,3S,45
+83,Grinding Wheel,U1,45,5U,5W,45
+83,Tathlums,U1,45,4S,4S,45
+83,Gold Hairpin,U1,3S,3S,3S,45
+83,Mammet Award,2S,2S,2S,2S,45
+83,Fruit Punch,2W,2W,2W,2W,45
+83,Sweet Popoto Pie,U1,67,67,7S,45
+83,Peperoncino,U1,45,5U,5S,45
+83,Buffalo Bean Salad,U1,45,4W,4W,45
+84,Potion,U1,67,3W,3W,56
+84,Firesand,U1,67,3W,3W,56
+84,WoodenChair,U1,67,67,7S,56
+84,GrilledClam,U1,67,67,6S,56
+84,Necklace,U1,67,6W,6W,56
+84,CoralRing,U1,67,3W,3W,56
+84,Barbut,U1,45,5U,5W,56
+84,Macuahuitl,U1,67,67,7W,56
+84,Sauerkraut,U1,45,4W,4W,56
+84,BakedPumpkin,U1,45,5U,5W,56
+84,Tunic,U1,45,4W,4W,56
+84,CulinaryKnife,U1,67,67,6S,56
+84,Brush,U1,67,67,7W,56
+84,BoiledEgg,U1,67,67,7S,56
+84,Hora,2U,2S,2S,2S,56
+84,Earrings,U1,45,4W,4W,56
+84,Butter,2U,2S,2S,2S,56
+84,BrickCounter,U1,45,4S,4S,56
+84,BronzeSheep,2U,2S,2S,2S,56
+84,GrowthFormula,U1,45,4S,4S,56
+84,GarnetRapier,U1,45,4S,4S,56
+84,SpruceRoundShield,U1,67,67,7W,56
+84,SharkOil,U1,67,67,7S,56
+84,SilverEarCuffs,U1,67,67,7W,56
+84,SweetPopoto,U1,45,5U,5S,56
+84,ParsnipSalad,U1,45,5U,5W,56
+84,Caramels,U1,45,5U,5S,56
+84,Ribbon,U1,3S,3S,3S,56
+84,Rope,U1,67,3W,3W,56
+84,CavaliersHat,U1,67,67,6S,56
+84,Horn,2U,2S,2S,2S,56
+84,SaltCod,U1,67,67,7W,56
+84,SquidInk,U1,45,5U,5S,56
+84,EssentialDraught,U1,45,5U,5W,56
+84,Jam,U1,67,6W,6W,56
+84,TomatoRelish,U1,3S,3S,3S,56
+84,OnionSoup,U1,45,5U,5S,56
+84,Pie,U1,45,4S,4S,56
+84,CornFlakes,U1,3S,3S,3S,56
+84,PickledRadish,2U,2W,2W,2W,56
+84,IronAxe,U1,67,67,7S,56
+84,QuartzRing,U1,67,6W,6W,56
+84,PorcelainVase,U1,67,6W,6W,56
+84,VegetableJuice,2W,2W,2W,2W,56
+84,PumpkinPudding,U1,67,67,6S,56
+84,SheepfluffRug,U1,67,67,7S,56
+84,GardenScythe,U1,3S,3S,3S,56
+84,Bed,U1,45,4W,4W,56
+84,ScaleFingers,2W,2W,2W,2W,56
+84,Crook,2U,2W,2W,2W,56
+84,Coral Sword,U1,45,4S,4S,56
+84,Coconut Juice,2W,2W,2W,2W,56
+84,Honey,U1,67,3W,3W,56
+84,Seashine Opal,U1,67,67,6S,56
+84,Dried Flowers,U1,67,67,7S,56
+84,Powdered Paprika,U1,3S,3S,3S,56
+84,Cawl Cennin,U1,45,4W,4W,56
+84,Isloaf,U1,45,5U,5S,56
+84,Popoto Salad,U1,67,6W,6W,56
+84,Dressing,2S,2S,2S,2S,56
+84,Stove,U1,67,67,7W,56
+84,Lantern,U1,45,5U,5W,56
+84,Natron,U1,67,67,7W,56
+84,Bouillabaisse,U1,45,5U,5W,56
+84,Fossil Display,U1,67,6W,6W,56
+84,Bathtub,U1,67,3W,3W,56
+84,Spectacles,U1,45,4W,4W,56
+84,Cooling Glass,2U,2W,2W,2W,56
+84,Runner Bean Saute,U1,3S,3S,3S,56
+84,Beet Soup,U1,67,67,7S,56
+84,Imam Bayildi,U1,45,5U,5S,56
+84,Pickled Zucchini,U1,45,4S,4S,56
+84,Serving Dish,U1,67,67,6S,56
+84,Grinding Wheel,2U,2S,2S,2S,56
+84,Tathlums,2S,2S,2S,2S,56
+84,Gold Hairpin,U1,67,6W,6W,56
+84,Mammet Award,U1,3S,3S,3S,56
+84,Fruit Punch,U1,45,5U,5W,56
+84,Sweet Popoto Pie,U1,67,67,7W,56
+84,Peperoncino,U1,45,5U,5S,56
+84,Buffalo Bean Salad,2W,2W,2W,2W,56
+85,Potion,U1,45,5U,5W,9
+85,Firesand,U1,3S,3S,3S,9
+85,WoodenChair,2U,2S,2S,2S,9
+85,GrilledClam,U1,45,4S,4S,9
+85,Necklace,U1,67,67,7S,9
+85,CoralRing,2U,2W,2W,2W,9
+85,Barbut,U1,67,3W,3W,9
+85,Macuahuitl,U1,45,4S,4S,9
+85,Sauerkraut,U1,67,67,7W,9
+85,BakedPumpkin,U1,67,3W,3W,9
+85,Tunic,U1,67,67,7S,9
+85,CulinaryKnife,U1,45,5U,5W,9
+85,Brush,U1,45,4W,4W,9
+85,BoiledEgg,U1,45,4W,4W,9
+85,Hora,2W,2W,2W,2W,9
+85,Earrings,U1,45,5U,5S,9
+85,Butter,U1,45,4S,4S,9
+85,BrickCounter,U1,3S,3S,3S,9
+85,BronzeSheep,U1,67,6W,6W,9
+85,GrowthFormula,U1,45,5U,5W,9
+85,GarnetRapier,U1,67,67,6S,9
+85,SpruceRoundShield,U1,67,67,7W,9
+85,SharkOil,U1,45,5U,5W,9
+85,SilverEarCuffs,U1,67,67,7W,9
+85,SweetPopoto,U1,67,67,6S,9
+85,ParsnipSalad,U1,3S,3S,3S,9
+85,Caramels,2S,2S,2S,2S,9
+85,Ribbon,U1,45,4W,4W,9
+85,Rope,U1,67,67,7S,9
+85,CavaliersHat,U1,67,67,7W,9
+85,Horn,U1,67,6W,6W,9
+85,SaltCod,U1,67,3W,3W,9
+85,SquidInk,2S,2S,2S,2S,9
+85,EssentialDraught,U1,67,6W,6W,9
+85,Jam,U1,45,5U,5S,9
+85,TomatoRelish,U1,67,67,7S,9
+85,OnionSoup,U1,45,4W,4W,9
+85,Pie,U1,67,67,6S,9
+85,CornFlakes,U1,45,5U,5S,9
+85,PickledRadish,2U,2W,2W,2W,9
+85,IronAxe,U1,67,67,7W,9
+85,QuartzRing,2U,2W,2W,2W,9
+85,PorcelainVase,U1,3S,3S,3S,9
+85,VegetableJuice,U1,67,3W,3W,9
+85,PumpkinPudding,2S,2S,2S,2S,9
+85,SheepfluffRug,U1,67,6W,6W,9
+85,GardenScythe,U1,67,67,7S,9
+85,Bed,U1,45,5U,5S,9
+85,ScaleFingers,U1,67,67,6S,9
+85,Crook,U1,45,4S,4S,9
+85,Coral Sword,U1,67,3W,3W,9
+85,Coconut Juice,U1,45,4W,4W,9
+85,Honey,U1,67,6W,6W,9
+85,Seashine Opal,U1,67,67,7W,9
+85,Dried Flowers,2U,2W,2W,2W,9
+85,Powdered Paprika,U1,45,4S,4S,9
+85,Cawl Cennin,U1,67,67,7S,9
+85,Isloaf,U1,45,5U,5S,9
+85,Popoto Salad,U1,3S,3S,3S,9
+85,Dressing,U1,67,67,6S,9
+85,Stove,U1,45,5U,5W,9
+85,Lantern,2U,2S,2S,2S,9
+85,Natron,U1,45,5U,5W,9
+85,Bouillabaisse,U1,45,4W,4W,9
+85,Fossil Display,U1,67,6W,6W,9
+85,Bathtub,U1,67,67,6S,9
+85,Spectacles,2S,2S,2S,2S,9
+85,Cooling Glass,U1,67,67,7S,9
+85,Runner Bean Saute,U1,45,5U,5S,9
+85,Beet Soup,U1,67,67,7W,9
+85,Imam Bayildi,U1,45,4S,4S,9
+85,Pickled Zucchini,2W,2W,2W,2W,9
+85,Serving Dish,U1,3S,3S,3S,9
+85,Grinding Wheel,U1,67,3W,3W,9
+85,Tathlums,2W,2W,2W,2W,9
+85,Gold Hairpin,U1,67,67,6S,9
+85,Mammet Award,U1,67,67,7S,9
+85,Fruit Punch,U1,45,5U,5S,9
+85,Sweet Popoto Pie,U1,45,4W,4W,9
+85,Peperoncino,U1,67,3W,3W,9
+85,Buffalo Bean Salad,2S,2S,2S,2S,9
+86,Potion,U1,67,67,7W,79
+86,Firesand,U1,67,67,7W,79
+86,WoodenChair,U1,67,67,7S,79
+86,GrilledClam,U1,3S,3S,3S,79
+86,Necklace,U1,67,67,6S,79
+86,CoralRing,U1,67,67,6S,79
+86,Barbut,2U,2S,2S,2S,79
+86,Macuahuitl,U1,3S,3S,3S,79
+86,Sauerkraut,U1,67,67,7S,79
+86,BakedPumpkin,U1,67,67,7W,79
+86,Tunic,U1,45,4S,4S,79
+86,CulinaryKnife,U1,67,6W,6W,79
+86,Brush,U1,45,5U,5S,79
+86,BoiledEgg,2U,2S,2S,2S,79
+86,Hora,U1,45,4W,4W,79
+86,Earrings,U1,67,67,6S,79
+86,Butter,U1,67,67,7S,79
+86,BrickCounter,U1,67,3W,3W,79
+86,BronzeSheep,U1,3S,3S,3S,79
+86,GrowthFormula,U1,67,67,7W,79
+86,GarnetRapier,U1,67,67,6S,79
+86,SpruceRoundShield,U1,45,5U,5W,79
+86,SharkOil,U1,67,3W,3W,79
+86,SilverEarCuffs,2U,2S,2S,2S,79
+86,SweetPopoto,U1,45,4W,4W,79
+86,ParsnipSalad,U1,45,5U,5S,79
+86,Caramels,U1,45,5U,5W,79
+86,Ribbon,U1,45,5U,5S,79
+86,Rope,U1,67,6W,6W,79
+86,CavaliersHat,U1,45,4S,4S,79
+86,Horn,U1,67,67,7S,79
+86,SaltCod,U1,45,4S,4S,79
+86,SquidInk,U1,45,5U,5W,79
+86,EssentialDraught,U1,67,6W,6W,79
+86,Jam,U1,3S,3S,3S,79
+86,TomatoRelish,U1,67,3W,3W,79
+86,OnionSoup,U1,45,4W,4W,79
+86,Pie,2W,2W,2W,2W,79
+86,CornFlakes,U1,45,5U,5S,79
+86,PickledRadish,U1,67,67,7S,79
+86,IronAxe,2U,2S,2S,2S,79
+86,QuartzRing,U1,67,67,7W,79
+86,PorcelainVase,U1,45,5U,5W,79
+86,VegetableJuice,2U,2W,2W,2W,79
+86,PumpkinPudding,U1,45,4W,4W,79
+86,SheepfluffRug,U1,67,6W,6W,79
+86,GardenScythe,2U,2W,2W,2W,79
+86,Bed,U1,67,3W,3W,79
+86,ScaleFingers,2W,2W,2W,2W,79
+86,Crook,U1,45,4S,4S,79
+86,Coral Sword,U1,45,5U,5S,79
+86,Coconut Juice,U1,45,4S,4S,79
+86,Honey,2W,2W,2W,2W,79
+86,Seashine Opal,U1,67,67,7W,79
+86,Dried Flowers,U1,67,67,6S,79
+86,Powdered Paprika,U1,67,6W,6W,79
+86,Cawl Cennin,U1,3S,3S,3S,79
+86,Isloaf,2S,2S,2S,2S,79
+86,Popoto Salad,U1,45,4W,4W,79
+86,Dressing,U1,67,67,7S,79
+86,Stove,U1,67,3W,3W,79
+86,Lantern,U1,45,5U,5W,79
+86,Natron,2U,2W,2W,2W,79
+86,Bouillabaisse,U1,67,67,7W,79
+86,Fossil Display,U1,45,4W,4W,79
+86,Bathtub,U1,45,4S,4S,79
+86,Spectacles,U1,67,67,6S,79
+86,Cooling Glass,U1,3S,3S,3S,79
+86,Runner Bean Saute,U1,67,3W,3W,79
+86,Beet Soup,2U,2S,2S,2S,79
+86,Imam Bayildi,U1,45,5U,5W,79
+86,Pickled Zucchini,U1,45,5U,5S,79
+86,Serving Dish,U1,67,6W,6W,79
+86,Grinding Wheel,U1,67,67,7S,79
+86,Tathlums,2S,2S,2S,2S,79
+86,Gold Hairpin,U1,45,5U,5S,79
+86,Mammet Award,U1,67,67,7S,79
+86,Fruit Punch,2W,2W,2W,2W,79
+86,Sweet Popoto Pie,U1,45,5U,5W,79
+86,Peperoncino,U1,45,4W,4W,79
+86,Buffalo Bean Salad,U1,67,67,7W,79
+87,Potion,U1,45,5U,5W,71
+87,Firesand,2U,2W,2W,2W,71
+87,WoodenChair,2U,2S,2S,2S,71
+87,GrilledClam,U1,67,67,7S,71
+87,Necklace,2S,2S,2S,2S,71
+87,CoralRing,U1,67,67,7S,71
+87,Barbut,U1,45,5U,5W,71
+87,Macuahuitl,U1,67,3W,3W,71
+87,Sauerkraut,U1,67,6W,6W,71
+87,BakedPumpkin,U1,67,3W,3W,71
+87,Tunic,U1,67,6W,6W,71
+87,CulinaryKnife,2U,2S,2S,2S,71
+87,Brush,U1,67,67,7S,71
+87,BoiledEgg,U1,45,4W,4W,71
+87,Hora,U1,3S,3S,3S,71
+87,Earrings,U1,67,67,7W,71
+87,Butter,U1,45,5U,5W,71
+87,BrickCounter,U1,3S,3S,3S,71
+87,BronzeSheep,U1,45,5U,5S,71
+87,GrowthFormula,U1,67,67,7S,71
+87,GarnetRapier,U1,67,3W,3W,71
+87,SpruceRoundShield,2U,2W,2W,2W,71
+87,SharkOil,U1,45,4W,4W,71
+87,SilverEarCuffs,U1,45,5U,5W,71
+87,SweetPopoto,U1,67,67,7W,71
+87,ParsnipSalad,U1,45,5U,5S,71
+87,Caramels,U1,45,5U,5S,71
+87,Ribbon,U1,45,4S,4S,71
+87,Rope,U1,67,67,6S,71
+87,CavaliersHat,U1,67,67,6S,71
+87,Horn,U1,45,4W,4W,71
+87,SaltCod,U1,67,67,7W,71
+87,SquidInk,U1,67,67,6S,71
+87,EssentialDraught,U1,67,67,7S,71
+87,Jam,U1,67,6W,6W,71
+87,TomatoRelish,U1,45,5U,5S,71
+87,OnionSoup,U1,3S,3S,3S,71
+87,Pie,U1,45,4S,4S,71
+87,CornFlakes,U1,67,67,6S,71
+87,PickledRadish,U1,67,3W,3W,71
+87,IronAxe,U1,45,4S,4S,71
+87,QuartzRing,U1,67,67,7W,71
+87,PorcelainVase,2U,2S,2S,2S,71
+87,VegetableJuice,U1,67,67,7W,71
+87,PumpkinPudding,2U,2W,2W,2W,71
+87,SheepfluffRug,U1,45,4S,4S,71
+87,GardenScythe,U1,45,4W,4W,71
+87,Bed,U1,67,6W,6W,71
+87,ScaleFingers,U1,3S,3S,3S,71
+87,Crook,2W,2W,2W,2W,71
+87,Coral Sword,U1,67,67,6S,71
+87,Coconut Juice,U1,45,4S,4S,71
+87,Honey,U1,67,67,7W,71
+87,Seashine Opal,U1,3S,3S,3S,71
+87,Dried Flowers,U1,45,5U,5S,71
+87,Powdered Paprika,U1,45,4W,4W,71
+87,Cawl Cennin,U1,67,3W,3W,71
+87,Isloaf,2S,2S,2S,2S,71
+87,Popoto Salad,U1,67,6W,6W,71
+87,Dressing,U1,67,67,7S,71
+87,Stove,2W,2W,2W,2W,71
+87,Lantern,U1,45,5U,5W,71
+87,Natron,U1,67,3W,3W,71
+87,Bouillabaisse,U1,45,4W,4W,71
+87,Fossil Display,U1,67,67,7W,71
+87,Bathtub,U1,45,5U,5S,71
+87,Spectacles,2W,2W,2W,2W,71
+87,Cooling Glass,2S,2S,2S,2S,71
+87,Runner Bean Saute,U1,3S,3S,3S,71
+87,Beet Soup,U1,67,67,7S,71
+87,Imam Bayildi,U1,67,67,6S,71
+87,Pickled Zucchini,U1,45,4S,4S,71
+87,Serving Dish,U1,45,5U,5W,71
+87,Grinding Wheel,U1,67,6W,6W,71
+87,Tathlums,U1,67,67,6S,71
+87,Gold Hairpin,2W,2W,2W,2W,71
+87,Mammet Award,U1,3S,3S,3S,71
+87,Fruit Punch,U1,45,4W,4W,71
+87,Sweet Popoto Pie,U1,67,67,7W,71
+87,Peperoncino,U1,67,6W,6W,71
+87,Buffalo Bean Salad,U1,67,3W,3W,71
+88,Potion,U1,67,6W,6W,40
+88,Firesand,U1,45,5U,5S,40
+88,WoodenChair,U1,3S,3S,3S,40
+88,GrilledClam,U1,67,67,7S,40
+88,Necklace,U1,45,5U,5S,40
+88,CoralRing,U1,67,67,7W,40
+88,Barbut,U1,45,4S,4S,40
+88,Macuahuitl,U1,67,67,7W,40
+88,Sauerkraut,U1,67,3W,3W,40
+88,BakedPumpkin,U1,67,67,7S,40
+88,Tunic,U1,45,5U,5W,40
+88,CulinaryKnife,U1,67,6W,6W,40
+88,Brush,U1,45,4W,4W,40
+88,BoiledEgg,2U,2W,2W,2W,40
+88,Hora,U1,67,6W,6W,40
+88,Earrings,U1,67,67,6S,40
+88,Butter,U1,45,5U,5S,40
+88,BrickCounter,U1,45,4W,4W,40
+88,BronzeSheep,U1,67,3W,3W,40
+88,GrowthFormula,U1,67,3W,3W,40
+88,GarnetRapier,2U,2S,2S,2S,40
+88,SpruceRoundShield,2U,2S,2S,2S,40
+88,SharkOil,U1,45,4S,4S,40
+88,SilverEarCuffs,U1,67,67,7W,40
+88,SweetPopoto,U1,67,67,7S,40
+88,ParsnipSalad,U1,67,67,7S,40
+88,Caramels,U1,67,67,7W,40
+88,Ribbon,U1,67,6W,6W,40
+88,Rope,2S,2S,2S,2S,40
+88,CavaliersHat,U1,3S,3S,3S,40
+88,Horn,2U,2W,2W,2W,40
+88,SaltCod,U1,45,4W,4W,40
+88,SquidInk,U1,45,5U,5W,40
+88,EssentialDraught,U1,45,5U,5S,40
+88,Jam,U1,3S,3S,3S,40
+88,TomatoRelish,U1,45,5U,5W,40
+88,OnionSoup,U1,45,4S,4S,40
+88,Pie,U1,67,67,6S,40
+88,CornFlakes,U1,67,3W,3W,40
+88,PickledRadish,U1,45,4W,4W,40
+88,IronAxe,2W,2W,2W,2W,40
+88,QuartzRing,U1,67,67,7W,40
+88,PorcelainVase,U1,67,67,7S,40
+88,VegetableJuice,2U,2W,2W,2W,40
+88,PumpkinPudding,U1,45,5U,5W,40
+88,SheepfluffRug,U1,67,67,6S,40
+88,GardenScythe,2U,2S,2S,2S,40
+88,Bed,U1,45,4S,4S,40
+88,ScaleFingers,U1,3S,3S,3S,40
+88,Crook,U1,67,67,6S,40
+88,Coral Sword,U1,3S,3S,3S,40
+88,Coconut Juice,2W,2W,2W,2W,40
+88,Honey,U1,67,6W,6W,40
+88,Seashine Opal,U1,45,4S,4S,40
+88,Dried Flowers,U1,45,4W,4W,40
+88,Powdered Paprika,2S,2S,2S,2S,40
+88,Cawl Cennin,U1,67,67,6S,40
+88,Isloaf,U1,67,67,7S,40
+88,Popoto Salad,U1,67,3W,3W,40
+88,Dressing,U1,45,5U,5W,40
+88,Stove,U1,67,67,7W,40
+88,Lantern,U1,45,5U,5S,40
+88,Natron,U1,67,67,7W,40
+88,Bouillabaisse,U1,45,5U,5S,40
+88,Fossil Display,2U,2S,2S,2S,40
+88,Bathtub,U1,67,3W,3W,40
+88,Spectacles,U1,45,4W,4W,40
+88,Cooling Glass,U1,3S,3S,3S,40
+88,Runner Bean Saute,U1,67,67,7S,40
+88,Beet Soup,U1,67,67,6S,40
+88,Imam Bayildi,U1,45,4S,4S,40
+88,Pickled Zucchini,U1,67,6W,6W,40
+88,Serving Dish,U1,45,5U,5W,40
+88,Grinding Wheel,2U,2W,2W,2W,40
+88,Tathlums,U1,67,3W,3W,40
+88,Gold Hairpin,U1,67,6W,6W,40
+88,Mammet Award,U1,3S,3S,3S,40
+88,Fruit Punch,U1,67,67,6S,40
+88,Sweet Popoto Pie,U1,67,67,7W,40
+88,Peperoncino,U1,45,4S,4S,40
+88,Buffalo Bean Salad,U1,45,4W,4W,40
+89,Potion,U1,45,5U,5S,58
+89,Firesand,U1,3S,3S,3S,58
+89,WoodenChair,U1,45,5U,5S,58
+89,GrilledClam,U1,67,3W,3W,58
+89,Necklace,2S,2S,2S,2S,58
+89,CoralRing,U1,67,67,7W,58
+89,Barbut,U1,3S,3S,3S,58
+89,Macuahuitl,U1,67,67,6S,58
+89,Sauerkraut,U1,67,67,7S,58
+89,BakedPumpkin,U1,67,67,6S,58
+89,Tunic,2U,2S,2S,2S,58
+89,CulinaryKnife,U1,45,5U,5W,58
+89,Brush,U1,67,67,6S,58
+89,BoiledEgg,U1,67,67,7W,58
+89,Hora,2U,2S,2S,2S,58
+89,Earrings,U1,67,67,7W,58
+89,Butter,2W,2W,2W,2W,58
+89,BrickCounter,U1,67,6W,6W,58
+89,BronzeSheep,U1,67,6W,6W,58
+89,GrowthFormula,U1,67,67,7S,58
+89,GarnetRapier,2W,2W,2W,2W,58
+89,SpruceRoundShield,U1,3S,3S,3S,58
+89,SharkOil,U1,67,3W,3W,58
+89,SilverEarCuffs,2U,2S,2S,2S,58
+89,SweetPopoto,U1,45,5U,5S,58
+89,ParsnipSalad,U1,45,4W,4W,58
+89,Caramels,U1,67,67,7S,58
+89,Ribbon,U1,67,67,6S,58
+89,Rope,U1,45,4S,4S,58
+89,CavaliersHat,U1,45,4W,4W,58
+89,Horn,U1,67,67,7W,58
+89,SaltCod,U1,67,67,7S,58
+89,SquidInk,U1,45,4S,4S,58
+89,EssentialDraught,U1,45,5U,5W,58
+89,Jam,U1,67,6W,6W,58
+89,TomatoRelish,U1,45,5U,5W,58
+89,OnionSoup,U1,67,3W,3W,58
+89,Pie,U1,67,67,7W,58
+89,CornFlakes,U1,45,5U,5S,58
+89,PickledRadish,U1,45,4S,4S,58
+89,IronAxe,2U,2W,2W,2W,58
+89,QuartzRing,U1,45,4S,4S,58
+89,PorcelainVase,2U,2W,2W,2W,58
+89,VegetableJuice,U1,67,6W,6W,58
+89,PumpkinPudding,U1,45,5U,5W,58
+89,SheepfluffRug,U1,45,4W,4W,58
+89,GardenScythe,U1,45,4W,4W,58
+89,Bed,U1,67,3W,3W,58
+89,ScaleFingers,U1,3S,3S,3S,58
+89,Crook,U1,67,67,7S,58
+89,Coral Sword,U1,45,4W,4W,58
+89,Coconut Juice,2U,2W,2W,2W,58
+89,Honey,U1,67,67,6S,58
+89,Seashine Opal,U1,45,5U,5W,58
+89,Dried Flowers,2U,2S,2S,2S,58
+89,Powdered Paprika,U1,67,3W,3W,58
+89,Cawl Cennin,U1,67,6W,6W,58
+89,Isloaf,U1,67,67,7S,58
+89,Popoto Salad,U1,67,67,7W,58
+89,Dressing,U1,45,5U,5S,58
+89,Stove,U1,3S,3S,3S,58
+89,Lantern,U1,45,4S,4S,58
+89,Natron,U1,67,3W,3W,58
+89,Bouillabaisse,U1,3S,3S,3S,58
+89,Fossil Display,U1,45,4S,4S,58
+89,Bathtub,U1,45,5U,5W,58
+89,Spectacles,U1,67,67,7W,58
+89,Cooling Glass,U1,67,67,6S,58
+89,Runner Bean Saute,2W,2W,2W,2W,58
+89,Beet Soup,2S,2S,2S,2S,58
+89,Imam Bayildi,U1,45,5U,5S,58
+89,Pickled Zucchini,U1,67,6W,6W,58
+89,Serving Dish,U1,45,4W,4W,58
+89,Grinding Wheel,U1,67,67,7S,58
+89,Tathlums,U1,45,5U,5W,58
+89,Gold Hairpin,U1,67,67,6S,58
+89,Mammet Award,2W,2W,2W,2W,58
+89,Fruit Punch,2S,2S,2S,2S,58
+89,Sweet Popoto Pie,U1,3S,3S,3S,58
+89,Peperoncino,U1,67,6W,6W,58
+89,Buffalo Bean Salad,U1,67,67,7W,58
+90,Potion,U1,67,67,7S,81
+90,Firesand,2S,2S,2S,2S,81
+90,WoodenChair,U1,67,6W,6W,81
+90,GrilledClam,U1,67,67,7S,81
+90,Necklace,U1,45,4W,4W,81
+90,CoralRing,U1,67,67,6S,81
+90,Barbut,U1,67,6W,6W,81
+90,Macuahuitl,U1,67,67,6S,81
+90,Sauerkraut,U1,45,4S,4S,81
+90,BakedPumpkin,2W,2W,2W,2W,81
+90,Tunic,U1,3S,3S,3S,81
+90,CulinaryKnife,U1,45,4W,4W,81
+90,Brush,U1,3S,3S,3S,81
+90,BoiledEgg,U1,67,67,7S,81
+90,Hora,U1,45,4W,4W,81
+90,Earrings,U1,67,3W,3W,81
+90,Butter,2U,2W,2W,2W,81
+90,BrickCounter,2U,2W,2W,2W,81
+90,BronzeSheep,U1,67,3W,3W,81
+90,GrowthFormula,U1,3S,3S,3S,81
+90,GarnetRapier,2U,2S,2S,2S,81
+90,SpruceRoundShield,U1,45,5U,5S,81
+90,SharkOil,U1,67,3W,3W,81
+90,SilverEarCuffs,U1,67,6W,6W,81
+90,SweetPopoto,U1,67,67,7S,81
+90,ParsnipSalad,U1,67,67,7W,81
+90,Caramels,U1,67,6W,6W,81
+90,Ribbon,2W,2W,2W,2W,81
+90,Rope,U1,45,4S,4S,81
+90,CavaliersHat,U1,67,67,7S,81
+90,Horn,U1,45,5U,5W,81
+90,SaltCod,U1,45,4W,4W,81
+90,SquidInk,U1,45,5U,5S,81
+90,EssentialDraught,U1,67,67,6S,81
+90,Jam,U1,67,67,6S,81
+90,TomatoRelish,U1,67,67,7W,81
+90,OnionSoup,U1,45,4S,4S,81
+90,Pie,U1,67,67,7W,81
+90,CornFlakes,U1,67,67,7W,81
+90,PickledRadish,2S,2S,2S,2S,81
+90,IronAxe,U1,45,5U,5W,81
+90,QuartzRing,U1,45,5U,5S,81
+90,PorcelainVase,U1,3S,3S,3S,81
+90,VegetableJuice,2U,2S,2S,2S,81
+90,PumpkinPudding,U1,45,4S,4S,81
+90,SheepfluffRug,U1,45,5U,5S,81
+90,GardenScythe,U1,67,3W,3W,81
+90,Bed,U1,45,5U,5W,81
+90,ScaleFingers,U1,67,67,7W,81
+90,Crook,U1,45,5U,5W,81
+90,Coral Sword,U1,45,4S,4S,81
+90,Coconut Juice,U1,67,3W,3W,81
+90,Honey,U1,67,67,6S,81
+90,Seashine Opal,U1,67,6W,6W,81
+90,Dried Flowers,U1,45,5U,5S,81
+90,Powdered Paprika,U1,3S,3S,3S,81
+90,Cawl Cennin,U1,45,4W,4W,81
+90,Isloaf,U1,67,67,7W,81
+90,Popoto Salad,U1,67,67,7S,81
+90,Dressing,U1,45,5U,5W,81
+90,Stove,2S,2S,2S,2S,81
+90,Lantern,2W,2W,2W,2W,81
+90,Natron,U1,67,3W,3W,81
+90,Bouillabaisse,U1,45,4W,4W,81
+90,Fossil Display,2S,2S,2S,2S,81
+90,Bathtub,U1,67,67,6S,81
+90,Spectacles,U1,67,67,7W,81
+90,Cooling Glass,U1,45,5U,5W,81
+90,Runner Bean Saute,U1,3S,3S,3S,81
+90,Beet Soup,U1,67,67,7S,81
+90,Imam Bayildi,U1,67,6W,6W,81
+90,Pickled Zucchini,U1,45,5U,5S,81
+90,Serving Dish,U1,45,4S,4S,81
+90,Grinding Wheel,2W,2W,2W,2W,81
+90,Tathlums,U1,67,67,7S,81
+90,Gold Hairpin,U1,45,5U,5W,81
+90,Mammet Award,2W,2W,2W,2W,81
+90,Fruit Punch,U1,45,5U,5S,81
+90,Sweet Popoto Pie,2S,2S,2S,2S,81
+90,Peperoncino,U1,67,3W,3W,81
+90,Buffalo Bean Salad,U1,3S,3S,3S,81
+91,Potion,U1,45,5U,5W,8
+91,Firesand,2S,2S,2S,2S,8
+91,WoodenChair,U1,67,67,6S,8
+91,GrilledClam,U1,45,5U,5S,8
+91,Necklace,U1,67,67,7S,8
+91,CoralRing,2S,2S,2S,2S,8
+91,Barbut,U1,3S,3S,3S,8
+91,Macuahuitl,U1,45,5U,5S,8
+91,Sauerkraut,U1,3S,3S,3S,8
+91,BakedPumpkin,2U,2S,2S,2S,8
+91,Tunic,U1,67,6W,6W,8
+91,CulinaryKnife,U1,67,67,7S,8
+91,Brush,2W,2W,2W,2W,8
+91,BoiledEgg,U1,67,67,7W,8
+91,Hora,U1,45,5U,5W,8
+91,Earrings,U1,45,5U,5W,8
+91,Butter,U1,45,4S,4S,8
+91,BrickCounter,U1,3S,3S,3S,8
+91,BronzeSheep,U1,67,67,6S,8
+91,GrowthFormula,U1,67,67,7S,8
+91,GarnetRapier,U1,45,4S,4S,8
+91,SpruceRoundShield,2W,2W,2W,2W,8
+91,SharkOil,U1,45,5U,5S,8
+91,SilverEarCuffs,U1,67,3W,3W,8
+91,SweetPopoto,U1,67,3W,3W,8
+91,ParsnipSalad,U1,67,67,7W,8
+91,Caramels,U1,67,67,6S,8
+91,Ribbon,U1,67,6W,6W,8
+91,Rope,U1,67,67,7S,8
+91,CavaliersHat,U1,45,4W,4W,8
+91,Horn,U1,67,6W,6W,8
+91,SaltCod,U1,67,3W,3W,8
+91,SquidInk,U1,45,4S,4S,8
+91,EssentialDraught,2W,2W,2W,2W,8
+91,Jam,U1,45,5U,5S,8
+91,TomatoRelish,2U,2W,2W,2W,8
+91,OnionSoup,U1,45,5U,5W,8
+91,Pie,U1,45,4W,4W,8
+91,CornFlakes,U1,67,67,7W,8
+91,PickledRadish,U1,45,4S,4S,8
+91,IronAxe,U1,3S,3S,3S,8
+91,QuartzRing,U1,67,67,6S,8
+91,PorcelainVase,U1,67,67,7S,8
+91,VegetableJuice,U1,45,4W,4W,8
+91,PumpkinPudding,2S,2S,2S,2S,8
+91,SheepfluffRug,U1,45,4W,4W,8
+91,GardenScythe,U1,67,67,7W,8
+91,Bed,U1,67,67,7W,8
+91,ScaleFingers,U1,67,6W,6W,8
+91,Crook,U1,67,3W,3W,8
+91,Coral Sword,U1,67,3W,3W,8
+91,Coconut Juice,U1,67,67,6S,8
+91,Honey,U1,3S,3S,3S,8
+91,Seashine Opal,2W,2W,2W,2W,8
+91,Dried Flowers,2S,2S,2S,2S,8
+91,Powdered Paprika,U1,45,4W,4W,8
+91,Cawl Cennin,U1,45,5U,5S,8
+91,Isloaf,U1,67,6W,6W,8
+91,Popoto Salad,U1,67,67,7W,8
+91,Dressing,U1,45,5U,5W,8
+91,Stove,U1,67,67,7S,8
+91,Lantern,U1,45,4S,4S,8
+91,Natron,U1,67,67,6S,8
+91,Bouillabaisse,U1,67,3W,3W,8
+91,Fossil Display,U1,45,5U,5W,8
+91,Bathtub,U1,67,67,7W,8
+91,Spectacles,U1,67,67,7S,8
+91,Cooling Glass,U1,67,6W,6W,8
+91,Runner Bean Saute,U1,45,4W,4W,8
+91,Beet Soup,U1,45,5U,5S,8
+91,Imam Bayildi,U1,3S,3S,3S,8
+91,Pickled Zucchini,2W,2W,2W,2W,8
+91,Serving Dish,U1,45,4S,4S,8
+91,Grinding Wheel,2S,2S,2S,2S,8
+91,Tathlums,U1,3S,3S,3S,8
+91,Gold Hairpin,U1,67,67,7W,8
+91,Mammet Award,U1,67,67,7S,8
+91,Fruit Punch,U1,45,5U,5W,8
+91,Sweet Popoto Pie,2W,2W,2W,2W,8
+91,Peperoncino,U1,45,5U,5S,8
+91,Buffalo Bean Salad,U1,45,4S,4S,8
+92,Potion,U1,67,67,7S,48
+92,Firesand,U1,45,5U,5S,48
+92,WoodenChair,U1,3S,3S,3S,48
+92,GrilledClam,2S,2S,2S,2S,48
+92,Necklace,U1,67,67,6S,48
+92,CoralRing,U1,67,67,6S,48
+92,Barbut,U1,45,4S,4S,48
+92,Macuahuitl,U1,67,6W,6W,48
+92,Sauerkraut,U1,45,4W,4W,48
+92,BakedPumpkin,U1,67,67,6S,48
+92,Tunic,U1,67,67,6S,48
+92,CulinaryKnife,U1,67,67,7W,48
+92,Brush,2U,2W,2W,2W,48
+92,BoiledEgg,2U,2S,2S,2S,48
+92,Hora,U1,45,4S,4S,48
+92,Earrings,U1,3S,3S,3S,48
+92,Butter,U1,67,67,7W,48
+92,BrickCounter,U1,45,4W,4W,48
+92,BronzeSheep,U1,67,67,7S,48
+92,GrowthFormula,2U,2S,2S,2S,48
+92,GarnetRapier,U1,67,3W,3W,48
+92,SpruceRoundShield,U1,45,5U,5S,48
+92,SharkOil,U1,67,67,7W,48
+92,SilverEarCuffs,U1,45,5U,5W,48
+92,SweetPopoto,U1,67,67,7W,48
+92,ParsnipSalad,2U,2W,2W,2W,48
+92,Caramels,U1,45,4W,4W,48
+92,Ribbon,U1,67,3W,3W,48
+92,Rope,U1,67,6W,6W,48
+92,CavaliersHat,U1,3S,3S,3S,48
+92,Horn,U1,45,5U,5W,48
+92,SaltCod,U1,67,3W,3W,48
+92,SquidInk,U1,67,67,7S,48
+92,EssentialDraught,2U,2W,2W,2W,48
+92,Jam,2W,2W,2W,2W,48
+92,TomatoRelish,U1,67,6W,6W,48
+92,OnionSoup,U1,45,4W,4W,48
+92,Pie,U1,67,6W,6W,48
+92,CornFlakes,U1,67,3W,3W,48
+92,PickledRadish,U1,67,67,7S,48
+92,IronAxe,U1,45,5U,5W,48
+92,QuartzRing,U1,45,4S,4S,48
+92,PorcelainVase,U1,67,67,7W,48
+92,VegetableJuice,U1,45,5U,5W,48
+92,PumpkinPudding,U1,45,5U,5S,48
+92,SheepfluffRug,2U,2S,2S,2S,48
+92,GardenScythe,U1,67,67,7S,48
+92,Bed,U1,3S,3S,3S,48
+92,ScaleFingers,U1,45,4S,4S,48
+92,Crook,U1,45,5U,5S,48
+92,Coral Sword,U1,45,4W,4W,48
+92,Coconut Juice,2W,2W,2W,2W,48
+92,Honey,U1,67,67,7W,48
+92,Seashine Opal,U1,45,5U,5W,48
+92,Dried Flowers,U1,3S,3S,3S,48
+92,Powdered Paprika,U1,67,6W,6W,48
+92,Cawl Cennin,U1,45,4S,4S,48
+92,Isloaf,2S,2S,2S,2S,48
+92,Popoto Salad,U1,45,5U,5S,48
+92,Dressing,U1,67,67,7S,48
+92,Stove,U1,67,67,6S,48
+92,Lantern,U1,67,3W,3W,48
+92,Natron,U1,67,67,7S,48
+92,Bouillabaisse,2W,2W,2W,2W,48
+92,Fossil Display,U1,3S,3S,3S,48
+92,Bathtub,U1,67,6W,6W,48
+92,Spectacles,U1,67,67,6S,48
+92,Cooling Glass,U1,45,5U,5W,48
+92,Runner Bean Saute,U1,45,5U,5S,48
+92,Beet Soup,2S,2S,2S,2S,48
+92,Imam Bayildi,U1,45,4W,4W,48
+92,Pickled Zucchini,U1,67,3W,3W,48
+92,Serving Dish,U1,67,67,7W,48
+92,Grinding Wheel,U1,45,4S,4S,48
+92,Tathlums,U1,67,67,6S,48
+92,Gold Hairpin,2S,2S,2S,2S,48
+92,Mammet Award,U1,3S,3S,3S,48
+92,Fruit Punch,U1,67,67,7W,48
+92,Sweet Popoto Pie,U1,67,3W,3W,48
+92,Peperoncino,U1,45,5U,5W,48
+92,Buffalo Bean Salad,U1,67,6W,6W,48
+93,Potion,2U,2S,2S,2S,10
+93,Firesand,U1,67,6W,6W,10
+93,WoodenChair,U1,3S,3S,3S,10
+93,GrilledClam,U1,45,5U,5W,10
+93,Necklace,U1,3S,3S,3S,10
+93,CoralRing,U1,45,4S,4S,10
+93,Barbut,U1,45,4S,4S,10
+93,Macuahuitl,U1,45,4W,4W,10
+93,Sauerkraut,U1,67,67,7W,10
+93,BakedPumpkin,U1,67,6W,6W,10
+93,Tunic,U1,67,3W,3W,10
+93,CulinaryKnife,2U,2S,2S,2S,10
+93,Brush,2U,2W,2W,2W,10
+93,BoiledEgg,U1,67,3W,3W,10
+93,Hora,U1,45,5U,5S,10
+93,Earrings,U1,67,3W,3W,10
+93,Butter,2U,2S,2S,2S,10
+93,BrickCounter,U1,3S,3S,3S,10
+93,BronzeSheep,U1,67,67,6S,10
+93,GrowthFormula,U1,45,4W,4W,10
+93,GarnetRapier,U1,67,67,7S,10
+93,SpruceRoundShield,U1,67,67,7S,10
+93,SharkOil,U1,3S,3S,3S,10
+93,SilverEarCuffs,U1,45,4S,4S,10
+93,SweetPopoto,2U,2W,2W,2W,10
+93,ParsnipSalad,U1,67,67,7S,10
+93,Caramels,U1,67,3W,3W,10
+93,Ribbon,U1,45,4W,4W,10
+93,Rope,2U,2W,2W,2W,10
+93,CavaliersHat,U1,67,67,7S,10
+93,Horn,U1,67,67,6S,10
+93,SaltCod,2U,2W,2W,2W,10
+93,SquidInk,U1,45,4S,4S,10
+93,EssentialDraught,U1,67,67,6S,10
+93,Jam,2U,2S,2S,2S,10
+93,TomatoRelish,U1,67,67,6S,10
+93,OnionSoup,U1,67,6W,6W,10
+93,Pie,U1,45,5U,5W,10
+93,CornFlakes,U1,45,5U,5S,10
+93,PickledRadish,U1,45,5U,5S,10
+93,IronAxe,U1,45,5U,5W,10
+93,QuartzRing,U1,67,6W,6W,10
+93,PorcelainVase,U1,67,67,7W,10
+93,VegetableJuice,U1,45,5U,5W,10
+93,PumpkinPudding,U1,67,67,7W,10
+93,SheepfluffRug,U1,67,67,7W,10
+93,GardenScythe,U1,67,67,7W,10
+93,Bed,U1,67,67,7S,10
+93,ScaleFingers,U1,45,5U,5S,10
+93,Crook,U1,45,4W,4W,10
+93,Coral Sword,U1,45,4S,4S,10
+93,Coconut Juice,U1,67,6W,6W,10
+93,Honey,U1,67,3W,3W,10
+93,Seashine Opal,U1,45,4W,4W,10
+93,Dried Flowers,U1,67,67,6S,10
+93,Powdered Paprika,U1,3S,3S,3S,10
+93,Cawl Cennin,2W,2W,2W,2W,10
+93,Isloaf,U1,67,67,7W,10
+93,Popoto Salad,2S,2S,2S,2S,10
+93,Dressing,U1,45,5U,5W,10
+93,Stove,U1,45,5U,5S,10
+93,Lantern,U1,67,67,7S,10
+93,Natron,U1,45,5U,5S,10
+93,Bouillabaisse,2W,2W,2W,2W,10
+93,Fossil Display,U1,67,67,6S,10
+93,Bathtub,U1,45,4W,4W,10
+93,Spectacles,2S,2S,2S,2S,10
+93,Cooling Glass,U1,45,4S,4S,10
+93,Runner Bean Saute,U1,67,67,7W,10
+93,Beet Soup,U1,67,3W,3W,10
+93,Imam Bayildi,U1,3S,3S,3S,10
+93,Pickled Zucchini,U1,67,67,7S,10
+93,Serving Dish,U1,45,5U,5W,10
+93,Grinding Wheel,U1,67,6W,6W,10
+93,Tathlums,U1,67,3W,3W,10
+93,Gold Hairpin,U1,45,4W,4W,10
+93,Mammet Award,U1,45,4S,4S,10
+93,Fruit Punch,2S,2S,2S,2S,10
+93,Sweet Popoto Pie,U1,67,67,6S,10
+93,Peperoncino,U1,45,5U,5W,10
+93,Buffalo Bean Salad,U1,67,6W,6W,10
+94,Potion,2S,2S,2S,2S,78
+94,Firesand,U1,67,6W,6W,78
+94,WoodenChair,U1,45,4W,4W,78
+94,GrilledClam,U1,3S,3S,3S,78
+94,Necklace,U1,45,5U,5S,78
+94,CoralRing,U1,45,5U,5W,78
+94,Barbut,U1,67,67,7S,78
+94,Macuahuitl,U1,67,67,7W,78
+94,Sauerkraut,U1,45,4W,4W,78
+94,BakedPumpkin,U1,67,67,6S,78
+94,Tunic,2U,2S,2S,2S,78
+94,CulinaryKnife,U1,45,5U,5S,78
+94,Brush,U1,45,4S,4S,78
+94,BoiledEgg,U1,45,4S,4S,78
+94,Hora,U1,67,3W,3W,78
+94,Earrings,2U,2S,2S,2S,78
+94,Butter,U1,45,4S,4S,78
+94,BrickCounter,2W,2W,2W,2W,78
+94,BronzeSheep,U1,67,67,6S,78
+94,GrowthFormula,U1,45,4W,4W,78
+94,GarnetRapier,U1,67,6W,6W,78
+94,SpruceRoundShield,2U,2W,2W,2W,78
+94,SharkOil,U1,45,5U,5S,78
+94,SilverEarCuffs,U1,3S,3S,3S,78
+94,SweetPopoto,U1,67,3W,3W,78
+94,ParsnipSalad,U1,3S,3S,3S,78
+94,Caramels,U1,67,67,7W,78
+94,Ribbon,2U,2W,2W,2W,78
+94,Rope,U1,67,67,7W,78
+94,CavaliersHat,U1,45,4S,4S,78
+94,Horn,U1,67,67,7W,78
+94,SaltCod,U1,67,67,7S,78
+94,SquidInk,2W,2W,2W,2W,78
+94,EssentialDraught,U1,67,3W,3W,78
+94,Jam,U1,67,67,6S,78
+94,TomatoRelish,U1,67,67,7S,78
+94,OnionSoup,U1,45,4W,4W,78
+94,Pie,U1,67,6W,6W,78
+94,CornFlakes,U1,67,3W,3W,78
+94,PickledRadish,U1,3S,3S,3S,78
+94,IronAxe,U1,45,5U,5W,78
+94,QuartzRing,U1,67,67,7W,78
+94,PorcelainVase,U1,67,67,6S,78
+94,VegetableJuice,U1,45,5U,5S,78
+94,PumpkinPudding,U1,45,5U,5W,78
+94,SheepfluffRug,2U,2S,2S,2S,78
+94,GardenScythe,U1,67,67,7S,78
+94,Bed,U1,67,67,7S,78
+94,ScaleFingers,U1,45,5U,5W,78
+94,Crook,U1,67,6W,6W,78
+94,Coral Sword,U1,67,67,7S,78
+94,Coconut Juice,U1,45,5U,5S,78
+94,Honey,2U,2S,2S,2S,78
+94,Seashine Opal,2U,2W,2W,2W,78
+94,Dried Flowers,U1,45,5U,5W,78
+94,Powdered Paprika,U1,67,67,7W,78
+94,Cawl Cennin,U1,45,4W,4W,78
+94,Isloaf,U1,67,6W,6W,78
+94,Popoto Salad,U1,67,67,6S,78
+94,Dressing,U1,3S,3S,3S,78
+94,Stove,U1,67,3W,3W,78
+94,Lantern,U1,45,4S,4S,78
+94,Natron,U1,45,5U,5W,78
+94,Bouillabaisse,U1,67,6W,6W,78
+94,Fossil Display,U1,67,67,6S,78
+94,Bathtub,U1,3S,3S,3S,78
+94,Spectacles,2W,2W,2W,2W,78
+94,Cooling Glass,U1,67,3W,3W,78
+94,Runner Bean Saute,U1,67,67,7W,78
+94,Beet Soup,U1,45,5U,5S,78
+94,Imam Bayildi,U1,45,4W,4W,78
+94,Pickled Zucchini,U1,67,67,7S,78
+94,Serving Dish,U1,45,4S,4S,78
+94,Grinding Wheel,2S,2S,2S,2S,78
+94,Tathlums,U1,67,67,7S,78
+94,Gold Hairpin,2U,2W,2W,2W,78
+94,Mammet Award,U1,67,67,7W,78
+94,Fruit Punch,U1,45,4S,4S,78
+94,Sweet Popoto Pie,U1,45,4W,4W,78
+94,Peperoncino,U1,3S,3S,3S,78
+94,Buffalo Bean Salad,U1,67,3W,3W,78
+95,Potion,U1,67,67,7W,60
+95,Firesand,U1,45,4W,4W,60
+95,WoodenChair,U1,45,5U,5W,60
+95,GrilledClam,U1,3S,3S,3S,60
+95,Necklace,U1,67,67,7W,60
+95,CoralRing,U1,3S,3S,3S,60
+95,Barbut,2U,2W,2W,2W,60
+95,Macuahuitl,U1,67,67,7S,60
+95,Sauerkraut,2U,2S,2S,2S,60
+95,BakedPumpkin,U1,45,5U,5W,60
+95,Tunic,U1,67,6W,6W,60
+95,CulinaryKnife,U1,67,6W,6W,60
+95,Brush,U1,67,67,6S,60
+95,BoiledEgg,U1,45,4S,4S,60
+95,Hora,U1,45,5U,5S,60
+95,Earrings,U1,67,67,7S,60
+95,Butter,U1,67,67,7W,60
+95,BrickCounter,2U,2S,2S,2S,60
+95,BronzeSheep,U1,67,67,6S,60
+95,GrowthFormula,U1,67,3W,3W,60
+95,GarnetRapier,U1,45,4S,4S,60
+95,SpruceRoundShield,U1,67,3W,3W,60
+95,SharkOil,U1,45,4S,4S,60
+95,SilverEarCuffs,2W,2W,2W,2W,60
+95,SweetPopoto,2U,2W,2W,2W,60
+95,ParsnipSalad,2W,2W,2W,2W,60
+95,Caramels,U1,45,5U,5S,60
+95,Ribbon,U1,67,67,7W,60
+95,Rope,U1,67,67,7W,60
+95,CavaliersHat,U1,45,4W,4W,60
+95,Horn,U1,45,5U,5W,60
+95,SaltCod,U1,45,4S,4S,60
+95,SquidInk,U1,45,5U,5W,60
+95,EssentialDraught,U1,45,4W,4W,60
+95,Jam,U1,3S,3S,3S,60
+95,TomatoRelish,U1,45,5U,5S,60
+95,OnionSoup,U1,45,4W,4W,60
+95,Pie,U1,45,5U,5S,60
+95,CornFlakes,U1,67,67,7S,60
+95,PickledRadish,U1,3S,3S,3S,60
+95,IronAxe,U1,67,67,6S,60
+95,QuartzRing,U1,67,67,6S,60
+95,PorcelainVase,U1,67,67,7S,60
+95,VegetableJuice,U1,67,3W,3W,60
+95,PumpkinPudding,U1,67,6W,6W,60
+95,SheepfluffRug,2S,2S,2S,2S,60
+95,GardenScythe,U1,67,6W,6W,60
+95,Bed,U1,67,3W,3W,60
+95,ScaleFingers,U1,67,67,7S,60
+95,Crook,2U,2S,2S,2S,60
+95,Coral Sword,U1,67,6W,6W,60
+95,Coconut Juice,2S,2S,2S,2S,60
+95,Honey,U1,45,4W,4W,60
+95,Seashine Opal,U1,67,67,7W,60
+95,Dried Flowers,U1,67,67,7S,60
+95,Powdered Paprika,U1,3S,3S,3S,60
+95,Cawl Cennin,U1,67,67,6S,60
+95,Isloaf,U1,67,3W,3W,60
+95,Popoto Salad,U1,45,4S,4S,60
+95,Dressing,U1,45,5U,5S,60
+95,Stove,U1,45,5U,5W,60
+95,Lantern,2W,2W,2W,2W,60
+95,Natron,U1,67,6W,6W,60
+95,Bouillabaisse,U1,67,67,7S,60
+95,Fossil Display,U1,67,67,6S,60
+95,Bathtub,U1,67,3W,3W,60
+95,Spectacles,U1,45,4S,4S,60
+95,Cooling Glass,U1,45,5U,5W,60
+95,Runner Bean Saute,U1,67,67,7W,60
+95,Beet Soup,2W,2W,2W,2W,60
+95,Imam Bayildi,U1,45,4W,4W,60
+95,Pickled Zucchini,2S,2S,2S,2S,60
+95,Serving Dish,U1,45,5U,5S,60
+95,Grinding Wheel,U1,3S,3S,3S,60
+95,Tathlums,2W,2W,2W,2W,60
+95,Gold Hairpin,U1,3S,3S,3S,60
+95,Mammet Award,U1,45,5U,5W,60
+95,Fruit Punch,2S,2S,2S,2S,60
+95,Sweet Popoto Pie,U1,67,67,7W,60
+95,Peperoncino,U1,67,67,7S,60
+95,Buffalo Bean Salad,U1,67,3W,3W,60
+96,Potion,2U,2S,2S,2S,86
+96,Firesand,U1,45,4W,4W,86
+96,WoodenChair,U1,3S,3S,3S,86
+96,GrilledClam,U1,45,4S,4S,86
+96,Necklace,U1,67,67,6S,86
+96,CoralRing,U1,67,67,7S,86
+96,Barbut,U1,67,67,7W,86
+96,Macuahuitl,U1,45,4S,4S,86
+96,Sauerkraut,U1,45,5U,5S,86
+96,BakedPumpkin,U1,67,6W,6W,86
+96,Tunic,U1,45,5U,5W,86
+96,CulinaryKnife,U1,67,67,6S,86
+96,Brush,U1,3S,3S,3S,86
+96,BoiledEgg,U1,67,67,7S,86
+96,Hora,2W,2W,2W,2W,86
+96,Earrings,2U,2S,2S,2S,86
+96,Butter,U1,67,3W,3W,86
+96,BrickCounter,2W,2W,2W,2W,86
+96,BronzeSheep,U1,67,3W,3W,86
+96,GrowthFormula,U1,45,5U,5S,86
+96,GarnetRapier,U1,67,67,7W,86
+96,SpruceRoundShield,2U,2S,2S,2S,86
+96,SharkOil,U1,45,4S,4S,86
+96,SilverEarCuffs,2U,2S,2S,2S,86
+96,SweetPopoto,U1,67,67,7W,86
+96,ParsnipSalad,U1,67,6W,6W,86
+96,Caramels,U1,45,4W,4W,86
+96,Ribbon,U1,67,67,6S,86
+96,Rope,U1,67,67,7S,86
+96,CavaliersHat,U1,45,5U,5W,86
+96,Horn,U1,67,67,7S,86
+96,SaltCod,2W,2W,2W,2W,86
+96,SquidInk,U1,45,4S,4S,86
+96,EssentialDraught,U1,45,4W,4W,86
+96,Jam,U1,45,5U,5S,86
+96,TomatoRelish,U1,67,67,7W,86
+96,OnionSoup,U1,67,6W,6W,86
+96,Pie,U1,67,3W,3W,86
+96,CornFlakes,U1,67,67,6S,86
+96,PickledRadish,U1,67,3W,3W,86
+96,IronAxe,U1,45,5U,5W,86
+96,QuartzRing,U1,3S,3S,3S,86
+96,PorcelainVase,U1,3S,3S,3S,86
+96,VegetableJuice,U1,45,5U,5W,86
+96,PumpkinPudding,2U,2W,2W,2W,86
+96,SheepfluffRug,U1,67,6W,6W,86
+96,GardenScythe,U1,45,5U,5S,86
+96,Bed,U1,67,67,7W,86
+96,ScaleFingers,U1,45,4W,4W,86
+96,Crook,U1,67,67,7S,86
+96,Coral Sword,U1,67,67,7S,86
+96,Coconut Juice,U1,45,4S,4S,86
+96,Honey,U1,3S,3S,3S,86
+96,Seashine Opal,U1,45,5U,5W,86
+96,Dried Flowers,U1,67,6W,6W,86
+96,Powdered Paprika,2S,2S,2S,2S,86
+96,Cawl Cennin,2W,2W,2W,2W,86
+96,Isloaf,U1,45,5U,5S,86
+96,Popoto Salad,U1,67,3W,3W,86
+96,Dressing,U1,67,67,7W,86
+96,Stove,U1,67,67,6S,86
+96,Lantern,U1,45,4W,4W,86
+96,Natron,U1,45,5U,5W,86
+96,Bouillabaisse,U1,45,5U,5S,86
+96,Fossil Display,U1,67,67,7W,86
+96,Bathtub,U1,67,3W,3W,86
+96,Spectacles,U1,67,67,6S,86
+96,Cooling Glass,U1,3S,3S,3S,86
+96,Runner Bean Saute,U1,45,4W,4W,86
+96,Beet Soup,2S,2S,2S,2S,86
+96,Imam Bayildi,U1,67,6W,6W,86
+96,Pickled Zucchini,2W,2W,2W,2W,86
+96,Serving Dish,U1,67,67,7S,86
+96,Grinding Wheel,U1,45,4S,4S,86
+96,Tathlums,2S,2S,2S,2S,86
+96,Gold Hairpin,2W,2W,2W,2W,86
+96,Mammet Award,U1,67,67,6S,86
+96,Fruit Punch,U1,67,6W,6W,86
+96,Sweet Popoto Pie,U1,45,5U,5S,86
+96,Peperoncino,U1,67,3W,3W,86
+96,Buffalo Bean Salad,U1,67,67,7S,86
+97,Potion,U1,3S,3S,3S,66
+97,Firesand,2U,2W,2W,2W,66
+97,WoodenChair,2S,2S,2S,2S,66
+97,GrilledClam,2S,2S,2S,2S,66
+97,Necklace,2S,2S,2S,2S,66
+97,CoralRing,U1,45,4W,4W,66
+97,Barbut,U1,3S,3S,3S,66
+97,Macuahuitl,U1,67,3W,3W,66
+97,Sauerkraut,U1,45,4W,4W,66
+97,BakedPumpkin,U1,67,67,7W,66
+97,Tunic,2U,2W,2W,2W,66
+97,CulinaryKnife,U1,67,67,7S,66
+97,Brush,2W,2W,2W,2W,66
+97,BoiledEgg,U1,45,5U,5W,66
+97,Hora,U1,67,67,7S,66
+97,Earrings,U1,67,3W,3W,66
+97,Butter,U1,45,4S,4S,66
+97,BrickCounter,U1,45,4S,4S,66
+97,BronzeSheep,U1,67,67,7W,66
+97,GrowthFormula,U1,67,67,7S,66
+97,GarnetRapier,U1,67,67,7W,66
+97,SpruceRoundShield,U1,67,67,7W,66
+97,SharkOil,U1,45,4S,4S,66
+97,SilverEarCuffs,U1,45,4W,4W,66
+97,SweetPopoto,U1,67,3W,3W,66
+97,ParsnipSalad,U1,67,67,7S,66
+97,Caramels,U1,67,67,6S,66
+97,Ribbon,U1,45,5U,5S,66
+97,Rope,U1,45,5U,5S,66
+97,CavaliersHat,U1,3S,3S,3S,66
+97,Horn,U1,67,6W,6W,66
+97,SaltCod,U1,67,67,6S,66
+97,SquidInk,U1,67,3W,3W,66
+97,EssentialDraught,U1,67,67,6S,66
+97,Jam,U1,67,67,7W,66
+97,TomatoRelish,U1,67,6W,6W,66
+97,OnionSoup,2U,2S,2S,2S,66
+97,Pie,U1,67,6W,6W,66
+97,CornFlakes,U1,45,5U,5W,66
+97,PickledRadish,U1,45,5U,5S,66
+97,IronAxe,U1,3S,3S,3S,66
+97,QuartzRing,U1,67,67,6S,66
+97,PorcelainVase,U1,67,67,7S,66
+97,VegetableJuice,U1,67,6W,6W,66
+97,PumpkinPudding,U1,45,5U,5W,66
+97,SheepfluffRug,U1,45,5U,5W,66
+97,GardenScythe,2W,2W,2W,2W,66
+97,Bed,U1,45,4S,4S,66
+97,ScaleFingers,U1,45,5U,5S,66
+97,Crook,U1,45,4W,4W,66
+97,Coral Sword,U1,67,67,7W,66
+97,Coconut Juice,U1,67,6W,6W,66
+97,Honey,2W,2W,2W,2W,66
+97,Seashine Opal,U1,45,5U,5S,66
+97,Dried Flowers,2S,2S,2S,2S,66
+97,Powdered Paprika,U1,67,67,7S,66
+97,Cawl Cennin,U1,67,67,6S,66
+97,Isloaf,U1,67,3W,3W,66
+97,Popoto Salad,U1,3S,3S,3S,66
+97,Dressing,U1,45,4S,4S,66
+97,Stove,U1,45,4W,4W,66
+97,Lantern,U1,45,5U,5W,66
+97,Natron,U1,67,67,7S,66
+97,Bouillabaisse,U1,45,4S,4S,66
+97,Fossil Display,U1,67,3W,3W,66
+97,Bathtub,U1,67,6W,6W,66
+97,Spectacles,U1,45,5U,5S,66
+97,Cooling Glass,U1,3S,3S,3S,66
+97,Runner Bean Saute,U1,67,67,6S,66
+97,Beet Soup,2W,2W,2W,2W,66
+97,Imam Bayildi,2S,2S,2S,2S,66
+97,Pickled Zucchini,U1,45,4W,4W,66
+97,Serving Dish,U1,45,5U,5W,66
+97,Grinding Wheel,U1,67,67,7W,66
+97,Tathlums,U1,67,67,7S,66
+97,Gold Hairpin,U1,67,6W,6W,66
+97,Mammet Award,2S,2S,2S,2S,66
+97,Fruit Punch,2W,2W,2W,2W,66
+97,Sweet Popoto Pie,U1,67,3W,3W,66
+97,Peperoncino,U1,45,5U,5S,66
+97,Buffalo Bean Salad,U1,3S,3S,3S,66
+98,Potion,U1,67,3W,3W,72
+98,Firesand,U1,67,67,7S,72
+98,WoodenChair,U1,45,5U,5W,72
+98,GrilledClam,U1,67,6W,6W,72
+98,Necklace,U1,3S,3S,3S,72
+98,CoralRing,U1,3S,3S,3S,72
+98,Barbut,U1,45,4W,4W,72
+98,Macuahuitl,2U,2S,2S,2S,72
+98,Sauerkraut,U1,45,4W,4W,72
+98,BakedPumpkin,U1,67,67,7W,72
+98,Tunic,U1,67,3W,3W,72
+98,CulinaryKnife,U1,67,67,7S,72
+98,Brush,U1,67,67,7W,72
+98,BoiledEgg,U1,67,67,7S,72
+98,Hora,U1,45,4S,4S,72
+98,Earrings,U1,45,5U,5W,72
+98,Butter,2S,2S,2S,2S,72
+98,BrickCounter,U1,67,67,7W,72
+98,BronzeSheep,U1,45,4W,4W,72
+98,GrowthFormula,2U,2W,2W,2W,72
+98,GarnetRapier,U1,67,67,7W,72
+98,SpruceRoundShield,U1,45,5U,5S,72
+98,SharkOil,U1,45,4S,4S,72
+98,SilverEarCuffs,U1,45,4W,4W,72
+98,SweetPopoto,2U,2W,2W,2W,72
+98,ParsnipSalad,U1,67,3W,3W,72
+98,Caramels,U1,45,4S,4S,72
+98,Ribbon,U1,3S,3S,3S,72
+98,Rope,U1,45,5U,5S,72
+98,CavaliersHat,U1,45,4S,4S,72
+98,Horn,U1,45,5U,5S,72
+98,SaltCod,2S,2S,2S,2S,72
+98,SquidInk,U1,67,6W,6W,72
+98,EssentialDraught,2S,2S,2S,2S,72
+98,Jam,U1,67,67,7W,72
+98,TomatoRelish,U1,3S,3S,3S,72
+98,OnionSoup,U1,67,67,6S,72
+98,Pie,U1,67,6W,6W,72
+98,CornFlakes,U1,67,3W,3W,72
+98,PickledRadish,U1,67,67,7S,72
+98,IronAxe,U1,45,5U,5W,72
+98,QuartzRing,2W,2W,2W,2W,72
+98,PorcelainVase,U1,45,5U,5W,72
+98,VegetableJuice,U1,45,5U,5S,72
+98,PumpkinPudding,U1,67,67,7S,72
+98,SheepfluffRug,2U,2W,2W,2W,72
+98,GardenScythe,U1,67,67,6S,72
+98,Bed,U1,67,67,6S,72
+98,ScaleFingers,U1,67,67,6S,72
+98,Crook,U1,67,6W,6W,72
+98,Coral Sword,U1,45,4S,4S,72
+98,Coconut Juice,U1,45,5U,5W,72
+98,Honey,U1,67,67,7W,72
+98,Seashine Opal,U1,45,5U,5S,72
+98,Dried Flowers,U1,67,67,6S,72
+98,Powdered Paprika,U1,67,6W,6W,72
+98,Cawl Cennin,2S,2S,2S,2S,72
+98,Isloaf,2W,2W,2W,2W,72
+98,Popoto Salad,U1,45,4W,4W,72
+98,Dressing,U1,3S,3S,3S,72
+98,Stove,U1,67,67,7S,72
+98,Lantern,U1,67,3W,3W,72
+98,Natron,U1,45,4S,4S,72
+98,Bouillabaisse,U1,67,3W,3W,72
+98,Fossil Display,U1,45,5U,5W,72
+98,Bathtub,U1,45,5U,5S,72
+98,Spectacles,U1,45,4W,4W,72
+98,Cooling Glass,U1,67,67,7W,72
+98,Runner Bean Saute,U1,67,6W,6W,72
+98,Beet Soup,U1,67,67,7S,72
+98,Imam Bayildi,2S,2S,2S,2S,72
+98,Pickled Zucchini,U1,3S,3S,3S,72
+98,Serving Dish,2W,2W,2W,2W,72
+98,Grinding Wheel,U1,67,67,6S,72
+98,Tathlums,2W,2W,2W,2W,72
+98,Gold Hairpin,U1,67,6W,6W,72
+98,Mammet Award,U1,45,5U,5S,72
+98,Fruit Punch,U1,67,67,6S,72
+98,Sweet Popoto Pie,U1,67,3W,3W,72
+98,Peperoncino,U1,67,67,7S,72
+98,Buffalo Bean Salad,U1,3S,3S,3S,72
+99,Potion,U1,67,67,6S,7
+99,Firesand,U1,67,67,7S,7
+99,WoodenChair,U1,45,5U,5W,7
+99,GrilledClam,U1,67,67,7S,7
+99,Necklace,U1,45,5U,5S,7
+99,CoralRing,U1,67,6W,6W,7
+99,Barbut,U1,45,4S,4S,7
+99,Macuahuitl,U1,45,4W,4W,7
+99,Sauerkraut,2U,2W,2W,2W,7
+99,BakedPumpkin,U1,45,5U,5S,7
+99,Tunic,U1,3S,3S,3S,7
+99,CulinaryKnife,2U,2W,2W,2W,7
+99,Brush,U1,67,67,7W,7
+99,BoiledEgg,U1,45,5U,5W,7
+99,Hora,U1,45,4S,4S,7
+99,Earrings,U1,67,67,7W,7
+99,Butter,U1,67,67,6S,7
+99,BrickCounter,U1,67,3W,3W,7
+99,BronzeSheep,U1,67,67,7W,7
+99,GrowthFormula,U1,3S,3S,3S,7
+99,GarnetRapier,U1,67,6W,6W,7
+99,SpruceRoundShield,U1,45,5U,5W,7
+99,SharkOil,2S,2S,2S,2S,7
+99,SilverEarCuffs,2U,2S,2S,2S,7
+99,SweetPopoto,2U,2S,2S,2S,7
+99,ParsnipSalad,U1,45,5U,5S,7
+99,Caramels,U1,3S,3S,3S,7
+99,Ribbon,U1,45,4W,4W,7
+99,Rope,U1,45,4W,4W,7
+99,CavaliersHat,U1,67,67,6S,7
+99,Horn,U1,67,67,7S,7
+99,SaltCod,U1,45,5U,5W,7
+99,SquidInk,U1,67,3W,3W,7
+99,EssentialDraught,U1,67,67,7S,7
+99,Jam,U1,67,6W,6W,7
+99,TomatoRelish,U1,67,3W,3W,7
+99,OnionSoup,U1,67,6W,6W,7
+99,Pie,U1,45,4W,4W,7
+99,CornFlakes,U1,67,67,7W,7
+99,PickledRadish,U1,67,3W,3W,7
+99,IronAxe,U1,67,67,7W,7
+99,QuartzRing,2U,2W,2W,2W,7
+99,PorcelainVase,U1,67,67,7S,7
+99,VegetableJuice,U1,45,5U,5S,7
+99,PumpkinPudding,U1,3S,3S,3S,7
+99,SheepfluffRug,U1,67,67,6S,7
+99,GardenScythe,2S,2S,2S,2S,7
+99,Bed,2W,2W,2W,2W,7
+99,ScaleFingers,U1,45,4S,4S,7
+99,Crook,U1,45,4S,4S,7
+99,Coral Sword,U1,45,5U,5S,7
+99,Coconut Juice,2U,2S,2S,2S,7
+99,Honey,U1,45,4S,4S,7
+99,Seashine Opal,U1,67,67,7S,7
+99,Dried Flowers,U1,45,5U,5W,7
+99,Powdered Paprika,U1,45,4W,4W,7
+99,Cawl Cennin,U1,67,3W,3W,7
+99,Isloaf,2U,2W,2W,2W,7
+99,Popoto Salad,U1,3S,3S,3S,7
+99,Dressing,U1,67,67,6S,7
+99,Stove,U1,67,6W,6W,7
+99,Lantern,U1,67,67,7W,7
+99,Natron,U1,45,4S,4S,7
+99,Bouillabaisse,U1,3S,3S,3S,7
+99,Fossil Display,U1,45,5U,5W,7
+99,Bathtub,U1,67,6W,6W,7
+99,Spectacles,2S,2S,2S,2S,7
+99,Cooling Glass,U1,45,4W,4W,7
+99,Runner Bean Saute,U1,45,5U,5S,7
+99,Beet Soup,U1,67,3W,3W,7
+99,Imam Bayildi,U1,67,67,6S,7
+99,Pickled Zucchini,U1,67,67,7W,7
+99,Serving Dish,U1,67,67,7S,7
+99,Grinding Wheel,2W,2W,2W,2W,7
+99,Tathlums,U1,45,4S,4S,7
+99,Gold Hairpin,U1,67,67,7W,7
+99,Mammet Award,U1,45,4W,4W,7
+99,Fruit Punch,U1,67,3W,3W,7
+99,Sweet Popoto Pie,U1,45,5U,5S,7
+99,Peperoncino,U1,45,5U,5W,7
+99,Buffalo Bean Salad,2S,2S,2S,2S,7
+100,Potion,U1,67,67,7S,44
+100,Firesand,U1,67,67,7W,44
+100,WoodenChair,U1,67,67,7S,44
+100,GrilledClam,U1,3S,3S,3S,44
+100,Necklace,2W,2W,2W,2W,44
+100,CoralRing,U1,67,3W,3W,44
+100,Barbut,U1,67,67,7S,44
+100,Macuahuitl,2U,2S,2S,2S,44
+100,Sauerkraut,U1,67,3W,3W,44
+100,BakedPumpkin,2S,2S,2S,2S,44
+100,Tunic,U1,67,67,7S,44
+100,CulinaryKnife,U1,45,5U,5W,44
+100,Brush,U1,45,5U,5S,44
+100,BoiledEgg,U1,45,5U,5W,44
+100,Hora,U1,3S,3S,3S,44
+100,Earrings,U1,67,67,7S,44
+100,Butter,U1,45,5U,5S,44
+100,BrickCounter,U1,67,6W,6W,44
+100,BronzeSheep,2U,2W,2W,2W,44
+100,GrowthFormula,U1,45,4W,4W,44
+100,GarnetRapier,U1,45,4W,4W,44
+100,SpruceRoundShield,U1,67,67,7W,44
+100,SharkOil,U1,67,67,7W,44
+100,SilverEarCuffs,U1,3S,3S,3S,44
+100,SweetPopoto,U1,45,5U,5S,44
+100,ParsnipSalad,2S,2S,2S,2S,44
+100,Caramels,U1,45,5U,5S,44
+100,Ribbon,U1,45,4S,4S,44
+100,Rope,U1,67,6W,6W,44
+100,CavaliersHat,U1,67,67,7W,44
+100,Horn,U1,45,4S,4S,44
+100,SaltCod,U1,45,5U,5W,44
+100,SquidInk,2U,2W,2W,2W,44
+100,EssentialDraught,U1,45,4S,4S,44
+100,Jam,U1,67,3W,3W,44
+100,TomatoRelish,U1,67,67,6S,44
+100,OnionSoup,U1,67,67,6S,44
+100,Pie,U1,67,6W,6W,44
+100,CornFlakes,U1,45,4W,4W,44
+100,PickledRadish,U1,45,4S,4S,44
+100,IronAxe,2U,2W,2W,2W,44
+100,QuartzRing,U1,67,6W,6W,44
+100,PorcelainVase,U1,67,3W,3W,44
+100,VegetableJuice,U1,45,4W,4W,44
+100,PumpkinPudding,2S,2S,2S,2S,44
+100,SheepfluffRug,U1,45,5U,5W,44
+100,GardenScythe,U1,67,67,7W,44
+100,Bed,U1,3S,3S,3S,44
+100,ScaleFingers,U1,67,67,6S,44
+100,Crook,U1,67,67,6S,44
+100,Coral Sword,U1,3S,3S,3S,44
+100,Coconut Juice,U1,67,67,6S,44
+100,Honey,U1,45,4S,4S,44
+100,Seashine Opal,U1,67,6W,6W,44
+100,Dried Flowers,2U,2S,2S,2S,44
+100,Powdered Paprika,U1,67,67,7S,44
+100,Cawl Cennin,U1,45,5U,5W,44
+100,Isloaf,U1,45,4W,4W,44
+100,Popoto Salad,U1,45,5U,5S,44
+100,Dressing,U1,67,3W,3W,44
+100,Stove,U1,67,67,7W,44
+100,Lantern,2U,2W,2W,2W,44
+100,Natron,2W,2W,2W,2W,44
+100,Bouillabaisse,U1,67,6W,6W,44
+100,Fossil Display,U1,45,5U,5S,44
+100,Bathtub,U1,45,5U,5W,44
+100,Spectacles,U1,67,67,7W,44
+100,Cooling Glass,U1,3S,3S,3S,44
+100,Runner Bean Saute,U1,45,4S,4S,44
+100,Beet Soup,U1,67,67,6S,44
+100,Imam Bayildi,U1,45,4W,4W,44
+100,Pickled Zucchini,2S,2S,2S,2S,44
+100,Serving Dish,U1,67,3W,3W,44
+100,Grinding Wheel,U1,67,67,7S,44
+100,Tathlums,U1,3S,3S,3S,44
+100,Gold Hairpin,U1,45,4S,4S,44
+100,Mammet Award,U1,67,67,7S,44
+100,Fruit Punch,U1,45,5U,5W,44
+100,Sweet Popoto Pie,U1,67,67,6S,44
+100,Peperoncino,2U,2W,2W,2W,44
+100,Buffalo Bean Salad,U1,67,67,7W,44
