@@ -131,7 +131,10 @@ public class Solver
     private static Map<Integer, TempSchedule> scheduledDays = new HashMap<>();
 
     private static Map<RareMaterial, Integer> matsUsed = new TreeMap<>();
+    private static Map<List<Item>, Integer> schedulesByQuantity = new HashMap<>();
     private static boolean logMats = false;
+
+    private static boolean logCommonSchedules = true;
     private static boolean writeCraftsToCSV = false;
 
     public static void main(String[] args)
@@ -151,22 +154,21 @@ public class Solver
         schedulesToCheck.put(5, schedules);
 
         verboseReservations = true;*/
-        /*List<Integer> list = Arrays.asList(0, 1, 2, 3, 4);
+       /* List<Integer> list = Arrays.asList(0, 1, 2, 3, 4);
         List<List<Integer>> result = new ArrayList<>();
         iteratePermutations(list, result::add);
         List<Integer> bestOrder = null;
-        int bestRest = -1;
         int bestAverage = -1;
-        for(int orderIndex = 1; orderIndex < 7; orderIndex++)
-        {*/
+        for(int orderIndex = 0; orderIndex < result.size(); orderIndex++)
+        {
 
-            /*var order = result.get(orderIndex);
+            var order = result.get(orderIndex);
             System.out.println("Order: "+order);*/
         int totalCowries = 0;
         int totalTotalNet = 0;
         totalGrooveless = 0;
-        int startWeek = 59;
-        int endWeek = 59;
+        int startWeek = 40;
+        int endWeek = 1040;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         var hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -315,6 +317,17 @@ public class Solver
                 for(var mat : RareMaterial.values())
                 {
                     System.out.println("Total "+mat+" used: "+matsUsed.getOrDefault(mat,0)+" Per week: "+matsUsed.getOrDefault(mat,0)/((double)endWeek-startWeek+1));
+                }
+            }
+
+            if(logCommonSchedules)
+            {
+                List<Entry<List<Item>,Integer>> list = new ArrayList<>(schedulesByQuantity.entrySet());
+                list.sort(Entry.comparingByValue());
+                int size = list.size();
+                for(int i=size-1; i>size-21; i--)
+                {
+                    System.out.println("List: "+list.get(i).getKey()+" Quantity: "+list.get(i).getValue());
                 }
             }
 
@@ -1300,6 +1313,11 @@ public class Solver
 
             if(logMats)
                 schedule.addMaterials(matsUsed);
+            if(logCommonSchedules)
+            {
+                int previous = schedulesByQuantity.getOrDefault(schedule.getItems(), 0);
+                schedulesByQuantity.put(schedule.getItems(), previous+1);
+            }
             //verboseCalculatorLogging = true;
             totalGrooveless+=schedule.getTrueGroovelessValue();
             verboseCalculatorLogging = oldVerbose;
