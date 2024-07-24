@@ -45,7 +45,7 @@ public class Solver
             new ItemInfo(SpruceRoundShield,Attire,Woodworks,136,8,5,Map.of(Spruce,2)),
             new ItemInfo(SharkOil,Sundries,MarineMerchandise,136,8,5,Map.of(Shark,2)),
             new ItemInfo(SilverEarCuffs,Accessories,Metalworks,136,8,5,Map.of(Silver,2)),
-            new ItemInfo(SweetPopoto,Confections,Invalid,72,6,5,Map.of(Popoto, 2, Milk,1)),
+            new ItemInfo(Item.SweetPopoto,Confections,Invalid,72,6,5,Map.of(Popoto, 2, Milk,1)),
             new ItemInfo(ParsnipSalad,Foodstuffs,Invalid,48,4,5,Map.of(Parsnip,2)),
             new ItemInfo(Caramels,Confections,Invalid,81,6,6,Map.of(Milk,2)),
             new ItemInfo(Ribbon,Accessories,Textiles,54,6,6,null),
@@ -55,10 +55,10 @@ public class Solver
             new ItemInfo(SaltCod,PreservedFood,MarineMerchandise,54,6,7,null),
             new ItemInfo(SquidInk,Ingredients,MarineMerchandise,36,4,7,null),
             new ItemInfo(EssentialDraught,Concoctions,MarineMerchandise,54,6,7,null),
-            new ItemInfo(Jam,Ingredients,Invalid,78,6,7,Map.of(Isleberry,3)),
+            new ItemInfo(IsleberryJam,Ingredients,Invalid,78,6,7,Map.of(Isleberry,3)),
             new ItemInfo(TomatoRelish,Ingredients,Invalid,52,4,7,Map.of(Tomato,2)),
             new ItemInfo(OnionSoup,Foodstuffs,Invalid,78,6,7,Map.of(Onion,3)),
-            new ItemInfo(Pie,Confections,MarineMerchandise,78,6,7,Map.of(Wheat,3)),
+            new ItemInfo(IslefishPie,Confections,MarineMerchandise,78,6,7,Map.of(Wheat,3)),
             new ItemInfo(CornFlakes,PreservedFood,Invalid,52,4,7,Map.of(Corn,2)),
             new ItemInfo(PickledRadish,PreservedFood,Invalid,104,8,7,Map.of(Radish,4)),
             new ItemInfo(IronAxe,Arms,Metalworks,72,8,8,null),
@@ -93,6 +93,15 @@ public class Solver
             new ItemInfo(BeetSoup, Foodstuffs, Invalid, 78, 6, 14,Map.of(Beet, 3, Popoto, 1, Milk, 1)),
             new ItemInfo(ImamBayildi, Foodstuffs, Invalid, 90, 6, 14,Map.of(Eggplant, 2, Onion, 2, Tomato, 2)),
             new ItemInfo(PickledZucchini, PreservedFood, Invalid, 104, 8, 14,Map.of(Zucchini, 4)),
+            new ItemInfo(BrassServingDish, Sundries, Metalworks, 36, 4, 16, null),
+            new ItemInfo(GrindingWheel, Sundries, Invalid, 60, 6, 16, null),
+            new ItemInfo(DuriumTathlums, Arms, Metalworks, 54, 6,17, null),
+            new ItemInfo(GoldHairpin, Accessories, Metalworks, 72, 8,17, null),
+            new ItemInfo(MammetAward, Furnishings, Invalid, 80, 8, 17, null),
+            new ItemInfo(FruitPunch, Confections, Invalid, 52, 4, 18, Map.of(Watermelon, 1, Isleberry, 1)),
+            new ItemInfo(SweetPopotoPie, Foodstuffs, Confections, 120, 8, 18, Map.of(RareMaterial.SweetPopoto, 3, Wheat, 1, Egg, 1)),
+            new ItemInfo(Peperoncino, Foodstuffs, Invalid, 75, 6, 18, Map.of(Broccoli, 2, Wheat, 1)),
+            new ItemInfo(BuffaloBeanSalad, Foodstuffs, CreatureCreations, 52, 4, 18, Map.of(BuffaloBeans, 2, Milk, 2)),
     };
     
     private static int groove = 0;
@@ -117,6 +126,7 @@ public class Solver
     private static int itemsToReserve = 15;
 
     public static Map<Integer, List<List<Item>>> schedulesToCheck;
+    public static Map<List<Item>, Integer> schedulesByPopularity = new HashMap<>();
 
     private static Map<Integer, TempSchedule> scheduledDays = new HashMap<>();
 
@@ -186,10 +196,16 @@ public class Solver
                     islandRank=11;
                     NUM_WORKSHOPS = 3;
                 }
-                else
+                else if(week <=58)
                 {
                     WORKSHOP_BONUS = 130;
                     islandRank = 15;
+                    NUM_WORKSHOPS = 4;
+                }
+                else
+                {
+                    WORKSHOP_BONUS = 140;
+                    islandRank = 20;
                     NUM_WORKSHOPS = 4;
                 }
                 averageDayValue = 1123 * WORKSHOP_BONUS * NUM_WORKSHOPS / 100;
@@ -207,7 +223,7 @@ public class Solver
 
                 dateStr += " - " + sdf.format(calendar.getTime());
 
-                System.out.println("Season "+week+" ("+dateStr+"):");
+                //System.out.println("Season "+week+" ("+dateStr+"):");
                 groove = 0;
                 totalGross = 0;
                 totalNet = 0;
@@ -233,8 +249,10 @@ public class Solver
                 //solveCrimeTime(week);
 
                 //verboseCalculatorLogging = true;
-                /*setObservedFromCSV(3);
-                CycleSchedule schedule = new CycleSchedule(1,0);
+                //setObservedFromCSV(3);
+
+                //setStaticSchedule(List.of(0,1,3,4,2), orderIndex);
+                /*CycleSchedule schedule = new CycleSchedule(1,0);
                 schedule.setForFirstThreeWorkshops(Arrays.asList(Earrings, Item.Horn, ScaleFingers, CavaliersHat));
                 schedule.setFourthWorkshop(Arrays.asList(Earrings, Item.Horn, ScaleFingers, CavaliersHat));
                 setDay(schedule, 1);
@@ -260,8 +278,6 @@ public class Solver
                 setDay(schedule5, 6);*/
 
 
-                /*var schedule = getBestBruteForceSchedule(2, 18, null, 3, null, 16);
-                System.out.println("Best C3 schedule: "+schedule.getKey().getItems()+" ("+schedule.getValue()+")");*/
                 if(totalGross > highestWeek)
                     highestWeek = totalGross;
                 if(totalGross < lowestWeek)
@@ -281,6 +297,18 @@ public class Solver
             System.out.println("Average cowries/week: "+averageGross+" Average net: "+(totalTotalNet/(endWeek-startWeek+1))+" Lowest week: "+lowestWeek+" Highest week: "+highestWeek);
 
             System.out.println("Average true grooveless: "+(totalGrooveless/((endWeek-startWeek+1)*5)));
+
+            var sortedSchedules = schedulesByPopularity
+                    .entrySet().stream()
+                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                    .collect(Collectors.toList());
+
+            System.out.println("Top schedules: ");
+            for(int i=0;i<15 && i<sortedSchedules.size();i++)
+            {
+                var sched = sortedSchedules.get(i);
+                System.out.println(sched.getKey()+": "+sched.getValue());
+            }
 
             if(writeCraftsToCSV)
                 csvexp.close();
@@ -314,16 +342,268 @@ public class Solver
 
             /*if(averageGross > bestAverage) {
                 bestAverage = averageGross;
-                bestOrder = order;
+                //bestOrder = order;
+                bestRest = orderIndex;
             }
         }
 
-        System.out.println("Best average: "+bestAverage+", so best order: "+bestOrder);*/
+        System.out.println("Best average: "+bestAverage+", so best rest: "+bestRest);*/
 
 
     }
 
-    public static void solveRestOfWeek(int currentDay)
+    public static void setStaticSchedule(List<Integer> order, int dayToRest)
+    {
+
+        CycleSchedule c1 = new CycleSchedule(0,0);
+        c1.setWorkshop(0, List.of(Earrings, SheepfluffRug, Earrings, Hora, CawlCennin));
+        c1.setWorkshop(1, List.of(Earrings, SheepfluffRug, Earrings, Hora, CawlCennin));
+        c1.setWorkshop(2, List.of(PopotoSalad, ParsnipSalad, Isloaf, PopotoSalad, ParsnipSalad, PopotoSalad));
+        c1.setWorkshop(3, List.of(PopotoSalad, ParsnipSalad, Isloaf, PopotoSalad, ParsnipSalad, PopotoSalad));
+
+        CycleSchedule c2 = new CycleSchedule(0,0);
+        c2.setWorkshop(0, List.of(FruitPunch, PumpkinPudding, FruitPunch, PumpkinPudding, FruitPunch));
+        c2.setWorkshop(1, List.of(FruitPunch, PumpkinPudding, FruitPunch, PumpkinPudding, FruitPunch));
+        c2.setWorkshop(2, List.of(Firesand, SeashineOpal, BrickCounter, CoolingGlass));
+        c2.setWorkshop(3, List.of(Firesand, SeashineOpal, BrickCounter, CoolingGlass));
+
+        CycleSchedule c3 = new CycleSchedule(0,0);
+        c3.setWorkshop(0, List.of(Necklace, Macuahuitl, Crook, DuriumTathlums));
+        c3.setWorkshop(1, List.of(Necklace, Macuahuitl, Crook, DuriumTathlums));
+        c3.setWorkshop(2, List.of(Necklace, Macuahuitl, SpruceRoundShield, CavaliersHat));
+        c3.setWorkshop(3, List.of(Necklace, Macuahuitl, SpruceRoundShield, CavaliersHat));
+
+        CycleSchedule c4 = new CycleSchedule(0,0);
+        c4.setWorkshop(0, List.of(Hora, BuffaloBeanSalad, SweetPopotoPie, OnionSoup));
+        c4.setWorkshop(1, List.of(Hora, BuffaloBeanSalad, SweetPopotoPie, OnionSoup));
+        c4.setWorkshop(2, List.of(Necklace, SilverEarCuffs, GardenScythe, DriedFlowers));
+        c4.setWorkshop(3, List.of(Necklace, SilverEarCuffs, GardenScythe, DriedFlowers));
+
+        CycleSchedule c5 = new CycleSchedule(0,0);
+        c5.setWorkshop(0, List.of(BuffaloBeanSalad, BeetSoup, Bouillabaisse, ImamBayildi));
+        c5.setWorkshop(1, List.of(BuffaloBeanSalad, BeetSoup, Bouillabaisse, ImamBayildi));
+        c5.setWorkshop(2, List.of(BuffaloBeanSalad, BeetSoup, Bouillabaisse, ImamBayildi));
+        c5.setWorkshop(3, List.of(BuffaloBeanSalad, BeetSoup, Bouillabaisse, ImamBayildi));
+
+        List<CycleSchedule> crafts = new ArrayList<>();
+        crafts.add(c1);
+        crafts.add(c2);
+        crafts.add(c3);
+        crafts.add(c4);
+        crafts.add(c5);
+
+
+        int orderIndex = 0;
+        for(int i=1;i<7;i++)
+        {
+            if(i==dayToRest)
+                i++;
+            if(i>=7)
+                continue;
+
+            int scheduleIndex = order.get(orderIndex);
+            orderIndex++;
+            crafts.get(scheduleIndex).startingGroove = groove;
+            crafts.get(scheduleIndex).day = i;
+            setDay(crafts.get(scheduleIndex), i, true);
+        }
+
+
+
+    }
+
+    public static void checkFavorsAndSet(CycleSchedule currentSchedule, List<Item> favors)
+    {
+        int weightedValue = currentSchedule.getWeightedValue();
+        setDay(currentSchedule, currentSchedule.day, false);
+        var restOfWeek = solveRestOfWeek(currentSchedule.day-1, false);
+        List<FavorModification> recsModifications = new ArrayList<>();
+        for(Item favor : favors)
+        {
+            var bestCycle = getBestFavorCycle(currentSchedule, favor);
+            System.out.println("Best schedule for favor "+favor+" is "+bestCycle.getSchedule().printWorkshops()+" with a value of "+bestCycle.getValue());
+            int tomorrowDelta = weightedValue - bestCycle.getValue();
+            System.out.println("Value is "+tomorrowDelta+" less than main recs");
+
+            int futureDelta = 0;
+
+
+            //get worst cycle value we're not resting on
+            int bestDelta = 99999;
+            FavorModification bestFutureReplacement = null;
+            for(var sched : restOfWeek)
+            {
+                if(sched.day != 0)
+                {
+                    var bestFutureCycle = getBestFavorCycle(sched, favor);
+
+                    setHypotheticalGroove(sched, currentSchedule.day, currentSchedule.startingGroove);
+                    setHypotheticalGroove(bestFutureCycle.getSchedule(), currentSchedule.day, currentSchedule.startingGroove);
+                    int delta = sched.getWeightedValue() - bestFutureCycle.getSchedule().getWeightedValue();
+                    System.out.println("Best future schedule for favor "+favor+" on cycle "+(sched.day+1)+" is "
+                            +bestFutureCycle.getSchedule().printWorkshops()+" with a value of "+bestFutureCycle.getSchedule().getWeightedValue()
+                            +" and a delta of "+delta);
+
+                    if(delta < bestDelta)
+                    {
+                        bestDelta = delta;
+                        bestFutureReplacement = bestFutureCycle;
+                    }
+                }
+            }
+            System.out.println("Best future delta is "+bestDelta+" less than anticipated future recs");
+            futureDelta = bestDelta;
+
+
+            if(futureDelta < tomorrowDelta)
+                System.out.println("Future delta seems smaller. Make "+favor+" later in the week!");
+            else
+            {
+                System.out.println("This seems like the best it's going to get. Make "+favor+" tomorrow!");
+                bestCycle.setDelta(futureDelta-tomorrowDelta);
+                recsModifications.add(bestCycle);
+            }
+
+            System.out.println("\n\n\n\n");
+        }
+
+        recsModifications.sort(Comparator.comparingInt(FavorModification::getDelta));
+        Collections.reverse(recsModifications);
+
+        if(recsModifications.size() >= 2 && recsModifications.get(0).getNumWorkshops() == 2 && recsModifications.get(1).getNumWorkshops() == 2)
+        {
+            //Use both
+            CycleSchedule newSched = new CycleSchedule(currentSchedule.day, currentSchedule.startingGroove);
+            newSched.setWorkshop(0, recsModifications.get(0).getWorkshop().getItems());
+            newSched.setWorkshop(1, recsModifications.get(0).getWorkshop().getItems());
+            newSched.setWorkshop(2, recsModifications.get(1).getWorkshop().getItems());
+            newSched.setWorkshop(3, recsModifications.get(1).getWorkshop().getItems());
+            favors.remove(recsModifications.get(0).getFavor());
+            favors.remove(recsModifications.get(1).getFavor());
+            setDay(newSched, currentSchedule.day, true);
+        }
+        else if(recsModifications.size() == 3 && recsModifications.get(0).getNumWorkshops() == 3 && recsModifications.get(1).getDelta() + recsModifications.get(2).getDelta() > recsModifications.get(0).getDelta())
+        {
+            //Use both
+            CycleSchedule newSched = new CycleSchedule(currentSchedule.day, currentSchedule.startingGroove);
+            newSched.setWorkshop(0, recsModifications.get(2).getWorkshop().getItems());
+            newSched.setWorkshop(1, recsModifications.get(2).getWorkshop().getItems());
+            newSched.setWorkshop(2, recsModifications.get(1).getWorkshop().getItems());
+            newSched.setWorkshop(3, recsModifications.get(1).getWorkshop().getItems());
+            favors.remove(recsModifications.get(2).getFavor());
+            favors.remove(recsModifications.get(1).getFavor());
+            setDay(newSched, currentSchedule.day, true);
+        }
+        else if (recsModifications.size() > 0)
+        {
+            favors.remove(recsModifications.get(0).getFavor());
+            setDay(recsModifications.get(0).getSchedule(), currentSchedule.day, true);
+        }
+        else
+        {
+            setDay(currentSchedule, currentSchedule.day, true);
+        }
+    }
+
+    private static void setHypotheticalGroove(CycleSchedule sched, int currentDay, int currentStarting)
+    {
+        sched.startingGroove = Math.min((sched.day - currentDay) * 13 + currentStarting, 45);
+    }
+
+    public static FavorModification getBestFavorCycle(CycleSchedule currentSchedule, Item favor)
+    {
+        //See how it is if we sub the current schedule for it
+        var twoWsSchedule = getBestFavorWorkshop(currentSchedule.day, favor, false, null, currentSchedule.startingGroove);
+        //System.out.println("Best schedule with 2x favor "+favor+" is "+twoWsSchedule.getKey().getItems()+" ("+twoWsSchedule.getValue()+")");
+        List<FavorModification> possibleCycles = new ArrayList<>();
+
+        CycleSchedule replaceMain = new CycleSchedule(currentSchedule.day, currentSchedule.startingGroove);
+        replaceMain.setWorkshop(0, twoWsSchedule.getKey().getItems());
+        replaceMain.setWorkshop(1, twoWsSchedule.getKey().getItems());
+        replaceMain.setWorkshop(2, currentSchedule.getItems());
+        replaceMain.setWorkshop(3, currentSchedule.getSubItems());
+        int value = replaceMain.getWeightedValue();
+        //System.out.println("Value replacing 2 main schedules: "+value);
+        possibleCycles.add(new FavorModification(replaceMain, favor, 2, twoWsSchedule.getKey(), value));
+
+        CycleSchedule replaceSub = new CycleSchedule(currentSchedule.day, currentSchedule.startingGroove);
+        replaceSub.setWorkshop(0, currentSchedule.getItems());
+        replaceSub.setWorkshop(1, currentSchedule.getItems());
+        replaceSub.setWorkshop(2, twoWsSchedule.getKey().getItems());
+        replaceSub.setWorkshop(3, twoWsSchedule.getKey().getItems());
+        value = replaceSub.getWeightedValue();
+        //System.out.println("Value replacing 1 main and sub schedules: "+value);
+        possibleCycles.add(new FavorModification(replaceSub, favor, 2, twoWsSchedule.getKey(), value));
+
+        if(items[favor.ordinal()].time == 6)
+        {
+            var threeWsSchedule = getBestFavorWorkshop(currentSchedule.day, favor, true, null, currentSchedule.startingGroove);
+            //System.out.println("Best schedule with 1x favor "+favor+" is "+threeWsSchedule.getKey().getItems()+" ("+threeWsSchedule.getValue()+")");
+
+            CycleSchedule replaceMainThree = new CycleSchedule(currentSchedule.day, currentSchedule.startingGroove);
+            replaceMainThree.setForFirstThreeWorkshops(threeWsSchedule.getKey().getItems());
+            replaceMainThree.setFourthWorkshop(currentSchedule.getSubItems());
+            value = replaceMainThree.getWeightedValue();
+            //System.out.println("Value replacing main schedule: "+value);
+            possibleCycles.add(new FavorModification(replaceMainThree, favor, 3, threeWsSchedule.getKey(), value));
+
+            CycleSchedule replaceSubThree = new CycleSchedule(currentSchedule.day, currentSchedule.startingGroove);
+            replaceSubThree.setForFirstThreeWorkshops(threeWsSchedule.getKey().getItems());
+            replaceSubThree.setFourthWorkshop( currentSchedule.getItems());
+            value = replaceSubThree.getWeightedValue();
+            //System.out.println("Value replacing sub schedule and 2x main schedule: "+value);
+            possibleCycles.add(new FavorModification(replaceSubThree, favor, 3, threeWsSchedule.getKey(), value));
+        }
+
+        Collections.sort(possibleCycles);
+        Collections.reverse(possibleCycles);
+
+        return possibleCycles.get(0);
+    }
+
+    public static Entry<WorkshopSchedule, Integer> getBestFavorWorkshop(int day, Item requiredFavor, boolean allow3, Map<Item,Integer> limitedUse, int groove)
+    {
+        //If it's an 8hr, we need it to be used in 2 workshops twice efficiently
+        //If it's a 6hr, we can let it be used once efficiently in 3 workshops
+        //If it's a 4hr, we need to be used in 2 workshops twice efficiently
+        Collection<List<Item>> filteredItemLists = CSVImporter.allEfficientChains.stream()
+                .filter(list -> list.stream().allMatch(item -> items[item.ordinal()].rankUnlocked <= islandRank))
+                .filter(list -> list.stream().allMatch(item -> items[item.ordinal()].peaksOnOrBeforeDay(day) || item == requiredFavor)).collect(Collectors.toList());
+
+        //I can't figure this out with streams, sorry
+        Collection<List<Item>> newFilteredList = new HashSet<>();
+
+        for(var list : filteredItemLists)
+        {
+            int efficientCount = 0;
+            for(int i=1; i<list.size(); i++)
+            {
+                if(list.get(i) == requiredFavor)
+                    efficientCount++;
+            }
+            if((!allow3 && efficientCount>=2) || (allow3 && efficientCount == 1))
+                newFilteredList.add(list);
+        }
+
+        filteredItemLists = newFilteredList;
+
+        Map<WorkshopSchedule, Integer> safeSchedules = new HashMap<>();
+        for (List<Item> list : filteredItemLists)
+        {
+            addToScheduleMap(list, day, limitedUse, safeSchedules, null, groove);
+        }
+        if(safeSchedules.size()==0)
+            return null;
+
+        var sortedSchedules = safeSchedules
+                .entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(Collectors.toList());
+
+        return sortedSchedules.get(0);
+    }
+
+    public static List<CycleSchedule> solveRestOfWeek(int currentDay, boolean real)
     {
         int worstIndex = -1;
         int worstValue = 99999;
@@ -364,16 +644,19 @@ public class Solver
             restOfWeek.set(3, best);
         }
 
-        setObservedFromCSV(3);
-
-        for(int i=0; i<restOfWeek.size();i++)
+        if(real)
         {
-            if(restOfWeek.get(i).day == 0)
-                continue;
-            restOfWeek.get(i).startingGroove = groove;
-            setDay(restOfWeek.get(i), i+currentDay+2, true);
-        }
+            setObservedFromCSV(3);
 
+            for(int i=0; i<restOfWeek.size();i++)
+            {
+                if(restOfWeek.get(i).day == 0)
+                    continue;
+                restOfWeek.get(i).startingGroove = groove;
+                setDay(restOfWeek.get(i), i+currentDay+2, true);
+            }
+        }
+        return restOfWeek;
     }
 
     private static void solveRecsWithNoSupply()
@@ -427,6 +710,10 @@ public class Solver
     {
         long time = System.currentTimeMillis();
 
+        List<Item> favors = new ArrayList<>();
+        favors.add(Stove);
+        favors.add(GoldHairpin);
+        favors.add(RunnerBeanSaute);
 
         CycleSchedule d2 = getBestSchedule(1, groove);
         alternatives = 0;
@@ -439,7 +726,8 @@ public class Solver
         else
         {
             hasNextDay = setObservedFromCSV(1);
-            recalculateTodayAndSet(1, d2);
+            //checkFavorsAndSet(d2, favors);
+            setDay(d2, d2.day, true);
         }
         verboseSolverLogging = false;
         if(hasNextDay)
@@ -453,9 +741,11 @@ public class Solver
             }
             else
             {
+
                 hasNextDay = setObservedFromCSV(2);
-                //setDay(d3.getKey().getItems(), 2);
-                recalculateTodayAndSet(2, d3);
+
+                setDay(d3, 2);
+                //checkFavorsAndSet(d3, favors);
             }
             if(hasNextDay)
             {
@@ -476,7 +766,8 @@ public class Solver
                     {
                         //System.out.println("It is! Using C4 schedule "+d4Again);
                         hasNextDay = setObservedFromCSV(3);
-                        recalculateTodayAndSet(3, d4Again);
+                        setDay(d4Again, 3);
+                        //checkFavorsAndSet(d4Again, favors);
                     }
                     else
                     {
@@ -494,7 +785,8 @@ public class Solver
                 else //We either rested already or we aren't the worst so add it
                 {
                     hasNextDay = setObservedFromCSV(3);
-                    recalculateTodayAndSet(3, d4);
+                    setDay(d4, 3);
+                    //checkFavorsAndSet(d4, favors);
                 }
 
                 if(hasNextDay)
@@ -504,8 +796,8 @@ public class Solver
             }
         }
 
-        if(!hasNextDay)
-            solveRestOfWeek(scheduledDays.size()-1 + (rested? 1 : 0));
+        /*if(!hasNextDay)
+            solveRestOfWeek(scheduledDays.size()-1 + (rested? 1 : 0), true);*/
 
         System.out.println("Total: " + totalGross + " (" + totalNet + ")\n" + "Took " + (System.currentTimeMillis() - time) + "ms.\n");
         //setDay(Arrays.asList(Rope,SharkOil,CulinaryKnife,SharkOil), 4);
@@ -545,7 +837,7 @@ public class Solver
         int cap = 0;
         for(var next : bestItemsEntries)
         {
-            if(day==1 && next.getKey().peaksOnDay(day+1))
+            if(day==1 && !next.getKey().peaksOnDay(1))
             {
                 currFullWeek++;
                 current = currFullWeek;
@@ -1018,9 +1310,7 @@ public class Solver
         {
             boolean oldVerbose = verboseCalculatorLogging;
             verboseCalculatorLogging = false;
-            schedule.startingGroove = 0;
-            groovelessValue = schedule.getValue();
-            schedule.startingGroove = startingGroove;
+
             if(logMats)
                 schedule.addMaterials(matsUsed);
             if(logCommonSchedules)
@@ -1032,6 +1322,8 @@ public class Solver
             totalGrooveless+=schedule.getTrueGroovelessValue();
             verboseCalculatorLogging = oldVerbose;
 
+            schedulesByPopularity.put(schedule.getItems(), schedulesByPopularity.getOrDefault(schedule.getItems(), 0)+3);
+            schedulesByPopularity.put(schedule.getSubItems(), schedulesByPopularity.getOrDefault(schedule.getSubItems(), 0)+1);
         }
 
         int gross = schedule.getValue();
@@ -1533,7 +1825,7 @@ public class Solver
     }
     
     private static void addToScheduleMap(List<Item> list, int day,Map<Item,Integer> limitedUse,
-            HashMap<WorkshopSchedule, Integer> safeSchedules, Map<WorkshopSchedule, Integer> semiSafeSchedules, int groove)
+            Map<WorkshopSchedule, Integer> safeSchedules, Map<WorkshopSchedule, Integer> semiSafeSchedules, int groove)
     {
         WorkshopSchedule workshop = new WorkshopSchedule(list);
         if(workshop.usesTooMany(limitedUse, true))
@@ -1548,32 +1840,21 @@ public class Solver
 
             if (oldValue < value)
             {
-//            if (verboseSolverLogging && oldValue > 0)
-//                System.out.println("Replacing schedule with mats "
-//                        + workshop.rareMaterialsRequired + " with " + list + " because "
-//                        + value + " is higher than " + oldValue);
-                safeSchedules.remove(workshop); // It doesn't seem to update the key when
-                // updating the value, so we delete the key
-                // first
+                safeSchedules.remove(workshop);
                 safeSchedules.put(workshop, value);
-            } else
-            {
-//            if (verboseSolverLogging)
-//                System.out.println("Not replacing schedule with mats "
-//                        + workshop.rareMaterialsRequired + " with " + list + " because "
-//                        + value + " is lower than " + oldValue);
-
-                value = 0;
             }
         }
-        int subValue = workshop.getValueWithGrooveEstimate(day, groove, true);
-        int oldSubValue = semiSafeSchedules.getOrDefault(workshop, -1);
-        if(oldSubValue < subValue)
-        {
-            semiSafeSchedules.remove(workshop);
-            semiSafeSchedules.put(workshop, subValue);
-        }
 
+        if(semiSafeSchedules != null)
+        {
+            int subValue = workshop.getValueWithGrooveEstimate(day, groove, true);
+            int oldSubValue = semiSafeSchedules.getOrDefault(workshop, -1);
+            if(oldSubValue < subValue)
+            {
+                semiSafeSchedules.remove(workshop);
+                semiSafeSchedules.put(workshop, subValue);
+            }
+        }
     }
 
     private static void setInitialFromCSV()

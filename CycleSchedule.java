@@ -204,5 +204,13 @@ public class CycleSchedule
     {
         return "Day: "+(day+1)+", Items: " + workshops[0].getItems() + " Sub items: "+(workshops.length>3?workshops[3].getItems():null)+", Starting groove: "+startingGroove+", Ending groove: "+endingGroove;
     }
+
+    public String printWorkshops()
+    {
+        return "WS1: "+workshops[0].getItems()+"\n"
+                +"WS2: "+workshops[1].getItems()+"\n"
+                +"WS3: "+workshops[2].getItems()+"\n"
+                +"WS4: "+workshops[3].getItems();
+    }
     
 }

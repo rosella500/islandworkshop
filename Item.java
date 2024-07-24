@@ -36,10 +36,10 @@ public enum Item
     SaltCod("Salt Cod"),
     SquidInk("Squid Ink"),
     EssentialDraught("Essential Draught"),
-    Jam("Jam"),
+    IsleberryJam("Isleberry Jam"),
     TomatoRelish("Tomato Relish"),
     OnionSoup("Onion Soup"),
-    Pie("Pie"),
+    IslefishPie("Islefish Pie"),
     CornFlakes("Corn Flakes"),
     PickledRadish("Pickled Radish"),
     IronAxe("Iron Axe"),
@@ -73,7 +73,16 @@ public enum Item
     RunnerBeanSaute("Runner Bean Saute"),
     BeetSoup("Beet Soup"),
     ImamBayildi("Imam Bayildi"),
-    PickledZucchini("Pickled Zucchini");
+    PickledZucchini("Pickled Zucchini"),
+    BrassServingDish("Brass Serving Dish"),
+    GrindingWheel("Grinding Wheel"),
+    DuriumTathlums("Durium Tathlums"),
+    GoldHairpin("Gold Hairpin"),
+    MammetAward("Mammet Award"),
+    FruitPunch("Fruit Punch"),
+    SweetPopotoPie("Sweet Popoto Pie"),
+    Peperoncino("Peperoncino"),
+    BuffaloBeanSalad("Buffalo Bean Salad");
 
     
     private String displayName;
