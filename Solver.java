@@ -133,7 +133,7 @@ public class Solver
     private static Map<RareMaterial, Integer> matsUsed = new TreeMap<>();
     private static boolean logMats = false;
 
-    private static boolean logCommonSchedules = false;
+    private static boolean logCommonSchedules = true;
     private static boolean writeCraftsToCSV = false;
 
     public static void main(String[] args)
@@ -166,8 +166,8 @@ public class Solver
         int totalCowries = 0;
         int totalTotalNet = 0;
         totalGrooveless = 0;
-        int startWeek = 102;
-        int endWeek = 102;
+        int startWeek = 60;
+        int endWeek = 100;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         var hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -243,9 +243,11 @@ public class Solver
 
 
                 //solveRecsWithNoSupply();
-                solveRecsForWeek();
-                //bruteForceWeek();
+                //solveRecsForWeek();
+                //solveFortuneTeller();
+                solveRecsWithPerfectInfo();
                 //solveCrimeTime(week);
+
 
                 //verboseCalculatorLogging = true;
                 //setObservedFromCSV(3);
@@ -341,6 +343,16 @@ public class Solver
         System.out.println("Best average: "+bestAverage+", so best rest: "+bestRest);*/
 
 
+    }
+
+    public static void solveFortuneTeller()
+    {
+        long time = System.currentTimeMillis();
+        rested = true;
+        setObservedFromCSV(1);
+        setDay(getBestSchedule(2, 0), 2);
+        solveRestOfWeek(1, true);
+        System.out.println("Total: " + totalGross + " (" + totalNet + ")\n" + "Took " + (System.currentTimeMillis() - time) + "ms.\n");
     }
 
     public static void setStaticSchedule(List<Integer> order, int dayToRest)
@@ -614,7 +626,7 @@ public class Solver
 
             restOfWeek.add(solution);
             reservedSet = solution.getLimitedUses(reservedSet);
-            System.out.println("day "+(d+1)+" schedule: "+solution+" ("+solution.getValue()+")");
+            //System.out.println("day "+(d+1)+" schedule: "+solution+" ("+solution.getValue()+")");
         }
 
         if(!rested)
@@ -695,6 +707,60 @@ public class Solver
         setDay(scheduleList.get(0), 5, verboseSolverLogging);
 
         System.out.println("Season total: " + totalGross + " (" + totalNet + ")\n" + "Took "+ (System.currentTimeMillis() - time) + "ms.\n");
+    }
+
+    private static void solveRecsWithPerfectInfo()
+    {
+        setObservedFromCSV(3);
+        long time = System.currentTimeMillis();
+        int bestTotal = 0;
+        List<CycleSchedule> bestSchedules = new ArrayList<>();
+
+        for(int rest=1; rest<7; rest++)
+        {
+            List<CycleSchedule> schedules = new ArrayList<>();
+            for(int cycle=1; cycle<7; cycle++)
+            {
+                if(cycle == rest)
+                    schedules.add(null);
+                else
+                {
+                    schedules.add(getBestSchedule(cycle, groove));
+                    setDay(schedules.get(schedules.size()-1), cycle, false);
+                }
+            }
+            //System.out.println("Resting C"+(rest+1)+", total: "+totalGross);
+            if(totalGross > bestTotal)
+            {
+                bestSchedules = schedules;
+                bestTotal = totalGross;
+            }
+            groove = 0;
+            totalGross = 0;
+            totalNet = 0;
+            scheduledDays.clear();
+            reservedHelpers.clear();
+            reservedItems.clear();
+            for(int day=1;day<7;day++)
+            {
+                for (var item : items)
+                    item.setCrafted(0, day);
+            }
+
+        }
+
+        //verboseCalculatorLogging = true;
+
+        for(int i=1; i<7; i++)
+        {
+            if(bestSchedules.get(i-1) == null)
+                System.out.println("Rest C"+(i+1));
+            else
+                setDay(bestSchedules.get(i-1), i);
+        }
+        verboseCalculatorLogging = false;
+        System.out.println("Total: " + totalGross + " (" + totalNet + ")\n" + "Took " + (System.currentTimeMillis() - time) + "ms.\n");
+
     }
 
     private static void solveRecsForWeek()
@@ -787,11 +853,10 @@ public class Solver
             }
         }
 
-        /*if(!hasNextDay)
-            solveRestOfWeek(scheduledDays.size()-1 + (rested? 1 : 0), true);*/
+        if(!hasNextDay)
+            solveRestOfWeek(scheduledDays.size()-1 + (rested? 1 : 0), true);
 
         System.out.println("Total: " + totalGross + " (" + totalNet + ")\n" + "Took " + (System.currentTimeMillis() - time) + "ms.\n");
-        //setDay(Arrays.asList(Rope,SharkOil,CulinaryKnife,SharkOil), 4);
     }
 
     private static void populateReservedItems(int day)
@@ -836,13 +901,13 @@ public class Solver
             }
             else if(day==2)
             {
-                if(next.getKey().peaksOnDay(3))
+                if(next.getKey().peaksOnDay(3) || next.getKey().peaksOnDay(4))
                 {
                     curr45++;
                     current = curr45;
                     cap = res45;
                 }
-                else if(next.getKey().peaksOnDay(5))
+                else if(next.getKey().peaksOnDay(5) || next.getKey().peaksOnDay(6))
                 {
                     curr67++;
                     current = curr67;
@@ -859,7 +924,7 @@ public class Solver
                     current = curr5;
                     cap = resSingle;
                 }
-                else if(next.getKey().peaksOnDay(5))
+                else if(next.getKey().peaksOnDay(5) || next.getKey().peaksOnDay(6))
                 {
                     curr67++;
                     current = curr67;
@@ -1280,6 +1345,10 @@ public class Solver
         {
             if(writeCraftsToCSV)
                 weekSchedule.setCycle(day-1,schedule.getItems(),schedule.getSubItems());
+            else if(schedule.workshops[0]==null)
+            {
+                System.out.println("Cycle "+(day+1)+", REST");
+            }
             else
                 System.out.println("Cycle " + (day + 1) + ", crafts: " + Arrays.toString(schedule.getItems().toArray())+". Subcrafts: "+schedule.getSubItems());
         }
@@ -1295,7 +1364,9 @@ public class Solver
             scheduledDays.remove(day);
         }
         int startingGroove = schedule.startingGroove;
-        int groovelessValue = 0;
+        schedule.startingGroove = 0;
+        int groovelessValue = schedule.getValue();
+        schedule.startingGroove = startingGroove;
 
         if (real)
         {

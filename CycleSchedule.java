@@ -46,6 +46,8 @@ public class CycleSchedule
 
     public int getTrueGroovelessValue()
     {
+        if(workshops[0] == null)
+            return 0;
         for(int i=0; i<workshops.length;i++)
             workshops[i].currentIndex = 0;
 
@@ -83,7 +85,7 @@ public class CycleSchedule
     public int getValue() 
     {
         numCrafted = new HashMap<>();
-        if(workshops.length == 0 || workshops[0].getItems().size() == 0)
+        if(workshops == null || workshops.length == 0 || workshops[0] == null || workshops[0].getItems() == null || workshops[0].getItems().size() == 0)
             return 0;
        
        for(int i=0; i<workshops.length;i++)
@@ -141,7 +143,8 @@ public class CycleSchedule
         int cost = 0;
         for(WorkshopSchedule shop : workshops)
         {
-            cost+=shop.getMaterialCost();
+            if(shop != null)
+                cost+=shop.getMaterialCost();
         }
         return cost;
     }
